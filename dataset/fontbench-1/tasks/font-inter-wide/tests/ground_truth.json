@@ -1,0 +1,11 @@
+{
+  "taskId": "font-inter-wide",
+  "canonical": "Inter",
+  "aliases": [
+    "inter"
+  ],
+  "category": "sans-serif",
+  "subCategory": "interface-neo-grotesque",
+  "widthId": "wide",
+  "widthPx": 440
+}

@@ -1,0 +1,333 @@
+{
+  "model_name": "mock-vlm",
+  "timestamp": "2026-09-07 11:17:40 UTC",
+  "total_tasks": 30,
+  "correct_tasks": 3,
+  "overall_accuracy": 0.1,
+  "accuracy_by_width": {
+    "wide": 0.1,
+    "narrow": 0.1,
+    "medium": 0.1
+  },
+  "accuracy_by_category": {
+    "sans-serif": 0.2,
+    "serif": 0.0,
+    "monospace": 0.0,
+    "handwriting": 0.0
+  },
+  "per_font_accuracy": {
+    "Helvetica": 1.0,
+    "Comic Sans MS": 0.0,
+    "Montserrat": 0.0,
+    "Roboto": 0.0,
+    "Courier New": 0.0,
+    "Inter": 0.0,
+    "Georgia": 0.0,
+    "Times New Roman": 0.0,
+    "Playfair Display": 0.0,
+    "Arial": 0.0
+  },
+  "avg_latency_sec": 6.051229623456796e-07,
+  "tasks": [
+    {
+      "task_id": "font-arial-narrow",
+      "target_canonical": "Arial",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 3.5869888961315155e-06
+    },
+    {
+      "task_id": "font-arial-medium",
+      "target_canonical": "Arial",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 1.4289980754256248e-06
+    },
+    {
+      "task_id": "font-arial-wide",
+      "target_canonical": "Arial",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 5.540205165743828e-07
+    },
+    {
+      "task_id": "font-helvetica-narrow",
+      "target_canonical": "Helvetica",
+      "raw_prediction": "Helvetica",
+      "is_correct": true,
+      "category": "sans-serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 6.00004568696022e-07
+    },
+    {
+      "task_id": "font-helvetica-medium",
+      "target_canonical": "Helvetica",
+      "raw_prediction": "Helvetica",
+      "is_correct": true,
+      "category": "sans-serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 6.799818947911263e-07
+    },
+    {
+      "task_id": "font-helvetica-wide",
+      "target_canonical": "Helvetica",
+      "raw_prediction": "Helvetica",
+      "is_correct": true,
+      "category": "sans-serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 4.859175533056259e-07
+    },
+    {
+      "task_id": "font-times-new-roman-narrow",
+      "target_canonical": "Times New Roman",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 4.5693013817071915e-07
+    },
+    {
+      "task_id": "font-times-new-roman-medium",
+      "target_canonical": "Times New Roman",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 2.1939631551504135e-06
+    },
+    {
+      "task_id": "font-times-new-roman-wide",
+      "target_canonical": "Times New Roman",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 5.880137905478477e-07
+    },
+    {
+      "task_id": "font-georgia-narrow",
+      "target_canonical": "Georgia",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 3.9103906601667404e-07
+    },
+    {
+      "task_id": "font-georgia-medium",
+      "target_canonical": "Georgia",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 3.110617399215698e-07
+    },
+    {
+      "task_id": "font-georgia-wide",
+      "target_canonical": "Georgia",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 3.5902485251426697e-07
+    },
+    {
+      "task_id": "font-courier-new-narrow",
+      "target_canonical": "Courier New",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "monospace",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 3.350432962179184e-07
+    },
+    {
+      "task_id": "font-courier-new-medium",
+      "target_canonical": "Courier New",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "monospace",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 3.139721229672432e-07
+    },
+    {
+      "task_id": "font-courier-new-wide",
+      "target_canonical": "Courier New",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "monospace",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 2.919696271419525e-07
+    },
+    {
+      "task_id": "font-comic-sans-ms-narrow",
+      "target_canonical": "Comic Sans MS",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "handwriting",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 3.059394657611847e-07
+    },
+    {
+      "task_id": "font-comic-sans-ms-medium",
+      "target_canonical": "Comic Sans MS",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "handwriting",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 4.4296029955148697e-07
+    },
+    {
+      "task_id": "font-comic-sans-ms-wide",
+      "target_canonical": "Comic Sans MS",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "handwriting",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 3.159511834383011e-07
+    },
+    {
+      "task_id": "font-roboto-narrow",
+      "target_canonical": "Roboto",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 4.600733518600464e-07
+    },
+    {
+      "task_id": "font-roboto-medium",
+      "target_canonical": "Roboto",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 4.00003045797348e-07
+    },
+    {
+      "task_id": "font-roboto-wide",
+      "target_canonical": "Roboto",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 3.019813448190689e-07
+    },
+    {
+      "task_id": "font-inter-narrow",
+      "target_canonical": "Inter",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 3.119930624961853e-07
+    },
+    {
+      "task_id": "font-inter-medium",
+      "target_canonical": "Inter",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 4.048924893140793e-07
+    },
+    {
+      "task_id": "font-inter-wide",
+      "target_canonical": "Inter",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 3.0407682061195374e-07
+    },
+    {
+      "task_id": "font-playfair-display-narrow",
+      "target_canonical": "Playfair Display",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 2.739252522587776e-07
+    },
+    {
+      "task_id": "font-playfair-display-medium",
+      "target_canonical": "Playfair Display",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 3.229361027479172e-07
+    },
+    {
+      "task_id": "font-playfair-display-wide",
+      "target_canonical": "Playfair Display",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 3.239838406443596e-07
+    },
+    {
+      "task_id": "font-montserrat-narrow",
+      "target_canonical": "Montserrat",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 3.030290827155113e-07
+    },
+    {
+      "task_id": "font-montserrat-medium",
+      "target_canonical": "Montserrat",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 7.540220394730568e-07
+    },
+    {
+      "task_id": "font-montserrat-wide",
+      "target_canonical": "Montserrat",
+      "raw_prediction": "Helvetica",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 3.5099219530820847e-07
+    }
+  ]
+}

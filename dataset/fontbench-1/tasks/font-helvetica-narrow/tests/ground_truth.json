@@ -1,0 +1,12 @@
+{
+  "taskId": "font-helvetica-narrow",
+  "canonical": "Helvetica",
+  "aliases": [
+    "helvetica",
+    "helvetica neue"
+  ],
+  "category": "sans-serif",
+  "subCategory": "neo-grotesque",
+  "widthId": "narrow",
+  "widthPx": 220
+}

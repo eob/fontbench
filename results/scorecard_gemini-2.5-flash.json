@@ -1,0 +1,51 @@
+{
+  "model_name": "gemini-2.5-flash",
+  "timestamp": "2026-09-07 11:17:32 UTC",
+  "total_tasks": 3,
+  "correct_tasks": 0,
+  "overall_accuracy": 0.0,
+  "accuracy_by_width": {
+    "wide": 0.0,
+    "narrow": 0.0,
+    "medium": 0.0
+  },
+  "accuracy_by_category": {
+    "sans-serif": 0.0
+  },
+  "per_font_accuracy": {
+    "Arial": 0.0
+  },
+  "avg_latency_sec": 7.3029536733326195,
+  "tasks": [
+    {
+      "task_id": "font-arial-narrow",
+      "target_canonical": "Arial",
+      "raw_prediction": "Roboto",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "narrow",
+      "width_px": 220,
+      "latency_sec": 6.828065929934382
+    },
+    {
+      "task_id": "font-arial-medium",
+      "target_canonical": "Arial",
+      "raw_prediction": "Roboto",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "medium",
+      "width_px": 320,
+      "latency_sec": 5.695919078076258
+    },
+    {
+      "task_id": "font-arial-wide",
+      "target_canonical": "Arial",
+      "raw_prediction": "Segoe UI",
+      "is_correct": false,
+      "category": "sans-serif",
+      "width_id": "wide",
+      "width_px": 440,
+      "latency_sec": 9.384876011987217
+    }
+  ]
+}

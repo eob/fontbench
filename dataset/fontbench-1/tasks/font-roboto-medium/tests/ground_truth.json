@@ -1,0 +1,11 @@
+{
+  "taskId": "font-roboto-medium",
+  "canonical": "Roboto",
+  "aliases": [
+    "roboto"
+  ],
+  "category": "sans-serif",
+  "subCategory": "neo-grotesque",
+  "widthId": "medium",
+  "widthPx": 320
+}

@@ -1,0 +1,500 @@
+[
+  {
+    "taskId": "font-arial-narrow",
+    "fontId": "arial",
+    "fontName": "Arial",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "arial",
+      "arial mt"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-arial-narrow.png",
+    "imagePath": "dataset/rendered/font-arial-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-arial-medium",
+    "fontId": "arial",
+    "fontName": "Arial",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "arial",
+      "arial mt"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-arial-medium.png",
+    "imagePath": "dataset/rendered/font-arial-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-arial-wide",
+    "fontId": "arial",
+    "fontName": "Arial",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "arial",
+      "arial mt"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-arial-wide.png",
+    "imagePath": "dataset/rendered/font-arial-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-helvetica-narrow",
+    "fontId": "helvetica",
+    "fontName": "Helvetica",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "helvetica",
+      "helvetica neue"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-helvetica-narrow.png",
+    "imagePath": "dataset/rendered/font-helvetica-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-helvetica-medium",
+    "fontId": "helvetica",
+    "fontName": "Helvetica",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "helvetica",
+      "helvetica neue"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-helvetica-medium.png",
+    "imagePath": "dataset/rendered/font-helvetica-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-helvetica-wide",
+    "fontId": "helvetica",
+    "fontName": "Helvetica",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "helvetica",
+      "helvetica neue"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-helvetica-wide.png",
+    "imagePath": "dataset/rendered/font-helvetica-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-times-new-roman-narrow",
+    "fontId": "times-new-roman",
+    "fontName": "Times New Roman",
+    "category": "serif",
+    "subCategory": "transitional-serif",
+    "aliases": [
+      "times new roman",
+      "times"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-times-new-roman-narrow.png",
+    "imagePath": "dataset/rendered/font-times-new-roman-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-times-new-roman-medium",
+    "fontId": "times-new-roman",
+    "fontName": "Times New Roman",
+    "category": "serif",
+    "subCategory": "transitional-serif",
+    "aliases": [
+      "times new roman",
+      "times"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-times-new-roman-medium.png",
+    "imagePath": "dataset/rendered/font-times-new-roman-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-times-new-roman-wide",
+    "fontId": "times-new-roman",
+    "fontName": "Times New Roman",
+    "category": "serif",
+    "subCategory": "transitional-serif",
+    "aliases": [
+      "times new roman",
+      "times"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-times-new-roman-wide.png",
+    "imagePath": "dataset/rendered/font-times-new-roman-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-georgia-narrow",
+    "fontId": "georgia",
+    "fontName": "Georgia",
+    "category": "serif",
+    "subCategory": "transitional-serif",
+    "aliases": [
+      "georgia"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-georgia-narrow.png",
+    "imagePath": "dataset/rendered/font-georgia-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-georgia-medium",
+    "fontId": "georgia",
+    "fontName": "Georgia",
+    "category": "serif",
+    "subCategory": "transitional-serif",
+    "aliases": [
+      "georgia"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-georgia-medium.png",
+    "imagePath": "dataset/rendered/font-georgia-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-georgia-wide",
+    "fontId": "georgia",
+    "fontName": "Georgia",
+    "category": "serif",
+    "subCategory": "transitional-serif",
+    "aliases": [
+      "georgia"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-georgia-wide.png",
+    "imagePath": "dataset/rendered/font-georgia-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-courier-new-narrow",
+    "fontId": "courier-new",
+    "fontName": "Courier New",
+    "category": "monospace",
+    "subCategory": "slab-serif-mono",
+    "aliases": [
+      "courier new",
+      "courier"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-courier-new-narrow.png",
+    "imagePath": "dataset/rendered/font-courier-new-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-courier-new-medium",
+    "fontId": "courier-new",
+    "fontName": "Courier New",
+    "category": "monospace",
+    "subCategory": "slab-serif-mono",
+    "aliases": [
+      "courier new",
+      "courier"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-courier-new-medium.png",
+    "imagePath": "dataset/rendered/font-courier-new-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-courier-new-wide",
+    "fontId": "courier-new",
+    "fontName": "Courier New",
+    "category": "monospace",
+    "subCategory": "slab-serif-mono",
+    "aliases": [
+      "courier new",
+      "courier"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-courier-new-wide.png",
+    "imagePath": "dataset/rendered/font-courier-new-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-comic-sans-ms-narrow",
+    "fontId": "comic-sans-ms",
+    "fontName": "Comic Sans MS",
+    "category": "handwriting",
+    "subCategory": "casual-script",
+    "aliases": [
+      "comic sans ms",
+      "comic sans"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-comic-sans-ms-narrow.png",
+    "imagePath": "dataset/rendered/font-comic-sans-ms-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-comic-sans-ms-medium",
+    "fontId": "comic-sans-ms",
+    "fontName": "Comic Sans MS",
+    "category": "handwriting",
+    "subCategory": "casual-script",
+    "aliases": [
+      "comic sans ms",
+      "comic sans"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-comic-sans-ms-medium.png",
+    "imagePath": "dataset/rendered/font-comic-sans-ms-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-comic-sans-ms-wide",
+    "fontId": "comic-sans-ms",
+    "fontName": "Comic Sans MS",
+    "category": "handwriting",
+    "subCategory": "casual-script",
+    "aliases": [
+      "comic sans ms",
+      "comic sans"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-comic-sans-ms-wide.png",
+    "imagePath": "dataset/rendered/font-comic-sans-ms-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-roboto-narrow",
+    "fontId": "roboto",
+    "fontName": "Roboto",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "roboto"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-roboto-narrow.png",
+    "imagePath": "dataset/rendered/font-roboto-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-roboto-medium",
+    "fontId": "roboto",
+    "fontName": "Roboto",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "roboto"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-roboto-medium.png",
+    "imagePath": "dataset/rendered/font-roboto-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-roboto-wide",
+    "fontId": "roboto",
+    "fontName": "Roboto",
+    "category": "sans-serif",
+    "subCategory": "neo-grotesque",
+    "aliases": [
+      "roboto"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-roboto-wide.png",
+    "imagePath": "dataset/rendered/font-roboto-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-inter-narrow",
+    "fontId": "inter",
+    "fontName": "Inter",
+    "category": "sans-serif",
+    "subCategory": "interface-neo-grotesque",
+    "aliases": [
+      "inter"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-inter-narrow.png",
+    "imagePath": "dataset/rendered/font-inter-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-inter-medium",
+    "fontId": "inter",
+    "fontName": "Inter",
+    "category": "sans-serif",
+    "subCategory": "interface-neo-grotesque",
+    "aliases": [
+      "inter"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-inter-medium.png",
+    "imagePath": "dataset/rendered/font-inter-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-inter-wide",
+    "fontId": "inter",
+    "fontName": "Inter",
+    "category": "sans-serif",
+    "subCategory": "interface-neo-grotesque",
+    "aliases": [
+      "inter"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-inter-wide.png",
+    "imagePath": "dataset/rendered/font-inter-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-playfair-display-narrow",
+    "fontId": "playfair-display",
+    "fontName": "Playfair Display",
+    "category": "serif",
+    "subCategory": "didone-modern-serif",
+    "aliases": [
+      "playfair display",
+      "playfair"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-playfair-display-narrow.png",
+    "imagePath": "dataset/rendered/font-playfair-display-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-playfair-display-medium",
+    "fontId": "playfair-display",
+    "fontName": "Playfair Display",
+    "category": "serif",
+    "subCategory": "didone-modern-serif",
+    "aliases": [
+      "playfair display",
+      "playfair"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-playfair-display-medium.png",
+    "imagePath": "dataset/rendered/font-playfair-display-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-playfair-display-wide",
+    "fontId": "playfair-display",
+    "fontName": "Playfair Display",
+    "category": "serif",
+    "subCategory": "didone-modern-serif",
+    "aliases": [
+      "playfair display",
+      "playfair"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-playfair-display-wide.png",
+    "imagePath": "dataset/rendered/font-playfair-display-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-montserrat-narrow",
+    "fontId": "montserrat",
+    "fontName": "Montserrat",
+    "category": "sans-serif",
+    "subCategory": "geometric-sans",
+    "aliases": [
+      "montserrat"
+    ],
+    "widthId": "narrow",
+    "widthPx": 220,
+    "imageFilename": "font-montserrat-narrow.png",
+    "imagePath": "dataset/rendered/font-montserrat-narrow.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-montserrat-medium",
+    "fontId": "montserrat",
+    "fontName": "Montserrat",
+    "category": "sans-serif",
+    "subCategory": "geometric-sans",
+    "aliases": [
+      "montserrat"
+    ],
+    "widthId": "medium",
+    "widthPx": 320,
+    "imageFilename": "font-montserrat-medium.png",
+    "imagePath": "dataset/rendered/font-montserrat-medium.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  },
+  {
+    "taskId": "font-montserrat-wide",
+    "fontId": "montserrat",
+    "fontName": "Montserrat",
+    "category": "sans-serif",
+    "subCategory": "geometric-sans",
+    "aliases": [
+      "montserrat"
+    ],
+    "widthId": "wide",
+    "widthPx": 440,
+    "imageFilename": "font-montserrat-wide.png",
+    "imagePath": "dataset/rendered/font-montserrat-wide.png",
+    "pangram": "The quick brown fox jumps over the lazy dog.",
+    "prompt": "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "taskId": "font-times-new-roman-narrow",
+  "canonical": "Times New Roman",
+  "aliases": [
+    "times new roman",
+    "times"
+  ],
+  "category": "serif",
+  "subCategory": "transitional-serif",
+  "widthId": "narrow",
+  "widthPx": 220
+}

@@ -1,0 +1,11 @@
+{
+  "taskId": "font-georgia-medium",
+  "canonical": "Georgia",
+  "aliases": [
+    "georgia"
+  ],
+  "category": "serif",
+  "subCategory": "transitional-serif",
+  "widthId": "medium",
+  "widthPx": 320
+}

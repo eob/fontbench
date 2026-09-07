@@ -1,0 +1,12 @@
+{
+  "taskId": "font-playfair-display-wide",
+  "canonical": "Playfair Display",
+  "aliases": [
+    "playfair display",
+    "playfair"
+  ],
+  "category": "serif",
+  "subCategory": "didone-modern-serif",
+  "widthId": "wide",
+  "widthPx": 440
+}

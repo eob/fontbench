@@ -1,0 +1,12 @@
+{
+  "taskId": "font-helvetica-wide",
+  "canonical": "Helvetica",
+  "aliases": [
+    "helvetica",
+    "helvetica neue"
+  ],
+  "category": "sans-serif",
+  "subCategory": "neo-grotesque",
+  "widthId": "wide",
+  "widthPx": 440
+}

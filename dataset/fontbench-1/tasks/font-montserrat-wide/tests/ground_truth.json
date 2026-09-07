@@ -1,0 +1,11 @@
+{
+  "taskId": "font-montserrat-wide",
+  "canonical": "Montserrat",
+  "aliases": [
+    "montserrat"
+  ],
+  "category": "sans-serif",
+  "subCategory": "geometric-sans",
+  "widthId": "wide",
+  "widthPx": 440
+}

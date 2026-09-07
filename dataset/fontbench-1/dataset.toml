@@ -1,0 +1,13 @@
+version = "1.0"
+
+[dataset]
+name = "fontbench-1"
+version = "1.0.0"
+description = "FontBench-1: Visual font identification benchmark across system & Google fonts at wrapped widths."
+author = "Edward Benson"
+license = "MIT"
+task_dir = "tasks"
+
+[metadata]
+total_tasks = 30
+primary_pangram = "The quick brown fox jumps over the lazy dog."

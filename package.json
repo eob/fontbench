@@ -1,0 +1,23 @@
+{
+  "name": "fontbench",
+  "version": "0.1.0",
+  "description": "FontBench-1: Visual font identification benchmark across system & Google fonts at wrapped widths.",
+  "type": "module",
+  "scripts": {
+    "render": "bun run src/render.ts",
+    "build:harbor": "bun run src/generate_harbor_dataset.ts",
+    "build:all": "bun run render && bun run build:harbor",
+    "baseline": ".venv/bin/python -m baseline.cli",
+    "baseline:mock": ".venv/bin/python -m baseline.cli --mock",
+    "test": ".venv/bin/pytest"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "playwright": "^1.63.0"
+  }
+}

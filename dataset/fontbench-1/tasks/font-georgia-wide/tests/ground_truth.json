@@ -1,0 +1,11 @@
+{
+  "taskId": "font-georgia-wide",
+  "canonical": "Georgia",
+  "aliases": [
+    "georgia"
+  ],
+  "category": "serif",
+  "subCategory": "transitional-serif",
+  "widthId": "wide",
+  "widthPx": 440
+}

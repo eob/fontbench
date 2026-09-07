@@ -1,0 +1,11 @@
+{
+  "taskId": "font-roboto-narrow",
+  "canonical": "Roboto",
+  "aliases": [
+    "roboto"
+  ],
+  "category": "sans-serif",
+  "subCategory": "neo-grotesque",
+  "widthId": "narrow",
+  "widthPx": 220
+}

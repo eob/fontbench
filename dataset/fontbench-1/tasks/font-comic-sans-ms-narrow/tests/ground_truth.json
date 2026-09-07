@@ -1,0 +1,12 @@
+{
+  "taskId": "font-comic-sans-ms-narrow",
+  "canonical": "Comic Sans MS",
+  "aliases": [
+    "comic sans ms",
+    "comic sans"
+  ],
+  "category": "handwriting",
+  "subCategory": "casual-script",
+  "widthId": "narrow",
+  "widthPx": 220
+}

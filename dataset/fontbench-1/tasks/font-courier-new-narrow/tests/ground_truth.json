@@ -1,0 +1,12 @@
+{
+  "taskId": "font-courier-new-narrow",
+  "canonical": "Courier New",
+  "aliases": [
+    "courier new",
+    "courier"
+  ],
+  "category": "monospace",
+  "subCategory": "slab-serif-mono",
+  "widthId": "narrow",
+  "widthPx": 220
+}
