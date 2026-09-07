@@ -1,0 +1,147 @@
+import { afterEach, beforeEach, describe, expect, spyOn, test } from 'bun:test';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { chromium, type Browser } from 'playwright';
+import { TOP_50_FONTS, VARIANT_RECIPES, type FontSpec, type VariantRecipe } from './fonts';
+import { renderAllSamples } from './render';
+
+// An original, minimal WOFF containing rectangle glyphs for the ASCII pangram.
+// It keeps browser checks independent of network access and installed system fonts.
+const FONT_DATA = 'd09GRgABAAAAAAQAAAoAAAAACuQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABZAAAAC4AAABgRQBECmNtYXAAAAGkAAAAPwAAAEwBIQENZ2x5ZgAAAlQAAAA1AAAFfA8u4cJoZWFkAAAA9AAAADYAAAA2Ln06aGhoZWEAAAEsAAAAIAAAACQEYgHiaG10eAAAAZQAAAANAAAAcAH0AABsb2NhAAAB5AAAAHAAAABwJlcnw21heHAAAAFMAAAAGAAAACAAOQAGbmFtZQAAAowAAAClAAABMloyVl9wb3N0AAADNAAAAMwAAAF/7iGq6wABAAAAAQAAs4lswF8PPPUAAQPoAAAAAObEe00AAAAA5sR7TQBQAAABkALuAAAAAwACAAAAAAAAeJxjYGRgYFb4b8HAwPiFgYFhC6MDA1AEBTACAFRZA0h4nGNgZGBgMGdgYQDRDAxMDGgAAAapAEB4nGNgZvzCOIGBlYGFgTBgRObYAwGQUmCoYlb4b8HAwKzAcAJNvQIDAwD8IwWPAAB4nGP8wkBXAABqrAD2AAAAeJxjYGBgYmBgYAZiESDJCKZZGCyANBcDB1COiUGBQY8hiqHq/3+gGIjtyJAIZIsycPw/8H8XWAcUAAAAaAooAAAAAA0AGgAnADQAQQBOAFsAaAB1AIIAjwCcAKkAtgDDANAA3QDqAPcBBAERAR4BKwE4AUUBUgFfAWwBeQGGAZMBoAGtAboBxwHUAeEB7gH7AggCFQIiAi8CPAJJAlYCYwJwAn0CigKXAqQCsQKxAr54nGNgZAhgYGCcwPSOgZmBwVhRUDGA0eHfASCXYVRmVGaIyDAeQpEBckdlRmUGuwwAwIslDgAAAHicdYzNCoJAFEaPPxhFtAmipasgyDdo5cIH0F7AZDBBRtARXPUIPXN3agJddBfD+c797gAbnnjY8dh+Xjs+K0lfDjiwdxzOOpHYs2y9cC3myNWxz46b44ALd8fhrBNx4pU1kxl7FRelHnJVj23ZZ502qdLVI54vHVtMXJGMhgnDSI8ipqBEM5BLqsW2km2rE2tIxWoqHtL8d7n0P5ssf3wDZHYyFwAAAHicfY4HbsQwEMTM86X33nPpvXhlnyW9yP//QWY+EAEcSAAJqJk1/5/cNMxombPCKmuss8EmW2yzwy577HPAIUccc8IpZ5xzwSVXXHPDLQvuuOeBR5545oVX3njng0+++OaHXzqCRM/AkpHcTuNSjML3Imo75U6ESKIXg5CX5WV5WV6WV+QVeUVekVfkFXlFXpFX5BV5VV7Vu+pd63yKrvOEJ3l6z+BZekZP9hSPi3ARLsJFuAgX4SJchItwES6Si+Qi6Xu9GMY/LfY3dg==';
+const css = `@font-face { font-family: 'Fixture Sans'; font-weight: 400; font-style: normal; src: url(data:font/woff;base64,${FONT_DATA}); }`;
+const fixtureFont: FontSpec = {
+  id: 'fixture', name: 'Fixture Sans', cssFamily: 'Fixture Sans',
+  cssUrl: `data:text/css,${encodeURIComponent(css)}`,
+  category: 'non-serif', subCategory: 'fixture', aliases: ['fixture sans'], description: 'Test font',
+};
+const recipe: VariantRecipe = {
+  variantIndex: 1, weight: 'regular', modifier: 'regular', kerning: 'normal', lineHeight: 'normal', widthId: 'narrow',
+};
+
+const originalFonts = [...TOP_50_FONTS];
+const originalRecipes = [...VARIANT_RECIPES];
+const realLaunch = chromium.launch.bind(chromium);
+let directory: string;
+let browsers: Browser[];
+let launchSpy: ReturnType<typeof spyOn>;
+
+beforeEach(() => {
+  directory = fs.mkdtempSync(path.join(os.tmpdir(), 'fontbench-render-test-'));
+  browsers = [];
+  TOP_50_FONTS.splice(0, TOP_50_FONTS.length, fixtureFont);
+  VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, recipe);
+  launchSpy = spyOn(chromium, 'launch').mockImplementation(async options => {
+    const browser = await realLaunch(options);
+    browsers.push(browser);
+    return browser;
+  });
+});
+
+afterEach(async () => {
+  launchSpy.mockRestore();
+  for (const browser of browsers) await browser.close();
+  TOP_50_FONTS.splice(0, TOP_50_FONTS.length, ...originalFonts);
+  VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, ...originalRecipes);
+  fs.rmSync(directory, { recursive: true, force: true });
+});
+
+describe('rendered font integrity', () => {
+  test('refuses a missing font instead of labeling a fallback', async () => {
+    TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: 'data:text/css,' };
+    await expect(renderAllSamples(directory)).rejects.toThrow(/font|fallback/i);
+    expect(fs.existsSync(path.join(directory, 'manifest.json'))).toBe(false);
+  });
+
+  test('refuses broken webfont bytes', async () => {
+    TOP_50_FONTS[0] = {
+      ...fixtureFont,
+      cssUrl: `data:text/css,${encodeURIComponent(css.replace(FONT_DATA, 'aW52YWxpZA=='))}`,
+    };
+    await expect(renderAllSamples(directory)).rejects.toThrow(/font|network/i);
+    expect(browsers.every(browser => !browser.isConnected())).toBe(true);
+  });
+
+  test('refuses partial glyph fallback even when a webfont loads', async () => {
+    const partialCss = css.replace('font-weight: 400;', 'font-weight: 400; unicode-range: U+0041-005A;');
+    TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(partialCss)}` };
+    await expect(renderAllSamples(directory)).rejects.toThrow(/fallback/i);
+  });
+
+  test('omits unsupported weights and records the face actually used', async () => {
+    VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length,
+      ...(['thin', 'regular', 'bold', 'black'] as const).map((weight, index) => ({ ...recipe, variantIndex: index + 1, weight })),
+    );
+    const manifest = await renderAllSamples(directory);
+    expect(manifest.map(sample => sample.weight)).toEqual(['regular']);
+    expect(manifest[0]).toMatchObject({
+      fontRendering: {
+        loadedFaces: [{ family: 'Fixture Sans', weight: '400', style: 'normal' }],
+        platformFonts: [{ familyName: 'Fixture Sans', postScriptName: 'FixtureSans-Regular', isCustomFont: true }],
+        syntheticItalic: false,
+      },
+    });
+    expect(fs.readFileSync(path.join(directory, manifest[0]!.imageFilename)).subarray(0, 8))
+      .toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+    expect(browsers.every(browser => !browser.isConnected())).toBe(true);
+  });
+
+  test('does not render upright labels using an italic-only font', async () => {
+    TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-style: normal', 'font-style: italic'))}` };
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'italic' });
+    const manifest = await renderAllSamples(directory);
+    expect(manifest.map(sample => sample.modifier)).toEqual(['italic']);
+  });
+
+  test('small caps visibly transforms lowercase letters and reports synthesis policy', async () => {
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'small-caps' });
+    const manifest = await renderAllSamples(directory);
+    const regular = fs.readFileSync(path.join(directory, manifest[0]!.imageFilename));
+    const smallCaps = fs.readFileSync(path.join(directory, manifest[1]!.imageFilename));
+    expect(smallCaps.equals(regular)).toBe(false);
+    expect(manifest[1]).toMatchObject({ fontRendering: { smallCapsSynthesisAllowed: true } });
+  });
+
+  test('records synthetic italic and preserves unrelated files on successful replacement', async () => {
+    VARIANT_RECIPES[0] = { ...recipe, modifier: 'italic' };
+    fs.writeFileSync(path.join(directory, 'notes.txt'), 'keep this');
+    fs.writeFileSync(path.join(directory, 'manifest.json'), 'previous manifest');
+    fs.writeFileSync(path.join(directory, 'font-fixture-v01.png'), 'previous image');
+    const manifest = await renderAllSamples(directory);
+    expect(manifest[0]).toMatchObject({ fontRendering: { syntheticItalic: true } });
+    expect(fs.readFileSync(path.join(directory, 'notes.txt'), 'utf8')).toBe('keep this');
+    expect(JSON.parse(fs.readFileSync(path.join(directory, 'manifest.json'), 'utf8'))).toEqual(manifest);
+  });
+
+  test('closes the browser and preserves previous output when a later screenshot fails', async () => {
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2 });
+    const imagePath = path.join(directory, 'font-fixture-v01.png');
+    fs.writeFileSync(imagePath, 'previous complete image');
+    fs.writeFileSync(path.join(directory, 'manifest.json'), 'previous complete manifest');
+    launchSpy.mockImplementation(async (options: Parameters<typeof chromium.launch>[0]) => {
+      const browser = await realLaunch(options);
+      browsers.push(browser);
+      const newPage = browser.newPage.bind(browser);
+      spyOn(browser, 'newPage').mockImplementation(async options => {
+        const page = await newPage(options);
+        const locator = page.locator.bind(page);
+        spyOn(page, 'locator').mockImplementation(selector => {
+          const target = locator(selector);
+          const screenshot = target.screenshot.bind(target);
+          let count = 0;
+          spyOn(target, 'screenshot').mockImplementation(async options => {
+            if (++count === 2) throw new Error('injected screenshot failure');
+            return screenshot(options);
+          });
+          return target;
+        });
+        return page;
+      });
+      return browser;
+    });
+    await expect(renderAllSamples(directory)).rejects.toThrow('injected screenshot failure');
+    expect(browsers.every(browser => !browser.isConnected())).toBe(true);
+    expect(fs.readFileSync(imagePath, 'utf8')).toBe('previous complete image');
+    expect(fs.readFileSync(path.join(directory, 'manifest.json'), 'utf8')).toBe('previous complete manifest');
+  });
+});

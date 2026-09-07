@@ -10,88 +10,22 @@ Evaluates multimodal models on multi-attribute typographic identification tasks:
 
 from __future__ import annotations
 
-import base64
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import io
 import json
-import os
 import re
 import time
-from dataclasses import asdict, dataclass, field
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Optional
 
-from PIL import Image
-from pydantic import BaseModel, Field
+from pydantic import ValidationError
 
-
-class TypographicPrediction(BaseModel):
-    font: str = Field(default="", description="The canonical font family name")
-    category: str = Field(default="other", description="serif, non-serif, mono, handwriting, other")
-    weight: str = Field(default="regular", description="thin, regular, bold, black")
-    modifier: str = Field(default="regular", description="regular, italic, underline, strikethrough, small-caps")
-    kerning: str = Field(default="normal", description="tight, normal, loose")
-    line_height: str = Field(default="normal", description="tight, normal, loose")
+from baseline.providers import PredictionClient, PredictionResponse, TypographicPrediction
 
 
 def normalize_font_name(text: str) -> str:
-    """Normalize font name for fuzzy comparison (lowercase, alphanumeric only)."""
+    """Normalize case and punctuation for font-name comparison."""
     return re.sub(r"[^a-z0-9]", "", text.lower())
-
-
-def normalize_category(cat: str) -> str:
-    c = cat.lower().strip()
-    if any(k in c for k in ["sans", "non-serif", "nonserif"]):
-        return "non-serif"
-    if "serif" in c:
-        return "serif"
-    if any(k in c for k in ["mono", "fixed", "code", "typewriter"]):
-        return "mono"
-    if any(k in c for k in ["hand", "script", "cursive", "calligraph", "marker", "casual"]):
-        return "handwriting"
-    return "other"
-
-
-def normalize_weight(w: str) -> str:
-    w = w.lower().strip()
-    if any(k in w for k in ["thin", "light", "hairline", "100", "200", "300"]):
-        return "thin"
-    if any(k in w for k in ["black", "heavy", "extra-bold", "extrabold", "ultra", "900", "800"]):
-        return "black"
-    if any(k in w for k in ["bold", "semi", "demi", "600", "700"]):
-        return "bold"
-    return "regular"
-
-
-def normalize_modifier(m: str) -> str:
-    m = m.lower().strip()
-    if any(k in m for k in ["small-caps", "smallcaps", "small caps", "smcp"]):
-        return "small-caps"
-    if any(k in m for k in ["italic", "oblique", "slanted", "italics"]):
-        return "italic"
-    if any(k in m for k in ["strike", "line-through", "linethrough"]):
-        return "strikethrough"
-    if any(k in m for k in ["under", "underlined"]):
-        return "underline"
-    return "regular"
-
-
-def normalize_kerning(k: str) -> str:
-    k = k.lower().strip()
-    if any(x in k for x in ["tight", "condensed", "narrow", "negative", "close", "compressed"]):
-        return "tight"
-    if any(x in k for x in ["loose", "wide", "expanded", "open", "spaced", "tracked", "relaxed"]):
-        return "loose"
-    return "normal"
-
-
-def normalize_line_height(lh: str) -> str:
-    lh = lh.lower().strip()
-    if any(x in lh for x in ["tight", "compact", "narrow", "condensed", "single", "close"]):
-        return "tight"
-    if any(x in lh for x in ["loose", "wide", "relaxed", "double", "large", "tall"]):
-        return "loose"
-    return "normal"
 
 
 def grade_font_prediction(prediction: str, canonical: str, aliases: List[str]) -> bool:
@@ -103,7 +37,42 @@ def grade_font_prediction(prediction: str, canonical: str, aliases: List[str]) -
     accepted = [canonical] + (aliases or [])
     accepted_norms = [normalize_font_name(a) for a in accepted if a]
     
-    return any(a in pred_norm or pred_norm in a for a in accepted_norms)
+    return pred_norm in accepted_norms
+
+
+def load_manifest(manifest_path: str) -> list[dict]:
+    """Load validated six-attribute tasks with image paths resolved beside the manifest."""
+    with open(manifest_path, "r", encoding="utf-8") as f:
+        manifest_items = json.load(f)
+
+    if not isinstance(manifest_items, list):
+        raise ValueError("Manifest must be a JSON array of task objects")
+    task_ids = set()
+    for index, item in enumerate(manifest_items):
+        if not isinstance(item, dict):
+            raise ValueError(f"Manifest task {index} must be a JSON object")
+        try:
+            TypographicPrediction.model_validate({
+                "font": item.get("fontName"), "category": item.get("category"),
+                "weight": item.get("weight"), "modifier": item.get("modifier"),
+                "kerning": item.get("kerning"), "line_height": item.get("lineHeight"),
+            })
+        except ValidationError as e:
+            raise ValueError(
+                f"Invalid typography in manifest task {index}; render a complete six-attribute manifest: {e}"
+            ) from e
+        task_id = item.get("taskId")
+        if not isinstance(task_id, str) or not task_id.strip():
+            raise ValueError(f"Manifest task {index} must have a non-empty taskId")
+        if task_id in task_ids:
+            raise ValueError(f"Duplicate manifest taskId: {task_id}")
+        task_ids.add(task_id)
+
+    for item in manifest_items:
+        if item.get("imageFilename"):
+            item["imagePath"] = str(Path(manifest_path).resolve().parent / item["imageFilename"])
+
+    return manifest_items
 
 
 @dataclass
@@ -138,6 +107,12 @@ class TaskEvaluationResult:
     latency_sec: float
     model_name: str
     error: Optional[str] = None
+    provider: str = "google"
+    error_kind: Optional[str] = None
+    input_tokens: Optional[int] = None
+    output_tokens: Optional[int] = None
+    request_attempts: int = 0
+    unmetered_attempts: int = 0
 
 
 @dataclass
@@ -162,6 +137,9 @@ class FontBenchScorecard:
     model_name: str
     timestamp: str
     task_results: List[TaskEvaluationResult] = field(default_factory=list)
+    expected_task_count: int = 0
+    grading_version: str = "2"
+    provider: str = "google"
 
     def to_markdown(self) -> str:
         lines = [
@@ -223,81 +201,61 @@ class FontBenchScorecard:
 class BaselineEvaluator:
     """Evaluates zero-shot multimodal models on FontBench multi-attribute tasks."""
 
-    def __init__(self, model_name: str = "gemini-3.5-flash-lite", mock: bool = False):
+    def __init__(
+        self, model_name: str = "gemini-3.5-flash-lite", mock: bool = False,
+        provider: str = "google", api_key_env: str | None = None,
+        base_url: str | None = None, max_output_tokens: int = 1024,
+    ):
         self.model_name = model_name
+        self.provider = provider
         self.mock = mock
-        self._client = None
-        if not mock:
-            self._init_client()
+        self._client = None if mock else PredictionClient(
+            provider, model_name, api_key_env=api_key_env,
+            base_url=base_url, max_output_tokens=max_output_tokens,
+        )
 
-    def _init_client(self):
-        from google import genai
-        from google.genai import types
-        self._client = genai.Client(http_options=types.HttpOptions(timeout=60_000))
+    def close(self) -> None:
+        if self._client is not None:
+            self._client.close()
 
-    def predict_image(self, image_path: str, prompt: str) -> tuple[str, dict]:
-        """Query VLM with (Image, Prompt) and return structured typography prediction."""
+    def predict_image(self, image_path: str, prompt: str) -> PredictionResponse:
+        """Return the prediction and its own usage/error metadata."""
         if self.mock:
-            return '{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}', {
-                "font": "Arial",
-                "category": "non-serif",
-                "weight": "regular",
-                "modifier": "regular",
-                "kerning": "normal",
-                "line_height": "normal"
+            prediction = {
+                "font": "Arial", "category": "non-serif", "weight": "regular",
+                "modifier": "regular", "kerning": "normal", "line_height": "normal",
             }
-
-        from google.genai import types
-        img = Image.open(image_path)
-        last_error = ""
-        for attempt in range(2):
-            try:
-                response = self._client.models.generate_content(
-                    model=self.model_name,
-                    contents=[img, prompt],
-                    config=types.GenerateContentConfig(
-                        response_mime_type="application/json",
-                        response_schema=TypographicPrediction,
-                        temperature=0.0
-                    )
-                )
-                raw_text = response.text.strip() if response.text else "{}"
-                # Extract JSON
-                try:
-                    data = json.loads(raw_text)
-                except Exception:
-                    m = re.search(r"\{.*\}", raw_text, re.DOTALL)
-                    data = json.loads(m.group(0)) if m else {}
-                return raw_text, data
-            except Exception as e:
-                last_error = str(e)
-                time.sleep(1.0)
-
-        err_msg = f"ERROR: {last_error}"
-        return err_msg, {}
+            return PredictionResponse(json.dumps(prediction), prediction, input_tokens=0, output_tokens=0)
+        return self._client.predict(image_path, prompt)
 
     def _eval_single_task(self, item: dict, prompt_default: str) -> TaskEvaluationResult:
         image_path = item["imagePath"]
         prompt = item.get("prompt", prompt_default)
 
         start_t = time.perf_counter()
-        raw_pred, parsed_pred = self.predict_image(image_path, prompt)
+        response = self.predict_image(image_path, prompt)
         latency = time.perf_counter() - start_t
+        raw_pred = response.raw_text
+        parsed_pred = response.parsed if not response.error else {}
 
-        pred_font = str(parsed_pred.get("font", "")).strip()
-        pred_cat = normalize_category(str(parsed_pred.get("category", "")))
-        pred_weight = normalize_weight(str(parsed_pred.get("weight", "")))
-        pred_modifier = normalize_modifier(str(parsed_pred.get("modifier", "")))
-        pred_kerning = normalize_kerning(str(parsed_pred.get("kerning", "")))
-        pred_lh = normalize_line_height(str(parsed_pred.get("line_height", "")))
+        prediction = {
+            key: value.strip() for key, value in parsed_pred.items()
+            if isinstance(value, str)
+        }
+        pred_font = prediction.get("font", "")
+        pred_cat = prediction.get("category", "").lower()
+        pred_weight = prediction.get("weight", "").lower()
+        pred_modifier = prediction.get("modifier", "").lower()
+        pred_kerning = prediction.get("kerning", "").lower()
+        pred_lh = prediction.get("line_height", "").lower()
 
         target_font = item["fontName"]
         target_aliases = item.get("aliases", [])
-        target_cat = normalize_category(item["category"])
-        target_weight = normalize_weight(item.get("weight", "regular"))
-        target_modifier = normalize_modifier(item.get("modifier", "regular"))
-        target_kerning = normalize_kerning(item.get("kerning", "normal"))
-        target_lh = normalize_line_height(item.get("lineHeight", "normal"))
+        target_cat = item["category"]
+        target_weight = item["weight"]
+        target_modifier = item["modifier"]
+        target_kerning = item["kerning"]
+        target_lh = item["lineHeight"]
 
         font_correct = grade_font_prediction(pred_font, target_font, target_aliases)
         cat_correct = pred_cat == target_cat
@@ -347,7 +305,13 @@ class BaselineEvaluator:
             composite_score=composite,
             latency_sec=latency,
             model_name=self.model_name,
-            error=raw_pred if raw_pred.startswith("ERROR:") else None
+            error=response.error,
+            provider=self.provider,
+            error_kind=response.error_kind,
+            input_tokens=response.input_tokens,
+            output_tokens=response.output_tokens,
+            request_attempts=response.request_attempts,
+            unmetered_attempts=response.unmetered_attempts,
         )
 
     def evaluate_manifest(
@@ -358,9 +322,12 @@ class BaselineEvaluator:
         progress_cb: Optional[Callable[[TaskEvaluationResult, int, int], None]] = None
     ) -> FontBenchScorecard:
         """Run evaluation over all tasks defined in manifest."""
-        with open(manifest_path, "r", encoding="utf-8") as f:
-            manifest_items = json.load(f)
-
+        if limit is not None and limit < 0:
+            raise ValueError("limit must be non-negative")
+        if concurrency < 1:
+            raise ValueError("concurrency must be positive")
+        manifest_items = load_manifest(manifest_path)
+        expected_task_count = len(manifest_items)
         if limit is not None:
             manifest_items = manifest_items[:limit]
 
@@ -402,7 +369,13 @@ class BaselineEvaluator:
             indexed_results.sort(key=lambda pair: pair[0])
             results = [pair[1] for pair in indexed_results]
 
-        # Aggregate metrics
+        return self.score_results(results, expected_task_count)
+
+    def score_results(
+        self, results: List[TaskEvaluationResult], expected_task_count: int,
+    ) -> FontBenchScorecard:
+        """Aggregate saved or newly evaluated results without issuing requests."""
+        total_tasks = len(results)
         font_correct_count = sum(1 for r in results if r.font_correct)
         cat_correct_count = sum(1 for r in results if r.category_correct)
         weight_correct_count = sum(1 for r in results if r.weight_correct)
@@ -470,6 +443,7 @@ class BaselineEvaluator:
         total_latency = sum(r.latency_sec for r in results)
         scorecard = FontBenchScorecard(
             total_tasks=total_tasks,
+            expected_task_count=expected_task_count,
             overall_composite_score=total_composite / total_tasks if total_tasks else 0.0,
             overall_exact_match=all_correct_count / total_tasks if total_tasks else 0.0,
             font_accuracy=font_correct_count / total_tasks if total_tasks else 0.0,
@@ -487,6 +461,7 @@ class BaselineEvaluator:
             per_font_accuracy=per_font_acc,
             avg_latency_sec=total_latency / total_tasks if total_tasks else 0.0,
             model_name=self.model_name,
+            provider=self.provider,
             timestamp=time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
             task_results=results
         )

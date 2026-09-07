@@ -9,7 +9,12 @@
     "build:all": "bun run render && bun run build:harbor",
     "baseline": ".venv/bin/python -m baseline.cli",
     "baseline:mock": ".venv/bin/python -m baseline.cli --mock",
-    "test": ".venv/bin/pytest"
+    "test": "bun run test:python && bun run test:ts && bun run typecheck",
+    "test:python": ".venv/bin/python -m pytest",
+    "test:ts": "bun test src",
+    "typecheck": "tsc --noEmit",
+    "benchmark": ".venv/bin/python -m baseline.runner",
+    "build:page": ".venv/bin/python -m baseline.build_page"
   },
   "devDependencies": {
     "@types/bun": "latest"

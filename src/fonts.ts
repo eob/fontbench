@@ -10,6 +10,8 @@ export interface FontSpec {
   name: string;
   cssFamily: string;
   cssUrl: string;
+  // Curated declarations when the provider stylesheet misidentifies its faces.
+  cssOverride?: string;
   category: TypographicCategory;
   subCategory: string;
   aliases: string[];
@@ -56,7 +58,7 @@ export interface VariantRecipe {
   widthId: ContainerWidthId;
 }
 
-// 20 balanced orthogonal recipes per font (50 fonts * 20 = 1,000 tasks)
+// 20 recipes per font (up to 50 fonts * 20 = 1,000 supported tasks)
 export const VARIANT_RECIPES: VariantRecipe[] = [
   { variantIndex: 1,  weight: 'thin',    modifier: 'regular',       kerning: 'normal', lineHeight: 'normal', widthId: 'narrow' },
   { variantIndex: 2,  weight: 'regular', modifier: 'italic',        kerning: 'tight',  lineHeight: 'loose',  widthId: 'medium' },
@@ -87,6 +89,13 @@ export const TOP_50_FONTS: FontSpec[] = [
     name: 'Arial',
     cssFamily: 'Arial',
     cssUrl: 'https://fonts.cdnfonts.com/css/arial',
+    cssOverride: `
+      @font-face { font-family: 'Arial'; font-style: normal; font-weight: 400; src: url('https://fonts.cdnfonts.com/s/29105/ARIAL.woff') format('woff'); }
+      @font-face { font-family: 'Arial'; font-style: italic; font-weight: 400; src: url('https://fonts.cdnfonts.com/s/29105/ARIALI.woff') format('woff'); }
+      @font-face { font-family: 'Arial'; font-style: normal; font-weight: 700; src: url('https://fonts.cdnfonts.com/s/29105/ARIALBD.woff') format('woff'); }
+      @font-face { font-family: 'Arial'; font-style: italic; font-weight: 700; src: url('https://fonts.cdnfonts.com/s/29105/ARIALBI.woff') format('woff'); }
+      @font-face { font-family: 'Arial'; font-style: normal; font-weight: 900; src: url('https://fonts.cdnfonts.com/s/29105/ARIBLK.woff') format('woff'); }
+    `,
     category: 'non-serif',
     subCategory: 'neo-grotesque',
     aliases: ['arial', 'arial mt'],

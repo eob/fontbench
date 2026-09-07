@@ -1,0 +1,33 @@
+{
+  "total_tasks": 0,
+  "overall_composite_score": 0.0,
+  "overall_exact_match": 0.0,
+  "font_accuracy": 0.0,
+  "category_accuracy": 0.0,
+  "weight_accuracy": 0.0,
+  "modifier_accuracy": 0.0,
+  "kerning_accuracy": 0.0,
+  "line_height_accuracy": 0.0,
+  "accuracy_by_category": {},
+  "accuracy_by_weight": {},
+  "accuracy_by_modifier": {},
+  "accuracy_by_kerning": {},
+  "accuracy_by_line_height": {},
+  "accuracy_by_width": {},
+  "per_font_accuracy": {},
+  "avg_latency_sec": 0.0,
+  "model_name": "claude-fable-5-1",
+  "timestamp": "2026-09-07 15:49:41 UTC",
+  "expected_task_count": 639,
+  "grading_version": "2",
+  "provider": "anthropic",
+  "tasks": [],
+  "mock": false,
+  "dataset_fingerprint": "b2dbd988d5c5c9c8cfdce397c2346531e9623e90e8752046ebaea3df142f6df8",
+  "model_id": "claude-fable-5-1",
+  "max_output_tokens": 4096,
+  "pricing": {
+    "input_per_m": 10.0,
+    "output_per_m": 50.0
+  }
+}

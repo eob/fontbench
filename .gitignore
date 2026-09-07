@@ -43,3 +43,14 @@ __pycache__/
 test_output/
 logs/
 output.txt
+
+# Resumable benchmark local input cache and SQLite state
+results/runs/**/input/
+results/runs/**/state.sqlite3*
+results/runs/**/run.log
+results/runs/**/.runner.lock
+
+# Version the frozen September 7 inputs and checkpoint for reproducible resumes.
+!results/runs/fontbench-2026-09-07/input/
+!results/runs/fontbench-2026-09-07/input/**
+!results/runs/fontbench-2026-09-07/state.sqlite3

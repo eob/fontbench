@@ -1,131 +1,92 @@
-"""Harbor BaseAgent Adapter for Baseline VLM.
+"""Harbor adapter that predicts all six FontBench typography attributes.
 
-Allows FontBench tasks to be run directly via Harbor CLI:
-    harbor run -d fontbench-1 --agent baseline.harbor_agent:BaselineVLMAgent --ak model=gemini-2.5-flash
+    harbor run --path dataset/fontbench-1/tasks --agent baseline.harbor_agent:BaselineVLMAgent --model gemini-2.5-flash
 """
 
 from __future__ import annotations
 
-import io
-import os
-import sys
 from pathlib import Path
-from typing import Any, Optional
+from tempfile import TemporaryDirectory
+from typing import Any
+
+from PIL import Image
+
+from baseline.evaluator import TypographicPrediction
 
 try:
     from harbor.agents.base import BaseAgent
     from harbor.environments.base import BaseEnvironment
     from harbor.models.agent.context import AgentContext
-except ImportError:
-    # Minimal fallback interface for standalone execution
-    class BaseAgent:  # type: ignore
-        session_id: Optional[str] = None
-        def __init__(self, **kwargs: Any):
-            pass
+except ModuleNotFoundError as exc:
+    if exc.name != "harbor":
+        raise
 
-    class BaseEnvironment:  # type: ignore
-        def exec(self, command: str, **kwargs: Any):
-            pass
+    # Keep the optional adapter importable for local tests without installing Harbor.
+    class BaseAgent:  # type: ignore[no-redef]
+        def __init__(self, model_name: str, **kwargs: Any):
+            self.model_name = model_name
 
-    class AgentContext:  # type: ignore
-        session_id: str = "mock-session"
+    BaseEnvironment = Any  # type: ignore[misc,assignment]
+    AgentContext = Any  # type: ignore[misc,assignment]
 
 
 class BaselineVLMAgent(BaseAgent):
-    """Zero-shot VLM Agent conforming to Harbor's BaseAgent interface."""
+    """Zero-shot structured VLM agent using Harbor's async file transfer API."""
 
     def __init__(
         self,
-        model: str = "gemini-2.5-flash",
+        model: str | None = None,
         mock: bool = False,
+        model_name: str | None = None,
         **kwargs: Any,
     ):
-        super().__init__(**kwargs)
-        self.model_name = model
+        super().__init__(model_name=model_name or model or "gemini-2.5-flash", **kwargs)
         self.mock = mock
         self._client = None
 
         if not self.mock:
             from google import genai
-            self._client = genai.Client()
+            from google.genai import types
+            self._client = genai.Client(http_options=types.HttpOptions(timeout=60_000))
 
-    def run(
+    @staticmethod
+    def name() -> str:
+        return "fontbench-baseline"
+
+    def version(self) -> str:
+        return "0.1.0"
+
+    async def setup(self, environment: BaseEnvironment) -> None:
+        """Model calls run on the host, so no container setup is needed."""
+
+    async def run(
         self,
         instruction: str,
-        environment: Any,
-        context: Optional[Any] = None,
+        environment: BaseEnvironment,
+        context: AgentContext,
     ) -> None:
-        """Execute task inside Harbor environment.
-        
-        Reads sample.png from /workspace or local dir, calls the VLM,
-        and writes the predicted font name to /workspace/output.txt.
-        """
-        prompt = (
-            "Examine the rendered text in the provided image. "
-            "Identify the primary font family used to typeset this text. "
-            "Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
-        )
-
-        # In Harbor, files can be fetched or read directly from container
-        # If running locally or with mock environment:
-        candidate_image_paths = [
-            "/workspace/sample.png",
-            "./sample.png",
-            "environment/sample.png",
-        ]
-        
-        image_path = None
-        for p in candidate_image_paths:
-            if os.path.exists(p):
-                image_path = p
-                break
-
-        if not image_path:
-            # Try pulling from environment if it supports file download
-            if hasattr(environment, "read_file"):
-                raw_bytes = environment.read_file("/workspace/sample.png")
-                prediction = self._predict_bytes(raw_bytes, prompt)
+        """Download the task image and upload validated JSON without shell interpolation."""
+        with TemporaryDirectory(prefix="fontbench-agent-") as directory:
+            image_path = Path(directory) / "sample.png"
+            await environment.download_file(source_path="/workspace/sample.png", target_path=image_path)
+            if self.mock:
+                prediction = TypographicPrediction(
+                    font="Arial", category="non-serif", weight="regular", modifier="regular",
+                    kerning="normal", line_height="normal",
+                )
             else:
-                prediction = "Unknown"
-        else:
-            prediction = self._predict_file(image_path, prompt)
-
-        # Write output.txt
-        write_cmd = f"echo '{prediction}' > /workspace/output.txt"
-        if hasattr(environment, "exec"):
-            environment.exec(write_cmd)
-        else:
-            # Fallback to local filesystem write
-            target = "/workspace/output.txt" if os.path.exists("/workspace") else "output.txt"
-            with open(target, "w", encoding="utf-8") as f:
-                f.write(prediction.strip() + "\n")
-
-    def _predict_file(self, path: str, prompt: str) -> str:
-        if self.mock:
-            return "Helvetica"
-
-        from PIL import Image
-        img = Image.open(path)
-        try:
-            response = self._client.models.generate_content(
-                model=self.model_name,
-                contents=[img, prompt]
-            )
-            return response.text.strip() if response.text else ""
-        except Exception as e:
-            return f"Error: {e}"
-
-    def _predict_bytes(self, raw_bytes: bytes, prompt: str) -> str:
-        if self.mock:
-            return "Helvetica"
-
-        from PIL import Image
-        img = Image.open(io.BytesIO(raw_bytes))
-        try:
-            response = self._client.models.generate_content(
-                model=self.model_name,
-                contents=[img, prompt]
-            )
-            return response.text.strip() if response.text else ""
-        except Exception as e:
-            return f"Error: {e}"
+                from google.genai import types
+                with Image.open(image_path) as image:
+                    response = await self._client.aio.models.generate_content(
+                        model=self.model_name,
+                        contents=[image, instruction],
+                        config=types.GenerateContentConfig(
+                            response_mime_type="application/json",
+                            response_schema=TypographicPrediction,
+                            temperature=0.0,
+                        ),
+                    )
+                prediction = TypographicPrediction.model_validate_json(response.text or "")
+            output_path = Path(directory) / "output.json"
+            output_path.write_text(prediction.model_dump_json() + "\n", encoding="utf-8")
+            await environment.upload_file(source_path=output_path, target_path="/workspace/output.json")

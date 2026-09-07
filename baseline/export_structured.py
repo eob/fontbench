@@ -7,8 +7,9 @@ benchmark dataset for visualization, Pareto analysis, and typographic slicing.
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 
 FONT_METADATA: Dict[str, Dict[str, str]] = {
@@ -75,41 +76,17 @@ FONT_METADATA: Dict[str, Dict[str, str]] = {
 
 MODEL_METADATA: Dict[str, Dict[str, Any]] = {
     "gemini-3.5-flash-lite": {
-        "display_name": "Gemini 3.5 Flash Lite",
-        "provider": "Google",
-        "family": "Gemini 3.5",
-        "input_price_per_m": 0.075,
-        "output_price_per_m": 0.30,
-        "is_pareto_frontier": True,
-        "notes": "Fastest inference latency with strong typographic property extraction."
+        "display_name": "Gemini 3.5 Flash Lite", "provider": "Google", "family": "Gemini 3.5",
     },
     "gemini-3.5-flash": {
-        "display_name": "Gemini 3.5 Flash",
-        "provider": "Google",
-        "family": "Gemini 3.5",
-        "input_price_per_m": 0.15,
-        "output_price_per_m": 0.60,
-        "is_pareto_frontier": True,
-        "notes": "Highest overall composite typographic discernment and font identification accuracy."
+        "display_name": "Gemini 3.5 Flash", "provider": "Google", "family": "Gemini 3.5",
     },
     "gemini-2.5-flash": {
-        "display_name": "Gemini 2.5 Flash",
-        "provider": "Google",
-        "family": "Gemini 2.5",
-        "input_price_per_m": 0.15,
-        "output_price_per_m": 0.60,
-        "is_pareto_frontier": False,
-        "notes": "Solid baseline performance across categories, but higher error rate on subtle weight contrasts."
+        "display_name": "Gemini 2.5 Flash", "provider": "Google", "family": "Gemini 2.5",
     },
     "gemini-2.5-pro": {
-        "display_name": "Gemini 2.5 Pro",
-        "provider": "Google",
-        "family": "Gemini 2.5",
-        "input_price_per_m": 1.25,
-        "output_price_per_m": 5.00,
-        "is_pareto_frontier": False,
-        "notes": "Deep reasoning model with high font discernment but higher per-query latency."
-    }
+        "display_name": "Gemini 2.5 Pro", "provider": "Google", "family": "Gemini 2.5",
+    },
 }
 
 
@@ -123,22 +100,25 @@ def build_structured_benchmark(results_dir: str = "results") -> Dict[str, Any]:
         with open(sc_file, "r", encoding="utf-8") as f:
             sc_data = json.load(f)
 
+        if sc_data.get("mock", False):
+            continue
+
         model_key = sc_data["model_name"]
         meta = MODEL_METADATA.get(model_key, {
             "display_name": model_key,
-            "provider": "Google",
+            "provider": None,
             "family": "Unknown",
-            "input_price_per_m": 0.15,
-            "output_price_per_m": 0.60,
-            "is_pareto_frontier": False,
-            "notes": ""
         })
 
         tasks = sc_data.get("tasks", [])
         total_tasks = sc_data.get("total_tasks", len(tasks))
 
-        # Only include complete benchmark runs
-        if total_tasks < 1000:
+        # Historical scorecards predate manifest-size provenance and used 1,000 tasks.
+        expected_task_count = sc_data.get("expected_task_count", 1000)
+        task_ids = [t.get("task_id") for t in tasks]
+        if (total_tasks <= 0 or total_tasks != expected_task_count
+                or len(tasks) != total_tasks or any(not task_id for task_id in task_ids)
+                or len(set(task_ids)) != total_tasks):
             continue
 
         # Check if new multi-attribute format
@@ -237,19 +217,28 @@ def build_structured_benchmark(results_dir: str = "results") -> Dict[str, Any]:
             acc_by_width = {w: round(a * 100, 1) for w, a in sc_data.get("accuracy_by_width", {}).items()}
             per_font = []
 
-        # Cost estimation per task: ~750 input tokens, ~60 output tokens
-        est_run_cost = (
-            (total_tasks * 750 / 1_000_000) * meta["input_price_per_m"] +
-            (total_tasks * 60 / 1_000_000) * meta["output_price_per_m"]
-        )
+        # Estimate only when rates were recorded with the run, using 750 input
+        # and 60 output tokens per task; these are not metered API charges.
+        pricing = sc_data.get("pricing", {})
+        input_price = pricing.get("input_per_m")
+        output_price = pricing.get("output_per_m")
+        est_run_cost = None
+        if input_price is not None and output_price is not None:
+            est_run_cost = round(
+                total_tasks * (750 * input_price + 60 * output_price) / 1_000_000, 4
+            )
 
         model_entry = {
             "model_id": model_key,
             "display_name": meta["display_name"],
-            "provider": meta["provider"],
+            "provider": sc_data.get("provider", meta["provider"]),
+            "dataset_fingerprint": sc_data.get("dataset_fingerprint"),
             "family": meta["family"],
             "total_tasks": total_tasks,
-            "overall_composite_score": round(composite_score, 1),
+            "expected_task_count": expected_task_count,
+            "grading_version": sc_data.get("grading_version", "legacy"),
+            "evaluated_at": sc_data.get("timestamp"),
+            "overall_composite_score": composite_score,
             "overall_exact_match": round(exact_match, 1),
             "overall_accuracy": round(composite_score, 1),  # For backward-compatibility with Pareto chart
             "font_accuracy": round(font_acc, 1),
@@ -258,12 +247,11 @@ def build_structured_benchmark(results_dir: str = "results") -> Dict[str, Any]:
             "modifier_accuracy": round(mod_acc, 1),
             "kerning_accuracy": round(kerning_acc, 1),
             "line_height_accuracy": round(lh_acc, 1),
-            "avg_latency_sec": round(sc_data["avg_latency_sec"], 2),
-            "is_pareto_frontier": meta["is_pareto_frontier"],
+            "avg_latency_sec": sc_data["avg_latency_sec"],
             "pricing": {
-                "input_per_m": meta["input_price_per_m"],
-                "output_per_m": meta["output_price_per_m"],
-                "estimated_run_cost_usd": round(est_run_cost, 4)
+                "input_per_m": input_price,
+                "output_per_m": output_price,
+                "estimated_run_cost_usd": est_run_cost
             },
             "by_category": acc_by_cat,
             "by_weight": acc_by_weight,
@@ -271,23 +259,44 @@ def build_structured_benchmark(results_dir: str = "results") -> Dict[str, Any]:
             "by_spacing": spacing_stats,
             "by_width": acc_by_width,
             "per_font": per_font,
-            "notes": meta["notes"],
+            "notes": sc_data.get("notes", ""),
             "tasks": tasks
         }
         models_output.append(model_entry)
 
-    # Sort models by composite score descending
+    comparison_groups = {}
+    for model in models_output:
+        key = (model["grading_version"], model["dataset_fingerprint"],
+               frozenset(t["task_id"] for t in model["tasks"]))
+        comparison_groups.setdefault(key, []).append(model)
+    # Compare only equivalent runs, before display rounding. Dominance requires
+    # at least equal accuracy and speed, with one strict improvement.
+    for group in comparison_groups.values():
+        for model in group:
+            model["is_pareto_frontier"] = not any(
+                other["overall_composite_score"] >= model["overall_composite_score"]
+                and other["avg_latency_sec"] <= model["avg_latency_sec"]
+                and (other["overall_composite_score"] > model["overall_composite_score"]
+                     or other["avg_latency_sec"] < model["avg_latency_sec"])
+                for other in group
+            )
     models_output.sort(key=lambda m: m["overall_composite_score"], reverse=True)
+    for model in models_output:
+        model["overall_composite_score"] = round(model["overall_composite_score"], 1)
+        model["avg_latency_sec"] = round(model["avg_latency_sec"], 2)
 
+    evaluation_dates = [m["evaluated_at"][:10] for m in models_output if m["evaluated_at"]]
+    task_counts = {m["total_tasks"] for m in models_output}
     summary = {
         "benchmark_id": "fontbench-1",
         "name": "FontBench-1",
         "version": "1.1.0",
-        "description": "Multi-attribute visual typography benchmark evaluating multimodal LLMs across 50 canonical fonts and 5 typographic dimensions: font family, category, weight, modifiers, and spacing.",
-        "eval_date": "2026-09-07",
+        "description": "Multi-attribute visual typography benchmark evaluating multimodal LLMs across 50 canonical fonts and 6 typographic dimensions: font family, category, weight, modifier, kerning, and line height.",
+        "eval_date": max(evaluation_dates) if evaluation_dates else None,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "sentence": "The quick brown fox jumps over the lazy dog.",
         "total_fonts": len(FONT_METADATA),
-        "total_tasks_per_model": models_output[0]["total_tasks"] if models_output else 1000,
+        "total_tasks_per_model": next(iter(task_counts)) if len(task_counts) == 1 else None,
         "taxonomies": {
             "categories": ["serif", "non-serif", "mono", "handwriting", "other"],
             "weights": ["thin", "regular", "bold", "black"],
@@ -304,7 +313,8 @@ def build_structured_benchmark(results_dir: str = "results") -> Dict[str, Any]:
             ]
         },
         "models": models_output,
-        "pareto_frontier": [m["model_id"] for m in models_output if m["is_pareto_frontier"]]
+        "pareto_frontier": [m["model_id"] for m in models_output if m["is_pareto_frontier"]],
+        "pareto_dimensions": {"maximize": "overall_composite_score", "minimize": "avg_latency_sec"},
     }
 
     return summary

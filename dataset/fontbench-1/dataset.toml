@@ -3,7 +3,7 @@ version = "1.0"
 [dataset]
 name = "fontbench-1"
 version = "1.1.0"
-description = "FontBench-1: Multi-attribute visual typography benchmark across 50 top fonts and 5 typographic dimensions (font, category, weight, modifiers, spacing)."
+description = "FontBench-1: Visual typography benchmark across six attributes: font, category, weight, modifier, kerning, and line height."
 author = "Edward Benson"
 license = "MIT"
 task_dir = "tasks"

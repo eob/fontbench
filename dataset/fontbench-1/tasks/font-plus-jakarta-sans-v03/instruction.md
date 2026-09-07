@@ -19,11 +19,11 @@ Write **only** a valid JSON object into `/workspace/output.json` (or `./output.j
 
 ```json
 {
-  "font": "Plus Jakarta Sans",
-  "category": "non-serif",
-  "weight": "bold",
-  "modifier": "underline",
-  "kerning": "loose",
-  "line_height": "tight"
+  "font": "<font name>",
+  "category": "<serif|non-serif|mono|handwriting|other>",
+  "weight": "<thin|regular|bold|black>",
+  "modifier": "<regular|italic|underline|strikethrough|small-caps>",
+  "kerning": "<tight|normal|loose>",
+  "line_height": "<tight|normal|loose>"
 }
 ```
