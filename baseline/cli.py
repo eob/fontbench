@@ -18,7 +18,7 @@ def main():
         "--model",
         type=str,
         default="gemini-2.5-flash",
-        help="VLM model identifier (e.g. gemini-2.5-flash, gemini-2.5-pro)",
+        help="VLM model identifier (e.g. gemini-2.5-flash, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-2.5-pro)",
     )
     parser.add_argument(
         "--manifest",
@@ -31,6 +31,12 @@ def main():
         type=int,
         default=None,
         help="Limit evaluation to first N tasks",
+    )
+    parser.add_argument(
+        "--concurrency",
+        type=int,
+        default=5,
+        help="Number of concurrent API evaluation workers",
     )
     parser.add_argument(
         "--output-dir",
@@ -48,8 +54,9 @@ def main():
 
     print("=" * 60)
     print(f"  FontBench-1 Baseline Evaluation Rig")
-    print(f"  Model:    {args.model} {'(MOCK MODE)' if args.mock else ''}")
-    print(f"  Manifest: {args.manifest}")
+    print(f"  Model:       {args.model} {'(MOCK MODE)' if args.mock else ''}")
+    print(f"  Concurrency: {args.concurrency}")
+    print(f"  Manifest:    {args.manifest}")
     print("=" * 60)
 
     evaluator = BaselineEvaluator(model_name=args.model, mock=args.mock)
@@ -63,6 +70,7 @@ def main():
     scorecard = evaluator.evaluate_manifest(
         manifest_path=args.manifest,
         limit=args.limit,
+        concurrency=args.concurrency,
         progress_cb=progress_callback,
     )
 
@@ -104,7 +112,7 @@ def main():
         f.write(scorecard.to_markdown())
 
     print("\n" + "=" * 60)
-    print(f"  Evaluation Finished!")
+    print(f"  Evaluation Finished: {args.model}")
     print(f"  Accuracy: {scorecard.correct_tasks}/{scorecard.total_tasks} ({scorecard.overall_accuracy * 100:.1f}%)")
     print(f"  Scorecard JSON: {json_path}")
     print(f"  Scorecard MD:   {md_path}")

@@ -1,43 +1,43 @@
 {
-  "model_name": "gemini-2.5-flash",
-  "timestamp": "2026-09-07 11:24:52 UTC",
+  "model_name": "gemini-3.5-flash",
+  "timestamp": "2026-09-07 11:26:13 UTC",
   "total_tasks": 30,
-  "correct_tasks": 6,
-  "overall_accuracy": 0.2,
+  "correct_tasks": 18,
+  "overall_accuracy": 0.6,
   "accuracy_by_width": {
-    "wide": 0.1,
-    "narrow": 0.3,
-    "medium": 0.2
+    "narrow": 0.6,
+    "medium": 0.6,
+    "wide": 0.6
   },
   "accuracy_by_category": {
-    "handwriting": 0.0,
-    "monospace": 0.0,
-    "sans-serif": 0.2,
-    "serif": 0.3333333333333333
+    "monospace": 1.0,
+    "serif": 1.0,
+    "handwriting": 0.6666666666666666,
+    "sans-serif": 0.26666666666666666
   },
   "per_font_accuracy": {
-    "Times New Roman": 0.6666666666666666,
+    "Roboto": 0.3333333333333333,
+    "Times New Roman": 1.0,
+    "Arial": 0.3333333333333333,
+    "Comic Sans MS": 0.6666666666666666,
+    "Georgia": 1.0,
     "Montserrat": 0.0,
-    "Arial": 0.0,
+    "Inter": 0.6666666666666666,
     "Helvetica": 0.0,
-    "Roboto": 0.6666666666666666,
-    "Georgia": 0.0,
-    "Comic Sans MS": 0.0,
-    "Courier New": 0.0,
-    "Inter": 0.3333333333333333,
-    "Playfair Display": 0.3333333333333333
+    "Courier New": 1.0,
+    "Playfair Display": 1.0
   },
-  "avg_latency_sec": 7.272837642599673,
+  "avg_latency_sec": 10.051605616641853,
   "tasks": [
     {
       "task_id": "font-arial-narrow",
       "target_canonical": "Arial",
-      "raw_prediction": "Roboto",
+      "raw_prediction": "Based on the letter shapes (such as the double-story \"a\", single-story \"g\", horizontal terminals on \"s\", \"e\", and \"c\", and the distinct condensed proportions), the font family used is **Roboto** (specifically, **Roboto Condensed**).",
       "is_correct": false,
       "category": "sans-serif",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 5.644130856031552
+      "latency_sec": 9.409795171930455
     },
     {
       "task_id": "font-arial-medium",
@@ -47,47 +47,47 @@
       "category": "sans-serif",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 10.449846541043371
+      "latency_sec": 6.684863788075745
     },
     {
       "task_id": "font-arial-wide",
       "target_canonical": "Arial",
-      "raw_prediction": "Roboto",
-      "is_correct": false,
+      "raw_prediction": "Arial",
+      "is_correct": true,
       "category": "sans-serif",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 5.773827244993299
+      "latency_sec": 6.949030074989423
     },
     {
       "task_id": "font-helvetica-narrow",
       "target_canonical": "Helvetica",
-      "raw_prediction": "Roboto",
+      "raw_prediction": "Gilroy",
       "is_correct": false,
       "category": "sans-serif",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 6.152036019018851
+      "latency_sec": 22.76987685507629
     },
     {
       "task_id": "font-helvetica-medium",
       "target_canonical": "Helvetica",
-      "raw_prediction": "Montserrat",
+      "raw_prediction": "Inter",
       "is_correct": false,
       "category": "sans-serif",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 11.673216535011306
+      "latency_sec": 22.368266197969206
     },
     {
       "task_id": "font-helvetica-wide",
       "target_canonical": "Helvetica",
-      "raw_prediction": "Roboto",
+      "raw_prediction": "Open Sans",
       "is_correct": false,
       "category": "sans-serif",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 6.8349874468985945
+      "latency_sec": 7.828159108059481
     },
     {
       "task_id": "font-times-new-roman-narrow",
@@ -97,7 +97,7 @@
       "category": "serif",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 6.661656907061115
+      "latency_sec": 6.336369758006185
     },
     {
       "task_id": "font-times-new-roman-medium",
@@ -107,127 +107,127 @@
       "category": "serif",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 4.163547048927285
+      "latency_sec": 6.014370193006471
     },
     {
       "task_id": "font-times-new-roman-wide",
       "target_canonical": "Times New Roman",
-      "raw_prediction": "Minion Pro",
-      "is_correct": false,
+      "raw_prediction": "Times New Roman",
+      "is_correct": true,
       "category": "serif",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 6.09772553795483
+      "latency_sec": 4.329231550917029
     },
     {
       "task_id": "font-georgia-narrow",
       "target_canonical": "Georgia",
-      "raw_prediction": "Source Serif Pro",
-      "is_correct": false,
+      "raw_prediction": "Georgia",
+      "is_correct": true,
       "category": "serif",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 9.80171547003556
+      "latency_sec": 5.414651963044889
     },
     {
       "task_id": "font-georgia-medium",
       "target_canonical": "Georgia",
-      "raw_prediction": "Lora",
-      "is_correct": false,
+      "raw_prediction": "Georgia",
+      "is_correct": true,
       "category": "serif",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 7.6151317009935156
+      "latency_sec": 8.592197404010221
     },
     {
       "task_id": "font-georgia-wide",
       "target_canonical": "Georgia",
-      "raw_prediction": "Playfair Display",
-      "is_correct": false,
+      "raw_prediction": "Based on the letterforms\u2014specifically the generous x-height, the prominent ball terminals on letters like **r**, **c**, and **a**, and the design of the lowercase **g** and **j**\u2014the primary font family used in this image is **Georgia**.",
+      "is_correct": true,
       "category": "serif",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 11.004720311961137
+      "latency_sec": 5.200995984021574
     },
     {
       "task_id": "font-courier-new-narrow",
       "target_canonical": "Courier New",
-      "raw_prediction": "Consolas",
-      "is_correct": false,
+      "raw_prediction": "Courier",
+      "is_correct": true,
       "category": "monospace",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 5.119026625994593
+      "latency_sec": 4.778381554060616
     },
     {
       "task_id": "font-courier-new-medium",
       "target_canonical": "Courier New",
-      "raw_prediction": "Consolas",
-      "is_correct": false,
+      "raw_prediction": "Courier New",
+      "is_correct": true,
       "category": "monospace",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 4.167657588026486
+      "latency_sec": 3.2311467020772398
     },
     {
       "task_id": "font-courier-new-wide",
       "target_canonical": "Courier New",
-      "raw_prediction": "Source Code Pro",
-      "is_correct": false,
+      "raw_prediction": "Courier New",
+      "is_correct": true,
       "category": "monospace",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 12.217793210991658
+      "latency_sec": 5.069492004928179
     },
     {
       "task_id": "font-comic-sans-ms-narrow",
       "target_canonical": "Comic Sans MS",
-      "raw_prediction": "Indie Flower",
-      "is_correct": false,
+      "raw_prediction": "Comic Sans MS",
+      "is_correct": true,
       "category": "handwriting",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 4.9739153439877555
+      "latency_sec": 4.827707279007882
     },
     {
       "task_id": "font-comic-sans-ms-medium",
       "target_canonical": "Comic Sans MS",
-      "raw_prediction": "Coming Soon",
-      "is_correct": false,
+      "raw_prediction": "Comic Sans MS",
+      "is_correct": true,
       "category": "handwriting",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 4.7089254289167
+      "latency_sec": 10.51261787803378
     },
     {
       "task_id": "font-comic-sans-ms-wide",
       "target_canonical": "Comic Sans MS",
-      "raw_prediction": "Architects Daughter",
+      "raw_prediction": "Based on the distinctive, cleaned-up casual handwriting style with uniform monoline strokes and rounded terminals, the primary font family used is:\n\n**Comic Neue**",
       "is_correct": false,
       "category": "handwriting",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 6.7282775229541585
+      "latency_sec": 12.794826135970652
     },
     {
       "task_id": "font-roboto-narrow",
       "target_canonical": "Roboto",
-      "raw_prediction": "Inter",
+      "raw_prediction": "Based on the distinctive features of the letters (such as the square dots on the **i** and **j**, the two-story **a**, the single-story **g**, the specific leg-joint on the **k**, and the overall neutral neo-grotesque design), the font used is:\n\n**Inter**",
       "is_correct": false,
       "category": "sans-serif",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 11.133148632012308
+      "latency_sec": 10.021329713985324
     },
     {
       "task_id": "font-roboto-medium",
       "target_canonical": "Roboto",
-      "raw_prediction": "Roboto",
-      "is_correct": true,
+      "raw_prediction": "Inter",
+      "is_correct": false,
       "category": "sans-serif",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 5.5740476860664785
+      "latency_sec": 9.007431493024342
     },
     {
       "task_id": "font-roboto-wide",
@@ -237,27 +237,27 @@
       "category": "sans-serif",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 8.05850973003544
+      "latency_sec": 12.906799328047782
     },
     {
       "task_id": "font-inter-narrow",
       "target_canonical": "Inter",
-      "raw_prediction": "Inter",
+      "raw_prediction": "Based on the specific letterforms (such as the square dots on the `i` and `j`, the square period, the single-story `g`, and the clean neo-grotesque design), the primary font family used to typeset this text is **Inter**.",
       "is_correct": true,
       "category": "sans-serif",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 9.015181594062597
+      "latency_sec": 22.76242032297887
     },
     {
       "task_id": "font-inter-medium",
       "target_canonical": "Inter",
-      "raw_prediction": "Lato",
-      "is_correct": false,
+      "raw_prediction": "Based on the clean, neo-grotesque geometric design (specifically the double-story lowercase \"a\", single-story \"g\", flat horizontal terminals on \"c\" and \"e\", and the shape of the \"t\" and \"y\"), the font used is:\n\n**Inter**",
+      "is_correct": true,
       "category": "sans-serif",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 6.9836244320031255
+      "latency_sec": 8.385541668976657
     },
     {
       "task_id": "font-inter-wide",
@@ -267,7 +267,7 @@
       "category": "sans-serif",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 5.846080444054678
+      "latency_sec": 10.806415865081362
     },
     {
       "task_id": "font-playfair-display-narrow",
@@ -277,27 +277,27 @@
       "category": "serif",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 7.627152387052774
+      "latency_sec": 7.583215894061141
     },
     {
       "task_id": "font-playfair-display-medium",
       "target_canonical": "Playfair Display",
-      "raw_prediction": "Lora",
-      "is_correct": false,
+      "raw_prediction": "Based on the distinct typographic features\u2014such as the high contrast between thick and thin strokes, the teardrop terminals on the lowercase **k**, **x**, and **y**, and the elegant double-story **g**\u2014the primary font family used in the image is **Playfair Display**.",
+      "is_correct": true,
       "category": "serif",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 8.364543825970031
+      "latency_sec": 8.984921281924471
     },
     {
       "task_id": "font-playfair-display-wide",
       "target_canonical": "Playfair Display",
-      "raw_prediction": "Times New Roman",
-      "is_correct": false,
+      "raw_prediction": "Playfair Display",
+      "is_correct": true,
       "category": "serif",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 5.414839996024966
+      "latency_sec": 7.615975238964893
     },
     {
       "task_id": "font-montserrat-narrow",
@@ -307,27 +307,27 @@
       "category": "sans-serif",
       "width_id": "narrow",
       "width_px": 220,
-      "latency_sec": 9.415569733013399
+      "latency_sec": 13.714236542000435
     },
     {
       "task_id": "font-montserrat-medium",
       "target_canonical": "Montserrat",
-      "raw_prediction": "Roboto",
+      "raw_prediction": "Poppins",
       "is_correct": false,
       "category": "sans-serif",
       "width_id": "medium",
       "width_px": 320,
-      "latency_sec": 5.4323398099513724
+      "latency_sec": 26.606128175044432
     },
     {
       "task_id": "font-montserrat-wide",
       "target_canonical": "Montserrat",
-      "raw_prediction": "Open Sans",
+      "raw_prediction": "Poppins",
       "is_correct": false,
       "category": "sans-serif",
       "width_id": "wide",
       "width_px": 440,
-      "latency_sec": 5.531953666941263
+      "latency_sec": 10.041773371980526
     }
   ]
 }

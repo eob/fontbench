@@ -7,6 +7,7 @@ Evaluates multimodal models on font identification tasks directly on
 from __future__ import annotations
 
 import base64
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import io
 import json
 import os
@@ -81,17 +82,19 @@ class FontBenchScorecard:
             "|---|---|---|",
         ]
         for width, acc in sorted(self.accuracy_by_width.items()):
-            lines.append(f"| `{width}` | - | {acc * 100:.1f}% |")
+            count = sum(1 for r in self.task_results if r.width_id == width)
+            lines.append(f"| `{width}` | {count} | {acc * 100:.1f}% |")
 
         lines.extend([
             "",
             "## 2. Accuracy by Font Category",
             "",
-            "| Category | Accuracy |",
-            "|---|---|",
+            "| Category | Tasks | Accuracy |",
+            "|---|---|---|",
         ])
         for cat, acc in sorted(self.accuracy_by_category.items()):
-            lines.append(f"| `{cat}` | {acc * 100:.1f}% |")
+            count = sum(1 for r in self.task_results if r.category == cat)
+            lines.append(f"| `{cat}` | {count} | {acc * 100:.1f}% |")
 
         lines.extend([
             "",
@@ -132,29 +135,61 @@ class BaselineEvaluator:
 
     def _init_client(self):
         from google import genai
-        # Initialize Google GenAI client (picks up GEMINI_API_KEY from environment)
-        self._client = genai.Client()
+        from google.genai import types
+        # Set a 90-second socket timeout (in milliseconds)
+        self._client = genai.Client(http_options=types.HttpOptions(timeout=90_000))
 
     def predict_image(self, image_path: str, prompt: str) -> str:
         """Query VLM with (Image, Prompt) and return raw predicted text."""
         if self.mock:
-            # Deterministic mock response for offline testing
             return "Helvetica"
 
         img = Image.open(image_path)
-        try:
-            response = self._client.models.generate_content(
-                model=self.model_name,
-                contents=[img, prompt]
-            )
-            return response.text.strip() if response.text else ""
-        except Exception as e:
-            return f"ERROR: {str(e)}"
+        last_error = ""
+        for attempt in range(2):
+            try:
+                response = self._client.models.generate_content(
+                    model=self.model_name,
+                    contents=[img, prompt]
+                )
+                return response.text.strip() if response.text else ""
+            except Exception as e:
+                last_error = str(e)
+                time.sleep(1.0)
+        return f"ERROR: {last_error}"
+
+    def _eval_single_task(self, item: dict, prompt_default: str) -> TaskEvaluationResult:
+        image_path = item["imagePath"]
+        prompt = item.get("prompt", prompt_default)
+
+        start_t = time.perf_counter()
+        raw_pred = self.predict_image(image_path, prompt)
+        latency = time.perf_counter() - start_t
+
+        is_correct = grade_prediction(raw_pred, item["fontName"], item.get("aliases", []))
+        
+        return TaskEvaluationResult(
+            task_id=item["taskId"],
+            font_id=item["fontId"],
+            target_canonical=item["fontName"],
+            target_aliases=item.get("aliases", []),
+            category=item["category"],
+            width_id=item["widthId"],
+            width_px=item["widthPx"],
+            image_path=image_path,
+            raw_prediction=raw_pred,
+            normalized_prediction=normalize_font_name(raw_pred),
+            is_correct=is_correct,
+            latency_sec=latency,
+            model_name=self.model_name,
+            error=raw_pred if raw_pred.startswith("ERROR:") else None
+        )
 
     def evaluate_manifest(
         self,
         manifest_path: str = "dataset/rendered/manifest.json",
         limit: Optional[int] = None,
+        concurrency: int = 5,
         progress_cb: Optional[Callable[[TaskEvaluationResult, int, int], None]] = None
     ) -> FontBenchScorecard:
         """Run evaluation over all tasks defined in manifest."""
@@ -166,42 +201,39 @@ class BaselineEvaluator:
 
         total_tasks = len(manifest_items)
         results: List[TaskEvaluationResult] = []
-        total_latency = 0.0
+        prompt_default = (
+            "Examine the rendered text in the provided image. "
+            "Identify the primary font family used to typeset this text. "
+            "Output only the canonical font name (e.g., Arial, Times New Roman, Roboto)."
+        )
 
-        for idx, item in enumerate(manifest_items, start=1):
-            image_path = item["imagePath"]
-            prompt = item.get(
-                "prompt",
-                "Examine the rendered text in the provided image. Identify the primary font family used to typeset this text. Output only the canonical font name."
-            )
+        completed_count = 0
+        if concurrency <= 1 or self.mock:
+            for item in manifest_items:
+                res = self._eval_single_task(item, prompt_default)
+                results.append(res)
+                completed_count += 1
+                if progress_cb:
+                    progress_cb(res, completed_count, total_tasks)
+        else:
+            # Parallel execution preserving original manifest ordering in results
+            indexed_results: List[tuple[int, TaskEvaluationResult]] = []
+            with ThreadPoolExecutor(max_workers=concurrency) as executor:
+                futures = {
+                    executor.submit(self._eval_single_task, item, prompt_default): idx
+                    for idx, item in enumerate(manifest_items)
+                }
+                for fut in as_completed(futures):
+                    idx = futures[fut]
+                    res = fut.result()
+                    indexed_results.append((idx, res))
+                    completed_count += 1
+                    if progress_cb:
+                        progress_cb(res, completed_count, total_tasks)
 
-            start_t = time.perf_counter()
-            raw_pred = self.predict_image(image_path, prompt)
-            latency = time.perf_counter() - start_t
-            total_latency += latency
-
-            is_correct = grade_prediction(raw_pred, item["fontName"], item.get("aliases", []))
-            
-            res = TaskEvaluationResult(
-                task_id=item["taskId"],
-                font_id=item["fontId"],
-                target_canonical=item["fontName"],
-                target_aliases=item.get("aliases", []),
-                category=item["category"],
-                width_id=item["widthId"],
-                width_px=item["widthPx"],
-                image_path=image_path,
-                raw_prediction=raw_pred,
-                normalized_prediction=normalize_font_name(raw_pred),
-                is_correct=is_correct,
-                latency_sec=latency,
-                model_name=self.model_name,
-                error=raw_pred if raw_pred.startswith("ERROR:") else None
-            )
-            results.append(res)
-
-            if progress_cb:
-                progress_cb(res, idx, total_tasks)
+            # Sort by original manifest index
+            indexed_results.sort(key=lambda pair: pair[0])
+            results = [pair[1] for pair in indexed_results]
 
         # Aggregate metrics
         correct_count = sum(1 for r in results if r.is_correct)
@@ -228,6 +260,7 @@ class BaselineEvaluator:
             sub = [r for r in results if r.target_canonical == f_name]
             per_font_acc[f_name] = sum(1 for r in sub if r.is_correct) / len(sub) if sub else 0.0
 
+        total_latency = sum(r.latency_sec for r in results)
         scorecard = FontBenchScorecard(
             total_tasks=total_tasks,
             correct_tasks=correct_count,
