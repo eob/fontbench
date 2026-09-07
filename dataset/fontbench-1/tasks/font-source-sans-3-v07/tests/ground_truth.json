@@ -1,0 +1,16 @@
+{
+  "taskId": "font-source-sans-3-v07",
+  "canonical": "Source Sans 3",
+  "aliases": [
+    "source sans 3",
+    "source sans pro",
+    "source sans"
+  ],
+  "category": "non-serif",
+  "weight": "bold",
+  "modifier": "italic",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

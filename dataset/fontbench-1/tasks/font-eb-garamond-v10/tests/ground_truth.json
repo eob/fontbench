@@ -1,0 +1,15 @@
+{
+  "taskId": "font-eb-garamond-v10",
+  "canonical": "EB Garamond",
+  "aliases": [
+    "eb garamond",
+    "garamond"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

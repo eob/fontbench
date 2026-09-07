@@ -1,72 +1,93 @@
 # FontBench-1 Scorecard: `gemini-3.5-flash-lite`
 
-- **Evaluated At**: 2026-09-07 11:26:25 UTC
-- **Overall Accuracy**: **12/30 (40.0%)**
-- **Average Latency**: 0.74s / task
+- **Evaluated At**: 2026-09-07 12:29:58 UTC
+- **Total Tasks**: 1000
+- **Composite Typographic Score**: **48.9%**
+- **All-Correct Exact Match**: **0.7%**
+- **Average Latency**: 1.25s / task
 
-## 1. Accuracy by Container Width
+## 1. Multi-Attribute Accuracy Breakdown
 
-| Width Slice | Tasks | Accuracy |
+| Typographic Dimension | Accuracy | Description |
 |---|---|---|
-| `medium` | 10 | 30.0% |
-| `narrow` | 10 | 50.0% |
-| `wide` | 10 | 40.0% |
+| **Font Family** | **14.8%** | Identification of exact font name across 50 top fonts |
+| **Category** | **82.9%** | serif, non-serif, mono, handwriting, other |
+| **Weight** | **50.9%** | thin, regular, bold, black |
+| **Modifiers** | **78.5%** | regular, italic, underline, strikethrough, small-caps |
+| **Kerning** | **32.8%** | tight, normal, loose |
+| **Line Height** | **33.7%** | tight, normal, loose |
 
-## 2. Accuracy by Font Category
+## 2. Accuracy by Typographic Category
 
-| Category | Tasks | Accuracy |
-|---|---|---|
-| `handwriting` | 3 | 100.0% |
-| `monospace` | 3 | 100.0% |
-| `sans-serif` | 15 | 13.3% |
-| `serif` | 9 | 44.4% |
-
-## 3. Per-Font Accuracy
-
-| Font | Category | Accuracy | Predictions |
-|---|---|---|---|
-| **Arial** | sans-serif | 0.0% | `Roboto`, `Roboto`, `Roboto` |
-| **Comic Sans MS** | handwriting | 100.0% | `Comic Sans MS`, `Comic Sans MS`, `Comic Sans` |
-| **Courier New** | monospace | 100.0% | `Courier`, `Courier New`, `Courier` |
-| **Georgia** | serif | 33.3% | `Georgia`, `Times New Roman`, `Times New Roman` |
-| **Helvetica** | sans-serif | 0.0% | `Inter`, `Inter`, `Inter` |
-| **Inter** | sans-serif | 0.0% | `Roboto`, `Roboto`, `Arial` |
-| **Montserrat** | sans-serif | 33.3% | `Futura`, `Comfortaa`, `Montserrat` |
-| **Playfair Display** | serif | 0.0% | `Merriweather`, `Georgia`, `Georgia` |
-| **Roboto** | sans-serif | 33.3% | `Roboto`, `Inter`, `Inter` |
-| **Times New Roman** | serif | 100.0% | `Times New Roman`, `Times New Roman`, `Times New Roman` |
-
-## 4. Full Task Log
-
-| Task ID | Target Font | Prediction | Pass/Fail | Latency |
+| Category | Tasks | Font Acc | Cat Acc | Composite Score |
 |---|---|---|---|---|
-| `font-arial-narrow` | Arial | `Roboto` | ❌ FAIL | 1.08s |
-| `font-arial-medium` | Arial | `Roboto` | ❌ FAIL | 1.31s |
-| `font-arial-wide` | Arial | `Roboto` | ❌ FAIL | 1.24s |
-| `font-helvetica-narrow` | Helvetica | `Inter` | ❌ FAIL | 1.57s |
-| `font-helvetica-medium` | Helvetica | `Inter` | ❌ FAIL | 1.17s |
-| `font-helvetica-wide` | Helvetica | `Inter` | ❌ FAIL | 0.75s |
-| `font-times-new-roman-narrow` | Times New Roman | `Times New Roman` | ✅ PASS | 0.64s |
-| `font-times-new-roman-medium` | Times New Roman | `Times New Roman` | ✅ PASS | 0.57s |
-| `font-times-new-roman-wide` | Times New Roman | `Times New Roman` | ✅ PASS | 0.65s |
-| `font-georgia-narrow` | Georgia | `Georgia` | ✅ PASS | 0.59s |
-| `font-georgia-medium` | Georgia | `Times New Roman` | ❌ FAIL | 0.70s |
-| `font-georgia-wide` | Georgia | `Times New Roman` | ❌ FAIL | 0.63s |
-| `font-courier-new-narrow` | Courier New | `Courier` | ✅ PASS | 0.67s |
-| `font-courier-new-medium` | Courier New | `Courier New` | ✅ PASS | 0.57s |
-| `font-courier-new-wide` | Courier New | `Courier` | ✅ PASS | 0.71s |
-| `font-comic-sans-ms-narrow` | Comic Sans MS | `Comic Sans MS` | ✅ PASS | 0.44s |
-| `font-comic-sans-ms-medium` | Comic Sans MS | `Comic Sans MS` | ✅ PASS | 0.77s |
-| `font-comic-sans-ms-wide` | Comic Sans MS | `Comic Sans` | ✅ PASS | 0.51s |
-| `font-roboto-narrow` | Roboto | `Roboto` | ✅ PASS | 0.67s |
-| `font-roboto-medium` | Roboto | `Inter` | ❌ FAIL | 0.72s |
-| `font-roboto-wide` | Roboto | `Inter` | ❌ FAIL | 0.58s |
-| `font-inter-narrow` | Inter | `Roboto` | ❌ FAIL | 0.58s |
-| `font-inter-medium` | Inter | `Roboto` | ❌ FAIL | 0.59s |
-| `font-inter-wide` | Inter | `Arial` | ❌ FAIL | 0.54s |
-| `font-playfair-display-narrow` | Playfair Display | `Merriweather` | ❌ FAIL | 0.70s |
-| `font-playfair-display-medium` | Playfair Display | `Georgia` | ❌ FAIL | 0.68s |
-| `font-playfair-display-wide` | Playfair Display | `Georgia` | ❌ FAIL | 0.70s |
-| `font-montserrat-narrow` | Montserrat | `Futura` | ❌ FAIL | 0.53s |
-| `font-montserrat-medium` | Montserrat | `Comfortaa` | ❌ FAIL | 0.74s |
-| `font-montserrat-wide` | Montserrat | `Montserrat` | ✅ PASS | 0.59s |
+| `handwriting` | 100 | 42.0% | 100.0% | 52.0% |
+| `mono` | 120 | 16.7% | 93.3% | 50.7% |
+| `non-serif` | 400 | 5.5% | 87.8% | 51.1% |
+| `other` | 80 | 37.5% | 3.8% | 39.0% |
+| `serif` | 300 | 11.3% | 87.7% | 47.0% |
+
+## 3. Font Accuracy Across Weights & Modifiers
+
+| Weight | Font Acc | Modifier | Font Acc |
+|---|---|---|---|
+| `black`: 16.0% | | `italic`: 15.0% | |
+| `bold`: 14.0% | | `regular`: 19.0% | |
+| `regular`: 13.2% | | `small-caps`: 12.5% | |
+| `thin`: 16.0% | | `strikethrough`: 11.5% | |
+|  | | `underline`: 16.0% | |
+
+## 4. Per-Font Accuracy (Top 50 Fonts)
+
+| Font | Font Accuracy |
+|---|---|
+| **Courier New** | 100.0% |
+| **Impact** | 90.0% |
+| **Pacifico** | 90.0% |
+| **Comic Sans MS** | 65.0% |
+| **Lobster** | 60.0% |
+| **Caveat** | 55.0% |
+| **Georgia** | 55.0% |
+| **Playfair Display** | 55.0% |
+| **Arial** | 30.0% |
+| **Cinzel** | 25.0% |
+| **Oswald** | 25.0% |
+| **Inter** | 20.0% |
+| **Merriweather** | 20.0% |
+| **Rubik** | 20.0% |
+| **Bitter** | 5.0% |
+| **EB Garamond** | 5.0% |
+| **Nunito** | 5.0% |
+| **Open Sans** | 5.0% |
+| **Roboto** | 5.0% |
+| **Times New Roman** | 5.0% |
+| **Arvo** | 0.0% |
+| **Bebas Neue** | 0.0% |
+| **Bodoni Moda** | 0.0% |
+| **Bungee** | 0.0% |
+| **Cormorant Garamond** | 0.0% |
+| **Crimson Text** | 0.0% |
+| **DM Sans** | 0.0% |
+| **Dancing Script** | 0.0% |
+| **Fira Code** | 0.0% |
+| **Fira Sans** | 0.0% |
+| **Helvetica** | 0.0% |
+| **JetBrains Mono** | 0.0% |
+| **Lato** | 0.0% |
+| **Libre Baskerville** | 0.0% |
+| **Lora** | 0.0% |
+| **Montserrat** | 0.0% |
+| **Noto Sans** | 0.0% |
+| **PT Sans** | 0.0% |
+| **PT Serif** | 0.0% |
+| **Plus Jakarta Sans** | 0.0% |
+| **Poppins** | 0.0% |
+| **Raleway** | 0.0% |
+| **Roboto Mono** | 0.0% |
+| **Shadows Into Light** | 0.0% |
+| **Source Code Pro** | 0.0% |
+| **Source Sans 3** | 0.0% |
+| **Space Mono** | 0.0% |
+| **Spectral** | 0.0% |
+| **Verdana** | 0.0% |
+| **Work Sans** | 0.0% |

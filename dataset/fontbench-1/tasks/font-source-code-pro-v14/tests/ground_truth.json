@@ -1,0 +1,15 @@
+{
+  "taskId": "font-source-code-pro-v14",
+  "canonical": "Source Code Pro",
+  "aliases": [
+    "source code pro",
+    "source code"
+  ],
+  "category": "mono",
+  "weight": "regular",
+  "modifier": "strikethrough",
+  "kerning": "tight",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

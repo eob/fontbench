@@ -1,0 +1,15 @@
+{
+  "taskId": "font-fira-sans-v15",
+  "canonical": "Fira Sans",
+  "aliases": [
+    "fira sans",
+    "fira"
+  ],
+  "category": "non-serif",
+  "weight": "bold",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

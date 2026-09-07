@@ -1,0 +1,16 @@
+{
+  "taskId": "font-source-sans-3-v20",
+  "canonical": "Source Sans 3",
+  "aliases": [
+    "source sans 3",
+    "source sans pro",
+    "source sans"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "wide",
+  "widthPx": 440
+}

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-eb-garamond-v09",
+  "canonical": "EB Garamond",
+  "aliases": [
+    "eb garamond",
+    "garamond"
+  ],
+  "category": "serif",
+  "weight": "thin",
+  "modifier": "strikethrough",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

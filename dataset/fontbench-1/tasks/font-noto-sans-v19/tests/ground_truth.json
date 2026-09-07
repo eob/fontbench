@@ -1,0 +1,15 @@
+{
+  "taskId": "font-noto-sans-v19",
+  "canonical": "Noto Sans",
+  "aliases": [
+    "noto sans",
+    "noto"
+  ],
+  "category": "non-serif",
+  "weight": "bold",
+  "modifier": "strikethrough",
+  "kerning": "tight",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

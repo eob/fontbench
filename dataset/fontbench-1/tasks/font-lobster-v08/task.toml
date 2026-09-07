@@ -1,0 +1,14 @@
+version = "1.0"
+
+[metadata]
+name = "font-lobster-v08"
+author_name = "Edward Benson"
+difficulty = "medium"
+category = "vision"
+tags = ["typography", "font-identification", "vlm", "other", "black", "underline", "medium"]
+
+[agent]
+timeout_sec = 180.0
+
+[verifier]
+timeout_sec = 60.0

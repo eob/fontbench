@@ -1,0 +1,15 @@
+{
+  "taskId": "font-bodoni-moda-v01",
+  "canonical": "Bodoni Moda",
+  "aliases": [
+    "bodoni moda",
+    "bodoni"
+  ],
+  "category": "serif",
+  "weight": "thin",
+  "modifier": "regular",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

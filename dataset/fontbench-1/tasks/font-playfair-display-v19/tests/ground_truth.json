@@ -1,0 +1,15 @@
+{
+  "taskId": "font-playfair-display-v19",
+  "canonical": "Playfair Display",
+  "aliases": [
+    "playfair display",
+    "playfair"
+  ],
+  "category": "serif",
+  "weight": "bold",
+  "modifier": "strikethrough",
+  "kerning": "tight",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

@@ -1,0 +1,16 @@
+{
+  "taskId": "font-source-sans-3-v09",
+  "canonical": "Source Sans 3",
+  "aliases": [
+    "source sans 3",
+    "source sans pro",
+    "source sans"
+  ],
+  "category": "non-serif",
+  "weight": "thin",
+  "modifier": "strikethrough",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

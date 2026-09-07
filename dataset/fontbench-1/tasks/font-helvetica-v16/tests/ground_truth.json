@@ -1,0 +1,15 @@
+{
+  "taskId": "font-helvetica-v16",
+  "canonical": "Helvetica",
+  "aliases": [
+    "helvetica",
+    "helvetica neue"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "regular",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

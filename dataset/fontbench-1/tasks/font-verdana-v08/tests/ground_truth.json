@@ -1,0 +1,14 @@
+{
+  "taskId": "font-verdana-v08",
+  "canonical": "Verdana",
+  "aliases": [
+    "verdana"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "underline",
+  "kerning": "tight",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

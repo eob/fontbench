@@ -1,0 +1,15 @@
+{
+  "taskId": "font-courier-new-v15",
+  "canonical": "Courier New",
+  "aliases": [
+    "courier new",
+    "courier"
+  ],
+  "category": "mono",
+  "weight": "bold",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

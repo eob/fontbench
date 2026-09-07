@@ -1,0 +1,14 @@
+version = "1.0"
+
+[metadata]
+name = "font-dm-sans-v14"
+author_name = "Edward Benson"
+difficulty = "medium"
+category = "vision"
+tags = ["typography", "font-identification", "vlm", "non-serif", "regular", "strikethrough", "medium"]
+
+[agent]
+timeout_sec = 180.0
+
+[verifier]
+timeout_sec = 60.0

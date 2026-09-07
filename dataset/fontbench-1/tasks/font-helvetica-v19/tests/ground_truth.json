@@ -1,0 +1,15 @@
+{
+  "taskId": "font-helvetica-v19",
+  "canonical": "Helvetica",
+  "aliases": [
+    "helvetica",
+    "helvetica neue"
+  ],
+  "category": "non-serif",
+  "weight": "bold",
+  "modifier": "strikethrough",
+  "kerning": "tight",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

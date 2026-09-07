@@ -1,0 +1,15 @@
+{
+  "taskId": "font-noto-sans-v01",
+  "canonical": "Noto Sans",
+  "aliases": [
+    "noto sans",
+    "noto"
+  ],
+  "category": "non-serif",
+  "weight": "thin",
+  "modifier": "regular",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

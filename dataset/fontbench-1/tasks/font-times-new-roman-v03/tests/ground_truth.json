@@ -1,0 +1,15 @@
+{
+  "taskId": "font-times-new-roman-v03",
+  "canonical": "Times New Roman",
+  "aliases": [
+    "times new roman",
+    "times"
+  ],
+  "category": "serif",
+  "weight": "bold",
+  "modifier": "underline",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

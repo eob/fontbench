@@ -2,12 +2,12 @@ version = "1.0"
 
 [dataset]
 name = "fontbench-1"
-version = "1.0.0"
-description = "FontBench-1: Visual font identification benchmark across system & Google fonts at wrapped widths."
+version = "1.1.0"
+description = "FontBench-1: Multi-attribute visual typography benchmark across 50 top fonts and 5 typographic dimensions (font, category, weight, modifiers, spacing)."
 author = "Edward Benson"
 license = "MIT"
 task_dir = "tasks"
 
 [metadata]
-total_tasks = 30
+total_tasks = 1000
 primary_pangram = "The quick brown fox jumps over the lazy dog."

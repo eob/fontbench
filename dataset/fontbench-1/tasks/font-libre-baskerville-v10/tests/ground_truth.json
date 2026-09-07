@@ -1,0 +1,15 @@
+{
+  "taskId": "font-libre-baskerville-v10",
+  "canonical": "Libre Baskerville",
+  "aliases": [
+    "libre baskerville",
+    "baskerville"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

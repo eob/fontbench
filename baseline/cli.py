@@ -17,8 +17,8 @@ def main():
     parser.add_argument(
         "--model",
         type=str,
-        default="gemini-2.5-flash",
-        help="VLM model identifier (e.g. gemini-2.5-flash, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-2.5-pro)",
+        default="gemini-3.5-flash-lite",
+        help="VLM model identifier (e.g. gemini-3.5-flash-lite, gemini-3.5-flash, gemini-2.5-flash, gemini-2.5-pro)",
     )
     parser.add_argument(
         "--manifest",
@@ -35,7 +35,7 @@ def main():
     parser.add_argument(
         "--concurrency",
         type=int,
-        default=5,
+        default=10,
         help="Number of concurrent API evaluation workers",
     )
     parser.add_argument(
@@ -53,7 +53,7 @@ def main():
     args = parser.parse_args()
 
     print("=" * 60)
-    print(f"  FontBench-1 Baseline Evaluation Rig")
+    print(f"  FontBench-1 Multi-Attribute Baseline Evaluation Rig")
     print(f"  Model:       {args.model} {'(MOCK MODE)' if args.mock else ''}")
     print(f"  Concurrency: {args.concurrency}")
     print(f"  Manifest:    {args.manifest}")
@@ -62,10 +62,15 @@ def main():
     evaluator = BaselineEvaluator(model_name=args.model, mock=args.mock)
 
     def progress_callback(result: TaskEvaluationResult, current: int, total: int):
-        status = "✅ PASS" if result.is_correct else "❌ FAIL"
-        print(f"[{current:02d}/{total:02d}] {status} | Task: {result.task_id} "
-              f"| Target: {result.target_canonical} | Pred: '{result.raw_prediction}' "
-              f"({result.latency_sec:.2f}s)")
+        f_st = "✅" if result.font_correct else "❌"
+        c_st = "✅" if result.category_correct else "❌"
+        w_st = "✅" if result.weight_correct else "❌"
+        m_st = "✅" if result.modifier_correct else "❌"
+        k_st = "✅" if result.kerning_correct else "❌"
+        l_st = "✅" if result.line_height_correct else "❌"
+        print(f"[{current:04d}/{total:04d}] Comp:{result.composite_score*100:3.0f}% | "
+              f"F:{f_st} C:{c_st} W:{w_st} M:{m_st} K:{k_st} L:{l_st} | "
+              f"{result.target_canonical} -> '{result.predicted_font}' ({result.latency_sec:.2f}s)")
 
     scorecard = evaluator.evaluate_manifest(
         manifest_path=args.manifest,
@@ -79,24 +84,49 @@ def main():
     json_path = os.path.join(args.output_dir, f"scorecard_{slug}.json")
     md_path = os.path.join(args.output_dir, f"scorecard_{slug}.md")
 
-    # Serialize results
     scorecard_dict = {
         "model_name": scorecard.model_name,
         "timestamp": scorecard.timestamp,
         "total_tasks": scorecard.total_tasks,
-        "correct_tasks": scorecard.correct_tasks,
-        "overall_accuracy": scorecard.overall_accuracy,
-        "accuracy_by_width": scorecard.accuracy_by_width,
+        "overall_composite_score": scorecard.overall_composite_score,
+        "overall_exact_match": scorecard.overall_exact_match,
+        "font_accuracy": scorecard.font_accuracy,
+        "category_accuracy": scorecard.category_accuracy,
+        "weight_accuracy": scorecard.weight_accuracy,
+        "modifier_accuracy": scorecard.modifier_accuracy,
+        "kerning_accuracy": scorecard.kerning_accuracy,
+        "line_height_accuracy": scorecard.line_height_accuracy,
         "accuracy_by_category": scorecard.accuracy_by_category,
+        "accuracy_by_weight": scorecard.accuracy_by_weight,
+        "accuracy_by_modifier": scorecard.accuracy_by_modifier,
+        "accuracy_by_kerning": scorecard.accuracy_by_kerning,
+        "accuracy_by_line_height": scorecard.accuracy_by_line_height,
+        "accuracy_by_width": scorecard.accuracy_by_width,
         "per_font_accuracy": scorecard.per_font_accuracy,
         "avg_latency_sec": scorecard.avg_latency_sec,
         "tasks": [
             {
                 "task_id": r.task_id,
                 "target_canonical": r.target_canonical,
-                "raw_prediction": r.raw_prediction,
-                "is_correct": r.is_correct,
+                "predicted_font": r.predicted_font,
+                "font_correct": r.font_correct,
                 "category": r.category,
+                "predicted_category": r.predicted_category,
+                "category_correct": r.category_correct,
+                "weight": r.weight,
+                "predicted_weight": r.predicted_weight,
+                "weight_correct": r.weight_correct,
+                "modifier": r.modifier,
+                "predicted_modifier": r.predicted_modifier,
+                "modifier_correct": r.modifier_correct,
+                "kerning": r.kerning,
+                "predicted_kerning": r.predicted_kerning,
+                "kerning_correct": r.kerning_correct,
+                "line_height": r.line_height,
+                "predicted_line_height": r.predicted_line_height,
+                "line_height_correct": r.line_height_correct,
+                "all_correct": r.all_correct,
+                "composite_score": r.composite_score,
                 "width_id": r.width_id,
                 "width_px": r.width_px,
                 "latency_sec": r.latency_sec,
@@ -113,7 +143,13 @@ def main():
 
     print("\n" + "=" * 60)
     print(f"  Evaluation Finished: {args.model}")
-    print(f"  Accuracy: {scorecard.correct_tasks}/{scorecard.total_tasks} ({scorecard.overall_accuracy * 100:.1f}%)")
+    print(f"  Composite Typographic Score: {scorecard.overall_composite_score * 100:.1f}%")
+    print(f"  Font Family Accuracy:       {scorecard.font_accuracy * 100:.1f}%")
+    print(f"  Category Accuracy:          {scorecard.category_accuracy * 100:.1f}%")
+    print(f"  Weight Accuracy:            {scorecard.weight_accuracy * 100:.1f}%")
+    print(f"  Modifier Accuracy:          {scorecard.modifier_accuracy * 100:.1f}%")
+    print(f"  Kerning Accuracy:           {scorecard.kerning_accuracy * 100:.1f}%")
+    print(f"  Line Height Accuracy:       {scorecard.line_height_accuracy * 100:.1f}%")
     print(f"  Scorecard JSON: {json_path}")
     print(f"  Scorecard MD:   {md_path}")
     print("=" * 60)

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-source-code-pro-v20",
+  "canonical": "Source Code Pro",
+  "aliases": [
+    "source code pro",
+    "source code"
+  ],
+  "category": "mono",
+  "weight": "black",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "wide",
+  "widthPx": 440
+}

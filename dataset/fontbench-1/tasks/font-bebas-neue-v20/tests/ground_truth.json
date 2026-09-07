@@ -1,0 +1,15 @@
+{
+  "taskId": "font-bebas-neue-v20",
+  "canonical": "Bebas Neue",
+  "aliases": [
+    "bebas neue",
+    "bebas"
+  ],
+  "category": "other",
+  "weight": "black",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "wide",
+  "widthPx": 440
+}

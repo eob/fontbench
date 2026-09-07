@@ -1,0 +1,15 @@
+{
+  "taskId": "font-crimson-text-v16",
+  "canonical": "Crimson Text",
+  "aliases": [
+    "crimson text",
+    "crimson"
+  ],
+  "category": "serif",
+  "weight": "black",
+  "modifier": "regular",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

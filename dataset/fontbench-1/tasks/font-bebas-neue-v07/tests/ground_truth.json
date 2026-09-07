@@ -1,0 +1,15 @@
+{
+  "taskId": "font-bebas-neue-v07",
+  "canonical": "Bebas Neue",
+  "aliases": [
+    "bebas neue",
+    "bebas"
+  ],
+  "category": "other",
+  "weight": "bold",
+  "modifier": "italic",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}
