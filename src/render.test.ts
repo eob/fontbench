@@ -118,7 +118,7 @@ describe('rendered font integrity', () => {
 
   test('refuses a CSS italic declaration around a regular font binary', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-style: normal', 'font-style: italic'))}` };
-    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'italic' });
+    VARIANT_RECIPES[0] = { ...recipe, modifier: 'italic' };
     await expect(renderAllSamples(directory)).rejects.toThrow(/binary style mismatch/);
   });
 
@@ -128,14 +128,19 @@ describe('rendered font integrity', () => {
     try {
       const italicCss = css.replace('font-style: normal', 'font-style: italic').replace(`data:font/woff;base64,${FONT_DATA}`, `http://localhost:${server.port}/italic.woff`);
       TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css + italicCss)}` };
-      VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'italic' });
+      VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, ...originalRecipes.filter(recipe => recipe.weight === 'regular'));
       const manifest = await renderAllSamples(directory);
-      expect(manifest[0]!.fontRendering!.platformFonts[0]!.postScriptName).toBe('FixtureSans-Regular');
-      expect(manifest[1]!.fontRendering!.platformFonts[0]!.postScriptName).toBe('FixtureSans-Italic');
+      expect(manifest).toHaveLength(15);
+      for (const sample of manifest) {
+        expect(sample.fontRendering!.platformFonts[0]!.postScriptName).toBe(sample.modifier === 'italic' ? 'FixtureSans-Italic' : 'FixtureSans-Regular');
+      }
+      await server.stop(true);
+      const replay = await renderAllSamples(directory);
+      expect(replay.map(sample => sample.imageSha256)).toEqual(manifest.map(sample => sample.imageSha256));
     } finally {
       await server.stop(true);
     }
-  });
+  }, 15000);
 
   test('small caps visibly transforms lowercase letters and reports synthesis policy', async () => {
     VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'small-caps' });
@@ -144,6 +149,14 @@ describe('rendered font integrity', () => {
     const smallCaps = fs.readFileSync(path.join(directory, manifest[1]!.imageFilename));
     expect(smallCaps.equals(regular)).toBe(false);
     expect(manifest[1]).toMatchObject({ fontRendering: { smallCapsSynthesisAllowed: true } });
+  });
+
+  test('omits a small-caps label when the requested style has no visible effect', async () => {
+    TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css + '#target { font-variant-caps: normal !important; }')}` };
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'small-caps' });
+    const manifest = await renderAllSamples(directory);
+    expect(manifest.map(sample => sample.modifier)).toEqual(['regular']);
+    expect(JSON.parse(fs.readFileSync(path.join(directory, 'skipped.json'), 'utf8'))[0].reason).toContain('no visible effect');
   });
 
   test('omits synthetic italic and preserves unrelated files on successful replacement', async () => {
@@ -168,7 +181,7 @@ describe('rendered font integrity', () => {
     const asset = sample!.fontRendering!.assets![0]!;
     fs.writeFileSync(path.join(directory, asset.path), 'corrupt');
     await expect(renderAllSamples(directory)).rejects.toThrow(/hash mismatch/);
-  });
+  }, 15000);
 
   test('refuses identical images assigned to distinct tasks', async () => {
     VARIANT_RECIPES.push({ ...recipe, variantIndex: 2 });

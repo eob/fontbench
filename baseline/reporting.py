@@ -43,7 +43,7 @@ def scorecard_tasks(card: dict, *, complete: bool = False) -> list[dict]:
             or card.get("cohort_fingerprint") != hashlib.sha256(json.dumps(sorted(ids)).encode()).hexdigest()
             or not isinstance(card.get("mock"), bool)):
         raise ValueError("Incompatible dataset, protocol, or mock provenance")
-    if card.get("status") not in {"complete", "partial"} or (
+    if card.get("status") not in ("complete", "partial") or (
             card["status"] == "complete" and len(tasks) != card["expected_task_count"]):
         raise ValueError("Inconsistent completion status")
     if complete and (card["status"] != "complete" or not tasks or card["mock"]):
@@ -51,7 +51,7 @@ def scorecard_tasks(card: dict, *, complete: bool = False) -> list[dict]:
     for task in tasks:
         if any(not isinstance(task.get(f"{key}_correct"), bool) for key in DIMENSIONS):
             raise ValueError("Invalid grading flags")
-        if task.get("error_kind") not in {None, "invalid_response"}:
+        if task.get("error_kind") not in (None, "invalid_response"):
             raise ValueError("Infrastructure failures are not completed measurements")
         if task.get("error_kind") == "invalid_response" and any(task[f"{key}_correct"] for key in DIMENSIONS):
             raise ValueError("Invalid model answers must receive zero credit")

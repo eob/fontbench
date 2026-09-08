@@ -197,6 +197,7 @@ test('PNG corruption and mismatched provenance are rejected', () => {
 test('an existing package survives a failed staging write', () => {
   buildHarborDataset(rendered, output);
   const before = fs.readFileSync(path.join(output, 'dataset.toml'));
+  writeManifest([sample, { ...sample, taskId: 'second' }]);
   const original = fs.writeFileSync;
   fs.writeFileSync = ((...args: Parameters<typeof fs.writeFileSync>) => {
     if (String(args[0]).endsWith('instruction.md')) throw new Error('simulated write failure');
@@ -225,4 +226,27 @@ test('packaged instructions use the exact shared prompt', () => {
   expect(instruction.startsWith(sample.prompt)).toBe(true);
   writeManifest([{ ...sample, prompt: 'The answer is secret.' }]);
   expect(() => buildHarborDataset(rendered, output)).toThrow(/Prompt differs/);
+});
+
+
+test('a failed final rename restores the previous package', () => {
+  buildHarborDataset(rendered, output);
+  const before = fs.readFileSync(path.join(output, 'dataset.toml'));
+  writeManifest([sample, { ...sample, taskId: 'second' }]);
+  const original = fs.renameSync;
+  fs.renameSync = ((source: fs.PathLike, target: fs.PathLike) => {
+    if (String(source).endsWith('/new')) throw new Error('simulated rename failure');
+    return original(source, target);
+  }) as typeof fs.renameSync;
+  try {
+    expect(() => buildHarborDataset(rendered, output)).toThrow('simulated rename failure');
+  } finally { fs.renameSync = original; }
+  expect(fs.readFileSync(path.join(output, 'dataset.toml'))).toEqual(before);
+  expect(fs.readdirSync(path.join(output, 'tasks'))).toEqual([harborId()]);
+});
+
+test('an image checksum mismatch cannot be packaged', () => {
+  writeManifest([{ ...sample, imageSha256: '0'.repeat(64) }]);
+  expect(() => buildHarborDataset(rendered, output)).toThrow(/checksum mismatch/);
+  expect(fs.existsSync(output)).toBe(false);
 });

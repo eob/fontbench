@@ -1,0 +1,16 @@
+{
+  "taskId": "font-arial-v25",
+  "harborTaskId": "task-97974bb03cd3f5ae40aa324b",
+  "canonical": "Arial",
+  "aliases": [
+    "arial",
+    "arial mt"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "strikethrough",
+  "kerning": "tight",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-playfair-display-v33",
+  "harborTaskId": "task-f3a890fec740efb141bf285c",
+  "canonical": "Playfair Display",
+  "aliases": [
+    "playfair display"
+  ],
+  "category": "serif",
+  "weight": "bold",
+  "modifier": "regular",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_supported_face_retains_catalog_layout_axis_coverage ___________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-36/test_supported_face_retains_ca0/manifest.json')
+
+    def test_supported_face_retains_catalog_layout_axis_coverage(candidate):
+        catalog = candidate.parent / 'catalog.json'
+        data = json.loads(catalog.read_text())
+        recipe = data['recipes'][0]
+        data['recipes'].extend([
+            {**recipe, 'variantIndex': 2, 'kerning': 'tight', 'lineHeight': 'tight', 'widthId': 'medium'},
+            {**recipe, 'variantIndex': 3, 'kerning': 'loose', 'lineHeight': 'loose', 'widthId': 'wide'},
+        ])
+        catalog.write_text(json.dumps(data))
+        (candidate.parent / 'skipped.json').write_text(json.dumps([
+            {'taskId': f'font-fixture-v{index:02}', 'reason': 'Unsupported face'} for index in (2, 3)
+        ]))
+        report = validate_dataset(candidate)
+>       assert not report['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:220: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_validate_dataset.py::test_supported_face_retains_catalog_layout_axis_coverage
+1 failed, 43 deselected in 0.22s

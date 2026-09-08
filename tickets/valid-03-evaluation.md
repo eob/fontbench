@@ -1,6 +1,6 @@
 # valid-03-evaluation: Strict answers and reproducible evaluation
 
-- **Status**: In Progress
+- **Status**: Completed (local implementation and validation)
 - **Branch**: `valid-01-benchmark-audit`
 - **Base**: `14e792f`
 - **Machine**: `eob-dev2`
@@ -97,3 +97,5 @@ Command: `.venv/bin/pytest -q tests/test_evaluator.py -k malformed_aliases`; ful
 ## Completion
 
 Implementation complete; parent integrates the complete audit branch. The simplifyfu and comment-hygiene pass removed one redundant test; changes introduce no transport wrapper or configurable policy abstraction. No remote inference was issued. Existing SQLite retention/idempotency, cumulative cost, concurrent runner locking, interruption draining, and retry tests remain green.
+
+Final integration update: renderer and evaluator now read the exact same checked-in `baseline/prompt.txt` rubric. Defaults point to `dataset/fontbench-2-rendered/manifest.json`; historical manifests still require explicit paths and cannot pass the live validation gate. Explicit canonical grading tests pin `Helvetica Neue` != `Helvetica` and `Times` != `Times New Roman` without declared aliases. Complete Python suite at `a6deba1` plus final review changes: **293 passed in 7.48s**; `git diff --check` clean.

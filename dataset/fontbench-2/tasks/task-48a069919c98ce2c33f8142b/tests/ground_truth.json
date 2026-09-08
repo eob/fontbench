@@ -1,0 +1,15 @@
+{
+  "taskId": "font-space-mono-v45",
+  "harborTaskId": "task-48a069919c98ce2c33f8142b",
+  "canonical": "Space Mono",
+  "aliases": [
+    "space mono"
+  ],
+  "category": "mono",
+  "weight": "bold",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

@@ -1,0 +1,1 @@
+OFFLINE REPLAY EXACT: 1824 PNG hashes and all metadata equal after canonical subset ordering; 1176 identical skips. Browser context offline; APIRequestContext.get replaced with throw.

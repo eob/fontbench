@@ -1,0 +1,15 @@
+{
+  "taskId": "font-fira-code-v27",
+  "harborTaskId": "task-d2c860ca0cb15decfc1040a9",
+  "canonical": "Fira Code",
+  "aliases": [
+    "fira code"
+  ],
+  "category": "mono",
+  "weight": "regular",
+  "modifier": "strikethrough",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

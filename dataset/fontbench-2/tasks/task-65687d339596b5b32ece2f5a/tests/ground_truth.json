@@ -1,0 +1,15 @@
+{
+  "taskId": "font-eb-garamond-v42",
+  "harborTaskId": "task-65687d339596b5b32ece2f5a",
+  "canonical": "EB Garamond",
+  "aliases": [
+    "eb garamond"
+  ],
+  "category": "serif",
+  "weight": "bold",
+  "modifier": "strikethrough",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "wide",
+  "widthPx": 440
+}

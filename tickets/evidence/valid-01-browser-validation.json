@@ -1,0 +1,42 @@
+[
+  {
+    "name": "desktop",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "images": 7,
+    "completed": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "errors": []
+  },
+  {
+    "name": "mobile",
+    "width": 390,
+    "scrollWidth": 390,
+    "images": 7,
+    "completed": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "errors": []
+  }
+]

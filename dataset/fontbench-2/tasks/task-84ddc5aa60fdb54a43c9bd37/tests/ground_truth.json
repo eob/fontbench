@@ -1,0 +1,15 @@
+{
+  "taskId": "font-pacifico-v27",
+  "harborTaskId": "task-84ddc5aa60fdb54a43c9bd37",
+  "canonical": "Pacifico",
+  "aliases": [
+    "pacifico"
+  ],
+  "category": "handwriting",
+  "weight": "regular",
+  "modifier": "strikethrough",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

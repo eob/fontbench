@@ -1,0 +1,15 @@
+{
+  "taskId": "font-arvo-v24",
+  "harborTaskId": "task-ef0a276929c393f5c9d74824",
+  "canonical": "Arvo",
+  "aliases": [
+    "arvo"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "loose",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

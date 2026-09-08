@@ -1,0 +1,14 @@
+version = "1.0"
+
+[dataset]
+name = "fontbench-2"
+version = "2.0.0"
+description = "FontBench-2: Visual typography benchmark across six attributes: font, category, weight, modifier, kerning, and line height."
+author = "Edward Benson"
+license = "MIT"
+task_dir = "tasks"
+
+[metadata]
+grading_version = "3"
+total_tasks = 1824
+primary_pangram = "The quick brown fox jumps over the lazy dog."

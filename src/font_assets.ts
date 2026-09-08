@@ -120,12 +120,13 @@ export class FontAssets {
   }
 
   forPlatformFonts(fonts: { postScriptName: string }[]): FontAsset[] {
-    return fonts.map(font => {
+    return fonts.flatMap(font => {
       const matches = [...this.loaded.values()].filter(asset => asset.meta.postscriptName === font.postScriptName);
       if (!matches.length) throw new Error(`Used font has no retained binary: ${font.postScriptName}`);
       // Unicode subsets may share a PostScript name; retain every loaded subset.
       return matches.map(asset => asset.meta);
-    }).flat().filter((asset, index, all) => all.findIndex(other => other.sha256 === asset.sha256) === index);
+    }).filter((asset, index, all) => all.findIndex(other => other.sha256 === asset.sha256) === index)
+      .sort((left, right) => left.sha256.localeCompare(right.sha256));
   }
 
   save(): void {

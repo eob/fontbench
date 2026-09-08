@@ -12,6 +12,7 @@ from typing import Any
 from PIL import Image
 
 from baseline.evaluator import TypographicPrediction
+from baseline.providers import parse_prediction
 
 try:
     from harbor.agents.base import BaseAgent
@@ -65,7 +66,7 @@ class BaselineVLMAgent(BaseAgent):
         environment: BaseEnvironment,
         context: AgentContext,
     ) -> None:
-        """Download the task image and upload validated JSON without shell interpolation."""
+        """Upload model answers as data; the verifier gives invalid answers zero credit."""
         with TemporaryDirectory(prefix="fontbench-agent-") as directory:
             image_path = Path(directory) / "sample.png"
             await environment.download_file(source_path="/workspace/sample.png", target_path=image_path)
@@ -74,6 +75,7 @@ class BaselineVLMAgent(BaseAgent):
                     font="Arial", category="non-serif", weight="regular", modifier="regular",
                     kerning="normal", line_height="normal",
                 )
+                output = prediction.model_dump_json()
             else:
                 from google.genai import types
                 with Image.open(image_path) as image:
@@ -84,9 +86,14 @@ class BaselineVLMAgent(BaseAgent):
                             response_mime_type="application/json",
                             response_schema=TypographicPrediction,
                             temperature=0.0,
+                            max_output_tokens=1024,
                         ),
                     )
-                prediction = TypographicPrediction.model_validate_json(response.text or "")
+                output = response.text or ""
+                try:
+                    output = TypographicPrediction.model_validate(parse_prediction(output)).model_dump_json()
+                except ValueError:
+                    pass  # The verifier scores invalid model answers as zero.
             output_path = Path(directory) / "output.json"
-            output_path.write_text(prediction.model_dump_json() + "\n", encoding="utf-8")
+            output_path.write_text(output + "\n", encoding="utf-8")
             await environment.upload_file(source_path=output_path, target_path="/workspace/output.json")

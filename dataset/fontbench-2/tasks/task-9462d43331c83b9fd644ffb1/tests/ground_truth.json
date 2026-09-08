@@ -1,0 +1,15 @@
+{
+  "taskId": "font-crimson-text-v18",
+  "harborTaskId": "task-9462d43331c83b9fd644ffb1",
+  "canonical": "Crimson Text",
+  "aliases": [
+    "crimson text"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "regular",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "narrow",
+  "widthPx": 220
+}

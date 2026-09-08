@@ -1,0 +1,15 @@
+{
+  "taskId": "font-libre-baskerville-v26",
+  "harborTaskId": "task-5ec353c42f337eeb6d2136b8",
+  "canonical": "Libre Baskerville",
+  "aliases": [
+    "libre baskerville"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "strikethrough",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

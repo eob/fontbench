@@ -1,0 +1,15 @@
+{
+  "taskId": "font-cinzel-v57",
+  "harborTaskId": "task-a121a97d9ff457defab1d9bb",
+  "canonical": "Cinzel",
+  "aliases": [
+    "cinzel"
+  ],
+  "category": "serif",
+  "weight": "black",
+  "modifier": "strikethrough",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "narrow",
+  "widthPx": 220
+}

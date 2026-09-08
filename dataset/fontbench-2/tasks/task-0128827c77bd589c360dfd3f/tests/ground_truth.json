@@ -1,0 +1,15 @@
+{
+  "taskId": "font-work-sans-v28",
+  "harborTaskId": "task-0128827c77bd589c360dfd3f",
+  "canonical": "Work Sans",
+  "aliases": [
+    "work sans"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "tight",
+  "lineHeight": "normal",
+  "widthId": "wide",
+  "widthPx": 440
+}

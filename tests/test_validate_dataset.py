@@ -202,3 +202,41 @@ def test_claimed_font_properties_must_match_actual_binary(candidate, field, valu
     report = validate_dataset(candidate)
     assert not report['valid']
     assert 'font_asset' in report['error_counts']
+
+
+def test_supported_face_retains_catalog_layout_axis_coverage(candidate):
+    catalog = candidate.parent / 'catalog.json'
+    data = json.loads(catalog.read_text())
+    recipe = data['recipes'][0]
+    data['recipes'].extend([
+        {**recipe, 'variantIndex': 2, 'kerning': 'tight', 'lineHeight': 'tight', 'widthId': 'medium'},
+        {**recipe, 'variantIndex': 3, 'kerning': 'loose', 'lineHeight': 'loose', 'widthId': 'wide'},
+    ])
+    catalog.write_text(json.dumps(data))
+    (candidate.parent / 'skipped.json').write_text(json.dumps([
+        {'taskId': f'font-fixture-v{index:02}', 'reason': 'Unsupported face'} for index in (2, 3)
+    ]))
+    report = validate_dataset(candidate)
+    assert not report['valid']
+    assert 'coverage' in report['error_counts']
+
+
+def test_overlapping_line_boxes_cannot_reuse_the_previous_lines_ink(candidate):
+    file = candidate.parent / 'sample.png'
+    image = Image.new('RGB', (440, 228), 'white')
+    ImageDraw.Draw(image).rectangle((52, 55, 200, 105), fill='#111827')
+    image.save(file)
+    def overlap(rows):
+        rows[0].update(lineHeight='tight', imageSha256=hashlib.sha256(file.read_bytes()).hexdigest())
+        layout = rows[0]['layout']
+        layout.update(lineHeightPx=25.3)
+        layout['lineBoxes'][0].update(height=28)
+        layout['lineBoxes'][1].update(y=50.3, height=28)
+    change(candidate, overlap)
+    catalog = candidate.parent / 'catalog.json'
+    data = json.loads(catalog.read_text())
+    data['recipes'][0]['lineHeight'] = 'tight'
+    catalog.write_text(json.dumps(data))
+    report = validate_dataset(candidate)
+    assert not report['valid']
+    assert 'layout' in report['error_counts']

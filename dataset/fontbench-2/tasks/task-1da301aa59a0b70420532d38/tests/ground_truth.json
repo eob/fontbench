@@ -1,0 +1,15 @@
+{
+  "taskId": "font-roboto-v26",
+  "harborTaskId": "task-1da301aa59a0b70420532d38",
+  "canonical": "Roboto",
+  "aliases": [
+    "roboto"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "strikethrough",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

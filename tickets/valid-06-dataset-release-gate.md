@@ -1,6 +1,6 @@
 # valid-06-dataset-release-gate: Refuse unvalidated benchmark inputs
 
-- **Status**: In Progress
+- **Status**: Completed (local implementation and validation)
 - **Branch**: `valid-01-benchmark-audit`
 - **Base**: `14e792f`
 - **Machine**: eob-dev2
@@ -36,3 +36,55 @@ Independent decoded-pixel census at base `14e792f`: the original 1,000 samples c
 - Geometry verifies line boxes and spacing; the independent pixel pass checks visible ink, clipping at image boundaries, corruption, and duplicate inputs. Representative visual review remains necessary for perceptual problems that geometry cannot prove absent.
 - Empty manifests and malformed nested evidence fail with actionable reports. Missing evidence never silently passes as legacy-compatible live data.
 - Exact source font bytes are frozen locally for reproducible rendering. Publishing or redistributing provider fonts is separate from this local audit.
+
+## Independent review hardening
+
+### Observed failures
+
+Independent review of the first validator implementation found these reproducible results on its otherwise-valid fixture:
+
+```text
+missing_second_line valid= True errors= []
+non_font_binary valid= True errors= []
+catalog_null AttributeError 'NoneType' object has no attribute 'get'
+transparent_LA valid= True errors= []
+```
+
+The first two are important validation omissions: hashing bytes pins their identity but does not prove that pixels or font metadata represent the claimed content.
+
+### Review plan
+
+1. Record regression Red evidence for erased lines, invisible PNGs, malformed catalog shapes, invalid font bytes, and forged internal names/weights.
+2. Decode each unique font once with fontTools; compare actual metadata to frozen claims and target families, supporting explicit catalog binary-family variants.
+3. Require ink inside every measured line at the recorded pixel scale and reject transparency in every PNG mode.
+4. Freeze the common prompt in `baseline/prompt.txt`; verify focused/full offline gates and a reversion against the pre-review validator.
+
+### Review decisions
+
+- Use fontTools independently from renderer fontkit, reducing shared implementation assumptions.
+- The original generated WOFF fixture from renderer tests is copied to `tests/fixtures/fixture.woff`; no network font downloads are needed by unit tests.
+- Pixel checks establish visible line presence and geometry consistency; they are not OCR and do not independently identify rendered glyph strings.
+
+### Review evidence and gates
+
+Full Red output: [valid-06-review-red.log](evidence/valid-06-review-red.log). The strict parser/line/alpha/catalog cases produced `11 failed, 1 passed` before fixes. A catalog that skipped two layout levels for an otherwise supported font/weight/modifier also passed; [coverage Red](evidence/valid-06-coverage-red.log) records `1 failed`. Coverage is now derived from the frozen recipes, allowing single-recipe unit fixtures and fully unsupported groups while preserving every specified layout level for supported groups.
+
+A second pixel-boundary test proved that overlapping line boxes could reuse the first line's ink as evidence for a nonexistent second line (`1 failed`, [overlap Red](evidence/valid-06-overlap-red.log)). Each claimed line now needs ink below the preceding line's bounding box; this stricter check passed every line of the 1,824-image candidate.
+
+The pre-review validator was restored in an isolated temporary package with current tests: `12 failed, 1 passed`, recorded in [valid-06-review-reversion.log](evidence/valid-06-review-reversion.log). The original RGBA transparency rejection remains a passing inverse control. UTF-8 shared prompt definitions now live in `baseline/prompt.txt` and are used by renderer and Python evaluator.
+
+| Review gate | Base | Result |
+| --- | --- | --- |
+| Independent source reversion with strict font/pixel/catalog/coverage tests | `14e792f` + pre-review validator | `12 failed, 1 passed`; expected Red reproduced |
+| Whole candidate, independently decoded pixels and parsed font binaries | `14e792f` + hardening | 1,824 unique images, 50 fonts, 129 binaries, zero errors |
+
+FontTools independently confirms names (including explicit catalog binary-family variants), OS/2 weight/style, variation-axis weight ranges, and PostScript identity against fontkit's frozen metadata. Every PNG alpha mode is checked. Catalog type errors return findings instead of crashing the reporting path. These are consistency checks with independent parsers, not OCR or adversarial attestation.
+
+Final review gates at checkpoint `a6deba1` plus final review changes:
+
+- `.venv/bin/pytest -q`: **293 passed in 7.48s** (complete Python suite).
+- `git diff --check`: clean.
+- `.venv/bin/python -m baseline.validate_dataset --manifest /tmp/fontbench-render-validation/manifest.json --output /tmp/fontbench-hardened-validation.json`: valid, 1,824 unique images, 129 independently parsed binaries, zero errors, including exclusive ink regions for overlapping line boxes.
+- Extended isolated pre-review-source reversion including overlapping-line regression: **13 failed, 1 passed**, [full output](evidence/valid-06-review-reversion-final.log).
+
+Review implementation complete. Parent integrates the final regenerated corpus and publication artifacts. The simplification pass retained only the nontrivial binary-parsing helper and a per-file cache; no alternate policy mode or metadata attestation abstraction was added.

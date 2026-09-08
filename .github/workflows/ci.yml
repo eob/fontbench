@@ -22,4 +22,5 @@ jobs:
       - run: python -m venv .venv
       - run: .venv/bin/python -m pip install -e '.[dev]'
       - run: bun run test
+      - run: bun run validate:dataset
       - run: .venv/bin/python -m pip wheel . --no-deps --wheel-dir /tmp/fontbench-wheels

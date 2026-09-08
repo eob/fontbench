@@ -1,0 +1,15 @@
+{
+  "taskId": "font-caveat-v29",
+  "harborTaskId": "task-2095ce95777ae31b156e81be",
+  "canonical": "Caveat",
+  "aliases": [
+    "caveat"
+  ],
+  "category": "handwriting",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "normal",
+  "lineHeight": "loose",
+  "widthId": "narrow",
+  "widthPx": 220
+}

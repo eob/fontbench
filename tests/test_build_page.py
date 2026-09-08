@@ -279,3 +279,18 @@ def test_page_excludes_incompatible_protocol_or_cohort(dataset, tmp_path, field)
     report = build_page(manifest, tmp_path / "results", tmp_path / "site", config)
     assert report["models"][0]["completed"] == 0
     assert report["warnings"]
+
+@pytest.mark.parametrize(("field", "value"), [("status", []), ("error_kind", {}), ("category_correct", "true")])
+def test_malformed_status_and_grading_fields_are_excluded(dataset, tmp_path, field, value):
+    manifest, samples, config = dataset
+    write_scorecard(tmp_path / "results", samples)
+    path = tmp_path / "results/scorecard_test-model.json"
+    card = json.loads(path.read_text())
+    if field == "status":
+        card[field] = value
+    else:
+        card["tasks"][0][field] = value
+    path.write_text(json.dumps(card))
+    report = build_page(manifest, tmp_path / "results", tmp_path / "site", config)
+    assert report["models"][0]["completed"] == 0
+    assert report["warnings"]

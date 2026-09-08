@@ -216,21 +216,7 @@ export async function renderAllSamples(outputDir: string = 'dataset/fontbench-2-
           continue;
         }
 
-        await cardLocator.evaluate(el => el.getBoundingClientRect().height);
-        const { root } = await session.send('DOM.getDocument');
-        const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '#target' });
-        const { fonts: platformFonts } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
-        if (!platformFonts.length || platformFonts.some(face => !face.isCustomFont)) {
-          throw new Error(`Font fallback detected for ${taskId}: ${platformFonts.map(face => face.familyName).join(', ')}`);
-        }
-        const assets = fontAssets.forPlatformFonts(platformFonts);
-        try {
-          for (const asset of assets) verifyFontAsset(asset, font, weightNum, recipe.modifier === 'italic');
-        } catch (error) {
-          if (!(error instanceof Error) || !/Font binary (weight|style) mismatch/.test(error.message)) throw error;
-          skipped.push({ taskId, fontId: font.id, reason: error.message });
-          continue;
-        }
+        // CDP must inspect the glyph runs after this recipe has been laid out.
         const layout = await page.evaluate(() => {
           const el = document.getElementById('target')!;
           const bounds = el.getBoundingClientRect();
@@ -249,6 +235,20 @@ export async function renderAllSamples(outputDir: string = 'dataset/fontbench-2-
             cardWidthPx: bounds.width, cardHeightPx: bounds.height, fontSizePx: parseFloat(style.fontSize),
             lineHeightPx: parseFloat(style.lineHeight), letterSpacingPx: parseFloat(style.letterSpacing) || 0, deviceScaleFactor: devicePixelRatio };
         });
+        const { root } = await session.send('DOM.getDocument');
+        const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector: '#target' });
+        const { fonts: platformFonts } = await session.send('CSS.getPlatformFontsForNode', { nodeId });
+        if (!platformFonts.length || platformFonts.some(face => !face.isCustomFont)) {
+          throw new Error(`Font fallback detected for ${taskId}: ${platformFonts.map(face => face.familyName).join(', ')}`);
+        }
+        const assets = fontAssets.forPlatformFonts(platformFonts);
+        try {
+          for (const asset of assets) verifyFontAsset(asset, font, weightNum, recipe.modifier === 'italic');
+        } catch (error) {
+          if (!(error instanceof Error) || !/Font binary (weight|style) mismatch/.test(error.message)) throw error;
+          skipped.push({ taskId, fontId: font.id, reason: error.message });
+          continue;
+        }
         const image = await cardLocator.screenshot();
         if (recipe.modifier === 'small-caps') {
           await cardLocator.evaluate(el => { (el as HTMLElement).style.fontVariantCaps = 'normal'; });

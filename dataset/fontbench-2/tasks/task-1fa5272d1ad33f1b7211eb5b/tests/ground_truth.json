@@ -1,0 +1,15 @@
+{
+  "taskId": "font-shadows-into-light-v27",
+  "harborTaskId": "task-1fa5272d1ad33f1b7211eb5b",
+  "canonical": "Shadows Into Light",
+  "aliases": [
+    "shadows into light"
+  ],
+  "category": "handwriting",
+  "weight": "regular",
+  "modifier": "strikethrough",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

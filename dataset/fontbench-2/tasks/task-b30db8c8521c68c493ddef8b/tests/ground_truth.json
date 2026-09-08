@@ -1,0 +1,15 @@
+{
+  "taskId": "font-source-code-pro-v38",
+  "harborTaskId": "task-b30db8c8521c68c493ddef8b",
+  "canonical": "Source Code Pro",
+  "aliases": [
+    "source code pro"
+  ],
+  "category": "mono",
+  "weight": "bold",
+  "modifier": "underline",
+  "kerning": "normal",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

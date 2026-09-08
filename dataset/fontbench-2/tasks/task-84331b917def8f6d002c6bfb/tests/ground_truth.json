@@ -1,0 +1,15 @@
+{
+  "taskId": "font-bungee-v23",
+  "harborTaskId": "task-84331b917def8f6d002c6bfb",
+  "canonical": "Bungee",
+  "aliases": [
+    "bungee"
+  ],
+  "category": "other",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "normal",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

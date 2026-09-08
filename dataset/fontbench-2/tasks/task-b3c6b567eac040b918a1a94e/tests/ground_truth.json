@@ -1,0 +1,15 @@
+{
+  "taskId": "font-nunito-v29",
+  "harborTaskId": "task-b3c6b567eac040b918a1a94e",
+  "canonical": "Nunito",
+  "aliases": [
+    "nunito"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "normal",
+  "lineHeight": "loose",
+  "widthId": "narrow",
+  "widthPx": 220
+}

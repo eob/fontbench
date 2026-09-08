@@ -67,6 +67,7 @@ def test_model_output_is_json_data_and_instruction_is_used(tmp_path):
     asyncio.run(agent.run("Task-specific instruction.", environment, SimpleNamespace()))
     assert calls[0]["contents"][1] == "Task-specific instruction."
     assert calls[0]["config"].response_mime_type == "application/json"
+    assert calls[0]["config"].max_output_tokens == 1024
     assert json.loads(environment.uploads["/workspace/output.json"]) == prediction
 
 
@@ -84,9 +85,7 @@ def test_model_errors_propagate_without_uploading_a_fake_prediction(tmp_path):
 
 
 @pytest.mark.parametrize("response", ["not JSON", "[]", "null", "{}", '{"font":"Arial"}'])
-def test_invalid_model_response_is_not_uploaded(tmp_path, response):
-    from pydantic import ValidationError
-
+def test_invalid_model_response_is_uploaded_for_zero_credit_verification(tmp_path, response):
     async def generate_content(**kwargs):
         return SimpleNamespace(text=response)
 
@@ -94,12 +93,11 @@ def test_invalid_model_response_is_not_uploaded(tmp_path, response):
     agent.mock = False
     agent._client = SimpleNamespace(aio=SimpleNamespace(models=SimpleNamespace(generate_content=generate_content)))
     environment = Environment()
-    with pytest.raises(ValidationError):
-        asyncio.run(agent.run("Identify typography.", environment, SimpleNamespace()))
-    assert environment.uploads == {}
+    asyncio.run(agent.run("Identify typography.", environment, SimpleNamespace()))
+    assert environment.uploads["/workspace/output.json"].strip() == response
 
 
-def test_duplicate_response_keys_are_rejected_before_upload(tmp_path):
+def test_duplicate_response_keys_are_preserved_for_zero_credit_verification(tmp_path):
     async def generate_content(**kwargs):
         return SimpleNamespace(text='{"font":"wrong","font":"Arial","category":"non-serif","weight":"regular","modifier":"regular","kerning":"normal","line_height":"normal"}')
 
@@ -107,6 +105,5 @@ def test_duplicate_response_keys_are_rejected_before_upload(tmp_path):
     agent.mock = False
     agent._client = SimpleNamespace(aio=SimpleNamespace(models=SimpleNamespace(generate_content=generate_content)))
     environment = Environment()
-    with pytest.raises(ValueError, match="Duplicate"):
-        asyncio.run(agent.run("Identify typography.", environment, SimpleNamespace()))
-    assert environment.uploads == {}
+    asyncio.run(agent.run("Identify typography.", environment, SimpleNamespace()))
+    assert environment.uploads["/workspace/output.json"].count('"font":') == 2

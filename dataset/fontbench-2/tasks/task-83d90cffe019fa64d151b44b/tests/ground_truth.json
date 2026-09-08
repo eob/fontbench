@@ -1,0 +1,15 @@
+{
+  "taskId": "font-pacifico-v28",
+  "harborTaskId": "task-83d90cffe019fa64d151b44b",
+  "canonical": "Pacifico",
+  "aliases": [
+    "pacifico"
+  ],
+  "category": "handwriting",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "tight",
+  "lineHeight": "normal",
+  "widthId": "wide",
+  "widthPx": 440
+}

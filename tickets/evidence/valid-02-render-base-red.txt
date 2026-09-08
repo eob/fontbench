@@ -1,0 +1,59 @@
+bun test v1.3.14 (0d9b296a)
+
+../../../../tmp/fontbench-render-base-cc4ziG/src/render.test.ts:
+Starting Chromium rendering for 1 fonts across 1 variants (1 total tasks)...
+[1/1] Rendered fonts through Unrelated Sans (1 samples total)...
+Rendering completed in 0.1s!
+Manifest saved to /tmp/fontbench-render-test-gqC5ne/manifest.json
+50 | 
+51 | describe('rendered font integrity', () => {
+52 |   test('refuses a CSS family alias around an unrelated font binary', async () => {
+53 |     TOP_50_FONTS[0] = { ...fixtureFont, name: 'Unrelated Sans', cssFamily: 'Unrelated Sans',
+54 |       cssUrl: `data:text/css,${encodeURIComponent(css.replaceAll('Fixture Sans', 'Unrelated Sans'))}` };
+55 |     await expect(renderAllSamples(directory)).rejects.toThrow(/identity|family/i);
+                                                           ^
+error: 
+
+Expected promise that rejects
+Received promise that resolved: Promise { <resolved> }
+
+      at <anonymous> (/tmp/fontbench-render-base-cc4ziG/src/render.test.ts:55:55)
+(fail) rendered font integrity > refuses a CSS family alias around an unrelated font binary [346.94ms]
+Starting Chromium rendering for 1 fonts across 1 variants (1 total tasks)...
+[1/1] Rendered fonts through Fixture Sans (1 samples total)...
+Rendering completed in 0.6s!
+Manifest saved to /tmp/fontbench-render-test-WdVN3W/manifest.json
+56 |   });
+57 | 
+58 |   test('refuses CSS weight declarations that mislabel a static font binary', async () => {
+59 |     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-weight: 400', 'font-weight: 700'))}` };
+60 |     VARIANT_RECIPES[0] = { ...recipe, weight: 'bold' };
+61 |     await expect(renderAllSamples(directory)).rejects.toThrow(/binary.*weight|weight.*binary/i);
+                                                           ^
+error: 
+
+Expected promise that rejects
+Received promise that resolved: Promise { <resolved> }
+
+      at <anonymous> (/tmp/fontbench-render-base-cc4ziG/src/render.test.ts:61:55)
+(fail) rendered font integrity > refuses CSS weight declarations that mislabel a static font binary [1491.01ms]
+Starting Chromium rendering for 1 fonts across 1 variants (1 total tasks)...
+[1/1] Rendered fonts through Fixture Sans (1 samples total)...
+Rendering completed in 0.1s!
+Manifest saved to /tmp/fontbench-render-test-loISLY/manifest.json
+61 |     await expect(renderAllSamples(directory)).rejects.toThrow(/binary.*weight|weight.*binary/i);
+62 |   });
+63 | 
+64 |   test('records actual multiline geometry and content hashes with pinned assets', async () => {
+65 |     const [sample] = await renderAllSamples(directory);
+66 |     expect(sample!.layout!.lineCount).toBeGreaterThanOrEqual(2);
+                        ^
+TypeError: undefined is not an object (evaluating 'sample.layout.lineCount')
+      at <anonymous> (/tmp/fontbench-render-base-cc4ziG/src/render.test.ts:66:20)
+(fail) rendered font integrity > records actual multiline geometry and content hashes with pinned assets [335.58ms]
+
+ 0 pass
+ 13 filtered out
+ 3 fail
+ 2 expect() calls
+Ran 3 tests across 1 file. [1.80s]

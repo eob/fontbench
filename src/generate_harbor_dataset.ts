@@ -138,7 +138,6 @@ export function buildHarborDataset(
   try {
   console.log(`Generating Harbor dataset at ${outputDir} for ${manifest.length} tasks...`);
 
-  // 1. Generate top-level dataset.toml
   const datasetToml = `version = "1.0"
 
 [dataset]
@@ -156,7 +155,6 @@ primary_pangram = "The quick brown fox jumps over the lazy dog."
 `;
   fs.writeFileSync(path.join(stagingDir, 'dataset.toml'), datasetToml, 'utf-8');
 
-  // 2. Generate each task directory
   for (const sample of manifest) {
     const { bytes, harborId } = inputs.get(sample.taskId)!;
     const taskDir = path.join(tasksDir, harborId);
@@ -168,10 +166,8 @@ primary_pangram = "The quick brown fox jumps over the lazy dog."
     fs.mkdirSync(solDir, { recursive: true });
     fs.mkdirSync(testsDir, { recursive: true });
 
-    // Copy sample image to environment/sample.png
     fs.writeFileSync(path.join(envDir, 'sample.png'), bytes);
 
-    // task.toml
     const taskToml = `version = "1.0"
 
 [metadata]
@@ -189,7 +185,6 @@ timeout_sec = 60.0
 `;
     fs.writeFileSync(path.join(taskDir, 'task.toml'), taskToml, 'utf-8');
 
-    // instruction.md
     const instructionMd = `${prompt}
 
 Examine the rendered image at \`/workspace/sample.png\`.
@@ -197,7 +192,6 @@ Write your JSON object into \`/workspace/output.json\`.
 `;
     fs.writeFileSync(path.join(taskDir, 'instruction.md'), instructionMd, 'utf-8');
 
-    // environment/Dockerfile
     const dockerfile = `FROM alpine:3.24
 RUN apk add --no-cache bash python3
 WORKDIR /workspace
@@ -205,7 +199,6 @@ COPY sample.png /workspace/sample.png
 `;
     fs.writeFileSync(path.join(envDir, 'Dockerfile'), dockerfile, 'utf-8');
 
-    // solution/solve.sh
     const solveSh = `#!/bin/bash
 set -euo pipefail
 
@@ -225,7 +218,6 @@ EOF
     fs.writeFileSync(solvePath, solveSh, 'utf-8');
     fs.chmodSync(solvePath, 0o755);
 
-    // tests/ground_truth.json
     const groundTruth = {
       taskId: sample.taskId,
       harborTaskId: harborId,
@@ -241,7 +233,6 @@ EOF
     };
     fs.writeFileSync(path.join(testsDir, 'ground_truth.json'), JSON.stringify(groundTruth, null, 2), 'utf-8');
 
-    // tests/test.sh
     const testSh = `#!/bin/bash
 set -euo pipefail
 
@@ -317,7 +308,7 @@ reward_path = os.path.join(logs_dir, "reward.txt")
 with open(reward_path, "w", encoding="utf-8") as f:
     f.write(f"{score}\\n")
 
-print(f"[FontBench-1 Verifier] Task: {gt['taskId']} - Score: {score*100:.1f}%")
+print(f"[FontBench-2 Verifier] Task: {gt['taskId']} - Score: {score*100:.1f}%")
 print(f"  Font: {'PASS' if font_pass else 'FAIL'} | Cat: {'PASS' if cat_pass else 'FAIL'} | Weight: {'PASS' if weight_pass else 'FAIL'}")
 PY_GRADER
 `;

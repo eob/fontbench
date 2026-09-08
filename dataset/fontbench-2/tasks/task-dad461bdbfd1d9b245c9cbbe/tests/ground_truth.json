@@ -1,0 +1,15 @@
+{
+  "taskId": "font-oswald-v15",
+  "harborTaskId": "task-dad461bdbfd1d9b245c9cbbe",
+  "canonical": "Oswald",
+  "aliases": [
+    "oswald"
+  ],
+  "category": "non-serif",
+  "weight": "thin",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-helvetica-v58",
+  "harborTaskId": "task-6424f112e1a7d8fd9939e7d4",
+  "canonical": "Helvetica",
+  "aliases": [
+    "helvetica"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "small-caps",
+  "kerning": "tight",
+  "lineHeight": "normal",
+  "widthId": "medium",
+  "widthPx": 320
+}

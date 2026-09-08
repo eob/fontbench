@@ -1,0 +1,15 @@
+{
+  "taskId": "font-pacifico-v24",
+  "harborTaskId": "task-59622573ff92778c78bd8d7c",
+  "canonical": "Pacifico",
+  "aliases": [
+    "pacifico"
+  ],
+  "category": "handwriting",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "loose",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

@@ -4,6 +4,8 @@ FontBench measures recognition of six typographic properties from an image: font
 
 The September 8 validity audit found single-line samples, conflicting font evidence, layout shortcuts, permissive grading, and task metadata that exposed answers. The repairs and verification evidence are cataloged in [tickets/README.md](tickets/README.md). Both the original 1,000-image dataset and the September 7 639-image comparison are historical, unsuitable for final benchmark scores. Their files and paid checkpoints are preserved.
 
+The accepted corpus contains **1,824 samples across all 50 families**, with 2–5 visible lines per image, 129 checked font binaries, and zero validation errors. See the [frozen validation report](dataset/fontbench-2-rendered/validation.json).
+
 The current rendering protocol is **2**, with grading version **3**. Final evaluation requires the new validated inputs and a new run ID. [The benchmark page](site/index.html) previews the current inputs; model scores appear only after compatible runs have been performed.
 
 ## Setup
@@ -59,6 +61,8 @@ The shared [prompt](baseline/prompt.txt) defines the labels for every provider a
 | Line height | `tight` = 1.15, `normal` = 1.45, `loose` = 1.9 times the 22px font size |
 
 `thin` is this benchmark's name for the numeric 200 bucket. `kerning` means uniform tracking, not adjustment of individual letter pairs. Category is an annotation policy; it is partly predictable from font identity. A family can contribute fewer tasks because it supplies fewer supported faces, so sample-weighted results do not imply equal family weighting.
+
+The compact recipes retain conditional correlations: for example, knowing the recipe, modifier, and tracking can determine line height. This is an accepted sampling limit, not a claim of independent factor isolation.
 
 This is a fixed-text, fixed-renderer typography recognition benchmark. Passing integrity checks establishes consistency of this corpus; it does not prove generalization to arbitrary text, sizes, browsers, languages, or unseen fonts. Inspect the contact sheets and per-family results alongside aggregate scores.
 

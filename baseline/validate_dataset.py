@@ -116,6 +116,14 @@ def validate_dataset(manifest_path: str | Path) -> dict:
                         'aliases': font['aliases'], **{key: recipe[key] for key in ('weight', 'modifier', 'kerning', 'lineHeight', 'widthId')}}
             if any(item.get(key) != value for key, value in expected.items()):
                 fail('catalog', 'Labels differ from the frozen font catalog or recipe', item['taskId'])
+        supported_groups = defaultdict(list)
+        for item in items:
+            supported_groups[(item['fontId'], item['weight'], item['modifier'])].append(item)
+        for (_, weight, modifier), group in supported_groups.items():
+            group_recipes = [recipe for recipe in recipes.values() if recipe['weight'] == weight and recipe['modifier'] == modifier]
+            for axis in ('kerning', 'lineHeight', 'widthId'):
+                if {item[axis] for item in group} != {recipe[axis] for recipe in group_recipes}:
+                    fail('coverage', f'Supported font/weight/modifier lacks catalog {axis} levels', group[0]['taskId'])
     except (OSError, ValueError, TypeError, KeyError, AttributeError) as error:
         fail('census', f'Complete frozen catalog and skipped-candidate census required: {error}')
 
@@ -186,12 +194,12 @@ def validate_dataset(manifest_path: str | Path) -> dict:
                 if index and abs(box['y'] - boxes[index - 1]['y'] - layout['lineHeightPx']) > 0.2:
                     raise ValueError('Measured line separation disagrees with line-height label')
                 if ink is not None:
-                    # Keep the middle of each line distinct when glyph bounds overlap at tight leading.
-                    top = box['y']
-                    bottom = min(box['y'] + box['height'], box['y'] + layout['lineHeightPx'])
-                    pixel_box = (math.floor(box['x'] * 2), math.floor(top * 2),
-                                 math.ceil((box['x'] + box['width']) * 2), math.ceil(bottom * 2))
-                    if ink.crop(pixel_box).getbbox() is None:
+                    # Previous-line descenders cannot prove that another line exists.
+                    top = max(box['y'], boxes[index - 1]['y'] + boxes[index - 1]['height']) if index else box['y']
+                    bottom = box['y'] + box['height']
+                    pixel_box = (math.floor(box['x'] * 2), math.ceil(top * 2),
+                                 math.ceil((box['x'] + box['width']) * 2), math.floor(bottom * 2))
+                    if bottom <= top or ink.crop(pixel_box).getbbox() is None:
                         raise ValueError(f'Measured text line {index + 1} has no visible ink')
         except (KeyError, ValueError, TypeError, IndexError, AttributeError) as error:
             fail('layout', f'Missing or invalid layout evidence: {error}', task_id)

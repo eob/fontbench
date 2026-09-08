@@ -1,0 +1,15 @@
+{
+  "taskId": "font-dancing-script-v41",
+  "harborTaskId": "task-3c5762a18c33d21558f129f3",
+  "canonical": "Dancing Script",
+  "aliases": [
+    "dancing script"
+  ],
+  "category": "handwriting",
+  "weight": "bold",
+  "modifier": "strikethrough",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "medium",
+  "widthPx": 320
+}

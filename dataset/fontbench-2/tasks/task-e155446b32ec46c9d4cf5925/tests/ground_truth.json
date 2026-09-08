@@ -1,0 +1,15 @@
+{
+  "taskId": "font-montserrat-v24",
+  "harborTaskId": "task-e155446b32ec46c9d4cf5925",
+  "canonical": "Montserrat",
+  "aliases": [
+    "montserrat"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "loose",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-impact-v28",
+  "harborTaskId": "task-1eb03c248b2f463c9c74e38a",
+  "canonical": "Impact",
+  "aliases": [
+    "impact"
+  ],
+  "category": "other",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "tight",
+  "lineHeight": "normal",
+  "widthId": "wide",
+  "widthPx": 440
+}

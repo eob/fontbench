@@ -1,0 +1,15 @@
+{
+  "taskId": "font-bebas-neue-v24",
+  "harborTaskId": "task-a39c707ac79d56de13482301",
+  "canonical": "Bebas Neue",
+  "aliases": [
+    "bebas neue"
+  ],
+  "category": "other",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "loose",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

@@ -42,6 +42,8 @@ def task(tmp_path):
     ("a", "Arial", [], False),
     ("Roboto", "Roboto Mono", [], False),
     ("Roboto Mono", "Roboto", [], False),
+    ("Helvetica Neue", "Helvetica", [], False),
+    ("Times", "Times New Roman", [], False),
     ("Arial or Helvetica", "Arial", [], False),
     ("Arial", "Helvetica", ["!!!"], False),
     ("", "Arial", [], False),
