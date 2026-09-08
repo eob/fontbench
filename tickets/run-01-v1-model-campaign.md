@@ -13,7 +13,7 @@
 
 Run the complete frozen V1.0.0 corpus against all enabled OpenAI, Gemini, and Claude configurations. The user subsequently added Anthropic funds/limits and explicitly included `claude-fable-5-1`. All eleven enabled configurations now target 20,064 final model–input observations. The already-disabled historical Gemini 2.5 Flash-Lite remains excluded.
 
-The user has authorized a **$50 cumulative estimated spending cap**, raised from the initial $25 guard. This includes all earlier attempts in the same campaign. Historical OpenAI/Gemini usage alone projects about $141 for complete coverage, plus unknown Claude usage; the campaign stops at the authorized guard if it cannot finish within it.
+The user has authorized a **$100 cumulative estimated spending cap**, raised from the earlier $25 and $50 guards. This includes all earlier attempts in the same campaign. Historical OpenAI/Gemini usage alone projects about $141 for complete coverage, plus unknown Claude usage; the campaign stops at the authorized guard if it cannot finish within it.
 
 ## Plan and gates
 
@@ -34,7 +34,7 @@ bun run benchmark --release 1.0.0 --run-id 2026-09-08-all-except-fable \
   --models claude-fable-5-1 claude-opus-5 claude-sonnet-5 claude-haiku-4-5-20251001 \
     gpt-6-astra gpt-5.6-sol gpt-5.6-terra gpt-5.6-luna \
     gemini-3.1-pro-preview gemini-3.8-flash gemini-3.5-flash-lite \
-  --budget-usd 50 --concurrency 10
+  --budget-usd 100 --concurrency 10
 ```
 
 The process writes `results/runs/1.0.0/2026-09-08-all-except-fable/`. Reusing this run ID preserves completed answers and attempt costs. Malformed model answers remain final zero-credit observations; infrastructure failures remain retryable. The corpus, rubric, grading, provider protocol and model configurations are unchanged.
@@ -149,3 +149,12 @@ The user reported funding the Claude Platform account and authorized another ret
 Independent preservation checks retain every one of the 2,439 prior final responses and 2,459 prior attempt IDs. The closed checkpoint contains 2,443 completed observations and 2,463 attempts. All four new Claude responses have no provider or schema error and include input/output token usage. SQLite integrity and V1.0.0 release identities pass. [Success evidence](evidence/run-01-claude-funded-success.json) records the outcome without credentials.
 
 Cumulative estimated spending is $37.8790802 against the authorized $50 cap. Resume all eleven enabled model configurations under the same run ID and guard; prior completed measurements remain final and all historical failed-attempt costs remain in the ledger. Anthropic's billing blocker is resolved for the tested requests. The local website refresh helper continues updating progress.
+
+
+### Cumulative cap raised to $100
+
+The user authorized increasing the campaign ceiling to $100 if the $50 guard was reached. The runner is resuming with that total ceiling so it can continue across $50 without another intervention. All previous attempts count toward the $100 maximum.
+
+The $50 invocation drained at `2026-09-08T22:54:03.256565+00:00`, preserving 3,644 completed observations and 3,664 attempts with $47.2365062 in cumulative estimated spending. SQLite integrity passes. The preservation snapshot precedes the new invocation, which selects all eleven enabled configurations with `--budget-usd 100 --concurrency 10`. The supplied Anthropic key and workspace remain in use; the fallback key has not been used.
+
+The local website monitor continues refreshing the versioned ledger. Claude is catching up with previously completed OpenAI/Gemini observations; all selected models remain eligible for their missing inputs.

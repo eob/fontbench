@@ -9,14 +9,14 @@
   "grading_version": "3",
   "expected_task_count": 1824,
   "mock": false,
-  "runner_git_commit": "9d996ff09cb8a129927afb2252dbaf82775c8164",
-  "runner_git_dirty": true,
+  "runner_git_commit": "952c723f698bdc3f751a792d9a08293c42d9587c",
+  "runner_git_dirty": false,
   "created_at": "2026-09-08T21:36:04.066Z",
-  "updated_at": "2026-09-08T22:46:17.815142+00:00",
+  "updated_at": "2026-09-08T22:54:03.256565+00:00",
   "budget_usd": 50.0,
-  "spent_cost_usd": 37.879080200000026,
+  "spent_cost_usd": 47.23650619999994,
   "cost_incomplete": false,
-  "status": "partial",
+  "status": "interrupted",
   "models": {
     "claude-fable-5-1": {
       "model_config": {
@@ -40,12 +40,12 @@
       "model": "claude-fable-5-1",
       "max_output_tokens": 4096,
       "display_name": "Claude Fable 5.1",
-      "completed": 1,
-      "attempted_tasks": 3,
-      "status": "partial",
-      "reason": null,
-      "cost_usd": 1.79975,
-      "composite_score": 0.8333333333333334
+      "completed": 302,
+      "attempted_tasks": 302,
+      "status": "paused",
+      "reason": "Interrupted; resume to continue",
+      "cost_usd": 7.027859999999989,
+      "composite_score": 0.7400662251655629
     },
     "claude-haiku-4-5-20251001": {
       "model_config": {
@@ -69,12 +69,12 @@
       "model": "claude-haiku-4-5-20251001",
       "max_output_tokens": 1024,
       "display_name": "Claude Haiku 4.5",
-      "completed": 1,
-      "attempted_tasks": 2,
-      "status": "partial",
-      "reason": null,
-      "cost_usd": 0.041787000000000005,
-      "composite_score": 0.5
+      "completed": 301,
+      "attempted_tasks": 301,
+      "status": "paused",
+      "reason": "Interrupted; resume to continue",
+      "cost_usd": 0.4475039999999998,
+      "composite_score": 0.5077519379844954
     },
     "claude-opus-5": {
       "model_config": {
@@ -98,12 +98,12 @@
       "model": "claude-opus-5",
       "max_output_tokens": 4096,
       "display_name": "Claude Opus 5",
-      "completed": 1,
-      "attempted_tasks": 3,
-      "status": "partial",
-      "reason": null,
-      "cost_usd": 0.645065,
-      "composite_score": 0.8333333333333334
+      "completed": 301,
+      "attempted_tasks": 301,
+      "status": "paused",
+      "reason": "Interrupted; resume to continue",
+      "cost_usd": 3.3838500000000007,
+      "composite_score": 0.6960132890365448
     },
     "claude-sonnet-5": {
       "model_config": {
@@ -127,12 +127,12 @@
       "model": "claude-sonnet-5",
       "max_output_tokens": 4096,
       "display_name": "Claude Sonnet 5",
-      "completed": 1,
-      "attempted_tasks": 2,
-      "status": "partial",
-      "reason": null,
-      "cost_usd": 0.207016,
-      "composite_score": 0.6666666666666666
+      "completed": 301,
+      "attempted_tasks": 301,
+      "status": "paused",
+      "reason": "Interrupted; resume to continue",
+      "cost_usd": 1.1918300000000002,
+      "composite_score": 0.6168327796234775
     },
     "gemini-3.1-pro-preview": {
       "model_config": {
@@ -338,5 +338,5 @@
       "composite_score": 0.8834765998089784
     }
   },
-  "interruption_signal": null
+  "interruption_signal": 15
 }

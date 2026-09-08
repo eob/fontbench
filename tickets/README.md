@@ -4,7 +4,8 @@ This folder is the authoritative local workfu/ticketfu issue catalog. It include
 
 | Ticket | Priority | Scope | State |
 | --- | --- | --- | --- |
-| [run-01](run-01-v1-model-campaign.md) | High | First V1.0.0 campaign across eleven provider models; $50 cap, all providers active | In Progress |
+| [run-02](run-02-resume-status.md) | Medium | Clear stale pause labels for selected models awaiting dispatch | Open |
+| [run-01](run-01-v1-model-campaign.md) | High | First V1.0.0 campaign across eleven provider models; $100 cap, all providers selected | In Progress |
 | [fix-repo-audit](fix-repo-audit.md) | High | Initial repository, renderer, grader, package, and installation repairs | Completed; historical |
 | [feat-multi-provider-benchmark](feat-multi-provider-benchmark.md) | High | Provider adapters, checkpoints, budgeted pilot, and first website | Completed; historical |
 | [valid-01](valid-01-benchmark-audit.md) | Critical | Audit integration, artifact census, fresh corpus, final verification | Completed |

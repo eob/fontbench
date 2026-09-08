@@ -1,17 +1,17 @@
 # V1.0.0 first multi-provider campaign
 
-Status: **partial**. Last checkpoint: `2026-09-08T22:46:17.815142+00:00`.
+Status: **interrupted**. Last checkpoint: `2026-09-08T22:54:03.256565+00:00`.
 
-**2,443 / 20,064 final observations**; cumulative estimated spend **$37.879080** against a **$50** guard.
+**3,644 / 20,064 final observations**; cumulative estimated spend **$47.236506** against a **$50** guard.
 
 The campaign includes all enabled Claude, OpenAI, and Gemini configurations, including Fable added on resume. The original run ID is retained to preserve checkpoints and history; its name describes the initial selection. Current provider issues appear below.
 
 | Model | Completed / 1,824 | State | Estimated USD |
 | --- | ---: | --- | ---: |
-| claude-fable-5-1 | 1 | partial | 1.799750 |
-| claude-haiku-4-5-20251001 | 1 | partial | 0.041787 |
-| claude-opus-5 | 1 | partial | 0.645065 |
-| claude-sonnet-5 | 1 | partial | 0.207016 |
+| claude-fable-5-1 | 302 | paused | 7.027860 |
+| claude-haiku-4-5-20251001 | 301 | paused | 0.447504 |
+| claude-opus-5 | 301 | paused | 3.383850 |
+| claude-sonnet-5 | 301 | paused | 1.191830 |
 | gemini-3.1-pro-preview | 348 | paused | 5.888766 |
 | gemini-3.5-flash-lite | 348 | paused | 0.202710 |
 | gemini-3.8-flash | 348 | paused | 4.168719 |
