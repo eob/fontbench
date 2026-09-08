@@ -97,3 +97,16 @@ def test_invalid_model_response_is_not_uploaded(tmp_path, response):
     with pytest.raises(ValidationError):
         asyncio.run(agent.run("Identify typography.", environment, SimpleNamespace()))
     assert environment.uploads == {}
+
+
+def test_duplicate_response_keys_are_rejected_before_upload(tmp_path):
+    async def generate_content(**kwargs):
+        return SimpleNamespace(text='{"font":"wrong","font":"Arial","category":"non-serif","weight":"regular","modifier":"regular","kerning":"normal","line_height":"normal"}')
+
+    agent = BaselineVLMAgent(mock=True, logs_dir=tmp_path)
+    agent.mock = False
+    agent._client = SimpleNamespace(aio=SimpleNamespace(models=SimpleNamespace(generate_content=generate_content)))
+    environment = Environment()
+    with pytest.raises(ValueError, match="Duplicate"):
+        asyncio.run(agent.run("Identify typography.", environment, SimpleNamespace()))
+    assert environment.uploads == {}

@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_foreign_checkpoint_tasks_are_refused_before_resuming ___________
+
+benchmark = {'manifest_path': PosixPath('/tmp/pytest-of-ted/pytest-9/test_foreign_checkpoint_tasks_0/manifest.json'), 'config_path...'), 'output_dir': PosixPath('/tmp/pytest-of-ted/pytest-9/test_foreign_checkpoint_tasks_0/runs'), 'run_id': 'test', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f64f30da950>
+
+    def test_foreign_checkpoint_tasks_are_refused_before_resuming(benchmark, monkeypatch):
+        from baseline.run_state import RunStore
+        run_benchmark(**benchmark, max_tasks=1)
+        with RunStore(benchmark['output_dir'] / 'mock-test' / 'state.sqlite3') as store:
+            previous = next(iter(store.completed_results('test', 'model-a').values()))
+            store.save_result('test', 'model-a', 'foreign-task', {**previous, 'task_id': 'foreign-task'})
+        calls = []
+        original = BaselineEvaluator._eval_single_task
+        def evaluate(self, item, prompt):
+            calls.append(item['taskId'])
+            return original(self, item, prompt)
+        monkeypatch.setattr(BaselineEvaluator, '_eval_single_task', evaluate)
+>       with pytest.raises(ValueError, match='checkpoint'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_runner.py:110: Failed
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+=========================== short test summary info ============================
+FAILED tests/test_runner.py::test_foreign_checkpoint_tasks_are_refused_before_resuming
+1 failed, 7 deselected in 0.16s

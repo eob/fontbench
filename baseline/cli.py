@@ -22,7 +22,7 @@ def main():
     parser.add_argument(
         "--manifest",
         type=str,
-        default="dataset/rendered/manifest.json",
+        default="dataset/fontbench-2-rendered/manifest.json",
         help="Path to rendered manifest.json",
     )
     parser.add_argument(
@@ -75,12 +75,15 @@ def main():
               f"F:{f_st} C:{c_st} W:{w_st} M:{m_st} K:{k_st} L:{l_st} | "
               f"{result.target_canonical} -> '{result.predicted_font}' ({result.latency_sec:.2f}s)")
 
-    scorecard = evaluator.evaluate_manifest(
-        manifest_path=args.manifest,
-        limit=args.limit,
-        concurrency=args.concurrency,
-        progress_cb=progress_callback,
-    )
+    try:
+        scorecard = evaluator.evaluate_manifest(
+            manifest_path=args.manifest,
+            limit=args.limit,
+            concurrency=args.concurrency,
+            progress_cb=progress_callback,
+        )
+    finally:
+        evaluator.close()
 
     os.makedirs(args.output_dir, exist_ok=True)
     slug = args.model.replace("/", "_").replace(":", "_")

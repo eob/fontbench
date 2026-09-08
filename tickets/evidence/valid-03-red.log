@@ -1,0 +1,301 @@
+FFFFFFFFFFFFFF                                                           [100%]
+=================================== FAILURES ===================================
+_ test_ambiguous_answers_are_final_schema_errors[{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-openai] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe1de490>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin0/sample.png')
+provider = 'openai'
+raw = '{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "ker...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=5, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_ test_ambiguous_answers_are_final_schema_errors[{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-anthropic] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe030d50>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin1/sample.png')
+provider = 'anthropic'
+raw = '{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "ker...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=5, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_ test_ambiguous_answers_are_final_schema_errors[{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-google] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe11dd10>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin2/sample.png')
+provider = 'google'
+raw = '{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "ker...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=8, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_ test_ambiguous_answers_are_final_schema_errors[{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}-openai] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfdda4690>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin3/sample.png')
+provider = 'openai'
+raw = '{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "k...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=5, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_ test_ambiguous_answers_are_final_schema_errors[{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}-anthropic] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe0332d0>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin4/sample.png')
+provider = 'anthropic'
+raw = '{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "k...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=5, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_ test_ambiguous_answers_are_final_schema_errors[{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}-google] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe198890>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin5/sample.png')
+provider = 'google'
+raw = '{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "k...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=8, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_ test_ambiguous_answers_are_final_schema_errors[{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-openai] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe0ec090>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin6/sample.png')
+provider = 'openai'
+raw = '{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modif...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=5, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_ test_ambiguous_answers_are_final_schema_errors[{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-anthropic] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe1b35d0>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin7/sample.png')
+provider = 'anthropic'
+raw = '{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modif...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=5, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_ test_ambiguous_answers_are_final_schema_errors[{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-google] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe1d3390>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_ambiguous_answers_are_fin8/sample.png')
+provider = 'google'
+raw = '{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}'
+
+    @pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+    @pytest.mark.parametrize('raw', [
+        json.dumps({**PREDICTION, 'font': '   '}),
+        json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+        '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+    ])
+    def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+        handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+        client = provider_client(monkeypatch, provider, handler)
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.error_kind == 'invalid_response'
+E       assert None == 'invalid_response'
+E        +  where None = PredictionResponse(raw_text='{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modif...t': 'normal'}, error=None, error_kind=None, input_tokens=12, output_tokens=8, request_attempts=1, unmetered_attempts=0).error_kind
+
+tests/test_providers.py:303: AssertionError
+_________ test_valid_prediction_whitespace_is_normalized_consistently __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfddb1dd0>
+image_path = PosixPath('/tmp/pytest-of-ted/pytest-5/test_valid_prediction_whitespa0/sample.png')
+
+    def test_valid_prediction_whitespace_is_normalized_consistently(monkeypatch, image_path):
+        raw = json.dumps({key: f' {value.upper()} ' for key, value in PREDICTION.items()})
+        client = provider_client(monkeypatch, 'openai', lambda request: httpx.Response(200, json=success_body('openai', raw=raw)))
+        result = client.predict(str(image_path), 'prompt')
+        client.close()
+>       assert result.parsed == {**PREDICTION, 'font': 'ARIAL'}
+E       AssertionError: assert {'font': ' AR...regular', ...} == {'font': 'ARI...regular', ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Differing items:
+E         {'font': ' ARIAL '} != {'font': 'ARIAL'}
+E         Use -v to get more diff
+
+tests/test_providers.py:313: AssertionError
+__ test_partial_parsed_responses_are_schema_failures_at_the_grading_boundary ___
+
+task = {'taskId': 'arial-1', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': ['Arial MT'], ...}
+
+    def test_partial_parsed_responses_are_schema_failures_at_the_grading_boundary(task):
+        evaluator = BaselineEvaluator(mock=True)
+        evaluator.predict_image = Mock(return_value=PredictionResponse('{"font":"Arial"}', {'font': 'Arial'}))
+        result = evaluator._eval_single_task(task, 'prompt')
+>       assert result.composite_score == 0
+E       AssertionError: assert 0.16666666666666666 == 0
+E        +  where 0.16666666666666666 = TaskEvaluationResult(task_id='arial-1', font_id='arial', target_canonical='Arial', target_aliases=['Arial MT'], catego...e, provider='google', error_kind=None, input_tokens=None, output_tokens=None, request_attempts=0, unmetered_attempts=0).composite_score
+
+tests/test_evaluator.py:241: AssertionError
+________ test_scorecard_marks_partial_cohort_and_invalid_model_answers _________
+
+task = {'taskId': 'arial-1', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': ['Arial MT'], ...}
+
+    def test_scorecard_marks_partial_cohort_and_invalid_model_answers(task):
+        evaluator = BaselineEvaluator(mock=True)
+        evaluator.predict_image = Mock(return_value=PredictionResponse('invalid', error='Invalid JSON', error_kind='invalid_response'))
+        result = evaluator._eval_single_task(task, 'prompt')
+        card = evaluator.score_results([result], expected_task_count=2)
+>       assert card.status == 'partial'
+               ^^^^^^^^^^^
+E       AttributeError: 'FontBenchScorecard' object has no attribute 'status'
+
+tests/test_evaluator.py:250: AttributeError
+________________ test_changed_evaluation_protocol_cannot_resume ________________
+
+benchmark = {'manifest_path': PosixPath('/tmp/pytest-of-ted/pytest-5/test_changed_evaluation_protoc0/manifest.json'), 'config_path...'), 'output_dir': PosixPath('/tmp/pytest-of-ted/pytest-5/test_changed_evaluation_protoc0/runs'), 'run_id': 'test', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3cfe176410>
+
+    def test_changed_evaluation_protocol_cannot_resume(benchmark, monkeypatch):
+        import baseline.evaluator as evaluator_module
+        run_benchmark(**benchmark, max_tasks=1)
+        monkeypatch.setattr(evaluator_module, 'DEFAULT_PROMPT', 'A changed evaluation prompt', raising=False)
+>       with pytest.raises(ValueError, match='fingerprint|protocol'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_runner.py:86: Failed
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+model-a / two: saved | estimated spend $0.0000
+___________ test_changed_rendering_evidence_changes_dataset_identity ___________
+
+benchmark = {'manifest_path': PosixPath('/tmp/pytest-of-ted/pytest-5/test_changed_rendering_evidenc0/manifest.json'), 'config_path...'), 'output_dir': PosixPath('/tmp/pytest-of-ted/pytest-5/test_changed_rendering_evidenc0/runs'), 'run_id': 'test', ...}
+
+    def test_changed_rendering_evidence_changes_dataset_identity(benchmark):
+        from baseline.runner import dataset_fingerprint, load_manifest
+        items = load_manifest(str(benchmark['manifest_path']))
+        initial = dataset_fingerprint(items)
+        items[0]['fontRendering'] = {'verified': False}
+>       assert dataset_fingerprint(items) != initial
+E       AssertionError: assert '3455096e40541da420e7ba3548fad6f4ee153f0f649cd2ba0e03de5747121990' != '3455096e40541da420e7ba3548fad6f4ee153f0f649cd2ba0e03de5747121990'
+E        +  where '3455096e40541da420e7ba3548fad6f4ee153f0f649cd2ba0e03de5747121990' = <function dataset_fingerprint at 0x7f3cfe1e8a40>([{'taskId': 'one', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': [], ...}, {'taskId': 'two', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': [], ...}])
+
+tests/test_runner.py:95: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-openai]
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-anthropic]
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font": "   ", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-google]
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}-openai]
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}-anthropic]
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal", "alternative_font": "Helvetica"}-google]
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-openai]
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-anthropic]
+FAILED tests/test_providers.py::test_ambiguous_answers_are_final_schema_errors[{"font":"Helvetica","font": "Arial", "category": "non-serif", "weight": "regular", "modifier": "regular", "kerning": "normal", "line_height": "normal"}-google]
+FAILED tests/test_providers.py::test_valid_prediction_whitespace_is_normalized_consistently
+FAILED tests/test_evaluator.py::test_partial_parsed_responses_are_schema_failures_at_the_grading_boundary
+FAILED tests/test_evaluator.py::test_scorecard_marks_partial_cohort_and_invalid_model_answers
+FAILED tests/test_runner.py::test_changed_evaluation_protocol_cannot_resume
+FAILED tests/test_runner.py::test_changed_rendering_evidence_changes_dataset_identity
+14 failed, 88 deselected in 0.32s

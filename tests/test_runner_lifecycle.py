@@ -16,6 +16,7 @@ import baseline.runner as runner
 
 @pytest.fixture
 def campaign(tmp_path, monkeypatch):
+    monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', lambda path: {'valid': True})
     Image.new('RGB', (4, 4), 'white').save(tmp_path / 'sample.png')
     sample = dict(taskId='one', fontId='arial', fontName='Arial', aliases=[], category='non-serif',
                   weight='regular', modifier='regular', kerning='normal', lineHeight='normal',

@@ -2,6 +2,7 @@
 
 import base64
 import json
+import hashlib
 from html.parser import HTMLParser
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -11,10 +12,12 @@ import pytest
 
 from baseline.build_page import build_page
 from baseline.runner import dataset_fingerprint
+from baseline.evaluator import evaluation_protocol_fingerprint
 
 
 @pytest.fixture
-def dataset(tmp_path):
+def dataset(tmp_path, monkeypatch):
+    monkeypatch.setattr("baseline.build_page.validate_dataset", lambda path: {"valid": True, "errors": []})
     samples = []
     for index in range(8):
         filename = f"sample-{index}.png"
@@ -47,11 +50,15 @@ def write_scorecard(directory, samples, count=1, fingerprint=None):
     } for sample in samples[:count]]
     (directory / "scorecard_test-model.json").write_text(json.dumps({
         "model_id": "test-model", "model_name": "exact-id", "provider": "openai", "max_output_tokens": 1024,
-        "grading_version": "2", "mock": False,
+        "grading_version": "3", "mock": False,
+        "evaluation_protocol_fingerprint": evaluation_protocol_fingerprint(),
+        "cohort_fingerprint": hashlib.sha256(json.dumps(sorted(task["task_id"] for task in tasks)).encode()).hexdigest(),
+        "status": "complete" if count == len(samples) else "partial",
         "dataset_fingerprint": fingerprint or dataset_fingerprint(samples), "tasks": tasks,
         "total_tasks": count, "expected_task_count": len(samples), "avg_latency_sec": 1.2,
     }))
     (directory / "summary.json").write_text(json.dumps({
+        "evaluation_protocol_fingerprint": evaluation_protocol_fingerprint(),
         "status": "partial", "mock": False, "dataset_fingerprint": fingerprint or dataset_fingerprint(samples),
         "models": {"test-model": {"provider": "openai", "model": "exact-id", "max_output_tokens": 1024,
                                   "status": "running", "completed": count, "cost_usd": 0.01}},
@@ -208,3 +215,67 @@ def test_build_is_deterministic(dataset, tmp_path):
     assert {p.relative_to(first): p.read_bytes() for p in first.rglob("*") if p.is_file()} == {
         p.relative_to(second): p.read_bytes() for p in second.rglob("*") if p.is_file()
     }
+
+@pytest.mark.parametrize('tasks', [None, [None], [{'task_id': []}]])
+def test_malformed_task_rows_are_excluded_without_breaking_page(dataset, tmp_path, tasks):
+    manifest, samples, config = dataset
+    write_scorecard(tmp_path / 'results', samples)
+    path = tmp_path / 'results/scorecard_test-model.json'
+    card = json.loads(path.read_text())
+    card['tasks'] = tasks
+    path.write_text(json.dumps(card))
+    report = build_page(manifest, tmp_path / 'results', tmp_path / 'site', config)
+    assert report['models'][0]['completed'] == 0
+    assert report['warnings']
+
+
+def test_corrupt_scorecard_json_is_excluded_with_warning(dataset, tmp_path):
+    manifest, samples, config = dataset
+    write_scorecard(tmp_path / 'results', samples)
+    (tmp_path / 'results/scorecard_test-model.json').write_text('{unfinished')
+    report = build_page(manifest, tmp_path / 'results', tmp_path / 'site', config)
+    assert report['models'][0]['completed'] == 0
+    assert report['warnings']
+
+
+def test_partial_comparison_records_intersection_of_measured_inputs(dataset, tmp_path):
+    manifest, samples, config = dataset
+    write_scorecard(tmp_path / 'results', samples, count=2)
+    settings = json.loads(config.read_text())
+    settings['models'].append({**settings['models'][0], 'id': 'second', 'display_name': 'Second'})
+    config.write_text(json.dumps(settings))
+    card = json.loads((tmp_path / 'results/scorecard_test-model.json').read_text())
+    card.update(model_id='second', tasks=card['tasks'][1:], total_tasks=1)
+    card['cohort_fingerprint'] = hashlib.sha256(json.dumps(['task-1']).encode()).hexdigest()
+    (tmp_path / 'results/scorecard_second.json').write_text(json.dumps(card))
+    report = build_page(manifest, tmp_path / 'results', tmp_path / 'site', config)
+    assert report['comparison']['task_ids'] == ['task-1']
+    assert report['comparison']['count'] == 1
+    assert report['comparison']['models']['test-model']['composite'] == 1.0
+    assert report['comparison']['models']['second']['composite'] == 1.0
+    assert 'Shared comparison: 1 input' in (tmp_path / 'site/index.html').read_text()
+
+
+def test_invalid_dataset_gate_prevents_valid_benchmark_claims(dataset, tmp_path, monkeypatch):
+    manifest, samples, config = dataset
+    write_scorecard(tmp_path / "results", samples, count=len(samples))
+    monkeypatch.setattr("baseline.build_page.validate_dataset", lambda path: {"valid": False, "errors": ["Font provenance missing"]})
+    report = build_page(manifest, tmp_path / "results", tmp_path / "site", config)
+    assert not report["validity"]["valid"]
+    assert report["models"][0]["completed"] == 0
+    html = (tmp_path / "site/index.html").read_text()
+    assert "Dataset validity checks failed" in html
+    assert "validated inputs" not in html
+
+
+@pytest.mark.parametrize("field", ["evaluation_protocol_fingerprint", "cohort_fingerprint", "grading_version"])
+def test_page_excludes_incompatible_protocol_or_cohort(dataset, tmp_path, field):
+    manifest, samples, config = dataset
+    write_scorecard(tmp_path / "results", samples)
+    path = tmp_path / "results/scorecard_test-model.json"
+    card = json.loads(path.read_text())
+    card[field] = "historical"
+    path.write_text(json.dumps(card))
+    report = build_page(manifest, tmp_path / "results", tmp_path / "site", config)
+    assert report["models"][0]["completed"] == 0
+    assert report["warnings"]

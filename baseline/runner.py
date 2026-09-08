@@ -17,19 +17,12 @@ import signal
 import threading
 from typing import Any
 
-from baseline.evaluator import BaselineEvaluator, TaskEvaluationResult, load_manifest
+from baseline.evaluator import (
+    DEFAULT_PROMPT, GRADING_VERSION, BaselineEvaluator, TaskEvaluationResult,
+    dataset_fingerprint, evaluation_protocol_fingerprint, load_manifest,
+)
 from baseline.model_config import load_model_config
 from baseline.run_state import RunStore
-
-
-def dataset_fingerprint(items: list[dict]) -> str:
-    digest = hashlib.sha256(b'fontbench-grading-2\n')
-    for item in sorted(items, key=lambda item: item['taskId']):
-        metadata = {key: value for key, value in item.items()
-                    if key not in {'imagePath', 'imageFilename', 'fontRendering'}}
-        digest.update(json.dumps(metadata, sort_keys=True, ensure_ascii=False).encode())
-        digest.update(hashlib.sha256(Path(item['imagePath']).read_bytes()).digest())
-    return digest.hexdigest()
 
 
 def write_json(path: Path, data: dict) -> None:
@@ -101,8 +94,13 @@ def run_benchmark(
     ):
         raise ValueError('A spending limit requires recorded pricing for each selected model')
 
+    if not mock:
+        from baseline.validate_dataset import require_valid_dataset
+        require_valid_dataset(manifest_path)
     items = load_manifest(str(manifest_path))
     fingerprint = dataset_fingerprint(items)
+    protocol_fingerprint = evaluation_protocol_fingerprint()
+    run_fingerprint = hashlib.sha256(f'{fingerprint}:{protocol_fingerprint}'.encode()).hexdigest()
     items.sort(key=lambda item: item['taskId'])
     random.Random(0).shuffle(items)
     selected_items = items[:max_tasks] if max_tasks is not None else items
@@ -134,8 +132,10 @@ def run_benchmark(
         }
 
         with RunStore(state_path) as store:
-            store.register_run(run_id, fingerprint, {'manifest_path': str(Path(manifest_path).resolve()), 'mock': mock,
-                                                     'expected_task_count': len(items), 'grading_version': '2'})
+            store.register_run(run_id, run_fingerprint, {'manifest_path': str(Path(manifest_path).resolve()), 'mock': mock,
+                                                        'expected_task_count': len(items), 'grading_version': GRADING_VERSION,
+                                                        'dataset_fingerprint': fingerprint,
+                                                        'evaluation_protocol_fingerprint': protocol_fingerprint})
             unknown_historical_costs = store.has_unknown_costs(run_id)
             if budget_usd is not None and unknown_historical_costs:
                 raise ValueError('Cannot enforce a cumulative spending limit: prior attempts have unknown costs')
@@ -145,6 +145,21 @@ def run_benchmark(
             # invocation selects only new models. Aggregation makes no requests.
             reported_models = [state['config'] for state in store.model_states(run_id).values()]
             completed = {model['id']: store.completed_results(run_id, model['id']) for model in reported_models}
+            item_by_id = {item['taskId']: item for item in items}
+            for model in reported_models:
+                for task_id, result in completed[model['id']].items():
+                    item = item_by_id.get(task_id)
+                    if item is None:
+                        raise ValueError(f'Unknown checkpoint task: {task_id}')
+                    expected = {
+                        'task_id': task_id, 'model_name': model['model'], 'provider': model['provider'],
+                        'font_id': item['fontId'], 'target_canonical': item['fontName'],
+                        'target_aliases': item.get('aliases', []), 'category': item['category'],
+                        'weight': item['weight'], 'modifier': item['modifier'], 'kerning': item['kerning'],
+                        'line_height': item['lineHeight'], 'width_id': item['widthId'], 'width_px': item['widthPx'],
+                    }
+                    if any(result.get(key) != value for key, value in expected.items()):
+                        raise ValueError(f'Inconsistent checkpoint identity or targets: {model["id"]}/{task_id}')
             pending = deque((model['id'], item) for item in selected_items for model in models
                             if item['taskId'] not in completed[model['id']])
             blocked_providers: set[str] = set()
@@ -156,6 +171,7 @@ def run_benchmark(
             def snapshot(changed_model_id: str | None = None) -> dict:
                 state = store.model_states(run_id)
                 summary = {'run_id': run_id, 'dataset_fingerprint': fingerprint, 'mock': mock,
+                           'evaluation_protocol_fingerprint': protocol_fingerprint, 'grading_version': GRADING_VERSION,
                            'expected_task_count': len(items), 'budget_usd': budget_usd,
                            'spent_cost_usd': store.spent_cost(run_id), 'cost_incomplete': unknown_historical_costs,
                            'status': status, 'models': {},
@@ -171,6 +187,7 @@ def run_benchmark(
                         scorecard.pop('task_results')
                         scorecard['tasks'] = list(saved.values())
                         scorecard.update(mock=mock, dataset_fingerprint=fingerprint, model_id=model_id,
+                                         evaluation_protocol_fingerprint=protocol_fingerprint,
                                          model_name=model['model'], provider=model['provider'],
                                          max_output_tokens=model.get('max_output_tokens', 1024),
                                          pricing={'input_per_m': model.get('input_per_m'), 'output_per_m': model.get('output_per_m')})
@@ -275,7 +292,7 @@ def run_benchmark(
                                 pending.appendleft((model_id, item))
                                 break
                             store.save_model_state(run_id, model_id, 'running')
-                            future = pool.submit(clients[model_id]._eval_single_task, item, item.get('prompt', 'Identify all six typographic properties.'))
+                            future = pool.submit(clients[model_id]._eval_single_task, item, DEFAULT_PROMPT)
                             running[future] = (model_id, item['taskId'], request_reserve)
                             reserved_cost += request_reserve
                         if not running:
@@ -313,7 +330,7 @@ def run_benchmark(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--manifest', default='dataset/rendered/manifest.json')
+    parser.add_argument('--manifest', default='dataset/fontbench-2-rendered/manifest.json')
     parser.add_argument('--config', default='config/models.json')
     parser.add_argument('--output-dir', default='results/runs')
     parser.add_argument('--run-id', default='default')

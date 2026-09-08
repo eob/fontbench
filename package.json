@@ -6,7 +6,7 @@
   "scripts": {
     "render": "bun run src/render.ts",
     "build:harbor": "bun run src/generate_harbor_dataset.ts",
-    "build:all": "bun run render && bun run build:harbor",
+    "build:all": "bun run render && bun run validate:dataset && bun run build:harbor",
     "baseline": ".venv/bin/python -m baseline.cli",
     "baseline:mock": ".venv/bin/python -m baseline.cli --mock",
     "test": "bun run test:python && bun run test:ts && bun run typecheck",
@@ -14,15 +14,18 @@
     "test:ts": "bun test src",
     "typecheck": "tsc --noEmit",
     "benchmark": ".venv/bin/python -m baseline.runner",
-    "build:page": ".venv/bin/python -m baseline.build_page"
+    "build:page": ".venv/bin/python -m baseline.build_page",
+    "validate:dataset": ".venv/bin/python -m baseline.validate_dataset --manifest dataset/fontbench-2-rendered/manifest.json"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/fontkit": "^2.0.9"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "fontkit": "^2.0.4",
     "playwright": "^1.63.0"
   }
 }

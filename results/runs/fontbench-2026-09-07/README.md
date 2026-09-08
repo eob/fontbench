@@ -1,8 +1,10 @@
-# September 7, 2026 live comparison — partial
+# September 7, 2026 historical comparison — invalid for final benchmark use
+
+The September 8 audit found two single-line inputs, remaining font-evidence conflicts, 21 synthetic italics, and a width-only shortcut that predicts 578/639 line-height labels. These results are retained for historical inspection. Use the new FontBench-2 inputs and grading version 3 for final measurements; the current live runner rejects this old dataset. See [the validity tickets](../../../tickets/README.md).
 
 The run stopped cleanly at its cumulative $25 spending guard with **2,216 completed model–input pairs** and 2,222 recorded evaluation attempts. Estimated spending is **$24.988759**, including conservative reservations for unmetered requests. This is not a provider invoice.
 
-The frozen corrected dataset contains 639 inputs across 50 font families, using grading version 2. No model has completed the full dataset; these partial samples should not be treated as final rankings.
+The historical dataset contains 639 inputs across 50 font families, using grading version 2. No model has completed the full dataset; these partial samples should not be treated as final rankings.
 
 | Model | Completed / 639 | State | Estimated USD |
 | --- | ---: | --- | ---: |
@@ -21,18 +23,11 @@ The frozen corrected dataset contains 639 inputs across 50 font families, using 
 
 Anthropic has insufficient credits. Gemini 3.5 Flash-Lite paused after repeated HTTP 503 deadline failures; Gemini 3.8 Flash paused after read timeouts. Their completed results are retained, and infrastructure failures are retryable. Gemini 2.5 Flash-Lite rejected inference as unavailable to new users and is disabled in the active catalog.
 
-All 11 active models appear on the [benchmark page](../../../site/index.html), including pending Anthropic rows. The page includes a balanced three-row montage and six H3 breakdowns made from the real inputs. Its data passed provenance validation against this run.
+## Preserved recovery evidence
 
-## Resume after adding credits
+The frozen `input/` directory and `state.sqlite3` checkpoint preserve all recorded responses and costs. Do not copy these datapoints into the new benchmark or change their frozen inputs. The current evaluator uses a different prompt, grading version, and protocol fingerprint and intentionally refuses to resume this campaign.
 
-```bash
-bun run benchmark --manifest results/runs/fontbench-2026-09-07/input/manifest.json --run-id fontbench-2026-09-07 --budget-usd 50
-bun run build:page --manifest results/runs/fontbench-2026-09-07/input/manifest.json --results-dir results/runs/fontbench-2026-09-07 --output-dir site
-```
-
-The example sets a cumulative $50 estimate for the entire run, including existing attempts. Select a model with `--models ID` to extend only that model. Add an enabled configuration entry to contribute another model; existing final results are reused. Preserve model settings and the frozen input images when resuming.
-
-This run's frozen `input/` and completed `state.sqlite3` checkpoint are versioned so a checkout can resume. Commit the updated checkpoint and reports together after extending this run. Other runs' input caches and checkpoint files remain ignored by default and need separate backups. If reports remain but the checkpoint is missing, the runner refuses to overwrite them. Restore the checkpoint or use a new run ID. SIGINT/SIGTERM drain outstanding requests; a hard kill between remote processing and local commit can still require a remote retry.
+Historical execution instructions and implementation details remain in Git at commit `14e792f`. The current benchmark page previews the replacement corpus. This run's checkpoint can still be inspected with SQLite without making provider requests.
 
 Dataset fingerprint: `b2dbd988d5c5c9c8cfdce397c2346531e9623e90e8752046ebaea3df142f6df8`.
 

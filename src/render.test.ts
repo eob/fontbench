@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { chromium, type Browser } from 'playwright';
-import { TOP_50_FONTS, VARIANT_RECIPES, type FontSpec, type VariantRecipe } from './fonts';
+import { TOP_50_FONTS, VARIANT_RECIPES, WIDTH_VARIANTS, type FontSpec, type VariantRecipe } from './fonts';
 import { renderAllSamples } from './render';
 
 // An original, minimal WOFF containing rectangle glyphs for the ASCII pangram.
@@ -21,6 +21,7 @@ const recipe: VariantRecipe = {
 
 const originalFonts = [...TOP_50_FONTS];
 const originalRecipes = [...VARIANT_RECIPES];
+const originalWidths = WIDTH_VARIANTS.map(width => ({ ...width }));
 const realLaunch = chromium.launch.bind(chromium);
 let directory: string;
 let browsers: Browser[];
@@ -43,10 +44,39 @@ afterEach(async () => {
   for (const browser of browsers) await browser.close();
   TOP_50_FONTS.splice(0, TOP_50_FONTS.length, ...originalFonts);
   VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, ...originalRecipes);
+  WIDTH_VARIANTS.splice(0, WIDTH_VARIANTS.length, ...originalWidths.map(width => ({ ...width })));
   fs.rmSync(directory, { recursive: true, force: true });
 });
 
 describe('rendered font integrity', () => {
+  test('refuses a CSS family alias around an unrelated font binary', async () => {
+    TOP_50_FONTS[0] = { ...fixtureFont, name: 'Unrelated Sans', cssFamily: 'Unrelated Sans',
+      cssUrl: `data:text/css,${encodeURIComponent(css.replaceAll('Fixture Sans', 'Unrelated Sans'))}` };
+    await expect(renderAllSamples(directory)).rejects.toThrow(/identity|family/i);
+  });
+
+  test('refuses CSS weight declarations that mislabel a static font binary', async () => {
+    TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-weight: 400', 'font-weight: 700'))}` };
+    VARIANT_RECIPES[0] = { ...recipe, weight: 'bold' };
+    await expect(renderAllSamples(directory)).rejects.toThrow(/binary.*weight|weight.*binary/i);
+  });
+
+  test('records actual multiline geometry and content hashes with pinned assets', async () => {
+    const [sample] = await renderAllSamples(directory);
+    expect(sample!.layout!.lineCount).toBeGreaterThanOrEqual(2);
+    expect(sample!.imageSha256).toMatch(/^[a-f0-9]{64}$/);
+    const asset = sample!.fontRendering!.assets![0]!;
+    expect(fs.readFileSync(path.join(directory, asset.path))).toEqual(Buffer.from(FONT_DATA, 'base64'));
+  });
+
+  test('keeps line height observable even when the full pangram fits the width', async () => {
+    WIDTH_VARIANTS.find(width => width.id === 'wide')!.widthPx = 1200;
+    VARIANT_RECIPES[0] = { ...recipe, widthId: 'wide' };
+    const [sample] = await renderAllSamples(directory);
+    expect(sample!.layout!.lineCount).toBe(2);
+    expect(sample!.layout!.cardHeightPx).toBeGreaterThan(110);
+  });
+
   test('refuses a missing font instead of labeling a fallback', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: 'data:text/css,' };
     await expect(renderAllSamples(directory)).rejects.toThrow(/font|fallback/i);
@@ -86,11 +116,25 @@ describe('rendered font integrity', () => {
     expect(browsers.every(browser => !browser.isConnected())).toBe(true);
   });
 
-  test('does not render upright labels using an italic-only font', async () => {
+  test('refuses a CSS italic declaration around a regular font binary', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-style: normal', 'font-style: italic'))}` };
     VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'italic' });
-    const manifest = await renderAllSamples(directory);
-    expect(manifest.map(sample => sample.modifier)).toEqual(['italic']);
+    await expect(renderAllSamples(directory)).rejects.toThrow(/binary style mismatch/);
+  });
+
+  test('records the current native face after styles change between recipes', async () => {
+    const italicBytes = fs.readFileSync(new URL('./fixtures/fixture-italic.woff', import.meta.url));
+    const server = Bun.serve({ port: 0, fetch: () => new Response(italicBytes, { headers: { 'Content-Type': 'font/woff' } }) });
+    try {
+      const italicCss = css.replace('font-style: normal', 'font-style: italic').replace(`data:font/woff;base64,${FONT_DATA}`, `http://localhost:${server.port}/italic.woff`);
+      TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css + italicCss)}` };
+      VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'italic' });
+      const manifest = await renderAllSamples(directory);
+      expect(manifest[0]!.fontRendering!.platformFonts[0]!.postScriptName).toBe('FixtureSans-Regular');
+      expect(manifest[1]!.fontRendering!.platformFonts[0]!.postScriptName).toBe('FixtureSans-Italic');
+    } finally {
+      await server.stop(true);
+    }
   });
 
   test('small caps visibly transforms lowercase letters and reports synthesis policy', async () => {
@@ -102,15 +146,33 @@ describe('rendered font integrity', () => {
     expect(manifest[1]).toMatchObject({ fontRendering: { smallCapsSynthesisAllowed: true } });
   });
 
-  test('records synthetic italic and preserves unrelated files on successful replacement', async () => {
-    VARIANT_RECIPES[0] = { ...recipe, modifier: 'italic' };
+  test('omits synthetic italic and preserves unrelated files on successful replacement', async () => {
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'italic' });
     fs.writeFileSync(path.join(directory, 'notes.txt'), 'keep this');
+    fs.writeFileSync(path.join(directory, 'font-fixture-v99.png'), 'obsolete managed image');
     fs.writeFileSync(path.join(directory, 'manifest.json'), 'previous manifest');
     fs.writeFileSync(path.join(directory, 'font-fixture-v01.png'), 'previous image');
     const manifest = await renderAllSamples(directory);
-    expect(manifest[0]).toMatchObject({ fontRendering: { syntheticItalic: true } });
+    expect(manifest).toHaveLength(1);
+    expect(manifest[0]).toMatchObject({ fontRendering: { syntheticItalic: false } });
+    expect(JSON.parse(fs.readFileSync(path.join(directory, 'skipped.json'), 'utf8'))).toMatchObject([{ taskId: 'font-fixture-v02', reason: expect.stringContaining('Unsupported face') }]);
     expect(fs.readFileSync(path.join(directory, 'notes.txt'), 'utf8')).toBe('keep this');
+    expect(fs.existsSync(path.join(directory, 'font-fixture-v99.png'))).toBe(false);
     expect(JSON.parse(fs.readFileSync(path.join(directory, 'manifest.json'), 'utf8'))).toEqual(manifest);
+  });
+
+  test('reuses pinned font bytes and refuses tampered cache assets', async () => {
+    const [sample] = await renderAllSamples(directory);
+    const [repeated] = await renderAllSamples(directory);
+    expect(repeated!.imageSha256).toBe(sample!.imageSha256);
+    const asset = sample!.fontRendering!.assets![0]!;
+    fs.writeFileSync(path.join(directory, asset.path), 'corrupt');
+    await expect(renderAllSamples(directory)).rejects.toThrow(/hash mismatch/);
+  });
+
+  test('refuses identical images assigned to distinct tasks', async () => {
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2 });
+    await expect(renderAllSamples(directory)).rejects.toThrow(/Identical images/);
   });
 
   test('closes the browser and preserves previous output when a later screenshot fails', async () => {

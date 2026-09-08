@@ -9,268 +9,81 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List
-
-
-FONT_METADATA: Dict[str, Dict[str, str]] = {
-    # Non-serif (20)
-    "Arial": {"classification": "non-serif", "category": "non-serif", "sub_category": "neo-grotesque", "origin": "Monotype (1982)"},
-    "Helvetica": {"classification": "non-serif", "category": "non-serif", "sub_category": "neo-grotesque", "origin": "Max Miedinger (1957)"},
-    "Roboto": {"classification": "non-serif", "category": "non-serif", "sub_category": "neo-grotesque", "origin": "Christian Robertson (2011)"},
-    "Inter": {"classification": "non-serif", "category": "non-serif", "sub_category": "neo-grotesque", "origin": "Rasmus Andersson (2017)"},
-    "Montserrat": {"classification": "non-serif", "category": "non-serif", "sub_category": "geometric-sans", "origin": "Julieta Ulanovsky (2011)"},
-    "Open Sans": {"classification": "non-serif", "category": "non-serif", "sub_category": "humanist-sans", "origin": "Steve Matteson (2011)"},
-    "Lato": {"classification": "non-serif", "category": "non-serif", "sub_category": "humanist-sans", "origin": "Łukasz Dziedzic (2010)"},
-    "Poppins": {"classification": "non-serif", "category": "non-serif", "sub_category": "geometric-sans", "origin": "Indian Type Foundry (2014)"},
-    "Source Sans 3": {"classification": "non-serif", "category": "non-serif", "sub_category": "humanist-sans", "origin": "Paul D. Hunt (2012)"},
-    "Oswald": {"classification": "non-serif", "category": "non-serif", "sub_category": "condensed-sans", "origin": "Vernon Adams (2011)"},
-    "Raleway": {"classification": "non-serif", "category": "non-serif", "sub_category": "geometric-sans", "origin": "Matt McInerney (2008)"},
-    "Nunito": {"classification": "non-serif", "category": "non-serif", "sub_category": "rounded-sans", "origin": "Vernon Adams (2011)"},
-    "Rubik": {"classification": "non-serif", "category": "non-serif", "sub_category": "rounded-sans", "origin": "Hubert & Fischer (2015)"},
-    "Work Sans": {"classification": "non-serif", "category": "non-serif", "sub_category": "grotesque-sans", "origin": "Wei Huang (2014)"},
-    "Fira Sans": {"classification": "non-serif", "category": "non-serif", "sub_category": "humanist-sans", "origin": "Erik Spiekermann (2013)"},
-    "PT Sans": {"classification": "non-serif", "category": "non-serif", "sub_category": "humanist-sans", "origin": "ParaType (2009)"},
-    "DM Sans": {"classification": "non-serif", "category": "non-serif", "sub_category": "geometric-sans", "origin": "Colophon Foundry (2019)"},
-    "Plus Jakarta Sans": {"classification": "non-serif", "category": "non-serif", "sub_category": "geometric-sans", "origin": "Tokotype (2020)"},
-    "Noto Sans": {"classification": "non-serif", "category": "non-serif", "sub_category": "humanist-sans", "origin": "Monotype / Google (2012)"},
-    "Verdana": {"classification": "non-serif", "category": "non-serif", "sub_category": "screen-humanist-sans", "origin": "Matthew Carter (1996)"},
-
-    # Serif (15)
-    "Times New Roman": {"classification": "serif", "category": "serif", "sub_category": "transitional-serif", "origin": "Stanley Morison (1931)"},
-    "Georgia": {"classification": "serif", "category": "serif", "sub_category": "transitional-serif", "origin": "Matthew Carter (1993)"},
-    "Playfair Display": {"classification": "serif", "category": "serif", "sub_category": "didone-modern-serif", "origin": "Claus Eggers Sørensen (2011)"},
-    "Merriweather": {"classification": "serif", "category": "serif", "sub_category": "editorial-serif", "origin": "Eben Sorkin (2010)"},
-    "EB Garamond": {"classification": "serif", "category": "serif", "sub_category": "old-style-serif", "origin": "Georg Duffner (2011)"},
-    "Lora": {"classification": "serif", "category": "serif", "sub_category": "contemporary-serif", "origin": "Olga Karpushina (2011)"},
-    "PT Serif": {"classification": "serif", "category": "serif", "sub_category": "transitional-serif", "origin": "ParaType (2010)"},
-    "Libre Baskerville": {"classification": "serif", "category": "serif", "sub_category": "transitional-serif", "origin": "Impallari Type (2012)"},
-    "Cormorant Garamond": {"classification": "serif", "category": "serif", "sub_category": "classical-display-serif", "origin": "Christian Thalmann (2015)"},
-    "Cinzel": {"classification": "serif", "category": "serif", "sub_category": "classical-roman-serif", "origin": "Natanael Gama (2012)"},
-    "Bodoni Moda": {"classification": "serif", "category": "serif", "sub_category": "didone-modern-serif", "origin": "Owen Earl (2020)"},
-    "Bitter": {"classification": "serif", "category": "serif", "sub_category": "slab-serif", "origin": "Sol Matas (2011)"},
-    "Arvo": {"classification": "serif", "category": "serif", "sub_category": "geometric-slab-serif", "origin": "Anton Koovit (2010)"},
-    "Crimson Text": {"classification": "serif", "category": "serif", "sub_category": "old-style-serif", "origin": "Sebastian Kosch (2010)"},
-    "Spectral": {"classification": "serif", "category": "serif", "sub_category": "screen-editorial-serif", "origin": "Production Type (2017)"},
-
-    # Monospace (6)
-    "Courier New": {"classification": "mono", "category": "mono", "sub_category": "slab-serif-mono", "origin": "Howard Kettler (1955)"},
-    "Roboto Mono": {"classification": "mono", "category": "mono", "sub_category": "geometric-mono", "origin": "Christian Robertson (2015)"},
-    "Fira Code": {"classification": "mono", "category": "mono", "sub_category": "coding-ligature-mono", "origin": "Nikita Prokopov (2014)"},
-    "Source Code Pro": {"classification": "mono", "category": "mono", "sub_category": "humanist-mono", "origin": "Paul D. Hunt (2012)"},
-    "Space Mono": {"classification": "mono", "category": "mono", "sub_category": "display-mono", "origin": "Colophon Foundry (2016)"},
-    "JetBrains Mono": {"classification": "mono", "category": "mono", "sub_category": "developer-mono", "origin": "Philipp Nurullin (2020)"},
-
-    # Handwriting (5)
-    "Comic Sans MS": {"classification": "handwriting", "category": "handwriting", "sub_category": "casual-script", "origin": "Vincent Connare (1994)"},
-    "Pacifico": {"classification": "handwriting", "category": "handwriting", "sub_category": "brush-script", "origin": "Vernon Adams (2011)"},
-    "Dancing Script": {"classification": "handwriting", "category": "handwriting", "sub_category": "casual-cursive", "origin": "Pablo Impallari (2011)"},
-    "Caveat": {"classification": "handwriting", "category": "handwriting", "sub_category": "handwritten-marker", "origin": "Pablo Impallari (2015)"},
-    "Shadows Into Light": {"classification": "handwriting", "category": "handwriting", "sub_category": "neat-handwriting", "origin": "Kimberly Geswein (2010)"},
-
-    # Other / Display (4)
-    "Impact": {"classification": "other", "category": "other", "sub_category": "industrial-display", "origin": "Geoffrey Lee (1965)"},
-    "Bebas Neue": {"classification": "other", "category": "other", "sub_category": "condensed-display", "origin": "Ryoichi Tsunekawa (2010)"},
-    "Lobster": {"classification": "other", "category": "other", "sub_category": "retro-display", "origin": "Pablo Impallari (2010)"},
-    "Bungee": {"classification": "other", "category": "other", "sub_category": "urban-sign-display", "origin": "David Jonathan Ross (2016)"},
-}
-
-MODEL_METADATA: Dict[str, Dict[str, Any]] = {
-    "gemini-3.5-flash-lite": {
-        "display_name": "Gemini 3.5 Flash Lite", "provider": "Google", "family": "Gemini 3.5",
-    },
-    "gemini-3.5-flash": {
-        "display_name": "Gemini 3.5 Flash", "provider": "Google", "family": "Gemini 3.5",
-    },
-    "gemini-2.5-flash": {
-        "display_name": "Gemini 2.5 Flash", "provider": "Google", "family": "Gemini 2.5",
-    },
-    "gemini-2.5-pro": {
-        "display_name": "Gemini 2.5 Pro", "provider": "Google", "family": "Gemini 2.5",
-    },
-}
+from typing import Any, Dict
 
 
 def build_structured_benchmark(results_dir: str = "results") -> Dict[str, Any]:
-    res_path = Path(results_dir)
-    scorecard_files = sorted(res_path.glob("scorecard_*.json"))
-    
-    models_output: List[Dict[str, Any]] = []
+    from baseline.reporting import DIMENSIONS, finite_nonnegative, metrics, read_report_json, scorecard_tasks
 
-    for sc_file in [f for f in scorecard_files if "mock" not in f.name]:
-        with open(sc_file, "r", encoding="utf-8") as f:
-            sc_data = json.load(f)
-
-        if sc_data.get("mock", False):
+    models_output = []
+    warnings = []
+    for sc_file in sorted(Path(results_dir).glob("scorecard_*.json")):
+        card = read_report_json(sc_file, warnings)
+        if not card:
             continue
-
-        model_key = sc_data["model_name"]
-        meta = MODEL_METADATA.get(model_key, {
-            "display_name": model_key,
-            "provider": None,
-            "family": "Unknown",
+        try:
+            tasks = scorecard_tasks(card, complete=True)
+            if (not isinstance(card.get("model_name"), str) or not card["model_name"]
+                    or any(not isinstance(task.get("target_canonical"), str) or not task["target_canonical"] for task in tasks)
+                    or any(not finite_nonnegative(task.get("latency_sec")) for task in tasks)):
+                raise ValueError("Missing model, font, or latency measurements")
+        except ValueError as error:
+            warnings.append(f"Excluded {sc_file.name}: {error}")
+            continue
+        model_key = card.get("model_id") or card["model_name"]
+        scores = metrics(tasks)
+        by_category = {}
+        for category in sorted({task.get("category", "unknown") for task in tasks}):
+            subset = [task for task in tasks if task.get("category", "unknown") == category]
+            measured = metrics(subset)
+            by_category[category] = {"accuracy": round(measured["category"] * 100, 1),
+                                     "font_accuracy": round(measured["font"] * 100, 1),
+                                     "composite": round(measured["composite"] * 100, 1), "total": len(subset)}
+        breakdowns = {}
+        for axis in ("weight", "modifier", "kerning", "line_height", "width_id"):
+            breakdowns[axis] = {
+                value: round(metrics([task for task in tasks if task.get(axis) == value])["composite"] * 100, 1)
+                for value in sorted({task[axis] for task in tasks if isinstance(task.get(axis), str)})
+            }
+        per_font = []
+        for font_name in sorted({task["target_canonical"] for task in tasks}):
+            subset = [task for task in tasks if task["target_canonical"] == font_name]
+            correct = sum(task["font_correct"] for task in subset)
+            per_font.append({"font": font_name, "classification": subset[0].get("category"),
+                             "category": subset[0].get("category"),
+                             "accuracy": round(correct / len(subset) * 100, 1), "correct": correct, "total": len(subset),
+                             "sample_predictions": [task.get("predicted_font", "") for task in subset[:3]]})
+        pricing = card.get("pricing") if isinstance(card.get("pricing"), dict) else {}
+        input_price, output_price = pricing.get("input_per_m"), pricing.get("output_per_m")
+        input_price = input_price if finite_nonnegative(input_price) else None
+        output_price = output_price if finite_nonnegative(output_price) else None
+        cost = None
+        if input_price is not None and output_price is not None and all(
+                finite_nonnegative(task.get("input_tokens")) and finite_nonnegative(task.get("output_tokens"))
+                and not task.get("unmetered_attempts", 0) for task in tasks):
+            cost = round(sum(task["input_tokens"] * input_price + task["output_tokens"] * output_price for task in tasks) / 1_000_000, 4)
+        models_output.append({
+            "model_id": model_key, "model_name": card["model_name"],
+            "display_name": card.get("display_name", model_key), "provider": card.get("provider"),
+            "dataset_fingerprint": card["dataset_fingerprint"],
+            "evaluation_protocol_fingerprint": card["evaluation_protocol_fingerprint"],
+            "cohort_fingerprint": card["cohort_fingerprint"], "grading_version": card["grading_version"],
+            "max_output_tokens": card.get("max_output_tokens"), "status": card["status"],
+            "total_tasks": len(tasks), "expected_task_count": card["expected_task_count"],
+            "evaluated_at": card.get("timestamp"), "overall_composite_score": scores["composite"] * 100,
+            "overall_accuracy": round(scores["composite"] * 100, 1), "overall_exact_match": round(scores["exact"] * 100, 1),
+            **{f"{key}_accuracy": round(scores[key] * 100, 1) for key in DIMENSIONS},
+            "avg_latency_sec": sum(task["latency_sec"] for task in tasks) / len(tasks),
+            "pricing": {"input_per_m": input_price, "output_per_m": output_price, "estimated_run_cost_usd": cost},
+            "by_category": by_category, "by_weight": breakdowns["weight"], "by_modifier": breakdowns["modifier"],
+            "by_spacing": {"kerning": breakdowns["kerning"], "line_height": breakdowns["line_height"]},
+            "by_width": breakdowns["width_id"], "per_font": per_font, "notes": card.get("notes", ""), "tasks": tasks,
         })
-
-        tasks = sc_data.get("tasks", [])
-        total_tasks = sc_data.get("total_tasks", len(tasks))
-
-        # Historical scorecards predate manifest-size provenance and used 1,000 tasks.
-        expected_task_count = sc_data.get("expected_task_count", 1000)
-        task_ids = [t.get("task_id") for t in tasks]
-        if (total_tasks <= 0 or total_tasks != expected_task_count
-                or len(tasks) != total_tasks or any(not task_id for task_id in task_ids)
-                or len(set(task_ids)) != total_tasks):
-            continue
-
-        # Check if new multi-attribute format
-        has_multi_attr = "overall_composite_score" in sc_data or (tasks and "font_correct" in tasks[0])
-
-        if has_multi_attr:
-            composite_score = sc_data.get("overall_composite_score", 0.0) * 100.0
-            exact_match = sc_data.get("overall_exact_match", 0.0) * 100.0
-            font_acc = sc_data.get("font_accuracy", 0.0) * 100.0
-            cat_acc = sc_data.get("category_accuracy", 0.0) * 100.0
-            weight_acc = sc_data.get("weight_accuracy", 0.0) * 100.0
-            mod_acc = sc_data.get("modifier_accuracy", 0.0) * 100.0
-            kerning_acc = sc_data.get("kerning_accuracy", 0.0) * 100.0
-            lh_acc = sc_data.get("line_height_accuracy", 0.0) * 100.0
-
-            # By category
-            acc_by_cat = {}
-            for c, c_stats in sc_data.get("accuracy_by_category", {}).items():
-                if isinstance(c_stats, dict):
-                    acc_by_cat[c] = {
-                        "accuracy": round(c_stats.get("cat_acc", 0.0) * 100, 1),
-                        "font_accuracy": round(c_stats.get("font_acc", 0.0) * 100, 1),
-                        "composite": round(c_stats.get("composite", 0.0) * 100, 1),
-                        "total": c_stats.get("count", 0),
-                    }
-                else:
-                    acc_by_cat[c] = {
-                        "accuracy": round(c_stats * 100, 1),
-                        "font_accuracy": round(c_stats * 100, 1),
-                        "composite": round(c_stats * 100, 1),
-                        "total": sum(1 for t in tasks if t.get("category") == c),
-                    }
-
-            # By weight
-            acc_by_weight = {
-                w: round(acc * 100, 1)
-                for w, acc in sc_data.get("accuracy_by_weight", {}).items()
-            }
-
-            # By modifier
-            acc_by_mod = {
-                m: round(acc * 100, 1)
-                for m, acc in sc_data.get("accuracy_by_modifier", {}).items()
-            }
-
-            # By spacing
-            spacing_stats = {
-                "kerning": {
-                    k: round(acc * 100, 1)
-                    for k, acc in sc_data.get("accuracy_by_kerning", {}).items()
-                },
-                "line_height": {
-                    lh: round(acc * 100, 1)
-                    for lh, acc in sc_data.get("accuracy_by_line_height", {}).items()
-                }
-            }
-
-            # By width
-            acc_by_width = {
-                w: round(acc * 100, 1)
-                for w, acc in sc_data.get("accuracy_by_width", {}).items()
-            }
-
-            # Per font
-            per_font = []
-            for font_name, f_meta in FONT_METADATA.items():
-                f_tasks = [t for t in tasks if t["target_canonical"] == font_name]
-                if f_tasks:
-                    f_correct = sum(1 for t in f_tasks if t.get("font_correct", t.get("is_correct", False)))
-                    f_tot = len(f_tasks)
-                    per_font.append({
-                        "font": font_name,
-                        "classification": f_meta["classification"],
-                        "category": f_meta["category"],
-                        "sub_category": f_meta["sub_category"],
-                        "accuracy": round(f_correct / f_tot * 100, 1) if f_tot else 0.0,
-                        "correct": f_correct,
-                        "total": f_tot,
-                        "sample_predictions": [t.get("predicted_font", t.get("raw_prediction", "")) for t in f_tasks[:3]]
-                    })
-
-        else:
-            # Fallback for legacy 1-attribute scorecards
-            font_acc = sc_data["overall_accuracy"] * 100.0
-            composite_score = font_acc
-            exact_match = font_acc
-            cat_acc = 0.0
-            weight_acc = 0.0
-            mod_acc = 0.0
-            kerning_acc = 0.0
-            lh_acc = 0.0
-            acc_by_cat = {}
-            acc_by_weight = {}
-            acc_by_mod = {}
-            spacing_stats = {"kerning": {}, "line_height": {}}
-            acc_by_width = {w: round(a * 100, 1) for w, a in sc_data.get("accuracy_by_width", {}).items()}
-            per_font = []
-
-        # Estimate only when rates were recorded with the run, using 750 input
-        # and 60 output tokens per task; these are not metered API charges.
-        pricing = sc_data.get("pricing", {})
-        input_price = pricing.get("input_per_m")
-        output_price = pricing.get("output_per_m")
-        est_run_cost = None
-        if input_price is not None and output_price is not None:
-            est_run_cost = round(
-                total_tasks * (750 * input_price + 60 * output_price) / 1_000_000, 4
-            )
-
-        model_entry = {
-            "model_id": model_key,
-            "display_name": meta["display_name"],
-            "provider": sc_data.get("provider", meta["provider"]),
-            "dataset_fingerprint": sc_data.get("dataset_fingerprint"),
-            "family": meta["family"],
-            "total_tasks": total_tasks,
-            "expected_task_count": expected_task_count,
-            "grading_version": sc_data.get("grading_version", "legacy"),
-            "evaluated_at": sc_data.get("timestamp"),
-            "overall_composite_score": composite_score,
-            "overall_exact_match": round(exact_match, 1),
-            "overall_accuracy": round(composite_score, 1),  # For backward-compatibility with Pareto chart
-            "font_accuracy": round(font_acc, 1),
-            "category_accuracy": round(cat_acc, 1),
-            "weight_accuracy": round(weight_acc, 1),
-            "modifier_accuracy": round(mod_acc, 1),
-            "kerning_accuracy": round(kerning_acc, 1),
-            "line_height_accuracy": round(lh_acc, 1),
-            "avg_latency_sec": sc_data["avg_latency_sec"],
-            "pricing": {
-                "input_per_m": input_price,
-                "output_per_m": output_price,
-                "estimated_run_cost_usd": est_run_cost
-            },
-            "by_category": acc_by_cat,
-            "by_weight": acc_by_weight,
-            "by_modifier": acc_by_mod,
-            "by_spacing": spacing_stats,
-            "by_width": acc_by_width,
-            "per_font": per_font,
-            "notes": sc_data.get("notes", ""),
-            "tasks": tasks
-        }
-        models_output.append(model_entry)
 
     comparison_groups = {}
     for model in models_output:
-        key = (model["grading_version"], model["dataset_fingerprint"],
-               frozenset(t["task_id"] for t in model["tasks"]))
+        key = (model["dataset_fingerprint"], model["evaluation_protocol_fingerprint"], model["cohort_fingerprint"])
         comparison_groups.setdefault(key, []).append(model)
-    # Compare only equivalent runs, before display rounding. Dominance requires
-    # at least equal accuracy and speed, with one strict improvement.
     for group in comparison_groups.values():
         for model in group:
             model["is_pareto_frontier"] = not any(
@@ -280,44 +93,32 @@ def build_structured_benchmark(results_dir: str = "results") -> Dict[str, Any]:
                      or other["avg_latency_sec"] < model["avg_latency_sec"])
                 for other in group
             )
-    models_output.sort(key=lambda m: m["overall_composite_score"], reverse=True)
+    models_output.sort(key=lambda model: (model["dataset_fingerprint"], model["cohort_fingerprint"], model["model_id"]))
     for model in models_output:
         model["overall_composite_score"] = round(model["overall_composite_score"], 1)
         model["avg_latency_sec"] = round(model["avg_latency_sec"], 2)
-
-    evaluation_dates = [m["evaluated_at"][:10] for m in models_output if m["evaluated_at"]]
-    task_counts = {m["total_tasks"] for m in models_output}
-    summary = {
-        "benchmark_id": "fontbench-1",
-        "name": "FontBench-1",
-        "version": "1.1.0",
-        "description": "Multi-attribute visual typography benchmark evaluating multimodal LLMs across 50 canonical fonts and 6 typographic dimensions: font family, category, weight, modifier, kerning, and line height.",
-        "eval_date": max(evaluation_dates) if evaluation_dates else None,
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "sentence": "The quick brown fox jumps over the lazy dog.",
-        "total_fonts": len(FONT_METADATA),
-        "total_tasks_per_model": next(iter(task_counts)) if len(task_counts) == 1 else None,
+    font_names = sorted({task["target_canonical"] for model in models_output for task in model["tasks"]})
+    dates = [model["evaluated_at"][:10] for model in models_output if isinstance(model["evaluated_at"], str)]
+    return {
+        "benchmark_id": "fontbench", "name": "FontBench", "version": "2.0.0",
+        "description": "Measured visual typography identification across six attributes; comparisons require the same dataset, protocol, and completed inputs.",
+        "eval_date": max(dates) if dates else None, "generated_at": datetime.now(timezone.utc).isoformat(),
+        "total_fonts": len(font_names),
+        "total_tasks_per_model": models_output[0]["total_tasks"] if len(comparison_groups) == 1 else None,
         "taxonomies": {
             "categories": ["serif", "non-serif", "mono", "handwriting", "other"],
             "weights": ["thin", "regular", "bold", "black"],
             "modifiers": ["regular", "italic", "underline", "strikethrough", "small-caps"],
-            "kerning": ["tight", "normal", "loose"],
-            "line_height": ["tight", "normal", "loose"],
-            "widths": [
-                {"id": "narrow", "width_px": 220, "label": "Narrow (220px, ~4 lines)"},
-                {"id": "medium", "width_px": 320, "label": "Medium (320px, ~3 lines)"},
-                {"id": "wide", "width_px": 440, "label": "Wide (440px, ~2 lines)"}
-            ],
-            "fonts": [
-                {"name": name, **meta} for name, meta in FONT_METADATA.items()
-            ]
+            "kerning": ["tight", "normal", "loose"], "line_height": ["tight", "normal", "loose"],
+            "fonts": [{"name": name, "category": next(task.get("category") for model in models_output for task in model["tasks"] if task["target_canonical"] == name)} for name in font_names],
         },
-        "models": models_output,
-        "pareto_frontier": [m["model_id"] for m in models_output if m["is_pareto_frontier"]],
+        "models": models_output, "warnings": warnings,
+        "comparison_groups": [{"dataset_fingerprint": key[0], "evaluation_protocol_fingerprint": key[1],
+                               "cohort_fingerprint": key[2], "model_ids": [model["model_id"] for model in group]}
+                              for key, group in comparison_groups.items()],
+        "pareto_frontier": [model["model_id"] for model in models_output if model["is_pareto_frontier"]],
         "pareto_dimensions": {"maximize": "overall_composite_score", "minimize": "avg_latency_sec"},
     }
-
-    return summary
 
 
 if __name__ == "__main__":

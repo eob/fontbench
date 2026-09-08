@@ -287,3 +287,27 @@ def test_invalid_request_configuration_is_unavailable_without_retry(monkeypatch,
     client.close()
     assert result.error_kind == "unavailable"
     assert result.request_attempts == handler.call_count == 1
+
+
+@pytest.mark.parametrize('provider', ['openai', 'anthropic', 'google'])
+@pytest.mark.parametrize('raw', [
+    json.dumps({**PREDICTION, 'font': '   '}),
+    json.dumps({**PREDICTION, 'alternative_font': 'Helvetica'}),
+    '{"font":"Helvetica",' + json.dumps(PREDICTION)[1:],
+])
+def test_ambiguous_answers_are_final_schema_errors(monkeypatch, image_path, provider, raw):
+    handler = Mock(return_value=httpx.Response(200, json=success_body(provider, raw=raw)))
+    client = provider_client(monkeypatch, provider, handler)
+    result = client.predict(str(image_path), 'prompt')
+    client.close()
+    assert result.error_kind == 'invalid_response'
+    assert result.parsed == {}
+    assert result.request_attempts == handler.call_count == 1
+
+
+def test_valid_prediction_whitespace_is_normalized_consistently(monkeypatch, image_path):
+    raw = json.dumps({key: f' {value.upper()} ' for key, value in PREDICTION.items()})
+    client = provider_client(monkeypatch, 'openai', lambda request: httpx.Response(200, json=success_body('openai', raw=raw)))
+    result = client.predict(str(image_path), 'prompt')
+    client.close()
+    assert result.parsed == {**PREDICTION, 'font': 'ARIAL'}

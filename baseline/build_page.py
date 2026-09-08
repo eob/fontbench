@@ -12,12 +12,13 @@ from pathlib import Path
 
 from PIL import Image
 
-from baseline.evaluator import load_manifest
+from baseline.evaluator import GRADING_VERSION, evaluation_protocol_fingerprint, load_manifest
 from baseline.model_config import load_model_config
 from baseline.runner import dataset_fingerprint
+from baseline.reporting import finite_nonnegative, metrics as _metrics, read_report_json, scorecard_tasks
+from baseline.validate_dataset import validate_dataset
 
 
-DIMENSIONS = ["font", "category", "weight", "modifier", "kerning", "line_height"]
 METRICS = {"composite": "Composite score", "exact": "All six correct", "font": "Font family",
            "category": "Category", "weight": "Weight", "modifier": "Modifier",
            "kerning": "Letter spacing", "line_height": "Line height"}
@@ -67,6 +68,7 @@ def _montage(samples: list[dict], title: str, columns: int, axis: str | None = N
         y = gap + index // columns * (cell_h + gap)
         image_path = Path(sample["imagePath"])
         with Image.open(image_path) as image:
+            image.load()
             if image.format != "PNG":
                 raise ValueError(f"Expected a PNG benchmark input: {image_path}")
         payload = base64.b64encode(image_path.read_bytes()).decode("ascii")
@@ -81,15 +83,6 @@ def _montage(samples: list[dict], title: str, columns: int, axis: str | None = N
             '</g>',
         ])
     return "\n".join(parts + ["</svg>"])
-
-
-def _metrics(tasks: list[dict]) -> dict:
-    if not tasks:
-        return {key: None for key in METRICS}
-    values = {key: sum(task[f"{key}_correct"] is True for task in tasks) / len(tasks) for key in DIMENSIONS}
-    values["composite"] = sum(values.values()) / len(DIMENSIONS)
-    values["exact"] = sum(all(task[f"{key}_correct"] is True for key in DIMENSIONS) for task in tasks) / len(tasks)
-    return values
 
 
 def _percent(value: float | None) -> str:
@@ -111,6 +104,7 @@ def _breakdown_table(section: dict, models: list[dict]) -> str:
 
 def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: str | Path = "site",
                config_path: str | Path = "config/models.json") -> dict:
+    validity = validate_dataset(manifest_path)
     items = load_manifest(str(manifest_path))
     if not items:
         raise ValueError("A benchmark page needs at least one rendered input")
@@ -119,45 +113,58 @@ def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: s
     models = load_model_config(config_path)
     directory, output = Path(results_dir), Path(output_dir)
     summary_path = directory / "summary.json"
-    summary = json.loads(summary_path.read_text()) if summary_path.exists() else {}
     warnings = []
-    if summary and (summary.get("dataset_fingerprint") != fingerprint or not isinstance(summary.get("mock"), bool)):
+    summary = read_report_json(summary_path, warnings)
+    if summary and (summary.get("dataset_fingerprint") != fingerprint
+                    or summary.get("evaluation_protocol_fingerprint") != evaluation_protocol_fingerprint()
+                    or not isinstance(summary.get("mock"), bool) or not isinstance(summary.get("models"), dict)):
         warnings.append("Excluded run summary with incompatible dataset or missing mock provenance.")
         summary = {}
+    if not validity["valid"]:
+        warnings.append("Dataset validity checks failed; these inputs are for inspection and cannot support benchmark claims.")
     tasks_by_model = {}
     for model in models:
         card_path = directory / f'scorecard_{model["id"]}.json'
-        card = json.loads(card_path.read_text()) if card_path.exists() else {}
-        tasks = card.get("tasks", [])
-        rejected_card = False
+        card = read_report_json(card_path, warnings)
+        tasks = []
+        rejected_card = card_path.exists() and not card
         if card:
-            ids = [task.get("task_id") for task in tasks]
-            if (card.get("dataset_fingerprint") != fingerprint or str(card.get("grading_version")) != "2"
-                    or card.get("model_id") != model["id"] or card.get("model_name") != model["model"]
-                    or card.get("provider") != model["provider"]
-                    or card.get("max_output_tokens") != model["max_output_tokens"]
-                    or not isinstance(card.get("mock"), bool)
-                    or len(ids) != len(set(ids)) or not set(ids) <= set(by_id)
-                    or card.get("total_tasks") != len(tasks)
-                    or any(not isinstance(task.get(f"{key}_correct"), bool) for task in tasks for key in DIMENSIONS)):
-                warnings.append(f'{model["display_name"]}: excluded scorecard with incompatible model, dataset, or grading provenance.')
+            try:
+                tasks = scorecard_tasks(card)
+                if (card["dataset_fingerprint"] != fingerprint
+                        or card.get("model_id") != model["id"] or card.get("model_name") != model["model"]
+                        or card.get("provider") != model["provider"]
+                        or card.get("max_output_tokens") != model["max_output_tokens"]
+                        or card["expected_task_count"] != len(items)
+                        or not {task["task_id"] for task in tasks} <= set(by_id)
+                        or not validity["valid"]):
+                    raise ValueError("Incompatible model or validated dataset")
+            except ValueError as error:
+                warnings.append(f'{model["display_name"]}: excluded scorecard: {error}.')
                 tasks = []
                 rejected_card = True
         state = summary.get("models", {}).get(model["id"], {})
-        if state and (rejected_card or state.get("model") != model["model"]
+        if state and (not isinstance(state, dict) or rejected_card or state.get("model") != model["model"]
                       or state.get("provider") != model["provider"]
                       or state.get("max_output_tokens") != model["max_output_tokens"]
-                      or (card and summary["mock"] != card["mock"])):
+                      or (card and summary["mock"] != card.get("mock"))):
             warnings.append(f'{model["display_name"]}: excluded run state with incompatible model or scorecard provenance.')
             state = {}
         model.update(completed=len(tasks), expected=len(items), metrics=_metrics(tasks),
                      status="complete" if len(tasks) == len(items) else "partial" if tasks else "pending",
-                     run_state=state.get("status", "pending"), reason=state.get("reason"),
-                     cost_usd=state.get("cost_usd"),
+                     run_state=state.get("status") if isinstance(state.get("status"), str) else "pending",
+                     reason=state.get("reason") if isinstance(state.get("reason"), str) else None,
+                     cost_usd=state.get("cost_usd") if finite_nonnegative(state.get("cost_usd")) else None,
                      mock=bool(card.get("mock", False)) if card and not rejected_card else bool(summary.get("mock", False)) if state else False)
         tasks_by_model[model["id"]] = tasks
     if len({model["mock"] for model in models if model["completed"]}) > 1:
         raise ValueError("Do not combine mock and live measurements on one benchmark page")
+
+    measured_ids = [model["id"] for model in models if model["completed"]]
+    common_ids = set.intersection(*({task["task_id"] for task in tasks_by_model[model_id]} for model_id in measured_ids)) if measured_ids else set()
+    comparison = {"task_ids": sorted(common_ids), "count": len(common_ids),
+                  "models": {model_id: _metrics([task for task in tasks_by_model[model_id] if task["task_id"] in common_ids])
+                             for model_id in measured_ids}}
 
     assets = output / "assets"
     assets.mkdir(parents=True, exist_ok=True)
@@ -183,6 +190,7 @@ def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: s
         sections.append({"id": section_id, "title": title, "description": description, "asset": asset,
                          "sample_ids": [sample["taskId"] for sample in samples], "groups": groups})
     report = {"dataset_fingerprint": fingerprint, "total_inputs": len(items),
+              "validity": validity, "comparison": comparison, "grading_version": GRADING_VERSION,
               "font_count": len({item["fontId"] for item in items}), "models": models,
               "sections": sections, "warnings": warnings, "mock": any(model["mock"] for model in models),
               "overview_sample_ids": [sample["taskId"] for sample in main_samples]}
@@ -218,6 +226,13 @@ def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: s
         price = "Unrecorded pricing" if model["input_per_m"] is None or model["output_per_m"] is None else f'${model["input_per_m"]:g} input / ${model["output_per_m"]:g} output per MTok'
         config_cards.append(f'''<article class="model-card"><span class="provider {model['provider']}">{model['provider']}</span><h4>{escape(model['display_name'])}</h4><code>{escape(model['model'])}</code><p>{price}</p><p>{escape(model['notes'])}</p><details><summary>Pricing and configuration</summary><p>{escape(model['pricing_notes'])}</p><p>Output cap: {model['max_output_tokens']:,} tokens. Model-default reasoning settings.</p><a href="{escape(model['pricing_source_url'] or model['source_url'], quote=True)}" target="_blank" rel="noopener">Official pricing ↗</a></details></article>''')
     warning_html = "".join(f'<p>{escape(message)}</p>' for message in warnings)
+    validity_html = ('<div class="notice">Dataset validity checks passed.</div>' if validity["valid"] else
+                     '<div class="notice">Dataset validity checks failed. Inspect these inputs before running the benchmark.</div>')
+    comparison_html = ''
+    if len(measured_ids) > 1:
+        comparison_html = f'<p class="method-note">Shared comparison: {len(common_ids)} input(s) completed by every measured model. ' + "; ".join(
+            f'{escape(model["display_name"])}: {_percent(comparison["models"][model["id"]]["composite"])} composite'
+            for model in models if model["id"] in measured_ids) + '</p>'
     mock_html = '<div class="notice">Mock preview: these are test outputs, not measured model performance.</div>' if report["mock"] else ""
     pending_html = '<p class="empty">Awaiting measured results. Model configurations are ready; no scores have been filled in.</p>' if not measured else ""
     data_json = json.dumps(report, ensure_ascii=False).replace("<", "\\u003c")
@@ -225,12 +240,12 @@ def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: s
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="FontBench: measured visual typography recognition across six attributes and leading multimodal models."><title>FontBench — Can a model read the type?</title><style>{_STYLE}</style></head>
 <body><header class="topbar"><a class="brand" href="#top"><span>Fb</span> FontBench</a><nav aria-label="Main navigation"><a href="#performance">Results</a><a href="#inputs">Inputs</a><a href="#dimensions">Dimensions</a><a href="#models">Models</a></nav></header>
 <main id="top"><section class="hero"><p class="eyebrow"><span class="live-dot"></span> A visual typography benchmark</p><h1>Can a model<br><em>read the type?</em></h1><div class="hero-bottom"><p>One sentence. Six typographic decisions.<br>Measuring how multimodal models see the details that make a typeface.</p><span class="run-label">{status_text}</span></div>
-<div class="stats"><div><strong>{report['font_count']}</strong><span>font families</span></div><div><strong>{len(items):,}</strong><span>validated inputs</span></div><div><strong>6</strong><span>scored attributes</span></div><div><strong>{len(models)}</strong><span>model configurations</span></div></div></section>
-{mock_html}<section id="inputs" class="inputs"><div class="section-heading"><div><p class="eyebrow">The evidence</p><h2>What the models actually see</h2></div><a class="sheet-link" href="assets/overview.svg" target="_blank">Explore full contact sheet ↗</a></div><figure><img src="assets/overview.svg" alt="A landscape contact sheet of {len(main_samples)} actual FontBench input images spanning families and typographic attributes"><figcaption>{len(main_samples)} representative inputs, selected to balance families, categories, weights, modifiers, and spacing. Every tile is an original benchmark PNG.</figcaption></figure></section>
-<section id="performance"><div class="section-heading"><div><p class="eyebrow">The measurements</p><h2>Model performance</h2><p>{coverage:,} completed model–input pairs. Each model's sample count is shown below.</p></div><label class="metric-label">Metric<select id="metric">{choices}</select></label></div>{pending_html}<div class="table-scroll overview"><table><thead><tr><th scope="col">Model</th><th scope="col">Coverage</th><th scope="col" id="metric-heading">Composite score</th><th scope="col">Run cost</th></tr></thead><tbody>{''.join(model_rows)}</tbody></table></div><p class="method-note">Composite score gives each of the six attributes equal weight. Percentages use completed samples; pending samples are not counted as wrong answers. Partial runs may cover different samples and should not be treated as final rankings.</p>{warning_html}</section>
+<div class="stats"><div><strong>{report['font_count']}</strong><span>font families</span></div><div><strong>{len(items):,}</strong><span>rendered inputs</span></div><div><strong>6</strong><span>scored attributes</span></div><div><strong>{len(models)}</strong><span>model configurations</span></div></div></section>
+{validity_html}{mock_html}<section id="inputs" class="inputs"><div class="section-heading"><div><p class="eyebrow">The evidence</p><h2>What the models actually see</h2></div><a class="sheet-link" href="assets/overview.svg" target="_blank">Explore full contact sheet ↗</a></div><figure><img src="assets/overview.svg" alt="A landscape contact sheet of {len(main_samples)} actual FontBench input images spanning families and typographic attributes"><figcaption>{len(main_samples)} representative inputs, selected to balance families, categories, weights, modifiers, and spacing. Every tile is an original benchmark PNG.</figcaption></figure></section>
+<section id="performance"><div class="section-heading"><div><p class="eyebrow">The measurements</p><h2>Model performance</h2><p>{coverage:,} completed model–input pairs. Each model's sample count is shown below.</p></div><label class="metric-label">Metric<select id="metric">{choices}</select></label></div>{pending_html}<div class="table-scroll overview"><table><thead><tr><th scope="col">Model</th><th scope="col">Coverage</th><th scope="col" id="metric-heading">Composite score</th><th scope="col">Run cost</th></tr></thead><tbody>{''.join(model_rows)}</tbody></table></div><p class="method-note">Composite score gives each of the six attributes equal weight. Percentages use completed samples; pending samples are not counted as wrong answers. Partial runs may cover different samples and should not be treated as final rankings.</p>{comparison_html}{warning_html}</section>
 <section id="dimensions" class="dimensions-intro"><p class="eyebrow">A closer look</p><h2>Six ways to read a sentence.</h2><p>Explore the visual variation, then compare measured scores within each group. Every cell includes its sample count; a dash means no completed measurements.</p></section>{''.join(section_html)}
 <section id="models"><div class="section-heading"><div><p class="eyebrow">The lineup</p><h2>Models &amp; configurations</h2><p>Explicit API models across Anthropic, OpenAI, and Google. Prices are recorded reference rates, not a performance estimate.</p></div></div><div class="model-grid">{''.join(config_cards)}</div></section>
-<footer><a class="brand" href="#top"><span>Fb</span> FontBench</a><p>Reproducible inputs. Explicit grading. Measured results.<br><a href="benchmark.json">Download the page data</a> · No external assets required.</p><details><summary>Dataset identity</summary><code>{fingerprint}</code><p>Input images and task metadata are hashed together. Only matching scorecards using grading version 2 contribute measurements.</p></details></footer></main>
+<footer><a class="brand" href="#top"><span>Fb</span> FontBench</a><p>Reproducible inputs. Explicit grading. Measured results.<br><a href="benchmark.json">Download the page data</a> · No external assets required.</p><details><summary>Dataset identity</summary><code>{fingerprint}</code><p>Input images and task metadata are hashed together. Only matching scorecards using grading version {GRADING_VERSION} and the current evaluation protocol contribute measurements.</p></details></footer></main>
 <script id="benchmark-data" type="application/json">{data_json}</script><script>{_SCRIPT}</script></body></html>'''
     (output / "index.html").write_text(html, encoding="utf-8")
     return report

@@ -2,6 +2,7 @@
 
 import json
 from dataclasses import replace
+from unittest.mock import Mock
 
 import pytest
 from PIL import Image
@@ -71,9 +72,56 @@ def test_interrupted_partial_run_resumes_remaining_tasks(benchmark):
 
 def test_zero_budget_never_calls_a_provider(benchmark, monkeypatch):
     benchmark['mock'] = False
+    monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', lambda path: {'valid': True})
     def fail(*args, **kwargs):
         raise AssertionError('No paid request should start')
     monkeypatch.setattr(BaselineEvaluator, '_eval_single_task', fail)
     result = run_benchmark(**benchmark, budget_usd=0)
     assert result['status'] == 'budget_exhausted'
     assert result['models']['model-a']['completed'] == 0
+
+
+def test_changed_evaluation_protocol_cannot_resume(benchmark, monkeypatch):
+    import baseline.evaluator as evaluator_module
+    run_benchmark(**benchmark, max_tasks=1)
+    monkeypatch.setattr(evaluator_module, 'DEFAULT_PROMPT', 'A changed evaluation prompt', raising=False)
+    with pytest.raises(ValueError, match='fingerprint|protocol'):
+        run_benchmark(**benchmark)
+
+
+def test_changed_rendering_evidence_changes_dataset_identity(benchmark):
+    from baseline.runner import dataset_fingerprint, load_manifest
+    items = load_manifest(str(benchmark['manifest_path']))
+    initial = dataset_fingerprint(items)
+    items[0]['fontRendering'] = {'verified': False}
+    assert dataset_fingerprint(items) != initial
+
+
+def test_foreign_checkpoint_tasks_are_refused_before_resuming(benchmark, monkeypatch):
+    from baseline.run_state import RunStore
+    run_benchmark(**benchmark, max_tasks=1)
+    with RunStore(benchmark['output_dir'] / 'mock-test' / 'state.sqlite3') as store:
+        previous = next(iter(store.completed_results('test', 'model-a').values()))
+        store.save_result('test', 'model-a', 'foreign-task', {**previous, 'task_id': 'foreign-task'})
+    calls = []
+    original = BaselineEvaluator._eval_single_task
+    def evaluate(self, item, prompt):
+        calls.append(item['taskId'])
+        return original(self, item, prompt)
+    monkeypatch.setattr(BaselineEvaluator, '_eval_single_task', evaluate)
+    with pytest.raises(ValueError, match='checkpoint'):
+        run_benchmark(**benchmark, max_tasks=1)
+    assert calls == []
+
+
+def test_live_run_requires_valid_dataset_before_client_creation(benchmark, monkeypatch):
+    import baseline.runner as runner_module
+    def refuse(path):
+        raise ValueError('Dataset is not valid: audit evidence missing')
+    monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', refuse)
+    client = Mock()
+    monkeypatch.setattr(runner_module, 'BaselineEvaluator', client)
+    benchmark['mock'] = False
+    with pytest.raises(ValueError, match='Dataset is not valid'):
+        run_benchmark(**benchmark)
+    client.assert_not_called()

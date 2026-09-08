@@ -12,6 +12,7 @@ export interface FontSpec {
   cssUrl: string;
   // Curated declarations when the provider stylesheet misidentifies its faces.
   cssOverride?: string;
+  binaryFamilyNames?: string[];
   category: TypographicCategory;
   subCategory: string;
   aliases: string[];
@@ -58,29 +59,7 @@ export interface VariantRecipe {
   widthId: ContainerWidthId;
 }
 
-// 20 recipes per font (up to 50 fonts * 20 = 1,000 supported tasks)
-export const VARIANT_RECIPES: VariantRecipe[] = [
-  { variantIndex: 1,  weight: 'thin',    modifier: 'regular',       kerning: 'normal', lineHeight: 'normal', widthId: 'narrow' },
-  { variantIndex: 2,  weight: 'regular', modifier: 'italic',        kerning: 'tight',  lineHeight: 'loose',  widthId: 'medium' },
-  { variantIndex: 3,  weight: 'bold',    modifier: 'underline',     kerning: 'loose',  lineHeight: 'tight',  widthId: 'wide'   },
-  { variantIndex: 4,  weight: 'black',   modifier: 'strikethrough', kerning: 'normal', lineHeight: 'normal', widthId: 'narrow' },
-  { variantIndex: 5,  weight: 'thin',    modifier: 'small-caps',    kerning: 'tight',  lineHeight: 'loose',  widthId: 'medium' },
-  { variantIndex: 6,  weight: 'regular', modifier: 'regular',       kerning: 'loose',  lineHeight: 'tight',  widthId: 'wide'   },
-  { variantIndex: 7,  weight: 'bold',    modifier: 'italic',        kerning: 'normal', lineHeight: 'normal', widthId: 'narrow' },
-  { variantIndex: 8,  weight: 'black',   modifier: 'underline',     kerning: 'tight',  lineHeight: 'loose',  widthId: 'medium' },
-  { variantIndex: 9,  weight: 'thin',    modifier: 'strikethrough', kerning: 'loose',  lineHeight: 'tight',  widthId: 'wide'   },
-  { variantIndex: 10, weight: 'regular', modifier: 'small-caps',    kerning: 'normal', lineHeight: 'normal', widthId: 'narrow' },
-  { variantIndex: 11, weight: 'bold',    modifier: 'regular',       kerning: 'tight',  lineHeight: 'loose',  widthId: 'medium' },
-  { variantIndex: 12, weight: 'black',   modifier: 'italic',        kerning: 'loose',  lineHeight: 'tight',  widthId: 'wide'   },
-  { variantIndex: 13, weight: 'thin',    modifier: 'underline',     kerning: 'normal', lineHeight: 'normal', widthId: 'narrow' },
-  { variantIndex: 14, weight: 'regular', modifier: 'strikethrough', kerning: 'tight',  lineHeight: 'loose',  widthId: 'medium' },
-  { variantIndex: 15, weight: 'bold',    modifier: 'small-caps',    kerning: 'loose',  lineHeight: 'tight',  widthId: 'wide'   },
-  { variantIndex: 16, weight: 'black',   modifier: 'regular',       kerning: 'normal', lineHeight: 'normal', widthId: 'narrow' },
-  { variantIndex: 17, weight: 'thin',    modifier: 'italic',        kerning: 'tight',  lineHeight: 'loose',  widthId: 'medium' },
-  { variantIndex: 18, weight: 'regular', modifier: 'underline',     kerning: 'loose',  lineHeight: 'tight',  widthId: 'wide'   },
-  { variantIndex: 19, weight: 'bold',    modifier: 'strikethrough', kerning: 'tight',  lineHeight: 'tight',  widthId: 'narrow' },
-  { variantIndex: 20, weight: 'black',   modifier: 'small-caps',    kerning: 'loose',  lineHeight: 'loose',  widthId: 'wide'   },
-];
+export { VARIANT_RECIPES } from './recipes';
 
 export const TOP_50_FONTS: FontSpec[] = [
   // --- NON-SERIF / SANS-SERIF (20) ---
@@ -103,12 +82,13 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'helvetica',
+    binaryFamilyNames: ['Helvetica Black'],
     name: 'Helvetica',
     cssFamily: 'Helvetica',
     cssUrl: 'https://fonts.cdnfonts.com/css/helvetica-2',
     category: 'non-serif',
     subCategory: 'neo-grotesque',
-    aliases: ['helvetica', 'helvetica neue'],
+    aliases: ['helvetica'],
     description: 'Classic Swiss neo-grotesque with strictly horizontal terminals and uniform stroke weight.'
   },
   {
@@ -133,6 +113,7 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'montserrat',
+    binaryFamilyNames: ['Montserrat Thin'],
     name: 'Montserrat',
     cssFamily: 'Montserrat',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap',
@@ -153,6 +134,7 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'lato',
+    binaryFamilyNames: ['Lato Black'],
     name: 'Lato',
     cssFamily: 'Lato',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap',
@@ -163,6 +145,7 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'poppins',
+    binaryFamilyNames: ['Poppins ExtraLight', 'Poppins Black'],
     name: 'Poppins',
     cssFamily: 'Poppins',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap',
@@ -173,12 +156,13 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'source-sans-3',
+    binaryFamilyNames: ['Source Sans 3 ExtraLight'],
     name: 'Source Sans 3',
     cssFamily: 'Source Sans 3',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap',
     category: 'non-serif',
     subCategory: 'humanist-sans',
-    aliases: ['source sans 3', 'source sans pro', 'source sans'],
+    aliases: ['source sans 3'],
     description: 'Paul D. Hunt Adobe open source typeface designed for UI legibility.'
   },
   {
@@ -193,6 +177,7 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'raleway',
+    binaryFamilyNames: ['Raleway Thin'],
     name: 'Raleway',
     cssFamily: 'Raleway',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap',
@@ -203,6 +188,7 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'nunito',
+    binaryFamilyNames: ['Nunito ExtraLight'],
     name: 'Nunito',
     cssFamily: 'Nunito',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap',
@@ -213,6 +199,7 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'rubik',
+    binaryFamilyNames: ['Rubik Light'],
     name: 'Rubik',
     cssFamily: 'Rubik',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap',
@@ -233,12 +220,13 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'fira-sans',
+    binaryFamilyNames: ['Fira Sans ExtraLight', 'Fira Sans Black'],
     name: 'Fira Sans',
     cssFamily: 'Fira Sans',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap',
     category: 'non-serif',
     subCategory: 'humanist-sans',
-    aliases: ['fira sans', 'fira'],
+    aliases: ['fira sans'],
     description: 'Erik Spiekermann humanist sans-serif designed for Mozilla Firefox OS.'
   },
   {
@@ -253,6 +241,7 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'dm-sans',
+    binaryFamilyNames: ['DM Sans 9pt'],
     name: 'DM Sans',
     cssFamily: 'DM Sans',
     cssUrl: 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap',
@@ -268,7 +257,7 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap',
     category: 'non-serif',
     subCategory: 'geometric-sans',
-    aliases: ['plus jakarta sans', 'jakarta sans'],
+    aliases: ['plus jakarta sans'],
     description: 'Tokotype fresh contemporary geometric sans-serif with clean proportions.'
   },
   {
@@ -278,7 +267,7 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap',
     category: 'non-serif',
     subCategory: 'humanist-sans',
-    aliases: ['noto sans', 'noto'],
+    aliases: ['noto sans'],
     description: 'Monotype universal typeface covering all worldwide scripts without tofu glyphs.'
   },
   {
@@ -300,7 +289,7 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.cdnfonts.com/css/times-new-roman',
     category: 'serif',
     subCategory: 'transitional-serif',
-    aliases: ['times new roman', 'times'],
+    aliases: ['times new roman'],
     description: 'Stanley Morison newspaper serif designed for high legibility in narrow columns.'
   },
   {
@@ -320,11 +309,12 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap',
     category: 'serif',
     subCategory: 'didone-modern-serif',
-    aliases: ['playfair display', 'playfair'],
+    aliases: ['playfair display'],
     description: 'Claus Eggers Sørensen high-contrast transitional/modern display serif.'
   },
   {
     id: 'merriweather',
+    binaryFamilyNames: ['Merriweather Light 18pt'],
     name: 'Merriweather',
     cssFamily: 'Merriweather',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300..900;1,300..900&display=swap',
@@ -340,7 +330,7 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap',
     category: 'serif',
     subCategory: 'old-style-serif',
-    aliases: ['eb garamond', 'garamond'],
+    aliases: ['eb garamond'],
     description: 'Georg Duffner revival of Claude Garamont classic Renaissance Roman typefaces.'
   },
   {
@@ -370,17 +360,18 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap',
     category: 'serif',
     subCategory: 'transitional-serif',
-    aliases: ['libre baskerville', 'baskerville'],
+    aliases: ['libre baskerville'],
     description: 'Impallari Type screen-optimized revival of John Baskerville 1757 typeface.'
   },
   {
     id: 'cormorant-garamond',
+    binaryFamilyNames: ['Cormorant Garamond Light'],
     name: 'Cormorant Garamond',
     cssFamily: 'Cormorant Garamond',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap',
     category: 'serif',
     subCategory: 'classical-display-serif',
-    aliases: ['cormorant garamond', 'cormorant'],
+    aliases: ['cormorant garamond'],
     description: 'Christian Thalmann traditional display serif with sharp, expressive flourishes.'
   },
   {
@@ -400,11 +391,12 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap',
     category: 'serif',
     subCategory: 'didone-modern-serif',
-    aliases: ['bodoni moda', 'bodoni'],
+    aliases: ['bodoni moda'],
     description: 'Modern high-contrast Didone fashion typeface with hairline serifs and vertical stress.'
   },
   {
     id: 'bitter',
+    binaryFamilyNames: ['Bitter Thin'],
     name: 'Bitter',
     cssFamily: 'Bitter',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap',
@@ -430,11 +422,12 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap',
     category: 'serif',
     subCategory: 'old-style-serif',
-    aliases: ['crimson text', 'crimson'],
+    aliases: ['crimson text'],
     description: 'Sebastian Kosch classical book production serif in the tradition of Garamond and Minion.'
   },
   {
     id: 'spectral',
+    binaryFamilyNames: ['Spectral ExtraLight'],
     name: 'Spectral',
     cssFamily: 'Spectral',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap',
@@ -452,7 +445,7 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.cdnfonts.com/css/courier-new',
     category: 'mono',
     subCategory: 'slab-serif-mono',
-    aliases: ['courier new', 'courier'],
+    aliases: ['courier new'],
     description: 'Howard Kettler typewriter monospaced slab serif with uniform character advance.'
   },
   {
@@ -467,6 +460,7 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'fira-code',
+    binaryFamilyNames: ['Fira Code Light'],
     name: 'Fira Code',
     cssFamily: 'Fira Code',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap',
@@ -477,12 +471,13 @@ export const TOP_50_FONTS: FontSpec[] = [
   },
   {
     id: 'source-code-pro',
+    binaryFamilyNames: ['Source Code Pro ExtraLight'],
     name: 'Source Code Pro',
     cssFamily: 'Source Code Pro',
     cssUrl: 'https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap',
     category: 'mono',
     subCategory: 'humanist-mono',
-    aliases: ['source code pro', 'source code'],
+    aliases: ['source code pro'],
     description: 'Paul D. Hunt monospaced companion to Source Sans designed for code editors.'
   },
   {
@@ -576,7 +571,7 @@ export const TOP_50_FONTS: FontSpec[] = [
     cssUrl: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap',
     category: 'other',
     subCategory: 'condensed-display',
-    aliases: ['bebas neue', 'bebas'],
+    aliases: ['bebas neue'],
     description: 'Ryoichi Tsunekawa condensed all-caps display font popular in posters and headlines.'
   },
   {
@@ -601,4 +596,4 @@ export const TOP_50_FONTS: FontSpec[] = [
   }
 ];
 
-export const STANDARD_PANGRAM = "The quick brown fox jumps over the lazy dog.";
+export const STANDARD_PANGRAM = "The quick brown fox\njumps over the lazy dog.";
