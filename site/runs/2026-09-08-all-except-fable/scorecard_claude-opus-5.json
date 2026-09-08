@@ -1,42 +1,105 @@
 {
-  "total_tasks": 0,
-  "overall_composite_score": 0.0,
+  "total_tasks": 1,
+  "overall_composite_score": 0.8333333333333334,
   "overall_exact_match": 0.0,
   "font_accuracy": 0.0,
-  "category_accuracy": 0.0,
-  "weight_accuracy": 0.0,
-  "modifier_accuracy": 0.0,
-  "kerning_accuracy": 0.0,
-  "line_height_accuracy": 0.0,
-  "accuracy_by_category": {},
-  "accuracy_by_weight": {},
-  "accuracy_by_modifier": {},
-  "accuracy_by_kerning": {},
-  "accuracy_by_line_height": {},
-  "accuracy_by_width": {},
-  "per_font_accuracy": {},
-  "avg_latency_sec": 0.0,
+  "category_accuracy": 1.0,
+  "weight_accuracy": 1.0,
+  "modifier_accuracy": 1.0,
+  "kerning_accuracy": 1.0,
+  "line_height_accuracy": 1.0,
+  "accuracy_by_category": {
+    "non-serif": {
+      "count": 1,
+      "font_acc": 0.0,
+      "cat_acc": 1.0,
+      "composite": 0.8333333333333334
+    }
+  },
+  "accuracy_by_weight": {
+    "black": 0.0
+  },
+  "accuracy_by_modifier": {
+    "strikethrough": 0.0
+  },
+  "accuracy_by_kerning": {
+    "tight": 1.0
+  },
+  "accuracy_by_line_height": {
+    "tight": 1.0
+  },
+  "accuracy_by_width": {
+    "medium": 0.0
+  },
+  "per_font_accuracy": {
+    "Montserrat": 0.0
+  },
+  "avg_latency_sec": 2.894935019008699,
   "model_name": "claude-opus-5",
-  "timestamp": "2026-09-08 22:35:18 UTC",
+  "timestamp": "2026-09-08 22:46:17 UTC",
   "expected_task_count": 1824,
   "grading_version": "3",
   "provider": "anthropic",
   "dataset_fingerprint": "d40a3cafa91610bbebaa6c49719f24efcbe754a328e448d3e51f0e1f217c79a6",
   "evaluation_protocol_fingerprint": "3769c8cc383a4959533c4801eec6202035a5a8cd30b76644e8cdfbc11cc859ce",
-  "cohort_fingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "cohort_fingerprint": "9ba2626c7e81d5e1d1eb062093b80a702d3690e74640915db62d3b1ac0cfa32d",
   "status": "partial",
   "invalid_response_count": 0,
-  "tasks": [],
+  "tasks": [
+    {
+      "task_id": "font-montserrat-v55",
+      "font_id": "montserrat",
+      "target_canonical": "Montserrat",
+      "target_aliases": [
+        "montserrat"
+      ],
+      "category": "non-serif",
+      "weight": "black",
+      "modifier": "strikethrough",
+      "kerning": "tight",
+      "line_height": "tight",
+      "width_id": "medium",
+      "width_px": 320,
+      "image_path": "/mnt/disks/data/fontbench/dataset/fontbench-2-rendered/font-montserrat-v55.png",
+      "raw_prediction": "{\"font\": \"Poppins\", \"category\": \"non-serif\", \"weight\": \"black\", \"modifier\": \"strikethrough\", \"kerning\": \"tight\", \"line_height\": \"tight\"}",
+      "predicted_font": "Poppins",
+      "predicted_category": "non-serif",
+      "predicted_weight": "black",
+      "predicted_modifier": "strikethrough",
+      "predicted_kerning": "tight",
+      "predicted_line_height": "tight",
+      "font_correct": false,
+      "category_correct": true,
+      "weight_correct": true,
+      "modifier_correct": true,
+      "kerning_correct": true,
+      "line_height_correct": true,
+      "all_correct": false,
+      "composite_score": 0.8333333333333334,
+      "latency_sec": 2.894935019008699,
+      "model_name": "claude-opus-5",
+      "error": null,
+      "provider": "anthropic",
+      "error_kind": null,
+      "input_tokens": 1318,
+      "output_tokens": 59,
+      "request_attempts": 1,
+      "unmetered_attempts": 0,
+      "cost_usd": 0.008065,
+      "cost_estimated": false,
+      "recorded_at": "2026-09-08T22:46:12.703659+00:00"
+    }
+  ],
   "schema_version": 1,
   "run_id": "2026-09-08-all-except-fable",
   "benchmark_version": "1.0.0",
   "dataset_git_commit": "d69e87e2c206ea75c52f5b8340d677bd14af03e3",
   "dataset_git_path": "dataset/fontbench-2-rendered",
   "mock": false,
-  "runner_git_commit": "577324bddbacbd5f82f971617e757bef59a3472f",
-  "runner_git_dirty": false,
+  "runner_git_commit": "9d996ff09cb8a129927afb2252dbaf82775c8164",
+  "runner_git_dirty": true,
   "created_at": "2026-09-08T21:36:04.066Z",
-  "updated_at": "2026-09-08T22:35:18.265137+00:00",
+  "updated_at": "2026-09-08T22:46:17.815142+00:00",
   "model_id": "claude-opus-5",
   "model_config": {
     "api_key_env": "ANTHROPIC_API_KEY",

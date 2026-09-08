@@ -140,3 +140,12 @@ At `2026-09-08T22:35:18.265137+00:00`, the request using workspace `wrkspc_01QaU
 Independent verification preserves all 2,041 prior final response hashes and 2,060 prior attempt IDs. The closed checkpoint now has 2,061 attempts, with $31.7783744 in cumulative estimated spending under the $50 cap. Its $0.2548 increase is a conservative reservation for the unmetered failed request, not a confirmed charge. SQLite integrity and all V1.0.0 release identities pass. [Retry evidence](evidence/run-01-workspace-retry.json) records the workspace and runner commit.
 
 The workspace authentication fix is complete. The campaign continues with OpenAI/Gemini while Anthropic's credit error remains unresolved. The same run ID, successful observations, failed-attempt history, and cumulative cost guard are retained.
+
+
+### Claude inference succeeds after account funding
+
+The user reported funding the Claude Platform account and authorized another retry. At `2026-09-08T22:46:17.815142+00:00`, all four Claude models, including Fable, returned valid, metered benchmark responses using the previously supplied key and workspace. The conditionally supplied fallback credential was not needed.
+
+Independent preservation checks retain every one of the 2,439 prior final responses and 2,459 prior attempt IDs. The closed checkpoint contains 2,443 completed observations and 2,463 attempts. All four new Claude responses have no provider or schema error and include input/output token usage. SQLite integrity and V1.0.0 release identities pass. [Success evidence](evidence/run-01-claude-funded-success.json) records the outcome without credentials.
+
+Cumulative estimated spending is $37.8790802 against the authorized $50 cap. Resume all eleven enabled model configurations under the same run ID and guard; prior completed measurements remain final and all historical failed-attempt costs remain in the ledger. Anthropic's billing blocker is resolved for the tested requests. The local website refresh helper continues updating progress.

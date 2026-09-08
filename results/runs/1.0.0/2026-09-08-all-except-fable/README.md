@@ -1,28 +1,27 @@
 # V1.0.0 first multi-provider campaign
 
-Status: **paused**. Last checkpoint: `2026-09-08T22:35:18.265137+00:00`.
+Status: **partial**. Last checkpoint: `2026-09-08T22:46:17.815142+00:00`.
 
-**2,041 / 20,064 final observations**; cumulative estimated spend **$31.778374** against a **$50** guard.
+**2,443 / 20,064 final observations**; cumulative estimated spend **$37.879080** against a **$50** guard.
 
 The campaign includes all enabled Claude, OpenAI, and Gemini configurations, including Fable added on resume. The original run ID is retained to preserve checkpoints and history; its name describes the initial selection. Current provider issues appear below.
 
 | Model | Completed / 1,824 | State | Estimated USD |
 | --- | ---: | --- | ---: |
-| claude-fable-5-1 | 0 | paused | 1.783600 |
-| claude-haiku-4-5-20251001 | 0 | paused | 0.040480 |
-| claude-opus-5 | 0 | paused | 0.637000 |
-| claude-sonnet-5 | 0 | paused | 0.203840 |
-| gemini-3.1-pro-preview | 291 | paused | 4.781426 |
-| gemini-3.5-flash-lite | 291 | paused | 0.169465 |
-| gemini-3.8-flash | 291 | paused | 3.466337 |
-| gpt-5.6-luna | 292 | paused | 0.278171 |
-| gpt-5.6-sol | 292 | paused | 5.382988 |
-| gpt-5.6-terra | 292 | paused | 1.877748 |
-| gpt-6-astra | 292 | paused | 13.157320 |
+| claude-fable-5-1 | 1 | partial | 1.799750 |
+| claude-haiku-4-5-20251001 | 1 | partial | 0.041787 |
+| claude-opus-5 | 1 | partial | 0.645065 |
+| claude-sonnet-5 | 1 | partial | 0.207016 |
+| gemini-3.1-pro-preview | 348 | paused | 5.888766 |
+| gemini-3.5-flash-lite | 348 | paused | 0.202710 |
+| gemini-3.8-flash | 348 | paused | 4.168719 |
+| gpt-5.6-luna | 348 | paused | 0.335370 |
+| gpt-5.6-sol | 349 | paused | 6.484784 |
+| gpt-5.6-terra | 349 | paused | 2.259254 |
+| gpt-6-astra | 349 | paused | 15.845860 |
 
 ## Recorded provider issues
 
-- HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
 - Interrupted; resume to continue
 
 ## Provenance and recovery

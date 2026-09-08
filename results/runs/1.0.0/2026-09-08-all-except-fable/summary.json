@@ -9,14 +9,14 @@
   "grading_version": "3",
   "expected_task_count": 1824,
   "mock": false,
-  "runner_git_commit": "577324bddbacbd5f82f971617e757bef59a3472f",
-  "runner_git_dirty": false,
+  "runner_git_commit": "9d996ff09cb8a129927afb2252dbaf82775c8164",
+  "runner_git_dirty": true,
   "created_at": "2026-09-08T21:36:04.066Z",
-  "updated_at": "2026-09-08T22:35:18.265137+00:00",
+  "updated_at": "2026-09-08T22:46:17.815142+00:00",
   "budget_usd": 50.0,
-  "spent_cost_usd": 31.77837439999998,
+  "spent_cost_usd": 37.879080200000026,
   "cost_incomplete": false,
-  "status": "paused",
+  "status": "partial",
   "models": {
     "claude-fable-5-1": {
       "model_config": {
@@ -40,12 +40,12 @@
       "model": "claude-fable-5-1",
       "max_output_tokens": 4096,
       "display_name": "Claude Fable 5.1",
-      "completed": 0,
+      "completed": 1,
       "attempted_tasks": 3,
-      "status": "paused",
-      "reason": "HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
-      "cost_usd": 1.7835999999999999,
-      "composite_score": 0.0
+      "status": "partial",
+      "reason": null,
+      "cost_usd": 1.79975,
+      "composite_score": 0.8333333333333334
     },
     "claude-haiku-4-5-20251001": {
       "model_config": {
@@ -69,12 +69,12 @@
       "model": "claude-haiku-4-5-20251001",
       "max_output_tokens": 1024,
       "display_name": "Claude Haiku 4.5",
-      "completed": 0,
+      "completed": 1,
       "attempted_tasks": 2,
-      "status": "paused",
-      "reason": "HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
-      "cost_usd": 0.04048,
-      "composite_score": 0.0
+      "status": "partial",
+      "reason": null,
+      "cost_usd": 0.041787000000000005,
+      "composite_score": 0.5
     },
     "claude-opus-5": {
       "model_config": {
@@ -98,12 +98,12 @@
       "model": "claude-opus-5",
       "max_output_tokens": 4096,
       "display_name": "Claude Opus 5",
-      "completed": 0,
+      "completed": 1,
       "attempted_tasks": 3,
-      "status": "paused",
-      "reason": "HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
-      "cost_usd": 0.637,
-      "composite_score": 0.0
+      "status": "partial",
+      "reason": null,
+      "cost_usd": 0.645065,
+      "composite_score": 0.8333333333333334
     },
     "claude-sonnet-5": {
       "model_config": {
@@ -127,12 +127,12 @@
       "model": "claude-sonnet-5",
       "max_output_tokens": 4096,
       "display_name": "Claude Sonnet 5",
-      "completed": 0,
+      "completed": 1,
       "attempted_tasks": 2,
-      "status": "paused",
-      "reason": "HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
-      "cost_usd": 0.20384,
-      "composite_score": 0.0
+      "status": "partial",
+      "reason": null,
+      "cost_usd": 0.207016,
+      "composite_score": 0.6666666666666666
     },
     "gemini-3.1-pro-preview": {
       "model_config": {
@@ -156,12 +156,12 @@
       "model": "gemini-3.1-pro-preview",
       "max_output_tokens": 4096,
       "display_name": "Gemini 3.1 Pro Preview",
-      "completed": 291,
-      "attempted_tasks": 291,
+      "completed": 348,
+      "attempted_tasks": 348,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 4.781426000000005,
-      "composite_score": 0.6277205040091629
+      "cost_usd": 5.888766000000006,
+      "composite_score": 0.633620689655172
     },
     "gemini-3.5-flash-lite": {
       "model_config": {
@@ -185,12 +185,12 @@
       "model": "gemini-3.5-flash-lite",
       "max_output_tokens": 1024,
       "display_name": "Gemini 3.5 Flash-Lite",
-      "completed": 291,
-      "attempted_tasks": 291,
+      "completed": 348,
+      "attempted_tasks": 348,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 0.16946510000000004,
-      "composite_score": 0.5567010309278352
+      "cost_usd": 0.20270960000000005,
+      "composite_score": 0.550766283524904
     },
     "gemini-3.8-flash": {
       "model_config": {
@@ -214,12 +214,12 @@
       "model": "gemini-3.8-flash",
       "max_output_tokens": 4096,
       "display_name": "Gemini 3.8 Flash",
-      "completed": 291,
-      "attempted_tasks": 291,
+      "completed": 348,
+      "attempted_tasks": 348,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 3.4663365,
-      "composite_score": 0.6506300114547534
+      "cost_usd": 4.168719,
+      "composite_score": 0.6475095785440609
     },
     "gpt-5.6-luna": {
       "model_config": {
@@ -243,12 +243,12 @@
       "model": "gpt-5.6-luna",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Luna",
-      "completed": 292,
-      "attempted_tasks": 292,
+      "completed": 348,
+      "attempted_tasks": 348,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 0.2781708000000003,
-      "composite_score": 0.6980593607305938
+      "cost_usd": 0.3353696000000004,
+      "composite_score": 0.7030651340996175
     },
     "gpt-5.6-sol": {
       "model_config": {
@@ -272,12 +272,12 @@
       "model": "gpt-5.6-sol",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Sol",
-      "completed": 292,
-      "attempted_tasks": 292,
+      "completed": 349,
+      "attempted_tasks": 349,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 5.382988,
-      "composite_score": 0.7522831050228316
+      "cost_usd": 6.484783999999999,
+      "composite_score": 0.7554918815663808
     },
     "gpt-5.6-terra": {
       "model_config": {
@@ -301,12 +301,12 @@
       "model": "gpt-5.6-terra",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Terra",
-      "completed": 292,
-      "attempted_tasks": 292,
+      "completed": 349,
+      "attempted_tasks": 349,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 1.877748000000001,
-      "composite_score": 0.6986301369863015
+      "cost_usd": 2.2592540000000008,
+      "composite_score": 0.6972301814708699
     },
     "gpt-6-astra": {
       "model_config": {
@@ -330,12 +330,12 @@
       "model": "gpt-6-astra",
       "max_output_tokens": 4096,
       "display_name": "GPT-6 Astra",
-      "completed": 292,
-      "attempted_tasks": 292,
+      "completed": 349,
+      "attempted_tasks": 349,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 13.157319999999991,
-      "composite_score": 0.8824200913242023
+      "cost_usd": 15.84585999999999,
+      "composite_score": 0.8834765998089784
     }
   },
   "interruption_signal": null
