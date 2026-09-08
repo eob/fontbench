@@ -978,6 +978,84 @@
       "status": "interrupted",
       "updated_at": "2026-09-08T22:31:29.264469+00:00",
       "finished_at": "2026-09-08T22:31:29.264469+00:00"
+    },
+    {
+      "runner_git_commit": "577324bddbacbd5f82f971617e757bef59a3472f",
+      "runner_git_dirty": false,
+      "started_at": "2026-09-08T22:35:17.701490+00:00",
+      "models": [
+        {
+          "id": "claude-fable-5-1",
+          "provider": "anthropic",
+          "model": "claude-fable-5-1",
+          "display_name": "Claude Fable 5.1",
+          "api_key_env": "ANTHROPIC_API_KEY",
+          "source_url": "https://platform.claude.com/docs/en/models/overview",
+          "pricing_source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "pricing_notes": "Standard online API rates in USD per million tokens; excludes caching, batch discounts and tools.",
+          "notes": "Latest Fable. Adaptive thinking is always on; default effort is high.",
+          "base_url": null,
+          "input_per_m": 10.0,
+          "output_per_m": 50.0,
+          "max_output_tokens": 4096,
+          "enabled": true
+        },
+        {
+          "id": "claude-opus-5",
+          "provider": "anthropic",
+          "model": "claude-opus-5",
+          "display_name": "Claude Opus 5",
+          "api_key_env": "ANTHROPIC_API_KEY",
+          "source_url": "https://platform.claude.com/docs/en/models/overview",
+          "pricing_source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "pricing_notes": "Standard online API rates in USD per million tokens; excludes caching, batch discounts and tools.",
+          "notes": "Latest Opus. Default model effort is high.",
+          "base_url": null,
+          "input_per_m": 5.0,
+          "output_per_m": 25.0,
+          "max_output_tokens": 4096,
+          "enabled": true
+        },
+        {
+          "id": "claude-sonnet-5",
+          "provider": "anthropic",
+          "model": "claude-sonnet-5",
+          "display_name": "Claude Sonnet 5",
+          "api_key_env": "ANTHROPIC_API_KEY",
+          "source_url": "https://platform.claude.com/docs/en/models/overview",
+          "pricing_source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "pricing_notes": "Standard online API rates in USD per million tokens; excludes caching, batch discounts and tools.",
+          "notes": "Latest Sonnet. Default model effort is high.",
+          "base_url": null,
+          "input_per_m": 2.0,
+          "output_per_m": 10.0,
+          "max_output_tokens": 4096,
+          "enabled": true
+        },
+        {
+          "id": "claude-haiku-4-5-20251001",
+          "provider": "anthropic",
+          "model": "claude-haiku-4-5-20251001",
+          "display_name": "Claude Haiku 4.5",
+          "api_key_env": "ANTHROPIC_API_KEY",
+          "source_url": "https://platform.claude.com/docs/en/models/overview",
+          "pricing_source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "pricing_notes": "Standard online API rates in USD per million tokens; excludes caching, batch discounts and tools.",
+          "notes": "Latest Haiku, using its dated snapshot ID.",
+          "base_url": null,
+          "input_per_m": 1.0,
+          "output_per_m": 5.0,
+          "max_output_tokens": 1024,
+          "enabled": true
+        }
+      ],
+      "max_tasks": 1,
+      "concurrency": 1,
+      "budget_usd": 50.0,
+      "status": "paused",
+      "anthropic_workspace_id": "wrkspc_01QaUFx97Qe9NkmYhy6hgLng",
+      "updated_at": "2026-09-08T22:35:18.265137+00:00",
+      "finished_at": "2026-09-08T22:35:18.265137+00:00"
     }
   ]
 }

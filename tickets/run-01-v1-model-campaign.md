@@ -132,3 +132,11 @@ Base commit: `da4a6ea718c3a9377819d90101cd0db6824b5fdb`. The offline reproductio
 The prior invocation drained at `2026-09-08T22:31:29.264469+00:00`, retaining 2,041 final observations and 2,060 attempts with $31.5235744 in cumulative estimated spending. [Gate details](evidence/run-01-workspace-gates.json) record the verification base. The bounded Claude retry will use workspace `wrkspc_01QaUFx97Qe9NkmYhy6hgLng` and the same $50 cumulative guard. Model-list access alone does not establish inference credit availability.
 
 The runner sets account routing before starting any workers, with client cleanup already registered. The limited access to the frozen client's HTTP defaults keeps authentication setup outside the inference sources. API keys stay in process environment, while the non-secret workspace ID is recorded per invocation.
+
+#### Workspace retry outcome
+
+At `2026-09-08T22:35:18.265137+00:00`, the request using workspace `wrkspc_01QaUFx97Qe9NkmYhy6hgLng` received HTTP 400 insufficient credits. Workspace scoping is no longer the reported error. The first Fable failure paused the provider before the other three models were requested. All four Claude models still have zero completed observations.
+
+Independent verification preserves all 2,041 prior final response hashes and 2,060 prior attempt IDs. The closed checkpoint now has 2,061 attempts, with $31.7783744 in cumulative estimated spending under the $50 cap. Its $0.2548 increase is a conservative reservation for the unmetered failed request, not a confirmed charge. SQLite integrity and all V1.0.0 release identities pass. [Retry evidence](evidence/run-01-workspace-retry.json) records the workspace and runner commit.
+
+The workspace authentication fix is complete. The campaign continues with OpenAI/Gemini while Anthropic's credit error remains unresolved. The same run ID, successful observations, failed-attempt history, and cumulative cost guard are retained.
