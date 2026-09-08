@@ -4,6 +4,7 @@ This folder is the authoritative local workfu/ticketfu issue catalog. It include
 
 | Ticket | Priority | Scope | State |
 | --- | --- | --- | --- |
+| [run-01](run-01-v1-model-campaign.md) | High | First V1.0.0 campaign across ten provider models; Fable deferred | In Progress |
 | [fix-repo-audit](fix-repo-audit.md) | High | Initial repository, renderer, grader, package, and installation repairs | Completed; historical |
 | [feat-multi-provider-benchmark](feat-multi-provider-benchmark.md) | High | Provider adapters, checkpoints, budgeted pilot, and first website | Completed; historical |
 | [valid-01](valid-01-benchmark-audit.md) | Critical | Audit integration, artifact census, fresh corpus, final verification | Completed |
@@ -20,4 +21,4 @@ This folder is the authoritative local workfu/ticketfu issue catalog. It include
 
 Use [the run guide](../results/README.md) to add measurements later and rebuild [the benchmark website](../site/index.html). New paid campaigns are separate from these implementation tickets.
 
-All **11 tickets are completed**. Final integration passed 413 Python tests, 78 Bun tests, TypeScript checking, frozen release validation, offline resume, wheel packaging, and desktop/mobile website checks. See [the integration record](valid-01-benchmark-audit.md#v100-release-and-ticket-closure) and [machine-readable gate evidence](evidence/release-final-gates.json).
+The **11 audit/release tickets are completed**; the newly authorized model campaign is tracked separately in run-01. Final integration passed 413 Python tests, 78 Bun tests, TypeScript checking, frozen release validation, offline resume, wheel packaging, and desktop/mobile website checks. See [the integration record](valid-01-benchmark-audit.md#v100-release-and-ticket-closure) and [machine-readable gate evidence](evidence/release-final-gates.json).

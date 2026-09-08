@@ -1,0 +1,33 @@
+[
+  {
+    "provider": "openai",
+    "status_code": 200,
+    "selected_models": {
+      "gpt-6-astra": true,
+      "gpt-5.6-sol": true,
+      "gpt-5.6-terra": true,
+      "gpt-5.6-luna": true
+    },
+    "listing_has_more": false
+  },
+  {
+    "provider": "anthropic",
+    "status_code": 200,
+    "selected_models": {
+      "claude-opus-5": true,
+      "claude-sonnet-5": true,
+      "claude-haiku-4-5-20251001": true
+    },
+    "listing_has_more": false
+  },
+  {
+    "provider": "google",
+    "status_code": 200,
+    "selected_models": {
+      "gemini-3.1-pro-preview": true,
+      "gemini-3.8-flash": true,
+      "gemini-3.5-flash-lite": true
+    },
+    "listing_has_more": true
+  }
+]
