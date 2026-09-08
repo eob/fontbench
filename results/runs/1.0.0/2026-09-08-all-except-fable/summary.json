@@ -9,14 +9,14 @@
   "grading_version": "3",
   "expected_task_count": 1824,
   "mock": false,
-  "runner_git_commit": "ba6ede53454737fe99840d15e7a85ff04dc86c44",
-  "runner_git_dirty": true,
+  "runner_git_commit": "339f2f2fe5f1fa36feec613eadf43794978ef5d6",
+  "runner_git_dirty": false,
   "created_at": "2026-09-08T21:36:04.066Z",
-  "updated_at": "2026-09-08T22:10:31.630073+00:00",
+  "updated_at": "2026-09-08T22:18:54.804932+00:00",
   "budget_usd": 25.0,
-  "spent_cost_usd": 23.302466199999987,
+  "spent_cost_usd": 24.453235799999973,
   "cost_incomplete": false,
-  "status": "paused",
+  "status": "interrupted",
   "models": {
     "claude-fable-5-1": {
       "model_config": {
@@ -156,12 +156,12 @@
       "model": "gemini-3.1-pro-preview",
       "max_output_tokens": 4096,
       "display_name": "Gemini 3.1 Pro Preview",
-      "completed": 216,
-      "attempted_tasks": 216,
+      "completed": 228,
+      "attempted_tasks": 228,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 3.3585960000000004,
-      "composite_score": 0.6365740740740738
+      "cost_usd": 3.560440000000001,
+      "composite_score": 0.6330409356725144
     },
     "gemini-3.5-flash-lite": {
       "model_config": {
@@ -185,12 +185,12 @@
       "model": "gemini-3.5-flash-lite",
       "max_output_tokens": 1024,
       "display_name": "Gemini 3.5 Flash-Lite",
-      "completed": 216,
-      "attempted_tasks": 216,
+      "completed": 228,
+      "attempted_tasks": 228,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 0.12577989999999997,
-      "composite_score": 0.5601851851851856
+      "cost_usd": 0.1327979,
+      "composite_score": 0.5599415204678365
     },
     "gemini-3.8-flash": {
       "model_config": {
@@ -214,12 +214,12 @@
       "model": "gemini-3.8-flash",
       "max_output_tokens": 4096,
       "display_name": "Gemini 3.8 Flash",
-      "completed": 216,
-      "attempted_tasks": 216,
+      "completed": 228,
+      "attempted_tasks": 228,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 2.5799835,
-      "composite_score": 0.6550925925925924
+      "cost_usd": 2.7248684999999995,
+      "composite_score": 0.6535087719298242
     },
     "gpt-5.6-luna": {
       "model_config": {
@@ -243,12 +243,12 @@
       "model": "gpt-5.6-luna",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Luna",
-      "completed": 216,
-      "attempted_tasks": 216,
+      "completed": 228,
+      "attempted_tasks": 228,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 0.2072168000000002,
-      "composite_score": 0.6998456790123456
+      "cost_usd": 0.21760740000000023,
+      "composite_score": 0.695175438596491
     },
     "gpt-5.6-sol": {
       "model_config": {
@@ -272,12 +272,12 @@
       "model": "gpt-5.6-sol",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Sol",
-      "completed": 217,
-      "attempted_tasks": 217,
+      "completed": 228,
+      "attempted_tasks": 228,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 3.925727999999998,
-      "composite_score": 0.7549923195084486
+      "cost_usd": 4.095851999999999,
+      "composite_score": 0.7521929824561403
     },
     "gpt-5.6-terra": {
       "model_config": {
@@ -301,12 +301,12 @@
       "model": "gpt-5.6-terra",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Terra",
-      "completed": 216,
-      "attempted_tasks": 216,
+      "completed": 228,
+      "attempted_tasks": 228,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 1.3849520000000006,
-      "composite_score": 0.7029320987654322
+      "cost_usd": 1.4537100000000005,
+      "composite_score": 0.6995614035087719
     },
     "gpt-6-astra": {
       "model_config": {
@@ -330,13 +330,13 @@
       "model": "gpt-6-astra",
       "max_output_tokens": 4096,
       "display_name": "GPT-6 Astra",
-      "completed": 217,
-      "attempted_tasks": 217,
+      "completed": 229,
+      "attempted_tasks": 229,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 9.753369999999997,
-      "composite_score": 0.8786482334869438
+      "cost_usd": 10.301119999999994,
+      "composite_score": 0.880640465793305
     }
   },
-  "interruption_signal": null
+  "interruption_signal": 15
 }

@@ -13,7 +13,7 @@
 
 Run the complete frozen V1.0.0 corpus against all enabled OpenAI, Gemini, and Claude configurations. The user subsequently added Anthropic funds/limits and explicitly included `claude-fable-5-1`. All eleven enabled configurations now target 20,064 final model–input observations. The already-disabled historical Gemini 2.5 Flash-Lite remains excluded.
 
-The existing cumulative estimated $25 spending guard applies at launch. The user has been asked for the campaign ceiling because historical OpenAI/Gemini usage alone projects about $141 for complete coverage, plus unknown Claude usage. No higher cap applies until the user selects it.
+The user has authorized a **$50 cumulative estimated spending cap**, raised from the initial $25 guard. This includes all earlier attempts in the same campaign. Historical OpenAI/Gemini usage alone projects about $141 for complete coverage, plus unknown Claude usage; the campaign stops at the authorized guard if it cannot finish within it.
 
 ## Plan and gates
 
@@ -34,7 +34,7 @@ bun run benchmark --release 1.0.0 --run-id 2026-09-08-all-except-fable \
   --models claude-fable-5-1 claude-opus-5 claude-sonnet-5 claude-haiku-4-5-20251001 \
     gpt-6-astra gpt-5.6-sol gpt-5.6-terra gpt-5.6-luna \
     gemini-3.1-pro-preview gemini-3.8-flash gemini-3.5-flash-lite \
-  --budget-usd 25 --concurrency 10
+  --budget-usd 50 --concurrency 10
 ```
 
 The process writes `results/runs/1.0.0/2026-09-08-all-except-fable/`. Reusing this run ID preserves completed answers and attempt costs. Malformed model answers remain final zero-credit observations; infrastructure failures remain retryable. The corpus, rubric, grading, provider protocol and model configurations are unchanged.
@@ -93,3 +93,10 @@ At `2026-09-08T22:10:31.630073+00:00`, another bounded serial Claude retry recei
 Independent verification confirmed all 1,514 prior final responses are byte-identical and all 1,528 prior attempt IDs remain. Exactly one failed attempt was added. SQLite integrity passes. The cumulative estimate is $23.3024662 against the unchanged $25 guard, including a $0.2548 conservative reservation for this unmetered failure, not a confirmed provider charge. See [run-01-claude-retry-2.json](evidence/run-01-claude-retry-2.json).
 
 OpenAI/Gemini resume from this checkpoint under the same cap. Claude remains paused pending usable API credits; this retry does not change the frozen dataset or evaluation protocol.
+
+
+### Cumulative cap raised to $50
+
+The user explicitly authorized increasing the campaign ceiling to $50. The $25 invocation was gracefully drained at `2026-09-08T22:18:54.804932+00:00` with 1,597 final observations, 1,612 recorded attempts, and $24.4532358 in cumulative estimated spending. SQLite integrity passes and a preservation snapshot was taken before resuming.
+
+Resume the seven OpenAI/Gemini configurations with `--budget-usd 50 --concurrency 10` under the same run ID. All prior costs count toward the new total ceiling. The four Claude configurations remain registered and paused after the latest API credit refusal. The local website refresh helper continues recording progress.
