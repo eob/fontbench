@@ -100,3 +100,12 @@ OpenAI/Gemini resume from this checkpoint under the same cap. Claude remains pau
 The user explicitly authorized increasing the campaign ceiling to $50. The $25 invocation was gracefully drained at `2026-09-08T22:18:54.804932+00:00` with 1,597 final observations, 1,612 recorded attempts, and $24.4532358 in cumulative estimated spending. SQLite integrity passes and a preservation snapshot was taken before resuming.
 
 Resume the seven OpenAI/Gemini configurations with `--budget-usd 50 --concurrency 10` under the same run ID. All prior costs count toward the new total ceiling. The four Claude configurations remain registered and paused after the latest API credit refusal. The local website refresh helper continues recording progress.
+
+
+### Replacement Anthropic credential attempt
+
+At `2026-09-08T22:20:23.380767+00:00`, a bounded serial retry used the replacement credential under the authorized $50 cumulative cap. Each of the four Claude models returned HTTP 400: the key is not scoped to a workspace and requires the `anthropic-workspace-id` header. The read-only List Workspaces request then returned HTTP 403, “Missing permissions.” Claude has no completed observations.
+
+All 1,597 prior final responses and 1,612 prior attempt IDs remain unchanged. The closed checkpoint now contains 1,616 attempts and $24.8965158 in cumulative estimated spending, including conservative reservations for the four unmetered failures. SQLite integrity passes. See [run-01-cap50-new-key.json](evidence/run-01-cap50-new-key.json).
+
+A workspace-scoped replacement key has been requested. [Anthropic authentication documentation](https://platform.claude.com/docs/en/manage-claude/authentication) confirms that these keys can omit the workspace header. No credential value is recorded in the repository. OpenAI/Gemini continue with the $50 cumulative cap and the existing versioned checkpoint.

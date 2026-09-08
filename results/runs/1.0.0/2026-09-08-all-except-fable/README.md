@@ -1,17 +1,17 @@
 # V1.0.0 first multi-provider campaign
 
-Status: **interrupted**. Last checkpoint: `2026-09-08T22:18:54.804932+00:00`.
+Status: **paused**. Last checkpoint: `2026-09-08T22:20:23.380767+00:00`.
 
-**1,597 / 20,064 final observations**; cumulative estimated spend **$24.453236** against a **$25** guard.
+**1,597 / 20,064 final observations**; cumulative estimated spend **$24.896516** against a **$50** guard.
 
 The campaign includes all enabled Claude, OpenAI, and Gemini configurations, including Fable added on resume. The original run ID is retained to preserve checkpoints and history; its name describes the initial selection. Current provider issues appear below.
 
 | Model | Completed / 1,824 | State | Estimated USD |
 | --- | ---: | --- | ---: |
-| claude-fable-5-1 | 0 | paused | 1.274000 |
-| claude-haiku-4-5-20251001 | 0 | paused | 0.030360 |
-| claude-opus-5 | 0 | paused | 0.509600 |
-| claude-sonnet-5 | 0 | paused | 0.152880 |
+| claude-fable-5-1 | 0 | paused | 1.528800 |
+| claude-haiku-4-5-20251001 | 0 | paused | 0.040480 |
+| claude-opus-5 | 0 | paused | 0.637000 |
+| claude-sonnet-5 | 0 | paused | 0.203840 |
 | gemini-3.1-pro-preview | 228 | paused | 3.560440 |
 | gemini-3.5-flash-lite | 228 | paused | 0.132798 |
 | gemini-3.8-flash | 228 | paused | 2.724868 |
@@ -22,7 +22,7 @@ The campaign includes all enabled Claude, OpenAI, and Gemini configurations, inc
 
 ## Recorded provider issues
 
-- HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+- HTTP 400: This API key is not scoped to a workspace, so this request must include the anthropic-workspace-id header with the ID of the workspace to use. Add the header, or use an API key that is scoped to a workspace.
 - Interrupted; resume to continue
 
 ## Provenance and recovery
