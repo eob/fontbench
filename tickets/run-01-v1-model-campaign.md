@@ -46,3 +46,21 @@ Authenticated model-list evidence: [run-01-provider-preflight.json](evidence/run
 Current reference pricing checked September 8, 2026: [OpenAI model comparison](https://developers.openai.com/api/docs/models/compare?model-1=gpt-6-astra&model-2=gpt-5.6-sol&model-3=gpt-5.6-terra), [GPT-5.6 Luna](https://developers.openai.com/api/docs/models/gpt-5.6-luna), [Gemini pricing](https://ai.google.dev/gemini-api/docs/pricing), and [Claude pricing](https://platform.claude.com/docs/en/about-claude/pricing). Selected standard token rates match the catalog; no inference configuration changed.
 
 A read-only inspection of the historical checkpoint projects $141.35 for the seven OpenAI/Gemini configurations at their previous mean cost per observation. This is a planning estimate on a changed corpus/prompt, not a billing guarantee. Claude has no usable prior metered observations; its historical provider-wide credit failures do not establish today's availability. Current inference responses will determine it.
+
+## Live startup
+
+Started `2026-09-08T21:36:04Z` from clean code commit `db0f3421f49af7ae6955744c5d640a495c72c6cf` with ten workers and the $25 cumulative estimated guard. Native responses immediately showed an Anthropic account billing block for all three selected Claude models:
+
+```text
+HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.
+```
+
+The runner paused Anthropic and continued OpenAI/Gemini. Fable was never requested. The Claude failures and conservative unmetered reservations are retained in the checkpoint; resetting a Fable model quota alone does not resolve this separate API credit-balance error. Resume the same run after the account has usable credits.
+
+## Startup verification and monitoring
+
+An independent read-only audit at `2026-09-08T21:38:53.722205+00:00` passed 627 checks over 144 attempts and 141 final observations. It recomputed the frozen dataset and protocol identities, checked all ten selected models with Fable absent, verified canonical targets and six-field grading, cost formulas, timestamps, configuration hashes, task uniqueness, and equality between the coherent SQLite transaction and exports. Estimated spending was $1.9826138, including $0.18848 conservatively reserved for the three unmetered Claude billing failures. No invalid model response had occurred in that initial sample.
+
+The runner is detached and continues independently of the chat session. Initial runner PID: `3895324`; process command metadata is retained at `/tmp/fontbench-v1-campaign-process.json`. The operator helper `/tmp/fontbench-v1-campaign-monitor.py` (PID recorded in `/tmp/fontbench-v1-campaign-monitor.pid`) refreshes the run's README and local `site/` approximately every 60 seconds, with a final refresh when the runner stops. Helper logs remain in `/tmp`. It makes no model requests and does not automatically commit or push files.
+
+Current work remains active while the guarded campaign runs. Higher spending and Anthropic credit availability remain user-controlled; neither is inferred from elapsed time. Any later resume uses the same run ID and preserves every completed final observation.
