@@ -84,3 +84,12 @@ Independent validation confirms all 559 pre-expansion final responses are byte-i
 OpenAI/Gemini continue under the same run ID and $25 cumulative cap, selecting only their seven configurations until the Anthropic billing issue is resolved. All eleven registered models remain in the ledger and website records. Fable is now part of the authorized campaign and remains paused alongside the other three Claude models.
 
 The [Anthropic API billing guide](https://support.claude.com/en/articles/8977456-how-do-i-pay-for-my-claude-api-usage) documents prepaid Console credits. The account backing the configured `ANTHROPIC_API_KEY` still receives the billing refusal; model-list access succeeds. The provider's status page lists an older credit-purchase delay resolved September 2, which does not establish a current incident or explain this account's failure.
+
+
+### Additional user-requested Claude retry
+
+At `2026-09-08T22:10:31.630073+00:00`, another bounded serial Claude retry received the same HTTP 400 insufficient-credit error on Fable. The provider pause prevented further Claude requests in that invocation; all four Claude models remain registered with zero final observations.
+
+Independent verification confirmed all 1,514 prior final responses are byte-identical and all 1,528 prior attempt IDs remain. Exactly one failed attempt was added. SQLite integrity passes. The cumulative estimate is $23.3024662 against the unchanged $25 guard, including a $0.2548 conservative reservation for this unmetered failure, not a confirmed provider charge. See [run-01-claude-retry-2.json](evidence/run-01-claude-retry-2.json).
+
+OpenAI/Gemini resume from this checkpoint under the same cap. Claude remains paused pending usable API credits; this retry does not change the frozen dataset or evaluation protocol.
