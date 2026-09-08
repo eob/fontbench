@@ -1,0 +1,12 @@
+{
+  "benchmark_version": "1.0.0",
+  "dataset_git_commit": "d69e87e2c206ea75c52f5b8340d677bd14af03e3",
+  "dataset_fingerprint": "d40a3cafa91610bbebaa6c49719f24efcbe754a328e448d3e51f0e1f217c79a6",
+  "evaluation_protocol_fingerprint": "3769c8cc383a4959533c4801eec6202035a5a8cd30b76644e8cdfbc11cc859ce",
+  "pre_resume_completed": 559,
+  "pre_resume_attempts": 562,
+  "pre_resume_spent_cost_usd": 8.02708635,
+  "sqlite_integrity": "ok",
+  "newly_authorized_model": "claude-fable-5-1",
+  "campaign_budget_usd": 25
+}

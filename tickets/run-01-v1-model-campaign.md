@@ -11,7 +11,7 @@
 
 ## Authorized outcome
 
-Run the complete frozen V1.0.0 corpus against all enabled OpenAI, Gemini, and Claude model configurations except `claude-fable-5-1`. Fable is deferred at the user's request until quota resets. The already-disabled historical Gemini 2.5 Flash-Lite remains excluded. Ten configurations target 18,240 final model–input observations.
+Run the complete frozen V1.0.0 corpus against all enabled OpenAI, Gemini, and Claude configurations. The user subsequently added Anthropic funds/limits and explicitly included `claude-fable-5-1`. All eleven enabled configurations now target 20,064 final model–input observations. The already-disabled historical Gemini 2.5 Flash-Lite remains excluded.
 
 The existing cumulative estimated $25 spending guard applies at launch. The user has been asked for the campaign ceiling because historical OpenAI/Gemini usage alone projects about $141 for complete coverage, plus unknown Claude usage. No higher cap applies until the user selects it.
 
@@ -31,7 +31,7 @@ Run ID: `2026-09-08-all-except-fable`.
 
 ```bash
 bun run benchmark --release 1.0.0 --run-id 2026-09-08-all-except-fable \
-  --models claude-opus-5 claude-sonnet-5 claude-haiku-4-5-20251001 \
+  --models claude-fable-5-1 claude-opus-5 claude-sonnet-5 claude-haiku-4-5-20251001 \
     gpt-6-astra gpt-5.6-sol gpt-5.6-terra gpt-5.6-luna \
     gemini-3.1-pro-preview gemini-3.8-flash gemini-3.5-flash-lite \
   --budget-usd 25 --concurrency 10
@@ -64,3 +64,12 @@ An independent read-only audit at `2026-09-08T21:38:53.722205+00:00` passed 627 
 The runner is detached and continues independently of the chat session. Initial runner PID: `3895324`; process command metadata is retained at `/tmp/fontbench-v1-campaign-process.json`. The operator helper `/tmp/fontbench-v1-campaign-monitor.py` (PID recorded in `/tmp/fontbench-v1-campaign-monitor.pid`) refreshes the run's README and local `site/` approximately every 60 seconds, with a final refresh when the runner stops. Helper logs remain in `/tmp`. It makes no model requests and does not automatically commit or push files.
 
 Current work remains active while the guarded campaign runs. Higher spending and Anthropic credit availability remain user-controlled; neither is inferred from elapsed time. Any later resume uses the same run ID and preserves every completed final observation.
+
+
+## Anthropic funding and Fable inclusion
+
+The user reported adding funds and raising provider limits, and explicitly requested inclusion of Fable. The current invocation was gracefully drained before resuming the same checkpoint with all eleven enabled catalog configurations. The existing run ID remains unchanged because it is part of immutable checkpoint identity; its `all-except-fable` suffix describes only the original selection, while `run.json` records the expanded invocation.
+
+All four exact Anthropic model IDs appear in the authenticated Models API. Current [Claude model and pricing documentation](https://platform.claude.com/docs/en/models/overview) confirms Fable 5.1 supports image input and retains the catalog's standard $10/$50 input/output token rates. The cumulative campaign cap remains $25; the user changed provider funding/limits but has not selected a higher numeric benchmark spending ceiling.
+
+The pre-resume checkpoint, final result hashes and original attempt IDs are captured for an independent preservation check. No final answer is eligible for remeasurement; prior billing failures remain in the attempt history and their conservative cost reservations remain in the cumulative guard.
