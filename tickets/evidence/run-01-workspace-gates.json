@@ -1,0 +1,12 @@
+{
+  "base_commit": "da4a6ea718c3a9377819d90101cd0db6824b5fdb",
+  "python_tests": "421 passed in 17.00s",
+  "targeted_red": "2 failed, 5 passed",
+  "targeted_green": "7 passed",
+  "reversion": "2 failed, 5 passed; same missing-header assertion",
+  "release_validation": "passed; all 1824 inputs and exact frozen identities",
+  "review": "Independent request comparison: identical body and URL; workspace header is the only Anthropic request difference; OpenAI/Google unchanged.",
+  "workspace_id": "wrkspc_01QaUFx97Qe9NkmYhy6hgLng",
+  "models_preflight_status": 200,
+  "all_four_claude_ids_available": true
+}

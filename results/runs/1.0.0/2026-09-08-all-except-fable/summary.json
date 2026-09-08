@@ -9,14 +9,14 @@
   "grading_version": "3",
   "expected_task_count": 1824,
   "mock": false,
-  "runner_git_commit": "424b9f1ce85dfd9f4e20f026253d213bd038a19c",
+  "runner_git_commit": "da4a6ea718c3a9377819d90101cd0db6824b5fdb",
   "runner_git_dirty": false,
   "created_at": "2026-09-08T21:36:04.066Z",
-  "updated_at": "2026-09-08T22:20:23.380767+00:00",
+  "updated_at": "2026-09-08T22:31:29.264469+00:00",
   "budget_usd": 50.0,
-  "spent_cost_usd": 24.896515799999975,
+  "spent_cost_usd": 31.523574399999976,
   "cost_incomplete": false,
-  "status": "paused",
+  "status": "interrupted",
   "models": {
     "claude-fable-5-1": {
       "model_config": {
@@ -156,12 +156,12 @@
       "model": "gemini-3.1-pro-preview",
       "max_output_tokens": 4096,
       "display_name": "Gemini 3.1 Pro Preview",
-      "completed": 228,
-      "attempted_tasks": 228,
+      "completed": 291,
+      "attempted_tasks": 291,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 3.560440000000001,
-      "composite_score": 0.6330409356725142
+      "cost_usd": 4.781426000000005,
+      "composite_score": 0.6277205040091629
     },
     "gemini-3.5-flash-lite": {
       "model_config": {
@@ -185,12 +185,12 @@
       "model": "gemini-3.5-flash-lite",
       "max_output_tokens": 1024,
       "display_name": "Gemini 3.5 Flash-Lite",
-      "completed": 228,
-      "attempted_tasks": 228,
+      "completed": 291,
+      "attempted_tasks": 291,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 0.1327979,
-      "composite_score": 0.5599415204678365
+      "cost_usd": 0.16946510000000004,
+      "composite_score": 0.5567010309278354
     },
     "gemini-3.8-flash": {
       "model_config": {
@@ -214,12 +214,12 @@
       "model": "gemini-3.8-flash",
       "max_output_tokens": 4096,
       "display_name": "Gemini 3.8 Flash",
-      "completed": 228,
-      "attempted_tasks": 228,
+      "completed": 291,
+      "attempted_tasks": 291,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 2.7248684999999995,
-      "composite_score": 0.6535087719298245
+      "cost_usd": 3.4663365,
+      "composite_score": 0.6506300114547537
     },
     "gpt-5.6-luna": {
       "model_config": {
@@ -243,12 +243,12 @@
       "model": "gpt-5.6-luna",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Luna",
-      "completed": 228,
-      "attempted_tasks": 228,
+      "completed": 292,
+      "attempted_tasks": 292,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 0.21760740000000023,
-      "composite_score": 0.6951754385964912
+      "cost_usd": 0.2781708000000003,
+      "composite_score": 0.6980593607305938
     },
     "gpt-5.6-sol": {
       "model_config": {
@@ -272,12 +272,12 @@
       "model": "gpt-5.6-sol",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Sol",
-      "completed": 228,
-      "attempted_tasks": 228,
+      "completed": 292,
+      "attempted_tasks": 292,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 4.095851999999999,
-      "composite_score": 0.7521929824561403
+      "cost_usd": 5.382988,
+      "composite_score": 0.7522831050228314
     },
     "gpt-5.6-terra": {
       "model_config": {
@@ -301,12 +301,12 @@
       "model": "gpt-5.6-terra",
       "max_output_tokens": 4096,
       "display_name": "GPT-5.6 Terra",
-      "completed": 228,
-      "attempted_tasks": 228,
+      "completed": 292,
+      "attempted_tasks": 292,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 1.4537100000000005,
-      "composite_score": 0.6995614035087718
+      "cost_usd": 1.877748000000001,
+      "composite_score": 0.6986301369863018
     },
     "gpt-6-astra": {
       "model_config": {
@@ -330,13 +330,13 @@
       "model": "gpt-6-astra",
       "max_output_tokens": 4096,
       "display_name": "GPT-6 Astra",
-      "completed": 229,
-      "attempted_tasks": 229,
+      "completed": 292,
+      "attempted_tasks": 292,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 10.301119999999994,
-      "composite_score": 0.880640465793305
+      "cost_usd": 13.157319999999991,
+      "composite_score": 0.8824200913242023
     }
   },
-  "interruption_signal": null
+  "interruption_signal": 15
 }

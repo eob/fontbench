@@ -4,6 +4,7 @@ import json
 from dataclasses import replace
 from unittest.mock import Mock
 
+import httpx
 import pytest
 from PIL import Image
 
@@ -24,6 +25,77 @@ def benchmark(tmp_path):
                  api_key_env='TEST_KEY', source_url='https://example.com/models', max_output_tokens=1024, input_per_m=1.0, output_per_m=1.0)
     config.write_text(json.dumps(dict(version=1, verified_at='2026-09-07', models=[model])))
     return dict(manifest_path=manifest, config_path=config, output_dir=tmp_path / 'runs', run_id='test', mock=True)
+
+
+@pytest.mark.parametrize('provider', ['anthropic', 'openai', 'google'])
+@pytest.mark.parametrize('workspace', [None, 'wrkspc_test123'])
+def test_workspace_auth_only_reaches_anthropic(benchmark, monkeypatch, provider, workspace):
+    from baseline.releases import load_release
+    from baseline.evaluator import evaluation_protocol_fingerprint
+
+    catalog = json.loads(benchmark['config_path'].read_text())
+    catalog['models'][0]['provider'] = provider
+    benchmark['config_path'].write_text(json.dumps(catalog))
+    benchmark['mock'] = False
+    monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', lambda _: {'valid': True})
+    monkeypatch.setenv('TEST_KEY', 'fixture-secret')
+    if workspace is None:
+        monkeypatch.delenv('ANTHROPIC_WORKSPACE_ID', raising=False)
+    else:
+        monkeypatch.setenv('ANTHROPIC_WORKSPACE_ID', workspace)
+    prediction = json.dumps(dict(font='Arial', category='non-serif', weight='regular',
+                                modifier='regular', kerning='normal', line_height='normal'))
+    bodies = {
+        'anthropic': {'stop_reason': 'end_turn', 'content': [{'type': 'text', 'text': prediction}],
+                      'usage': {'input_tokens': 10, 'output_tokens': 10}},
+        'openai': {'status': 'completed', 'output': [{'type': 'message', 'content': [
+            {'type': 'output_text', 'text': prediction}]}], 'usage': {'input_tokens': 10, 'output_tokens': 10}},
+        'google': {'candidates': [{'finishReason': 'STOP', 'content': {'parts': [{'text': prediction}]}}],
+                   'usageMetadata': {'promptTokenCount': 10, 'candidatesTokenCount': 10}},
+    }
+    requests = []
+    def handle(request):
+        requests.append(request)
+        return httpx.Response(200, json=bodies[provider])
+    original = httpx.Client
+    monkeypatch.setattr('baseline.providers.httpx.Client',
+                        lambda **kwargs: original(transport=httpx.MockTransport(handle), **kwargs))
+
+    summary = run_benchmark(**benchmark, max_tasks=1)
+    assert summary['models']['model-a']['completed'] == 1
+    assert len(requests) == 1
+    expected_workspace = workspace if provider == 'anthropic' else None
+    assert requests[0].headers.get('anthropic-workspace-id') == expected_workspace
+    assert b'wrkspc_' not in requests[0].content
+    metadata = json.loads((benchmark['output_dir'] / 'test/run.json').read_text())
+    assert metadata['invocations'][-1].get('anthropic_workspace_id') == expected_workspace
+    assert 'fixture-secret' not in json.dumps(metadata)
+    assert evaluation_protocol_fingerprint() == load_release()['evaluation_protocol_fingerprint']
+
+
+def test_invalid_workspace_is_refused_before_client_creation(benchmark, monkeypatch):
+    catalog = json.loads(benchmark['config_path'].read_text())
+    catalog['models'][0]['provider'] = 'anthropic'
+    benchmark['config_path'].write_text(json.dumps(catalog))
+    benchmark['mock'] = False
+    monkeypatch.setenv('ANTHROPIC_WORKSPACE_ID', 'wrong\r\nheader: value')
+    monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', lambda _: {'valid': True})
+    client = Mock(side_effect=AssertionError('Client constructed before invalid workspace was refused'))
+    monkeypatch.setattr('baseline.runner.BaselineEvaluator', client)
+    with pytest.raises(ValueError, match='ANTHROPIC_WORKSPACE_ID'):
+        run_benchmark(**benchmark, max_tasks=0)
+    client.assert_not_called()
+
+
+def test_workspace_setting_does_not_affect_mock_runs(benchmark, monkeypatch):
+    catalog = json.loads(benchmark['config_path'].read_text())
+    catalog['models'][0]['provider'] = 'anthropic'
+    benchmark['config_path'].write_text(json.dumps(catalog))
+    monkeypatch.setenv('ANTHROPIC_WORKSPACE_ID', 'ignored-in-offline-mode')
+    result = run_benchmark(**benchmark, max_tasks=1)
+    assert result['models']['model-a']['completed'] == 1
+    metadata = json.loads((benchmark['output_dir'] / 'mock-test/run.json').read_text())
+    assert 'anthropic_workspace_id' not in metadata['invocations'][-1]
 
 
 def test_resume_does_not_repeat_completed_tasks(benchmark, monkeypatch):

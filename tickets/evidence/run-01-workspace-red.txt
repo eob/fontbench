@@ -1,0 +1,102 @@
+...F..F                                                                  [100%]
+=================================== FAILURES ===================================
+_____ test_workspace_auth_only_reaches_anthropic[wrkspc_test123-anthropic] _____
+
+benchmark = {'manifest_path': PosixPath('/tmp/pytest-of-ted/pytest-90/test_workspace_auth_only_reach3/manifest.json'), 'config_pat...), 'output_dir': PosixPath('/tmp/pytest-of-ted/pytest-90/test_workspace_auth_only_reach3/runs'), 'run_id': 'test', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f44f9752590>
+provider = 'anthropic', workspace = 'wrkspc_test123'
+
+    @pytest.mark.parametrize('provider', ['anthropic', 'openai', 'google'])
+    @pytest.mark.parametrize('workspace', [None, 'wrkspc_test123'])
+    def test_workspace_auth_only_reaches_anthropic(benchmark, monkeypatch, provider, workspace):
+        from baseline.releases import load_release
+        from baseline.evaluator import evaluation_protocol_fingerprint
+    
+        catalog = json.loads(benchmark['config_path'].read_text())
+        catalog['models'][0]['provider'] = provider
+        benchmark['config_path'].write_text(json.dumps(catalog))
+        benchmark['mock'] = False
+        monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', lambda _: {'valid': True})
+        monkeypatch.setenv('TEST_KEY', 'fixture-secret')
+        if workspace is None:
+            monkeypatch.delenv('ANTHROPIC_WORKSPACE_ID', raising=False)
+        else:
+            monkeypatch.setenv('ANTHROPIC_WORKSPACE_ID', workspace)
+        prediction = json.dumps(dict(font='Arial', category='non-serif', weight='regular',
+                                    modifier='regular', kerning='normal', line_height='normal'))
+        bodies = {
+            'anthropic': {'stop_reason': 'end_turn', 'content': [{'type': 'text', 'text': prediction}],
+                          'usage': {'input_tokens': 10, 'output_tokens': 10}},
+            'openai': {'status': 'completed', 'output': [{'type': 'message', 'content': [
+                {'type': 'output_text', 'text': prediction}]}], 'usage': {'input_tokens': 10, 'output_tokens': 10}},
+            'google': {'candidates': [{'finishReason': 'STOP', 'content': {'parts': [{'text': prediction}]}}],
+                       'usageMetadata': {'promptTokenCount': 10, 'candidatesTokenCount': 10}},
+        }
+        requests = []
+        def handle(request):
+            requests.append(request)
+            return httpx.Response(200, json=bodies[provider])
+        original = httpx.Client
+        monkeypatch.setattr('baseline.providers.httpx.Client',
+                            lambda **kwargs: original(transport=httpx.MockTransport(handle), **kwargs))
+    
+        summary = run_benchmark(**benchmark, max_tasks=1)
+        assert summary['models']['model-a']['completed'] == 1
+        assert len(requests) == 1
+        expected_workspace = workspace if provider == 'anthropic' else None
+>       assert requests[0].headers.get('anthropic-workspace-id') == expected_workspace
+E       AssertionError: assert None == 'wrkspc_test123'
+E        +  where None = get('anthropic-workspace-id')
+E        +    where get = Headers({'host': 'api.anthropic.com', 'accept': '*/*', 'accept-encoding': 'gzip, deflate, br', 'connection': 'keep-ali...type': 'application/json', 'x-api-key': 'fixture-secret', 'anthropic-version': '2023-06-01', 'content-length': '1112'}).get
+E        +      where Headers({'host': 'api.anthropic.com', 'accept': '*/*', 'accept-encoding': 'gzip, deflate, br', 'connection': 'keep-ali...type': 'application/json', 'x-api-key': 'fixture-secret', 'anthropic-version': '2023-06-01', 'content-length': '1112'}) = <Request('POST', 'https://api.anthropic.com/v1/messages')>.headers
+
+tests/test_runner.py:68: AssertionError
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+___________ test_invalid_workspace_is_refused_before_client_creation ___________
+
+benchmark = {'manifest_path': PosixPath('/tmp/pytest-of-ted/pytest-90/test_invalid_workspace_is_refu0/manifest.json'), 'config_pat...), 'output_dir': PosixPath('/tmp/pytest-of-ted/pytest-90/test_invalid_workspace_is_refu0/runs'), 'run_id': 'test', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f44f9580410>
+
+    def test_invalid_workspace_is_refused_before_client_creation(benchmark, monkeypatch):
+        catalog = json.loads(benchmark['config_path'].read_text())
+        catalog['models'][0]['provider'] = 'anthropic'
+        benchmark['config_path'].write_text(json.dumps(catalog))
+        benchmark['mock'] = False
+        monkeypatch.setenv('ANTHROPIC_WORKSPACE_ID', 'wrong\r\nheader: value')
+        monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', lambda _: {'valid': True})
+        client = Mock(side_effect=AssertionError('Client constructed before invalid workspace was refused'))
+        monkeypatch.setattr('baseline.runner.BaselineEvaluator', client)
+        with pytest.raises(ValueError, match='ANTHROPIC_WORKSPACE_ID'):
+>           run_benchmark(**benchmark, max_tasks=0)
+
+tests/test_runner.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+baseline/runner.py:149: in run_benchmark
+    client = BaselineEvaluator(
+/usr/lib/python3.11/unittest/mock.py:1118: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1122: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='139934217812240'>, args = ()
+kwargs = {'model_name': 'model-a', 'provider': 'anthropic', 'mock': False, 'api_key_env': 'TEST_KEY', ...}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: Client constructed before invalid workspace was refused
+
+/usr/lib/python3.11/unittest/mock.py:1177: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_runner.py::test_workspace_auth_only_reaches_anthropic[wrkspc_test123-anthropic]
+FAILED tests/test_runner.py::test_invalid_workspace_is_refused_before_client_creation
+2 failed, 5 passed, 26 deselected in 1.04s

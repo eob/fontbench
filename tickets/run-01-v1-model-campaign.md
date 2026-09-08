@@ -109,3 +109,26 @@ At `2026-09-08T22:20:23.380767+00:00`, a bounded serial retry used the replaceme
 All 1,597 prior final responses and 1,612 prior attempt IDs remain unchanged. The closed checkpoint now contains 1,616 attempts and $24.8965158 in cumulative estimated spending, including conservative reservations for the four unmetered failures. SQLite integrity passes. See [run-01-cap50-new-key.json](evidence/run-01-cap50-new-key.json).
 
 A workspace-scoped replacement key has been requested. [Anthropic authentication documentation](https://platform.claude.com/docs/en/manage-claude/authentication) confirms that these keys can omit the workspace header. No credential value is recorded in the repository. OpenAI/Gemini continue with the $50 cumulative cap and the existing versioned checkpoint.
+
+
+### Anthropic workspace authentication support
+
+The user supplied a workspace ID for the replacement credential. The V1.0.0 provider client sends the API key but has no workspace routing setting. Add the optional `ANTHROPIC_WORKSPACE_ID` runtime setting at the runner's client initialization boundary, before workers start, and record the workspace ID in invocation metadata. Keep all model configurations, inference bodies, prompt/schema/grading, frozen protocol sources, dataset files, and release identities unchanged.
+
+Validation plan: reproduce the missing header offline; verify the header reaches only Anthropic, absent settings retain prior behavior, invalid IDs fail before client creation, and metadata contains the workspace ID but no API key. Run the runner/provider/release gates and independently compare request bodies with and without workspace routing. Then issue a bounded Claude retry under the $50 cumulative cap and resume the applicable models from the same checkpoint.
+
+#### Workspace support validation
+
+Base commit: `da4a6ea718c3a9377819d90101cd0db6824b5fdb`. The offline reproduction failed with `AssertionError: assert None == 'wrkspc_test123'`; invalid workspace input also constructed a client instead of failing preflight. [Verbatim Red evidence](evidence/run-01-workspace-red.txt) and [reversion evidence](evidence/run-01-workspace-reversion.txt) retain both failures. With the fix, all seven initial targeted cases pass; an eighth case additionally verifies offline runs ignore workspace settings.
+
+| Gate | Result |
+| --- | --- |
+| `.venv/bin/python -m pytest -q` | 421 passed in 17.00s |
+| `.venv/bin/python -m baseline.releases --release 1.0.0` | Passed; all 1,824 inputs and exact release identities |
+| Independent offline request comparison | Identical request bodies/URLs; only Anthropic workspace header added |
+| Read-only Models API with supplied workspace | HTTP 200; all four Claude IDs available |
+| Simplification and code review | No issues; limited to the authentication header and invocation metadata |
+
+The prior invocation drained at `2026-09-08T22:31:29.264469+00:00`, retaining 2,041 final observations and 2,060 attempts with $31.5235744 in cumulative estimated spending. [Gate details](evidence/run-01-workspace-gates.json) record the verification base. The bounded Claude retry will use workspace `wrkspc_01QaUFx97Qe9NkmYhy6hgLng` and the same $50 cumulative guard. Model-list access alone does not establish inference credit availability.
+
+The runner sets account routing before starting any workers, with client cleanup already registered. The limited access to the frozen client's HTTP defaults keeps authentication setup outside the inference sources. API keys stay in process environment, while the non-secret workspace ID is recorded per invocation.

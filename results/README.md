@@ -12,6 +12,8 @@ bun run build:page --release 1.0.0 --results-dir results/runs --output-dir site
 
 These example live commands have separate cumulative spending guards; they are not issued by the release-preparation work. Configure provider keys and verify the selected model's rates/availability first. Use `--mock --max-tasks 3` for an offline smoke test; mock directories are ignored and excluded from comparisons.
 
+For an Anthropic key that spans workspaces, also set `ANTHROPIC_WORKSPACE_ID` to the selected `wrkspc_...` ID. The runner sends it as an authentication header only to Anthropic and records the ID in invocation history. Workspace-scoped keys can omit this setting. Account routing does not change the frozen inference request body, grading, or model configuration identity.
+
 ## Retained run artifacts
 
 | Artifact | Purpose |

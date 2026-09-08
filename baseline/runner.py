@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import random
 import re
@@ -104,6 +105,11 @@ def run_benchmark(
         models = [model for model in models if model['id'] in selected_models]
     if not models:
         raise ValueError('No enabled models selected')
+    anthropic_workspace_id = None
+    if not mock and any(model['provider'] == 'anthropic' for model in models):
+        anthropic_workspace_id = os.environ.get('ANTHROPIC_WORKSPACE_ID', '').strip() or None
+        if anthropic_workspace_id and not re.fullmatch(r'wrkspc_[A-Za-z0-9]+', anthropic_workspace_id):
+            raise ValueError('ANTHROPIC_WORKSPACE_ID must be a wrkspc_ workspace ID')
     if not mock and budget_usd is not None and any(
         model.get(key) is None for model in models for key in ('input_per_m', 'output_per_m')
     ):
@@ -152,6 +158,9 @@ def run_benchmark(
                 max_output_tokens=model.get('max_output_tokens', 1024),
             )
             resources.callback(client.close)
+            if model['provider'] == 'anthropic' and anthropic_workspace_id:
+                # Configure account routing outside the frozen inference protocol.
+                client._client._http.headers['anthropic-workspace-id'] = anthropic_workspace_id
             clients[model['id']] = client
         model_by_id = {model['id']: model for model in models}
         # Reserve two possible HTTP attempts before scheduling. Unmetered
@@ -193,6 +202,8 @@ def run_benchmark(
             invocation = {**code_identity, 'started_at': datetime.now(timezone.utc).isoformat(),
                           'models': models, 'max_tasks': max_tasks, 'concurrency': concurrency,
                           'budget_usd': budget_usd, 'status': 'running'}
+            if anthropic_workspace_id:
+                invocation['anthropic_workspace_id'] = anthropic_workspace_id
             run_metadata['invocations'].append(invocation)
             # Previously registered models remain in reports even when this
             # invocation selects only new models. Aggregation makes no requests.
