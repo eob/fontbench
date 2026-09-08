@@ -37,7 +37,7 @@ The fresh candidate contains 1824 accepted images across all 50 families, plus 1
 - [x] Guarantee a shared paragraph break and measure line boxes after loading; refuse clipping and no-op small-caps.
 - [x] Account for every candidate in manifest or skipped census; detect image collisions.
 - [x] Share the exact prompt in `baseline/prompt.txt`, including the numeric label rubric.
-- [x] Preserve old data by defaulting new rendering to `dataset/fontbench-2-rendered`.
+- [x] Preserve old data with a separate audited corpus; release-03 subsequently freezes it and directs new generation to `dataset/candidate-rendered`.
 - [x] Run browser tests, base reversion, typecheck, simplify/comment audit.
 - [x] Complete full blocked-network replay against the retained candidate.
 
@@ -108,3 +108,24 @@ The renderer now sorts font assets by SHA-256. A deterministic regression loads 
 ## Sources (inspected 2026-09-08)
 
 Fontkit supports WOFF2 parsing and exposes family names/variation axes ([upstream API](https://github.com/foliojs/fontkit)). Binary weight evidence comes from [OpenType OS/2](https://learn.microsoft.com/en-us/typography/opentype/spec/os 2) and variable ranges from [fvar](https://learn.microsoft.com/en-us/typography/opentype/spec/fvar). Google catalogs call ExtraLight 200 for both [Poppins](https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/METADATA.pb) and [Fira Sans](https://raw.githubusercontent.com/google/fonts/main/ofl/firasans/METADATA.pb), which is why their 275 binary values are documented as a disagreement rather than a conclusive outline defect.
+
+## Closure verification: transient test timeout
+
+The September 8 takeover check at unchanged `d69e87e` recorded one timeout in `reuses pinned font bytes and refuses tampered cache assets`. Both successful renders completed before the test timed out; Bun killed one dangling process, ran the next two renderer tests, then remained active without a Chromium descendant. The exact asynchronous operation that stalled was not captured, so this evidence does not establish a renderer defect or a specific browser/runtime cause.
+
+```text
+killed 1 dangling process
+(fail) rendered font integrity > reuses pinned font bytes and refuses tampered cache assets [15176.67ms]
+  ^ this test timed out after 15000ms.
+```
+
+Debugfu investigation retained the failure and tested unchanged source, including simultaneous control runs. An isolated source control was populated from `git show d69e87e:<path>` and used the same installed dependencies. No renderer, font-cache, test, or timeout setting changed.
+
+| Gate | Source base | Result |
+| --- | --- | --- |
+| Isolated cache test | `d69e87e` | 1 passed, 0 failed; 1.55 s |
+| `bun test ./src/render.test.ts` | `d69e87e` | 16 passed, 0 failed; 12.95 s |
+| Concurrent cache controls, broad discovery versus explicit file, `--rerun-each 4` | `d69e87e` | 4 passed each; 4.19 s / 4.37 s |
+| Concurrent `DEBUG=pw:browser bun test src`, checkout versus isolated frozen source | `d69e87e` | 51 passed each; 12.98 s / 12.43 s |
+
+All controls passed at the existing timeouts. Broad directory discovery was investigated because the failed Bun process retained many directory descriptors, but its successful controls did not establish that hypothesis. There is no demonstrated implementation fix to revert; changing production code or increasing timeouts would be speculative. The renderer acceptance checks remain satisfied, with this transient validation-run limitation preserved in [the complete failure and control evidence](evidence/valid-02-closure-timeout-controls.log).

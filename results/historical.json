@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "paths": [
+        "scorecard_*.json",
+        "scorecard_*.md",
+        "fontbench_summary.json"
+      ],
+      "classification": "invalid-historical",
+      "benchmark_version": null,
+      "reason": "Unversioned prototype inputs and grading; insufficient provenance for corrected measurements. Mock scorecards are also excluded from live comparisons."
+    },
+    {
+      "paths": [
+        "runs/fontbench-2026-09-07"
+      ],
+      "classification": "invalid-historical",
+      "benchmark_version": null,
+      "dataset_git_commit": "14e792fc4cc0cb568b98d63b5f6ffd416ba581e0",
+      "reason": "Retired 639-input pilot contains single-line images, synthetic italics, conflicting font evidence, and a strong layout shortcut. Grading version 2 is incompatible with FontBench V1.0.0. Preserve the paid attempts and checkpoint; do not resume or relabel them as V1.0.0."
+    }
+  ]
+}

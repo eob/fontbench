@@ -125,3 +125,172 @@ def test_live_run_requires_valid_dataset_before_client_creation(benchmark, monke
     with pytest.raises(ValueError, match='Dataset is not valid'):
         run_benchmark(**benchmark)
     client.assert_not_called()
+
+
+def test_custom_manifest_ledger_does_not_claim_a_release(benchmark):
+    result = run_benchmark(**benchmark)
+    assert 'benchmark_version' in result, 'Runs have no explicit benchmark version identity'
+    assert result['benchmark_version'] is None
+    directory = benchmark['output_dir'] / 'mock-test'
+    assert (directory / 'run.json').is_file()
+    assert (directory / 'attempts.jsonl').is_file()
+    card = json.loads((directory / 'scorecard_model-a.json').read_text())
+    assert card['run_id'] == 'test'
+    assert card['model_config_fingerprint'] == result['models']['model-a']['model_config_fingerprint']
+    assert all(task['recorded_at'] for task in card['tasks'])
+
+
+def test_default_release_uses_version_directory_and_complete_provenance(benchmark):
+    from baseline.releases import load_release
+    benchmark.pop('manifest_path')
+    result = run_benchmark(**benchmark, max_tasks=1)
+    release = load_release()
+    for key in ('benchmark_version', 'dataset_git_commit', 'dataset_fingerprint', 'evaluation_protocol_fingerprint'):
+        assert result[key] == release[key]
+    assert result['expected_task_count'] == 1824
+    assert len(result['runner_git_commit']) == 40
+    assert isinstance(result['runner_git_dirty'], bool)
+    directory = benchmark['output_dir'] / '1.0.0/mock-test'
+    metadata = json.loads((directory / 'run.json').read_text())
+    assert metadata['created_at'] == result['created_at']
+    assert metadata['invocations'][0]['status'] == 'partial'
+    assert metadata['invocations'][0]['models'][0]['id'] == 'model-a'
+    card = json.loads((directory / 'scorecard_model-a.json').read_text())
+    attempts = [json.loads(line) for line in (directory / 'attempts.jsonl').read_text().splitlines()]
+    assert len(attempts) == len(card['tasks']) == 1
+    assert attempts[0]['result']['recorded_at'] == card['tasks'][0]['recorded_at']
+    assert attempts[0]['run_id'] == card['run_id'] == result['run_id']
+    assert card['benchmark_version'] == '1.0.0'
+
+
+@pytest.mark.parametrize('key', ['dataset_fingerprint', 'evaluation_protocol_fingerprint'])
+def test_release_mismatch_is_refused_before_client_creation(benchmark, monkeypatch, key):
+    import baseline.runner as runner_module
+    from baseline.releases import load_release
+    descriptor = load_release()
+    descriptor[key] = '0' * 64
+    monkeypatch.setattr(runner_module, 'load_release', lambda _: descriptor)
+    client = Mock()
+    monkeypatch.setattr(runner_module, 'BaselineEvaluator', client)
+    benchmark.pop('manifest_path')
+    benchmark['mock'] = False
+    with pytest.raises(ValueError, match='fingerprint|protocol'):
+        run_benchmark(**benchmark)
+    client.assert_not_called()
+    assert not benchmark['output_dir'].exists()
+
+
+def test_custom_manifest_cannot_request_release_label(benchmark):
+    with pytest.raises(ValueError, match='either'):
+        run_benchmark(**benchmark, release='1.0.0')
+    assert not benchmark['output_dir'].exists()
+
+
+def test_omitting_run_id_creates_independent_ledgers(benchmark):
+    benchmark.pop('run_id')
+    first = run_benchmark(**benchmark, max_tasks=0)
+    second = run_benchmark(**benchmark, max_tasks=0)
+    assert first['run_id'] != second['run_id']
+    assert (benchmark['output_dir'] / f"mock-{first['run_id']}" / 'run.json').is_file()
+    assert (benchmark['output_dir'] / f"mock-{second['run_id']}" / 'run.json').is_file()
+
+
+def test_resume_preserves_creation_and_observation_times_and_logs_invocations(benchmark):
+    first = run_benchmark(**benchmark, max_tasks=1)
+    directory = benchmark['output_dir'] / 'mock-test'
+    initial_card = json.loads((directory / 'scorecard_model-a.json').read_text())
+    second = run_benchmark(**benchmark)
+    final_card = json.loads((directory / 'scorecard_model-a.json').read_text())
+    assert first['created_at'] == second['created_at']
+    assert second['updated_at'] >= first['updated_at']
+    initial_task = initial_card['tasks'][0]
+    assert next(task for task in final_card['tasks'] if task['task_id'] == initial_task['task_id']) == initial_task
+    metadata = json.loads((directory / 'run.json').read_text())
+    assert [invocation['status'] for invocation in metadata['invocations']] == ['partial', 'complete']
+    assert len((directory / 'attempts.jsonl').read_text().splitlines()) == 2
+
+
+def test_resume_refuses_changed_run_metadata(benchmark, monkeypatch):
+    run_benchmark(**benchmark, max_tasks=1)
+    path = benchmark['output_dir'] / 'mock-test/run.json'
+    metadata = json.loads(path.read_text())
+    metadata['benchmark_version'] = '1.0.0'
+    path.write_text(json.dumps(metadata))
+    evaluate = Mock()
+    monkeypatch.setattr(BaselineEvaluator, '_eval_single_task', evaluate)
+    with pytest.raises(ValueError, match='metadata'):
+        run_benchmark(**benchmark)
+    evaluate.assert_not_called()
+
+
+def test_resume_repairs_partial_attempt_export_without_repeating_requests(benchmark, monkeypatch):
+    run_benchmark(**benchmark)
+    path = benchmark['output_dir'] / 'mock-test/attempts.jsonl'
+    original = path.read_bytes()
+    path.write_text('{partial JSON')
+    evaluate = Mock()
+    monkeypatch.setattr(BaselineEvaluator, '_eval_single_task', evaluate)
+    run_benchmark(**benchmark)
+    assert path.read_bytes() == original
+    evaluate.assert_not_called()
+
+
+@pytest.mark.parametrize('corruption', ['missing', 'creation', 'object-invocations', 'empty-invocations', 'invalid-invocation'])
+def test_resume_refuses_lost_or_corrupt_invocation_history_before_inference(benchmark, monkeypatch, corruption):
+    run_benchmark(**benchmark, max_tasks=1)
+    path = benchmark['output_dir'] / 'mock-test/run.json'
+    metadata = json.loads(path.read_text())
+    if corruption == 'missing':
+        path.unlink()
+    else:
+        if corruption == 'creation':
+            metadata['created_at'] = '2000-01-01T00:00:00Z'
+        elif corruption == 'object-invocations':
+            metadata['invocations'] = {}
+        elif corruption == 'empty-invocations':
+            metadata['invocations'] = []
+        else:
+            metadata['invocations'] = [None]
+        path.write_text(json.dumps(metadata))
+    evaluate = Mock(side_effect=AssertionError('No inference after lost or corrupt provenance'))
+    monkeypatch.setattr(BaselineEvaluator, '_eval_single_task', evaluate)
+    with pytest.raises(ValueError, match='metadata|invocation|history'):
+        run_benchmark(**benchmark)
+    evaluate.assert_not_called()
+
+
+def test_brand_new_empty_checkpoint_recovers_without_run_metadata(benchmark):
+    from baseline.run_state import RunStore
+    path = benchmark['output_dir'] / 'mock-test/state.sqlite3'
+    with RunStore(path):
+        pass
+    result = run_benchmark(**benchmark)
+    assert result['models']['model-a']['completed'] == 2
+    assert (path.parent / 'run.json').is_file()
+
+
+def test_initialized_zero_task_run_needs_its_retained_history(benchmark, monkeypatch):
+    run_benchmark(**benchmark, max_tasks=0)
+    (benchmark['output_dir'] / 'mock-test/run.json').unlink()
+    evaluate = Mock()
+    monkeypatch.setattr(BaselineEvaluator, '_eval_single_task', evaluate)
+    with pytest.raises(ValueError, match='lost run metadata'):
+        run_benchmark(**benchmark)
+    evaluate.assert_not_called()
+
+
+def test_resume_refuses_history_that_dropped_an_earlier_model(benchmark, monkeypatch):
+    run_benchmark(**benchmark, max_tasks=1)
+    config = json.loads(benchmark['config_path'].read_text())
+    config['models'].append({**config['models'][0], 'id': 'model-b', 'model': 'model-b'})
+    benchmark['config_path'].write_text(json.dumps(config))
+    run_benchmark(**benchmark, max_tasks=1, selected_models=['model-b'])
+    path = benchmark['output_dir'] / 'mock-test/run.json'
+    metadata = json.loads(path.read_text())
+    metadata['invocations'] = metadata['invocations'][-1:]
+    path.write_text(json.dumps(metadata))
+    evaluate = Mock()
+    monkeypatch.setattr(BaselineEvaluator, '_eval_single_task', evaluate)
+    with pytest.raises(ValueError, match='lost a checkpoint model'):
+        run_benchmark(**benchmark, selected_models=['model-b'])
+    evaluate.assert_not_called()

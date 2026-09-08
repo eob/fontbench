@@ -1,53 +1,66 @@
-# FontBench
+# FontBench V1.0.0
 
-FontBench measures recognition of six typographic properties from an image: font family, category, weight, modifier, letter spacing (`kerning`), and line height. Every input uses the same pangram with a mandatory break after “fox”; narrow cards can wrap further. Each input must contain at least two visible lines.
+FontBench measures recognition of six typographic properties from an image: font family, category, weight, modifier, letter spacing (`kerning`), and line height. **V1.0.0 freezes 1,824 images across 50 families**, with 2–5 visible lines per image, 129 verified font binaries, and zero validation errors.
 
-The September 8 validity audit found single-line samples, conflicting font evidence, layout shortcuts, permissive grading, and task metadata that exposed answers. The repairs and verification evidence are cataloged in [tickets/README.md](tickets/README.md). Both the original 1,000-image dataset and the September 7 639-image comparison are historical, unsuitable for final benchmark scores. Their files and paid checkpoints are preserved.
+The [release descriptor](releases/1.0.0.json) binds this version to dataset Git commit [`d69e87e2c206ea75c52f5b8340d677bd14af03e3`](https://github.com/eob/fontbench/commit/d69e87e2c206ea75c52f5b8340d677bd14af03e3), the dataset fingerprint, and the evaluation protocol fingerprint. [CHANGELOG.md](CHANGELOG.md) records the release; Git tag `v1.0.0` identifies its compatible tooling. The accepted files remain in `dataset/fontbench-2-rendered` and `dataset/fontbench-2`: these directory names predate public versioning and do not mean V2.
 
-The accepted corpus contains **1,824 samples across all 50 families**, with 2–5 visible lines per image, 129 checked font binaries, and zero validation errors. See the [frozen validation report](dataset/fontbench-2-rendered/validation.json).
+The original 1,000-image dataset and September 7 639-image pilot are **invalid historical prototypes**. Their inputs, paid checkpoints, and reports are preserved and labeled in the [dataset guide](dataset/README.md) and [historical result catalog](results/historical.json). The [ticket catalog](tickets/README.md) records the defects, repairs, and regression evidence.
 
-The current rendering protocol is **2**, with grading version **3**. Final evaluation requires the new validated inputs and a new run ID. [The benchmark page](site/index.html) previews the current inputs; model scores appear only after compatible runs have been performed.
+## Setup and validate the release
 
-## Setup
-
-Requires Bun, Python 3.10+, and Chromium. Initial font acquisition requires network access; retained font assets support subsequent rendering without provider downloads.
+Requires Bun, Python 3.10+, Git history containing the dataset commit, and Chromium for browser tests or candidate generation.
 
 ```bash
 bun install --frozen-lockfile
 bunx playwright install chromium
 python3 -m venv .venv
 .venv/bin/python -m pip install -e '.[dev]'
+bun run validate:release
 ```
 
-On Linux, `bunx playwright install --with-deps chromium` can install browser system dependencies.
+On Linux, `bunx playwright install --with-deps chromium` can install browser system dependencies. The release validator runs offline: it verifies committed manifest bytes, dataset and protocol fingerprints, and the independent all-image/font gate. Live runs require this gate before contacting a model.
 
-## Validate and package the inputs
+## Run any supported vision model, now or later
+
+Run an offline smoke check first:
 
 ```bash
-bun run render
-bun run validate:dataset
-bun run build:harbor
-# Or all three:
-bun run build:all
+bun run benchmark --release 1.0.0 --mock --run-id smoke --max-tasks 3
 ```
 
-Rendering writes `dataset/fontbench-2-rendered`. Packaging writes `dataset/fontbench-2`, using opaque task identifiers and generic metadata. Old datasets remain in their original directories.
+Select models from [`config/models.json`](config/models.json), or provide your own catalog with `--config path/to/models.json`. Native adapters support OpenAI Responses, Anthropic Messages, and Google generateContent; an OpenAI-compatible endpoint can use `base_url`. Set the API key environment variable specified by each configuration. Catalog IDs and prices are dated records; verify availability and rates when scheduling a new campaign.
 
-The renderer checks internal font family, native weight range and style, and the fonts Chromium actually uses. It omits unsupported faces and records each exclusion. It forbids synthetic italic and weight; synthetic small caps are permitted only when they visibly change the image. Font binaries and stylesheets are retained with SHA256 hashes in the rendering directory. Re-rendering that directory reuses its pinned assets.
-
-The release gate independently decodes every image and parses every retained font binary. It checks hashes, visible text, line geometry, CSS settings, duplicate pixels, font identity, and complete accounting of every rendered or skipped candidate. It emits a failing exit status for missing or inconsistent evidence. Live evaluation and the packaging CLI require this gate to pass.
+Separate runs can contribute to the same release:
 
 ```bash
-.venv/bin/python -m baseline.validate_dataset \
-  --manifest dataset/fontbench-2-rendered/manifest.json \
-  --output dataset/fontbench-2-rendered/validation.json
+# Example: GPT in one campaign.
+bun run benchmark --release 1.0.0 --run-id gpt-september \
+  --models gpt-6-astra --budget-usd 25
+
+# Example: Gemini in a later campaign.
+bun run benchmark --release 1.0.0 --run-id gemini-later \
+  --models gemini-3.1-pro-preview --budget-usd 25
+
+# Rebuild the website from all compatible recorded runs.
+bun run build:page --release 1.0.0 --results-dir results/runs --output-dir site
+python3 -m http.server 8000 --directory site
 ```
 
-Keep `manifest.json`, `catalog.json`, `skipped.json`, `fonts.lock.json`, PNGs, and the `fonts/` directory together. A manifest alone does not establish validity. Source fonts retain their providers' licenses; local font acquisition and any later redistribution are separate matters.
+These live commands make paid requests. The budget is a cumulative estimate for that run based on configured rates and conservative reservations, not a provider invoice or provider-enforced limit.
+
+Each run writes to `results/runs/1.0.0/<run-id>/`. Its `run.json` records the release, full dataset Git hash, data/protocol fingerprints, model configurations, timestamps, and executing code commit/dirty state. `state.sqlite3` is the resumable checkpoint; `attempts.jsonl` retains every attempt; summaries and scorecards expose the scored observations. Commit a completed run directory to contribute it to this repository. The runner does not commit or push automatically. See the [run log guide](results/README.md) for the artifact layout and contribution workflow.
+
+Repeat the same command to resume. `--max-tasks N` selects a reproducible subset that can be extended later; `--concurrency N` controls simultaneous requests. Omitting `--run-id` creates a unique run. New model IDs can be added in separate runs at any time. Changed inference settings need a new run ID and remain separate configurations on the website. Explicit `--manifest` runs are unversioned experiments and do not enter the release leaderboard.
+
+The website combines complementary observations for the same provider/model/endpoint/output limit, keeps the earliest final observation for each input, and retains all contributing run records and attempt costs. Repeating a task cannot replace a lower score with a higher one. Mocks, incompatible releases, and malformed reports are excluded. Rankings use shared task cohorts; partial coverage is displayed explicitly.
+
+Completed answers and malformed model outputs are final datapoints. Malformed outputs receive zero; infrastructure failures remain retryable and appear in error counts. Exact match requires all six fields correct; the composite is their equal-weight mean. Extra fields, duplicate JSON keys, missing fields, and invalid enum values invalidate the whole prediction.
 
 ## What the benchmark measures
 
-The catalog has 50 candidate families and 60 recipes per family: four weights × five modifiers × three layout repeats. Each supported face/modifier combination samples all three tracking, line-height, and width levels. Recipes rotate these levels to remove the previous deterministic layout shortcuts. Unsupported faces are excluded rather than labeled with the requested style; actual family and class counts are published in the validation report.
+Every input uses the same pangram with a mandatory break after “fox”; narrow cards can wrap further. The compact corpus samples the typographic space. It is not an exhaustive factorial design.
+
+The catalog has 50 candidate families and 60 recipes per family: four weights × five modifiers × three layout repeats. Supported combinations sample all three tracking, line-height, and width levels. Unsupported native faces are excluded, with the reason retained for each skipped candidate. The [frozen validation report](dataset/fontbench-2-rendered/validation.json) publishes the actual counts.
 
 The shared [prompt](baseline/prompt.txt) defines the labels for every provider and Harbor task:
 
@@ -60,62 +73,38 @@ The shared [prompt](baseline/prompt.txt) defines the labels for every provider a
 | Letter spacing | `tight` = −0.05em, `normal` = 0em, `loose` = 0.12em |
 | Line height | `tight` = 1.15, `normal` = 1.45, `loose` = 1.9 times the 22px font size |
 
-`thin` is this benchmark's name for the numeric 200 bucket. `kerning` means uniform tracking, not adjustment of individual letter pairs. Category is an annotation policy; it is partly predictable from font identity. A family can contribute fewer tasks because it supplies fewer supported faces, so sample-weighted results do not imply equal family weighting.
+`thin` names the numeric 200 bucket. `kerning` means uniform tracking, not adjustment of individual letter pairs. Category is an annotation policy and is partly predictable from font identity. Family counts differ with face availability, so sample-weighted scores do not imply equal family weighting.
 
-The compact recipes retain conditional correlations: for example, knowing the recipe, modifier, and tracking can determine line height. This is an accepted sampling limit, not a claim of independent factor isolation.
+Conditional correlations remain in the compact recipes. For example, knowing the recipe, modifier, and tracking can determine line height. This accepted sampling limit means the benchmark does not isolate independent causal effects. It also does not establish generalization to arbitrary text, sizes, browsers, languages, or unseen fonts. Inspect per-family results and input contact sheets alongside aggregate scores.
 
-This is a fixed-text, fixed-renderer typography recognition benchmark. Passing integrity checks establishes consistency of this corpus; it does not prove generalization to arbitrary text, sizes, browsers, languages, or unseen fonts. Inspect the contact sheets and per-family results alongside aggregate scores.
+## Candidate generation and Harbor
 
-## Evaluate models
-
-[`config/models.json`](config/models.json) records model IDs, inference settings, rates, and their source dates. Set the relevant `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY`. Model availability and prices should be rechecked before the final campaign.
-
-Start with an offline smoke test:
+The release inputs are already checked in. Generation commands create development candidates; they refuse to overwrite or overlap registered release directories.
 
 ```bash
-bun run benchmark --mock --manifest dataset/fontbench-2-rendered/manifest.json \
-  --run-id smoke --max-tasks 3
+bun run build:all
+# render -> dataset/candidate-rendered
+# validate candidate -> package -> dataset/candidate-harbor
 ```
 
-For a live run, the following command authorizes up to the runner's cumulative estimated $25 guard:
+The renderer verifies binary family, weight, style, and the fonts Chromium actually uses. It forbids synthetic italic/weight and accepts synthetic small caps only if they visibly change the image. It retains source font bytes, stylesheets, and hashes. Initial acquisition needs network access; pinned cache assets support subsequent offline replay to a separate destination.
 
-```bash
-bun run benchmark --manifest dataset/fontbench-2-rendered/manifest.json \
-  --run-id fontbench-2-final --budget-usd 25
-```
+The independent gate decodes every image and parses all 129 font binaries used by the release (139 assets are retained in total). It checks hashes, visible text, line geometry, CSS settings, duplicate pixels, font identity, and complete accounting of 3,000 rendered or skipped candidates. Keep `manifest.json`, `catalog.json`, `skipped.json`, `fonts.lock.json`, PNGs, and `fonts/` together. Changes to released inputs or evaluation behavior require a new release descriptor and version.
 
-The audit itself makes no paid inference calls. The guard is an estimate based on configured rates and conservative reservations, not a provider invoice or provider-enforced limit.
-
-The runner checkpoints each attempt in `results/runs/<run-id>/state.sqlite3`, shuffles inputs reproducibly, and cycles across models. Resume with the same command and inputs. `--models ID [ID ...]` selects models; `--max-tasks N` selects a reproducible subset that can be extended later; `--concurrency N` controls simultaneous requests. Raising the cumulative budget allows additional work. Preserve the database and frozen inputs when backing up a run.
-
-Completed answers and malformed model outputs are final datapoints. Malformed outputs receive zero; infrastructure failures remain retryable and appear in error counts. Exact match requires all six correct fields; the composite is their equal-weight mean. Extra fields, duplicate JSON keys, missing fields, and invalid enum values invalidate the whole prediction.
-
-Changed images, labels, prompts, grading code, provider protocol, or existing model settings require a new run ID. A run refuses changed provenance and missing checkpoints before issuing requests. Historical version 2 grading results cannot resume into version 3 or be copied into its reports.
-
-## Reports and Harbor
-
-```bash
-bun run build:page --manifest dataset/fontbench-2-rendered/manifest.json \
-  --results-dir results/runs/fontbench-2-final --output-dir site
-python3 -m http.server 8000 --directory site
-```
-
-The page shows real input contact sheets, dataset validation status, per-dimension counts, completion status, and scores on shared task cohorts. Partial samples are not final rankings. The exporter recomputes metrics from validated task rows and compares only matching dataset, protocol, and cohort identities. Rebuild the page after extending a run.
-
-Install Harbor separately in the Python environment, then use:
+Install Harbor separately to use the frozen task package:
 
 ```bash
 harbor run -p dataset/fontbench-2/tasks \
   --agent baseline.harbor_agent:BaselineVLMAgent --model YOUR_MODEL_ID
 ```
 
-Answers are confined to verifier and oracle files; instructions, task names, and public tags do not identify the target family or labels. The verifier writes its reward to `/logs/verifier/reward.txt`. This does not sandbox a malicious host-side adapter that can access verifier files.
+Instructions, opaque task names, and public tags do not reveal the answers. The verifier writes `/logs/verifier/reward.txt`; it does not sandbox a malicious host-side adapter with access to verifier files. Harbor's own run output is separate from the versioned model ledger; use `bun run benchmark` for website contributions.
 
 ## Development checks
 
 ```bash
 bun run test
-# Python tests, local-fixture browser tests, and TypeScript checking.
+bun run validate:release
 ```
 
-Browser tests do not need font-provider access or API keys. The Python wheel contains the shared prompt and validation tools. Repository code is MIT licensed; see [LICENSE](LICENSE).
+The checks cover Python, local-fixture browser tests, TypeScript, and frozen release integrity. Browser tests need no provider access or API keys. Repository code is MIT licensed; source fonts retain their providers' licenses. See [LICENSE](LICENSE).

@@ -294,3 +294,31 @@ def test_malformed_status_and_grading_fields_are_excluded(dataset, tmp_path, fie
     report = build_page(manifest, tmp_path / "results", tmp_path / "site", config)
     assert report["models"][0]["completed"] == 0
     assert report["warnings"]
+
+
+@pytest.mark.parametrize("value", [[], None, False, 0, "", ["broken"], "broken"])
+def test_malformed_summary_model_state_preserves_measurements_and_peer(dataset, tmp_path, value):
+    manifest, samples, config = dataset
+    directory = tmp_path / "results"
+    write_scorecard(directory, samples)
+    model_config = json.loads(config.read_text())
+    model_config["models"].append({**model_config["models"][0], "id": "peer"})
+    config.write_text(json.dumps(model_config))
+    card = json.loads((directory / "scorecard_test-model.json").read_text())
+    (directory / "scorecard_peer.json").write_text(json.dumps({**card, "model_id": "peer"}))
+    summary_path = directory / "summary.json"
+    summary = json.loads(summary_path.read_text())
+    summary["models"]["peer"] = summary["models"]["test-model"]
+    summary["models"]["test-model"] = value
+    summary_path.write_text(json.dumps(summary))
+
+    report = build_page(manifest, directory, tmp_path / "site", config)
+
+    affected, peer = report["models"]
+    assert affected["completed"] == peer["completed"] == 1
+    assert affected["metrics"] == peer["metrics"]
+    assert affected["run_state"] == "pending"
+    assert affected["cost_usd"] is None
+    assert peer["run_state"] == "running"
+    assert peer["cost_usd"] == 0.01
+    assert len(report["warnings"]) == 1

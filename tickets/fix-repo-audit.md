@@ -1,11 +1,13 @@
 # fix-repo-audit: Repository audit and corrective fixes
 
-- Status: Implemented and validated locally (audit phase)
+- Status: Completed (historical audit; subsequent validity defects resolved in valid-01 through valid-06)
 - Branch: `fix-repo-audit`
 - Base: `080ac96`
 - Harness: Codex
 - Workspace: `/mnt/disks/data/fontbench`
 - Delivery: Committed to `main`; implementation branch `fix-repo-audit`
+
+> **Historical ticket.** This records the September 7 prototype repairs. Its 639-image output was later found unsuitable for final benchmarking. The [current release](../CHANGELOG.md) and [validity tickets](README.md) supersede the data claims below; the original evidence remains intact.
 
 ## Scope and plan
 

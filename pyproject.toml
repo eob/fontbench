@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fontbench"
-version = "0.1.0"
-description = "FontBench-1: Visual font identification benchmark across system & Google fonts at wrapped widths."
+version = "1.0.0"
+description = "FontBench: versioned visual typography recognition benchmark."
 readme = "README.md"
 license = "MIT"
 authors = [

@@ -1,0 +1,8 @@
+{
+  "check": "Open release hash details in Chromium at 390px viewport",
+  "viewport_width": 390,
+  "document_scroll_width": 461,
+  "overflowing_content": ["dataset fingerprint", "evaluation protocol fingerprint"],
+  "source": "baseline/build_page.py before release details wrapping fix",
+  "preview": "/tmp/fontbench-v1-page-preview/index.html"
+}

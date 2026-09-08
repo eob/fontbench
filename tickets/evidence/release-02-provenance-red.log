@@ -1,0 +1,296 @@
+$ .venv/bin/pytest -q tests/test_run_aggregation.py -k inconsistent_run_history or missing_run_metadata or explicitly_unavailable
+
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+_ test_inconsistent_run_history_and_code_provenance_are_excluded[run-benchmark_version-0.9.0] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_inconsistent_run_history_0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+record = 'run', field = 'benchmark_version', value = '0.9.0'
+
+    @pytest.mark.parametrize(("record", "field", "value"), [
+        ("run", "benchmark_version", "0.9.0"), ("run", "created_at", "2026-08-31T10:00:00Z"),
+        ("run", "invocations", []), ("summary", "runner_git_commit", "short"),
+        ("summary", "runner_git_dirty", "false"), ("card", "runner_git_commit", "c" * 40),
+        ("state", "completed", 999), ("state", "completed", True),
+    ])
+    def test_inconsistent_run_history_and_code_provenance_are_excluded(release_history, record, field, value):
+        directory, summary, card = write_run(release_history, "invalid", [0])
+        if record == "run":
+            data = json.loads((directory / "run.json").read_text())
+            filename = "run.json"
+        elif record == "card":
+            data, filename = card, "scorecard_arbitrary-model.json"
+        else:
+            data, filename = summary, "summary.json"
+        target = data["models"]["arbitrary-model"] if record == "state" else data
+        target[field] = value
+        (directory / filename).write_text(json.dumps(data))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:296: AssertionError
+_ test_inconsistent_run_history_and_code_provenance_are_excluded[run-created_at-2026-08-31T10:00:00Z] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_inconsistent_run_history_1'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+record = 'run', field = 'created_at', value = '2026-08-31T10:00:00Z'
+
+    @pytest.mark.parametrize(("record", "field", "value"), [
+        ("run", "benchmark_version", "0.9.0"), ("run", "created_at", "2026-08-31T10:00:00Z"),
+        ("run", "invocations", []), ("summary", "runner_git_commit", "short"),
+        ("summary", "runner_git_dirty", "false"), ("card", "runner_git_commit", "c" * 40),
+        ("state", "completed", 999), ("state", "completed", True),
+    ])
+    def test_inconsistent_run_history_and_code_provenance_are_excluded(release_history, record, field, value):
+        directory, summary, card = write_run(release_history, "invalid", [0])
+        if record == "run":
+            data = json.loads((directory / "run.json").read_text())
+            filename = "run.json"
+        elif record == "card":
+            data, filename = card, "scorecard_arbitrary-model.json"
+        else:
+            data, filename = summary, "summary.json"
+        target = data["models"]["arbitrary-model"] if record == "state" else data
+        target[field] = value
+        (directory / filename).write_text(json.dumps(data))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:296: AssertionError
+_ test_inconsistent_run_history_and_code_provenance_are_excluded[run-invocations-value2] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_inconsistent_run_history_2'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+record = 'run', field = 'invocations', value = []
+
+    @pytest.mark.parametrize(("record", "field", "value"), [
+        ("run", "benchmark_version", "0.9.0"), ("run", "created_at", "2026-08-31T10:00:00Z"),
+        ("run", "invocations", []), ("summary", "runner_git_commit", "short"),
+        ("summary", "runner_git_dirty", "false"), ("card", "runner_git_commit", "c" * 40),
+        ("state", "completed", 999), ("state", "completed", True),
+    ])
+    def test_inconsistent_run_history_and_code_provenance_are_excluded(release_history, record, field, value):
+        directory, summary, card = write_run(release_history, "invalid", [0])
+        if record == "run":
+            data = json.loads((directory / "run.json").read_text())
+            filename = "run.json"
+        elif record == "card":
+            data, filename = card, "scorecard_arbitrary-model.json"
+        else:
+            data, filename = summary, "summary.json"
+        target = data["models"]["arbitrary-model"] if record == "state" else data
+        target[field] = value
+        (directory / filename).write_text(json.dumps(data))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:296: AssertionError
+_ test_inconsistent_run_history_and_code_provenance_are_excluded[summary-runner_git_commit-short] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_inconsistent_run_history_3'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+record = 'summary', field = 'runner_git_commit', value = 'short'
+
+    @pytest.mark.parametrize(("record", "field", "value"), [
+        ("run", "benchmark_version", "0.9.0"), ("run", "created_at", "2026-08-31T10:00:00Z"),
+        ("run", "invocations", []), ("summary", "runner_git_commit", "short"),
+        ("summary", "runner_git_dirty", "false"), ("card", "runner_git_commit", "c" * 40),
+        ("state", "completed", 999), ("state", "completed", True),
+    ])
+    def test_inconsistent_run_history_and_code_provenance_are_excluded(release_history, record, field, value):
+        directory, summary, card = write_run(release_history, "invalid", [0])
+        if record == "run":
+            data = json.loads((directory / "run.json").read_text())
+            filename = "run.json"
+        elif record == "card":
+            data, filename = card, "scorecard_arbitrary-model.json"
+        else:
+            data, filename = summary, "summary.json"
+        target = data["models"]["arbitrary-model"] if record == "state" else data
+        target[field] = value
+        (directory / filename).write_text(json.dumps(data))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:296: AssertionError
+_ test_inconsistent_run_history_and_code_provenance_are_excluded[summary-runner_git_dirty-false] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_inconsistent_run_history_4'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+record = 'summary', field = 'runner_git_dirty', value = 'false'
+
+    @pytest.mark.parametrize(("record", "field", "value"), [
+        ("run", "benchmark_version", "0.9.0"), ("run", "created_at", "2026-08-31T10:00:00Z"),
+        ("run", "invocations", []), ("summary", "runner_git_commit", "short"),
+        ("summary", "runner_git_dirty", "false"), ("card", "runner_git_commit", "c" * 40),
+        ("state", "completed", 999), ("state", "completed", True),
+    ])
+    def test_inconsistent_run_history_and_code_provenance_are_excluded(release_history, record, field, value):
+        directory, summary, card = write_run(release_history, "invalid", [0])
+        if record == "run":
+            data = json.loads((directory / "run.json").read_text())
+            filename = "run.json"
+        elif record == "card":
+            data, filename = card, "scorecard_arbitrary-model.json"
+        else:
+            data, filename = summary, "summary.json"
+        target = data["models"]["arbitrary-model"] if record == "state" else data
+        target[field] = value
+        (directory / filename).write_text(json.dumps(data))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:296: AssertionError
+_ test_inconsistent_run_history_and_code_provenance_are_excluded[card-runner_git_commit-cccccccccccccccccccccccccccccccccccccccc] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_inconsistent_run_history_5'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+record = 'card', field = 'runner_git_commit'
+value = 'cccccccccccccccccccccccccccccccccccccccc'
+
+    @pytest.mark.parametrize(("record", "field", "value"), [
+        ("run", "benchmark_version", "0.9.0"), ("run", "created_at", "2026-08-31T10:00:00Z"),
+        ("run", "invocations", []), ("summary", "runner_git_commit", "short"),
+        ("summary", "runner_git_dirty", "false"), ("card", "runner_git_commit", "c" * 40),
+        ("state", "completed", 999), ("state", "completed", True),
+    ])
+    def test_inconsistent_run_history_and_code_provenance_are_excluded(release_history, record, field, value):
+        directory, summary, card = write_run(release_history, "invalid", [0])
+        if record == "run":
+            data = json.loads((directory / "run.json").read_text())
+            filename = "run.json"
+        elif record == "card":
+            data, filename = card, "scorecard_arbitrary-model.json"
+        else:
+            data, filename = summary, "summary.json"
+        target = data["models"]["arbitrary-model"] if record == "state" else data
+        target[field] = value
+        (directory / filename).write_text(json.dumps(data))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:296: AssertionError
+_ test_inconsistent_run_history_and_code_provenance_are_excluded[state-completed-999] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_inconsistent_run_history_6'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+record = 'state', field = 'completed', value = 999
+
+    @pytest.mark.parametrize(("record", "field", "value"), [
+        ("run", "benchmark_version", "0.9.0"), ("run", "created_at", "2026-08-31T10:00:00Z"),
+        ("run", "invocations", []), ("summary", "runner_git_commit", "short"),
+        ("summary", "runner_git_dirty", "false"), ("card", "runner_git_commit", "c" * 40),
+        ("state", "completed", 999), ("state", "completed", True),
+    ])
+    def test_inconsistent_run_history_and_code_provenance_are_excluded(release_history, record, field, value):
+        directory, summary, card = write_run(release_history, "invalid", [0])
+        if record == "run":
+            data = json.loads((directory / "run.json").read_text())
+            filename = "run.json"
+        elif record == "card":
+            data, filename = card, "scorecard_arbitrary-model.json"
+        else:
+            data, filename = summary, "summary.json"
+        target = data["models"]["arbitrary-model"] if record == "state" else data
+        target[field] = value
+        (directory / filename).write_text(json.dumps(data))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:296: AssertionError
+_ test_inconsistent_run_history_and_code_provenance_are_excluded[state-completed-True] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_inconsistent_run_history_7'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+record = 'state', field = 'completed', value = True
+
+    @pytest.mark.parametrize(("record", "field", "value"), [
+        ("run", "benchmark_version", "0.9.0"), ("run", "created_at", "2026-08-31T10:00:00Z"),
+        ("run", "invocations", []), ("summary", "runner_git_commit", "short"),
+        ("summary", "runner_git_dirty", "false"), ("card", "runner_git_commit", "c" * 40),
+        ("state", "completed", 999), ("state", "completed", True),
+    ])
+    def test_inconsistent_run_history_and_code_provenance_are_excluded(release_history, record, field, value):
+        directory, summary, card = write_run(release_history, "invalid", [0])
+        if record == "run":
+            data = json.loads((directory / "run.json").read_text())
+            filename = "run.json"
+        elif record == "card":
+            data, filename = card, "scorecard_arbitrary-model.json"
+        else:
+            data, filename = summary, "summary.json"
+        target = data["models"]["arbitrary-model"] if record == "state" else data
+        target[field] = value
+        (directory / filename).write_text(json.dumps(data))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:296: AssertionError
+_ test_missing_run_metadata_is_excluded_and_missing_attempt_history_is_explicit _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_missing_run_metadata_is_e0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+
+    def test_missing_run_metadata_is_excluded_and_missing_attempt_history_is_explicit(release_history):
+        missing, _, _ = write_run(release_history, "missing-run", [0])
+        (missing / "run.json").unlink()
+        write_run(release_history, "missing-attempts", [1])
+        report = aggregate(release_history)
+>       assert report["models"][0]["completed"] == 1
+E       assert 2 == 1
+
+tests/test_run_aggregation.py:305: AssertionError
+_ test_explicitly_unavailable_code_identity_and_multiple_invocations_are_retained _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-71/test_explicitly_unavailable_co0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+
+    def test_explicitly_unavailable_code_identity_and_multiple_invocations_are_retained(release_history):
+        directory, summary, card = write_run(release_history, "resumed", [0])
+        summary.update(runner_git_commit=None, runner_git_dirty=None)
+        metadata = json.loads((directory / "run.json").read_text())
+        metadata["invocations"].append({**metadata["invocations"][0], "runner_git_commit": None, "runner_git_dirty": None})
+        (directory / "summary.json").write_text(json.dumps(summary))
+        (directory / "run.json").write_text(json.dumps(metadata))
+        report = aggregate(release_history)
+        assert report["models"][0]["completed"] == 1
+>       assert len(report["runs"][0]["invocations"]) == 2
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'invocations'
+
+tests/test_run_aggregation.py:319: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_run_aggregation.py::test_inconsistent_run_history_and_code_provenance_are_excluded[run-benchmark_version-0.9.0]
+FAILED tests/test_run_aggregation.py::test_inconsistent_run_history_and_code_provenance_are_excluded[run-created_at-2026-08-31T10:00:00Z]
+FAILED tests/test_run_aggregation.py::test_inconsistent_run_history_and_code_provenance_are_excluded[run-invocations-value2]
+FAILED tests/test_run_aggregation.py::test_inconsistent_run_history_and_code_provenance_are_excluded[summary-runner_git_commit-short]
+FAILED tests/test_run_aggregation.py::test_inconsistent_run_history_and_code_provenance_are_excluded[summary-runner_git_dirty-false]
+FAILED tests/test_run_aggregation.py::test_inconsistent_run_history_and_code_provenance_are_excluded[card-runner_git_commit-cccccccccccccccccccccccccccccccccccccccc]
+FAILED tests/test_run_aggregation.py::test_inconsistent_run_history_and_code_provenance_are_excluded[state-completed-999]
+FAILED tests/test_run_aggregation.py::test_inconsistent_run_history_and_code_provenance_are_excluded[state-completed-True]
+FAILED tests/test_run_aggregation.py::test_missing_run_metadata_is_excluded_and_missing_attempt_history_is_explicit
+FAILED tests/test_run_aggregation.py::test_explicitly_unavailable_code_identity_and_multiple_invocations_are_retained
+10 failed, 26 deselected in 0.27s

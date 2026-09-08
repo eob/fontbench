@@ -13,7 +13,7 @@
 
 Reject ambiguous malformed answers, pin evaluation protocol identity, and make completion and compared cohorts auditable before final runs. Audit evaluator/provider requests and SQLite resumption entirely offline.
 
-## Confirmed by inspection; Red checks pending
+## Initial findings (regressions and repairs completed below)
 
 - Prediction schema silently ignores additional keys and accepts whitespace-only font names. Python JSON parsing also silently resolves repeated keys, leaving ambiguous answers scorable.
 - Dataset fingerprint excludes rendering evidence and uses a hardcoded grading marker. Default prompts differ between runner and evaluator, and changing request/grading code does not prevent mixing old and new protocol attempts in one run.
@@ -96,6 +96,6 @@ Command: `.venv/bin/pytest -q tests/test_evaluator.py -k malformed_aliases`; ful
 
 ## Completion
 
-Implementation complete; parent integrates the complete audit branch. The simplifyfu and comment-hygiene pass removed one redundant test; changes introduce no transport wrapper or configurable policy abstraction. No remote inference was issued. Existing SQLite retention/idempotency, cumulative cost, concurrent runner locking, interruption draining, and retry tests remain green.
+Implementation and integration completed in `d69e87e`. The simplifyfu and comment-hygiene pass removed one redundant test; changes introduce no transport wrapper or configurable policy abstraction. No remote inference was issued. Existing SQLite retention/idempotency, cumulative cost, concurrent runner locking, interruption draining, and retry tests remain green.
 
-Final integration update: renderer and evaluator now read the exact same checked-in `baseline/prompt.txt` rubric. Defaults point to `dataset/fontbench-2-rendered/manifest.json`; historical manifests still require explicit paths and cannot pass the live validation gate. Explicit canonical grading tests pin `Helvetica Neue` != `Helvetica` and `Times` != `Times New Roman` without declared aliases. Complete Python suite at `a6deba1` plus final review changes: **293 passed in 7.48s**; `git diff --check` clean.
+Final integration update: renderer and evaluator now read the exact same checked-in `baseline/prompt.txt` rubric. At audit closure, defaults pointed to `dataset/fontbench-2-rendered/manifest.json`; release-01 now selects that same corpus through the V1.0.0 registry. Historical manifests still require explicit paths and cannot pass the live validation gate. Explicit canonical grading tests pin `Helvetica Neue` != `Helvetica` and `Times` != `Times New Roman` without declared aliases. Complete Python suite at `a6deba1` plus final review changes: **293 passed in 7.48s**; `git diff --check` clean.

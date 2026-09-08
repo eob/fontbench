@@ -230,3 +230,16 @@ class RunStore:
             {"run_id": run_id, "fingerprint": fingerprint, "metadata": json.loads(metadata), "created_at": created_at}
             for run_id, fingerprint, metadata, created_at in rows
         ]
+
+    def attempts(self, run_id: str, *, after_sequence: int = 0) -> list[dict]:
+        """Return the complete attempt history, including superseded failures."""
+        with self._lock:
+            rows = self._connection.execute(
+                'SELECT rowid, attempt_id, model_id, task_id, result_json, created_at FROM attempts '
+                'WHERE run_id = ? AND rowid > ? ORDER BY rowid', (run_id, after_sequence),
+            ).fetchall()
+        return [
+            {'sequence': sequence, 'attempt_id': attempt_id, 'run_id': run_id, 'model_id': model_id,
+             'task_id': task_id, 'result': json.loads(result), 'created_at': created_at}
+            for sequence, attempt_id, model_id, task_id, result, created_at in rows
+        ]

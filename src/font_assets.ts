@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { create, type Font } from 'fontkit';
 import type { APIRequestContext } from 'playwright';
 import type { FontSpec } from './fonts';
+import { assertMutableOutput } from './release_protection';
 
 export const sha256 = (bytes: Uint8Array | string): string => createHash('sha256').update(bytes).digest('hex');
 
@@ -62,6 +63,7 @@ export class FontAssets {
   private loaded = new Map<string, { bytes: Buffer; meta: FontAsset }>();
 
   constructor(private outputDir: string, private cacheDir: string, private request: APIRequestContext) {
+    assertMutableOutput(outputDir);
     const lockPath = path.join(cacheDir, 'fonts.lock.json');
     this.lock = fs.existsSync(lockPath) ? JSON.parse(fs.readFileSync(lockPath, 'utf8')) : { version: 1, stylesheets: {}, assets: {} };
     if (this.lock.version !== 1) throw new Error('Unsupported font lock version');

@@ -1,6 +1,7 @@
 import { chromium, type Browser } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
+import { assertMutableOutput } from './release_protection';
 import { FontAssets, verifyFontAsset, sha256, type FontAsset } from './font_assets';
 import {
   TOP_50_FONTS,
@@ -73,7 +74,8 @@ function getCategoryFallback(cat: TypographicCategory): string {
   }
 }
 
-export async function renderAllSamples(outputDir: string = 'dataset/fontbench-2-rendered', options: { fontCacheDir?: string } = {}): Promise<RenderedSampleMeta[]> {
+export async function renderAllSamples(outputDir: string = 'dataset/candidate-rendered', options: { fontCacheDir?: string } = {}): Promise<RenderedSampleMeta[]> {
+  assertMutableOutput(outputDir);
   const destination = path.resolve(outputDir);
   fs.mkdirSync(path.dirname(destination), { recursive: true });
   const stagingDir = fs.mkdtempSync(path.join(path.dirname(destination), `.${path.basename(destination)}-render-`));

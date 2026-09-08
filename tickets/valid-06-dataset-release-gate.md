@@ -87,4 +87,4 @@ Final review gates at checkpoint `a6deba1` plus final review changes:
 - `.venv/bin/python -m baseline.validate_dataset --manifest /tmp/fontbench-render-validation/manifest.json --output /tmp/fontbench-hardened-validation.json`: valid, 1,824 unique images, 129 independently parsed binaries, zero errors, including exclusive ink regions for overlapping line boxes.
 - Extended isolated pre-review-source reversion including overlapping-line regression: **13 failed, 1 passed**, [full output](evidence/valid-06-review-reversion-final.log).
 
-Review implementation complete. Parent integrates the final regenerated corpus and publication artifacts. The simplification pass retained only the nontrivial binary-parsing helper and a per-file cache; no alternate policy mode or metadata attestation abstraction was added.
+Implementation, the final regenerated corpus, and publication artifacts were integrated in `d69e87e`. The simplification pass retained only the nontrivial binary-parsing helper and a per-file cache; no alternate policy mode or metadata attestation abstraction was added.

@@ -1,0 +1,43 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________________ test_release_identity_api_is_available ____________________
+
+    def test_release_identity_api_is_available():
+>       assert importlib.util.find_spec('baseline.releases') is not None, 'Versioned release identity API is missing'
+E       AssertionError: Versioned release identity API is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7feda8893100>('baseline.releases')
+E        +    where <function find_spec at 0x7feda8893100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_releases.py:11: AssertionError
+___________ test_frozen_v1_descriptor_exists_and_names_a_git_commit ____________
+
+    def test_frozen_v1_descriptor_exists_and_names_a_git_commit():
+        path = Path(__file__).resolve().parents[1] / 'releases/1.0.0.json'
+>       assert path.is_file(), 'FontBench V1.0.0 release descriptor is missing'
+E       AssertionError: FontBench V1.0.0 release descriptor is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/tmp/fontbench-release-reversion-p33959cm/releases/1.0.0.json').is_file
+
+tests/test_releases.py:16: AssertionError
+_____________ test_custom_manifest_ledger_does_not_claim_a_release _____________
+
+benchmark = {'manifest_path': PosixPath('/tmp/pytest-of-ted/pytest-67/test_custom_manifest_ledger_do0/manifest.json'), 'config_pat...), 'output_dir': PosixPath('/tmp/pytest-of-ted/pytest-67/test_custom_manifest_ledger_do0/runs'), 'run_id': 'test', ...}
+
+    def test_custom_manifest_ledger_does_not_claim_a_release(benchmark):
+        result = run_benchmark(**benchmark)
+>       assert 'benchmark_version' in result, 'Runs have no explicit benchmark version identity'
+E       AssertionError: Runs have no explicit benchmark version identity
+E       assert 'benchmark_version' in {'run_id': 'test', 'dataset_fingerprint': '1e8e27798a042478402fdee456e99bb0c692c98f3c508de2a9c48c667d2518af', 'mock': True, 'evaluation_protocol_fingerprint': '3769c8cc383a4959533c4801eec6202035a5a8cd30b76644e8cdfbc11cc859ce', ...}
+
+tests/test_runner.py:132: AssertionError
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+model-a / two: saved | estimated spend $0.0000
+=========================== short test summary info ============================
+FAILED tests/test_releases.py::test_release_identity_api_is_available - Asser...
+FAILED tests/test_releases.py::test_frozen_v1_descriptor_exists_and_names_a_git_commit
+FAILED tests/test_runner.py::test_custom_manifest_ledger_does_not_claim_a_release
+3 failed in 0.18s

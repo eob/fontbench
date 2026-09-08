@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { crc32, inflateSync } from 'node:zlib';
 import type { RenderedSampleMeta } from './render';
+import { assertMutableOutput } from './release_protection';
 
 function validatePng(bytes: Buffer, filename: string) {
   const invalid = () => new Error(`Invalid PNG benchmark image: ${filename}`);
@@ -48,9 +49,10 @@ function validatePng(bytes: Buffer, filename: string) {
 }
 
 export function buildHarborDataset(
-  renderedDir: string = 'dataset/fontbench-2-rendered',
-  outputDir: string = 'dataset/fontbench-2'
+  renderedDir: string = 'dataset/candidate-rendered',
+  outputDir: string = 'dataset/candidate-harbor'
 ) {
+  assertMutableOutput(outputDir);
   const prompt = fs.readFileSync(path.join(import.meta.dir, '../baseline/prompt.txt'), 'utf8').trim();
   const manifestPath = path.join(renderedDir, 'manifest.json');
   if (!fs.existsSync(manifestPath)) {
@@ -141,9 +143,9 @@ export function buildHarborDataset(
   const datasetToml = `version = "1.0"
 
 [dataset]
-name = "fontbench-2"
-version = "2.0.0"
-description = "FontBench-2: Visual typography benchmark across six attributes: font, category, weight, modifier, kerning, and line height."
+name = "fontbench-candidate"
+version = "0.0.0"
+description = "Development candidate: Visual typography benchmark across six attributes: font, category, weight, modifier, kerning, and line height."
 author = "Edward Benson"
 license = "MIT"
 task_dir = "tasks"
@@ -335,9 +337,8 @@ if (import.meta.main) {
   const repository = path.resolve(import.meta.dir, '..');
   const localPython = path.join(repository, '.venv/bin/python');
   const checked = spawnSync(fs.existsSync(localPython) ? localPython : 'python3', [
-    '-c', 'from baseline.validate_dataset import require_valid_dataset; require_valid_dataset("dataset/fontbench-2-rendered/manifest.json")',
+    '-c', 'from baseline.validate_dataset import require_valid_dataset; require_valid_dataset("dataset/candidate-rendered/manifest.json")',
   ], { cwd: repository, stdio: 'inherit' });
   if (checked.status !== 0) throw new Error('Dataset readiness checks failed; Harbor package was not changed.');
-  buildHarborDataset(path.join(repository, 'dataset/fontbench-2-rendered'), path.join(repository, 'dataset/fontbench-2'));
+  buildHarborDataset(path.join(repository, 'dataset/candidate-rendered'), path.join(repository, 'dataset/candidate-harbor'));
 }
-

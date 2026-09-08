@@ -1,11 +1,18 @@
-# Dataset generations
+# Dataset releases
 
-Use **`fontbench-2-rendered/manifest.json`** for evaluation and **`fontbench-2/tasks`** for Harbor.
+**FontBench V1.0.0** is the accepted release. Use `--release 1.0.0` when evaluating models or rebuilding the website. Its [descriptor](../releases/1.0.0.json) binds the data to Git commit `d69e87e2c206ea75c52f5b8340d677bd14af03e3` and the exact dataset/protocol fingerprints in the [changelog](../CHANGELOG.md).
 
-The accepted compact corpus contains 1,824 samples across 50 families. Every input has 2–5 measured visible lines. Its [validation report](fontbench-2-rendered/validation.json) records zero errors, 129 independently checked font binaries, no duplicate images, all class distributions, and the census of 1,176 omitted candidates. Each tracking, line-height, and width level occurs 608 times.
+| Directory | Classification |
+| --- | --- |
+| `fontbench-2-rendered/` | Frozen V1.0.0 inputs: 1,824 images, 50 families |
+| `fontbench-2/` | Frozen V1.0.0 Harbor package |
+| `candidate-rendered/`, `candidate-harbor/` | Unreleased development output; excluded from Git |
+| `rendered/`, `fontbench-1/` | Invalid historical 1,000-image prototype |
 
-Run `bun run validate:dataset` from the repository root before final evaluation. Keep the manifest, catalog, skipped census, font lock, font binaries, and PNGs together. Rendering protocol 2 and grading version 3 are required; use a new run ID for the final campaign.
+The internal `fontbench-2` folder names predate public release naming and do not denote V2. The old `fontbench-1` folder is not V1.0.0.
 
-`rendered/` and `fontbench-1/` retain the original 1,000 historical samples. The separate September 7 run retains 639 later historical samples. Both generations have known validity defects and are rejected by the current live release gate. Existing scores cannot be reused for FontBench-2.
+Every accepted input has 2–5 measured visible lines. The [validation report](fontbench-2-rendered/validation.json) records zero errors, 129 independently checked fonts used by accepted samples, no duplicate images, all class distributions, and the census of 1,176 omitted candidates. All 139 downloaded font assets remain pinned for reproduction, including unsupported source faces. Each tracking, line-height, and width level occurs 608 times.
 
-The compact recipe design samples the typography space and intentionally retains some conditional factor correlations. It does not claim exhaustive coverage or independent causal measurement of each attribute. See the [audit tickets](../tickets/README.md).
+Run `bun run validate:release` to verify release identity and input integrity. Registered input/package directories are protected against generation overwrites. Keep the manifest, catalog, skipped census, font lock, source binaries, and PNGs together. Development generation writes the candidate directories; a changed accepted corpus needs a new public release descriptor.
+
+The compact recipe design samples the typography space and retains documented conditional factor correlations. It does not claim exhaustive coverage or independent causal measurement of each attribute. See the [audit tickets](../tickets/README.md).

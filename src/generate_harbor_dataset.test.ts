@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, expect, test } from 'bun:test';
+import { afterEach, beforeEach, expect, spyOn, test } from 'bun:test';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -51,6 +51,15 @@ function verify(data: unknown, cwd?: string) {
   expect(fs.existsSync(reward), result.stderr).toBe(true);
   return { score: Number(fs.readFileSync(reward, 'utf8')), status: result.status };
 }
+
+test('refuses registered release output before filesystem mutation', () => {
+  const mkdir = spyOn(fs, 'mkdirSync').mockImplementation(() => { throw new Error('Filesystem mutation reached'); });
+  try {
+    expect(() => buildHarborDataset(rendered, path.join(import.meta.dir, '../dataset/fontbench-2'))).toThrow(/Frozen release output/);
+  } finally {
+    mkdir.mockRestore();
+  }
+});
 
 test('instructions are independent of hidden typography answers', () => {
   buildHarborDataset(rendered, output);
@@ -155,6 +164,8 @@ test('image symlinks cannot read files outside the rendering directory', () => {
 
 test('public task metadata contains no hidden labels or source IDs', () => {
   buildHarborDataset(rendered, output);
+  const descriptor = Bun.TOML.parse(fs.readFileSync(path.join(output, 'dataset.toml'), 'utf8'));
+  expect(descriptor).toMatchObject({ dataset: { name: 'fontbench-candidate', version: '0.0.0' } });
   const taskDir = path.join(output, 'tasks', harborId());
   expect(fs.existsSync(taskDir)).toBe(true);
   const toml = fs.readFileSync(path.join(taskDir, 'task.toml'), 'utf8');

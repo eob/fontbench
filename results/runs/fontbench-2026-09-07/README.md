@@ -1,6 +1,6 @@
 # September 7, 2026 historical comparison — invalid for final benchmark use
 
-The September 8 audit found two single-line inputs, remaining font-evidence conflicts, 21 synthetic italics, and a width-only shortcut that predicts 578/639 line-height labels. These results are retained for historical inspection. Use the new FontBench-2 inputs and grading version 3 for final measurements; the current live runner rejects this old dataset. See [the validity tickets](../../../tickets/README.md).
+The September 8 audit found two single-line inputs, remaining font-evidence conflicts, 21 synthetic italics, and a width-only shortcut that predicts 578/639 line-height labels. These results are retained for historical inspection. Use [FontBench V1.0.0](../../../releases/1.0.0.json) and grading version 3 for final measurements; the current live runner rejects this old dataset. See [the validity tickets](../../../tickets/README.md).
 
 The run stopped cleanly at its cumulative $25 spending guard with **2,216 completed model–input pairs** and 2,222 recorded evaluation attempts. Estimated spending is **$24.988759**, including conservative reservations for unmetered requests. This is not a provider invoice.
 

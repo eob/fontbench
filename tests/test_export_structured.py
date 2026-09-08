@@ -2,6 +2,10 @@
 
 import json
 import hashlib
+import os
+from pathlib import Path
+import subprocess
+import sys
 from datetime import datetime
 
 import pytest
@@ -193,3 +197,75 @@ def test_corrupt_json_is_excluded_instead_of_breaking_other_exports(tmp_path):
     report = build_structured_benchmark(str(tmp_path))
     assert len(report["models"]) == 1
     assert report["warnings"]
+
+
+@pytest.mark.parametrize(("field", "value"), [
+    ("category", {}), ("category", []), ("category", None), ("category", False),
+    ("category", ""), ("category", "   "),
+    ("weight", {}), ("modifier", []), ("kerning", None),
+    ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+])
+def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+    write_scorecard(tmp_path, "valid", total_tasks=1)
+    write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+    report = build_structured_benchmark(str(tmp_path))
+    assert [model["model_id"] for model in report["models"]] == ["valid"]
+    assert report["models"][0]["total_tasks"] == 1
+    assert len(report["warnings"]) == 1
+
+
+@pytest.mark.parametrize("value", [{}, [], None, False, 0, "", "   "])
+def test_malformed_export_model_id_preserves_valid_peer(tmp_path, value):
+    write_scorecard(tmp_path, "valid", total_tasks=1)
+    write_scorecard(tmp_path, "broken", total_tasks=1, model_id=value)
+    report = build_structured_benchmark(str(tmp_path))
+    assert [model["model_id"] for model in report["models"]] == ["valid"]
+    assert len(report["warnings"]) == 1
+
+
+def test_export_preserves_explicit_and_omitted_model_ids(tmp_path):
+    write_scorecard(tmp_path, "default", total_tasks=1)
+    write_scorecard(tmp_path, "named", total_tasks=1, model_id="custom-id")
+    report = build_structured_benchmark(str(tmp_path))
+    assert {model["model_id"] for model in report["models"]} == {"default", "custom-id"}
+    assert report["warnings"] == []
+
+
+def test_legacy_export_is_explicitly_unversioned(tmp_path):
+    write_scorecard(tmp_path, total_tasks=1)
+    report = build_structured_benchmark(str(tmp_path))
+    assert report["version"] is None
+    assert report["benchmark_version"] is None
+    assert report["schema_version"] == 1
+
+
+def test_legacy_cli_requires_explicit_paths_and_preserves_historical_output(tmp_path):
+    directory = tmp_path / "results"
+    directory.mkdir()
+    historical = directory / "fontbench_summary.json"
+    historical.write_text("Historical results must stay intact.\n")
+    result = subprocess.run([sys.executable, "-m", "baseline.export_structured"], cwd=tmp_path,
+                            env={**os.environ, "PYTHONPATH": str(Path(__file__).resolve().parents[1])},
+                            capture_output=True, text=True)
+    assert historical.read_text() == "Historical results must stay intact.\n"
+    assert result.returncode != 0
+    assert "--results-dir" in result.stderr and "--output" in result.stderr
+
+
+def test_legacy_cli_writes_only_requested_output(tmp_path):
+    directory = tmp_path / "input"
+    directory.mkdir()
+    write_scorecard(directory, total_tasks=1)
+    historical_dir = tmp_path / "results"
+    historical_dir.mkdir()
+    historical = historical_dir / "fontbench_summary.json"
+    historical.write_text("Historical results must stay intact.\n")
+    output = tmp_path / "explicit" / "summary.json"
+    result = subprocess.run([sys.executable, "-m", "baseline.export_structured", "--results-dir", str(directory),
+                             "--output", str(output)], cwd=tmp_path,
+                            env={**os.environ, "PYTHONPATH": str(Path(__file__).resolve().parents[1])},
+                            capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    assert output.exists()
+    assert len(json.loads(output.read_text())["models"]) == 1
+    assert historical.read_text() == "Historical results must stay intact.\n"

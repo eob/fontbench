@@ -146,12 +146,20 @@ def test_zero_limit_produces_an_empty_scorecard(task, tmp_path):
 def test_cli_mock_output_cannot_replace_a_live_scorecard(task, tmp_path, monkeypatch):
     manifest = tmp_path / "manifest.json"
     manifest.write_text(json.dumps([task]))
-    live = tmp_path / "scorecard_example.json"
+    config = tmp_path / "models.json"
+    config.write_text(json.dumps({"version": 1, "verified_at": "2026-09-08", "models": [{
+        "id": "example", "model": "example", "provider": "google", "display_name": "Example",
+        "api_key_env": "TEST_KEY", "source_url": "https://example.com/models",
+    }]}))
+    live_directory = tmp_path / "safety"
+    live_directory.mkdir()
+    live = live_directory / "scorecard_example.json"
     live.write_text('"existing live results"')
-    monkeypatch.setattr("sys.argv", ["fontbench", "--mock", "--model", "example", "--manifest", str(manifest), "--output-dir", str(tmp_path)])
+    monkeypatch.setattr("sys.argv", ["fontbench", "--mock", "--models", "example", "--config", str(config),
+                                    "--run-id", "safety", "--manifest", str(manifest), "--output-dir", str(tmp_path)])
     cli.main()
     assert live.read_text() == '"existing live results"'
-    saved = json.loads((tmp_path / "scorecard_mock_example.json").read_text())
+    saved = json.loads((tmp_path / "mock-safety" / "scorecard_example.json").read_text())
     assert saved["mock"] is True
     assert saved["tasks"][0]["raw_prediction"]
     assert "error" in saved["tasks"][0]

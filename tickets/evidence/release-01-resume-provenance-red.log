@@ -1,0 +1,130 @@
+FFFFF.                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[missing] _
+tests/test_runner.py:258: in test_resume_refuses_lost_or_corrupt_invocation_history_before_inference
+    run_benchmark(**benchmark)
+baseline/runner.py:385: in run_benchmark
+    raise fatal_error
+baseline/runner.py:294: in checkpoint
+    result = asdict(future.result())
+                    ^^^^^^^^^^^^^^^
+/usr/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/usr/lib/python3.11/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1118: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1122: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1177: in _execute_mock_call
+    raise effect
+E   AssertionError: No inference after lost or corrupt provenance
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+model-a / two: other | estimated spend $0.0000
+_ test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[creation] _
+tests/test_runner.py:258: in test_resume_refuses_lost_or_corrupt_invocation_history_before_inference
+    run_benchmark(**benchmark)
+baseline/runner.py:385: in run_benchmark
+    raise fatal_error
+baseline/runner.py:294: in checkpoint
+    result = asdict(future.result())
+                    ^^^^^^^^^^^^^^^
+/usr/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/usr/lib/python3.11/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1118: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1122: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1177: in _execute_mock_call
+    raise effect
+E   AssertionError: No inference after lost or corrupt provenance
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+model-a / two: other | estimated spend $0.0000
+_ test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[object-invocations] _
+tests/test_runner.py:258: in test_resume_refuses_lost_or_corrupt_invocation_history_before_inference
+    run_benchmark(**benchmark)
+baseline/runner.py:184: in run_benchmark
+    run_metadata['invocations'].append(invocation)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'dict' object has no attribute 'append'
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+_ test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[empty-invocations] _
+tests/test_runner.py:258: in test_resume_refuses_lost_or_corrupt_invocation_history_before_inference
+    run_benchmark(**benchmark)
+baseline/runner.py:385: in run_benchmark
+    raise fatal_error
+baseline/runner.py:294: in checkpoint
+    result = asdict(future.result())
+                    ^^^^^^^^^^^^^^^
+/usr/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/usr/lib/python3.11/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1118: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1122: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1177: in _execute_mock_call
+    raise effect
+E   AssertionError: No inference after lost or corrupt provenance
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+model-a / two: other | estimated spend $0.0000
+_ test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[invalid-invocation] _
+tests/test_runner.py:258: in test_resume_refuses_lost_or_corrupt_invocation_history_before_inference
+    run_benchmark(**benchmark)
+baseline/runner.py:385: in run_benchmark
+    raise fatal_error
+baseline/runner.py:294: in checkpoint
+    result = asdict(future.result())
+                    ^^^^^^^^^^^^^^^
+/usr/lib/python3.11/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/usr/lib/python3.11/concurrent/futures/thread.py:58: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1118: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1122: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.11/unittest/mock.py:1177: in _execute_mock_call
+    raise effect
+E   AssertionError: No inference after lost or corrupt provenance
+----------------------------- Captured stdout call -----------------------------
+model-a / one: saved | estimated spend $0.0000
+model-a / two: other | estimated spend $0.0000
+=========================== short test summary info ============================
+FAILED tests/test_runner.py::test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[missing]
+FAILED tests/test_runner.py::test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[creation]
+FAILED tests/test_runner.py::test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[object-invocations]
+FAILED tests/test_runner.py::test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[empty-invocations]
+FAILED tests/test_runner.py::test_resume_refuses_lost_or_corrupt_invocation_history_before_inference[invalid-invocation]
+5 failed, 1 passed in 1.71s

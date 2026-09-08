@@ -1,0 +1,37 @@
+{
+  "benchmark_version": "1.0.0",
+  "dataset_git_commit": "d69e87e2c206ea75c52f5b8340d677bd14af03e3",
+  "dataset_fingerprint": "d40a3cafa91610bbebaa6c49719f24efcbe754a328e448d3e51f0e1f217c79a6",
+  "evaluation_protocol_fingerprint": "3769c8cc383a4959533c4801eec6202035a5a8cd30b76644e8cdfbc11cc859ce",
+  "tooling_git_tag": "v1.0.0",
+  "python_tests": {
+    "passed": 413,
+    "failed": 0,
+    "seconds": 16.31
+  },
+  "bun_tests": {
+    "passed": 78,
+    "failed": 0,
+    "seconds": 13.24
+  },
+  "typecheck": "passed",
+  "frozen_install": "passed, no package changes",
+  "release_validation": "passed",
+  "frozen_inputs": 1824,
+  "font_families": 50,
+  "python_wheel": "fontbench-1.0.0-py3-none-any.whl",
+  "offline_smoke": "release-01-integration-smoke.json",
+  "browser_checks": "release-02-browser-validation.json",
+  "historical_checkpoint": {
+    "unchanged": true,
+    "integrity": "ok",
+    "attempts": 2222,
+    "completed": 2216
+  },
+  "accepted_dataset_and_package_unchanged": true,
+  "historical_input_and_result_json_unchanged": true,
+  "protocol_sources_unchanged": true,
+  "closed_tickets": 11,
+  "paid_requests": 0,
+  "remote_publication": false
+}

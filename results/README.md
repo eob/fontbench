@@ -1,11 +1,51 @@
-# Historical results
+# Versioned run history
 
-The checked-in scorecards and `fontbench_summary.json` were produced before the repository audit. They are retained as historical artifacts, not validated results for the corrected benchmark.
+Current release: **[FontBench V1.0.0](../releases/1.0.0.json)**. The [changelog](../CHANGELOG.md) records its Git commit, dataset fingerprint, and evaluation protocol.
 
-The old grader accepted font substrings and assigned default attribute values to missing or invalid predictions, which could inflate scores. The old renderer could capture an unintended face, fallback font, or unsupported weight while retaining the requested label. The Harbor instructions also contained each task's answer.
+Each independent campaign writes to `results/runs/<version>/<run-id>/`. Run GPT today and Gemini later using different run IDs; the website collects compatible records across all those directories. Reuse a run ID only to resume that same campaign.
 
-Existing scorecards do not contain enough raw response or font provenance data to establish corrected measurements reliably. Re-render into a separate directory and run a new evaluation with the corrected code. Do not compare the old and new scores as if they used the same protocol.
+```bash
+bun run benchmark --release 1.0.0 --run-id gpt-september --models gpt-6-astra --budget-usd 25
+bun run benchmark --release 1.0.0 --run-id gemini-later --models gemini-3.1-pro-preview --budget-usd 25
+bun run build:page --release 1.0.0 --results-dir results/runs --output-dir site
+```
 
-The old structured summary also includes hard-coded pricing, evaluation dates, performance notes, and Pareto-frontier labels. Those values should not be treated as current provider prices or independently computed comparisons. The current exporter derives comparisons from supplied scorecards and leaves unknown pricing unset.
+These example live commands have separate cumulative spending guards; they are not issued by the release-preparation work. Configure provider keys and verify the selected model's rates/availability first. Use `--mock --max-tasks 3` for an offline smoke test; mock directories are ignored and excluded from comparisons.
 
-The September 7 multi-provider campaign in `runs/fontbench-2026-09-07` is also historical after the September 8 validity audit. It still contains single-line images and remaining font/layout design defects. The new live validation gate rejects both generations. Use `dataset/fontbench-2-rendered` and a new run ID for grading version 3; see [the current audit catalog](../tickets/README.md).
+## Retained run artifacts
+
+| Artifact | Purpose |
+| --- | --- |
+| `run.json` | Fixed run/release identity, creation provenance, and appended invocation history |
+| `state.sqlite3` | Authoritative resumable checkpoint and all attempted measurements |
+| `attempts.jsonl` | Readable attempt ledger, including failures and costs |
+| `summary.json` | Current completion, model/configuration identities, dates, and spending |
+| `scorecard_*.json` | Individual predictions and grading outcomes with release/data/protocol provenance |
+
+Versioned SQLite checkpoints and JSON/JSONL records are included by Git's tracking rules. Keys, console logs, locks, SQLite WAL/SHM files, input caches, and mock runs remain excluded. Wait for the runner to finish or drain an interruption, then commit the complete run directory together:
+
+```bash
+git add results/runs/1.0.0/gpt-september
+git commit -m 'results: record GPT evaluation on FontBench V1.0.0'
+```
+
+The runner writes the local repository; it does not commit unrelated work or push to a remote. Share the committed run directory through the normal repository workflow, then rebuild the website from the accumulated logs. Keep the closed SQLite file with its JSON exports so resuming can reuse completed measurements. If a checkpoint or `run.json` is lost or inconsistent, restore the complete run from Git before resuming. Commit code changes before measured runs so the recorded runner commit identifies the implementation; the dirty flag records any remaining local repository changes.
+
+## Comparison rules
+
+The website requires matching benchmark version, dataset Git commit/fingerprint, and evaluation protocol. It discovers model configurations from run records, including custom model catalogs used at other times. Equivalent inference settings can contribute complementary tasks; different provider/model/endpoint/output-cap settings remain separate configurations.
+
+For repeated model/configuration–input pairs, the earliest recorded final observation is retained for scoring, with deterministic tie-breaking. Invalid model answers are final zero-credit observations. Infrastructure failures remain attempts and can be retried. Repeats are counted and their cost history remains visible; later high-scoring answers do not replace earlier ones. Partial models expose completion and shared-cohort counts.
+
+Results cannot be migrated to changed images, labels, prompts, grading, or release descriptors by editing their version string. Use compatible release code and a new version when the benchmark protocol changes.
+
+The canonical versioned structured export is `site/benchmark.json`, generated by `build:page --release`. The older `baseline.export_structured` utility is explicitly unversioned and requires explicit input and output paths when invoked as a CLI.
+
+## Invalid historical records
+
+The [machine-readable classification](historical.json) marks these pre-release artifacts as **invalid historical data**:
+
+- Root `scorecard_*.json`, corresponding Markdown, and `fontbench_summary.json` came from unversioned prototype inputs/graders. Some accepted substrings or missing-value defaults, and early Harbor prompts exposed answers.
+- `runs/fontbench-2026-09-07/` retains a paid pilot on 639 inputs. It still contains single-line images, synthesized italics, conflicting font evidence, and a layout shortcut; grading version 2 is incompatible with V1.0.0.
+
+Their original JSON predictions and paid checkpoint are preserved for inspection. They are excluded from the V1.0.0 website and must not be resumed into or relabeled as that release. Old run instructions and source code remain in Git history at `14e792f`; the current run guide is above.

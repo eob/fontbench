@@ -49,6 +49,16 @@ afterEach(async () => {
 });
 
 describe('rendered font integrity', () => {
+  test('refuses registered release output before filesystem mutation or browser launch', async () => {
+    const mkdir = spyOn(fs, 'mkdirSync').mockImplementation(() => { throw new Error('Filesystem mutation reached'); });
+    try {
+      await expect(renderAllSamples(path.join(import.meta.dir, '../dataset/fontbench-2-rendered'))).rejects.toThrow(/Frozen release output/);
+      expect(launchSpy).not.toHaveBeenCalled();
+    } finally {
+      mkdir.mockRestore();
+    }
+  });
+
   test('refuses a CSS family alias around an unrelated font binary', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, name: 'Unrelated Sans', cssFamily: 'Unrelated Sans',
       cssUrl: `data:text/css,${encodeURIComponent(css.replaceAll('Fixture Sans', 'Unrelated Sans'))}` };
@@ -135,8 +145,11 @@ describe('rendered font integrity', () => {
         expect(sample.fontRendering!.platformFonts[0]!.postScriptName).toBe(sample.modifier === 'italic' ? 'FixtureSans-Italic' : 'FixtureSans-Regular');
       }
       await server.stop(true);
-      const replay = await renderAllSamples(directory);
+      const frozenManifest = fs.readFileSync(path.join(directory, 'manifest.json'));
+      const replayDirectory = path.join(directory, 'replay');
+      const replay = await renderAllSamples(replayDirectory, { fontCacheDir: directory });
       expect(replay.map(sample => sample.imageSha256)).toEqual(manifest.map(sample => sample.imageSha256));
+      expect(fs.readFileSync(path.join(directory, 'manifest.json'))).toEqual(frozenManifest);
     } finally {
       await server.stop(true);
     }

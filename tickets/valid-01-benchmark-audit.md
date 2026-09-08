@@ -85,3 +85,32 @@ Detailed evidence: [historical census](evidence/valid-01-historical-census.json)
 Final dataset fingerprint: `d40a3cafa91610bbebaa6c49719f24efcbe754a328e448d3e51f0e1f217c79a6`. Evaluation protocol fingerprint: `3769c8cc383a4959533c4801eec6202035a5a8cd30b76644e8cdfbc11cc859ce`. [Final offline resume evidence](evidence/valid-01-final-run-smoke.json) and [blocked-network replay evidence](evidence/valid-02-offline-replay.txt) are retained in the ticket folder.
 
 Final combined `bun run test` passed: 293 Python tests, 51 Bun tests, TypeScript clean. The historical 639-input validation command returned exit status 1 as expected; the frozen release returned exit status 0. CI now runs the release gate as well as the source tests. Remote CI was not run.
+
+
+## V1.0.0 release and ticket closure
+
+The user accepted a compact sampling design and requested completion of every ticket, then added versioned release identity, historical cleanup, and independent future model runs. All eight pre-existing tickets and three release tickets are now completed. The two historical tickets are indexed and marked superseded; their original paid campaign ended at its authorized spending guard and requires no further inference to close.
+
+The closure review reproduced and fixed two remaining report crashes involving malformed group labels and falsy non-object model states. The release work also rejects contradictory run provenance and lost resume metadata before further inference, protects frozen generator/cache outputs, preserves first-recorded observations across run history, and retires the unversioned exporter's implicit historical overwrite. Each ticket retains its own Red/Green and isolated reversion evidence.
+
+FontBench **V1.0.0** names the accepted 1,824-image corpus in dataset commit `d69e87e2c206ea75c52f5b8340d677bd14af03e3`. The release descriptor and changelog record its exact dataset and protocol fingerprints. The local `v1.0.0` tag identifies the compatible versioned tooling. Existing physical dataset directories were not renamed or regenerated.
+
+Future campaigns write `results/runs/1.0.0/<run-id>/` with checkpoint, JSONL attempt log, model configurations, dates, code commit/dirty state, and release identity. The website aggregates matching runs from any date, keeps first final observations with deterministic ties, retains repeat costs, and discovers models from the logs. The rebuilt page correctly shows zero V1.0.0 measurements and explicitly excludes the historical pilot.
+
+| Final gate | Result |
+| --- | --- |
+| `bun run test:python` | 413 passed in 16.31s |
+| `bun run test:ts` | 78 passed, 0 failed in 13.24s |
+| `bun run typecheck` | Passed |
+| `bun install --frozen-lockfile` | Passed; no package changes |
+| `bun run validate:release` | Passed; committed manifest, 1,824 images, used font binaries, dataset/protocol hashes match |
+| Offline V1.0.0 CLI and two resumes | Six results, six unchanged attempts, three invocations, zero spend; SQLite integrity ok |
+| Release page build and Chromium desktop/mobile inspection | Correct release/hash, 1,824 inputs, 50 families, seven loaded images, six dimensions, no JS errors or overflow with details expanded |
+| Python wheel | `fontbench-1.0.0-py3-none-any.whl` built; exact shared prompt and release modules included |
+| Frozen and historical artifact comparison | Accepted inputs/package unchanged from d69e87e; historical inputs/checkpoint unchanged from 14e792f; original result JSON unchanged |
+| Historical SQLite read-only inspection | Integrity ok; 2,222 attempts and 2,216 completed responses retained |
+| Source diff/comment/simplify review | Passed; retired CLI delegates to one runner, report consumers share checks, no evaluator/provider/prompt edits |
+
+The initial full gate found one stale CLI test expecting the retired layout; its regression intent was migrated to the versioned runner interface, preserving live/mock isolation assertions. The earlier one-off Bun cache-test timeout could not be reproduced by repeated fixture, exact-source, or concurrent controls; its evidence and uncertainty are recorded in valid-02. Final owned and integration gates passed without timeout/source workarounds.
+
+[Final gate record](evidence/release-final-gates.json), [run smoke](evidence/release-01-integration-smoke.json), and [browser evidence](evidence/release-02-browser-validation.json) are durable. The final source is locally committed/tagged; no remote push, remote CI, website deployment, or paid model campaign was performed.

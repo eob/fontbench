@@ -1,6 +1,6 @@
 # valid-04-packaging-reporting: Isolate answers and preserve comparable measurements
 
-- **Status**: Completed (local implementation and validation)
+- **Status**: Completed (local implementation and validation, including closure review)
 - **Branch**: `valid-01-benchmark-audit` (shared ownership coordinated by root)
 - **Machine**: eob-dev2
 - **Harness**: codex
@@ -11,6 +11,60 @@
 
 ## Goal
 Package only intact benchmark images without exposing typography labels, and publish scores only with consistent dataset, grading, and cohort provenance.
+
+## September 8 closure review
+
+The user requested resolution of every ticket. Review of base `d69e87e` reproduced two remaining report-consumer defects without provider requests:
+
+- A task category stored as an object reaches the exporter's set comprehension and raises `TypeError: unhashable type: 'dict'`. The report boundary validates outcome flags but not the descriptive task metadata consumed by grouping and sorting.
+- A model state stored as an empty array bypasses the page's truthiness-guarded type check and raises `AttributeError: 'list' object has no attribute 'get'`. Missing state is valid, but explicit nonobjects must be rejected regardless of truthiness.
+
+### Closure plan
+
+1. Completed: add focused malformed metadata/state regressions to `tests/test_export_structured.py` and `tests/test_build_page.py`; require warnings while preserving valid peer measurements, and capture the expected Red output.
+2. Completed: validate export task grouping labels and optional model IDs before consuming them; reject malformed supplied values instead of silently converting or omitting them. Validate page model state by type before using dictionary operations.
+3. Completed: run the focused report suites, copy the final tests into an isolated temporary tree with base `d69e87e` report implementations, and confirm the original failures recur without reverting the shared checkout.
+4. Completed: run the simplifyfu/comment-hygiene pass and record final gates. Preserve corpus bytes, evaluation-protocol source, and historical measurements; root handles integrated validation and catalog closure.
+
+### Closure Red evidence
+
+Command: `.venv/bin/pytest -q tests/test_export_structured.py tests/test_build_page.py -k 'malformed_export_task_metadata or malformed_export_model_id or export_preserves_explicit or malformed_summary_model_state'`.
+
+At `d69e87e`, the new cases recorded **24 failed, 3 passed, 59 deselected in 0.46s**. Full output: [valid-04-closure-red.log](evidence/valid-04-closure-red.log). The three passing controls preserve explicit/omitted valid model IDs and already-rejected truthy state values. Causal excerpts:
+
+```text
+>   for category in sorted({task.get("category", "unknown") for task in tasks}):
+E   TypeError: unhashable type: 'dict'
+
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+
+>                        run_state=state.get("status") if isinstance(state.get("status"), str) else "pending",
+E           AttributeError: 'list' object has no attribute 'get'
+```
+
+### Closure implementation and durable findings
+
+- Exported task grouping labels must be nonblank strings. A supplied `model_id` must also be a nonblank string; an omitted ID retains the established fallback to `model_name`. Invalid cards produce warnings and do not suppress valid peers.
+- Page model-state objects are validated by type before truthiness or dictionary access. An invalid summary state drops only that model's status/cost metadata; matching measured scorecard rows and valid peer state remain visible.
+- Export-specific label checks stay in the exporter. The page derives task labels from the independently validated manifest and does not need to trust those persisted scorecard fields, so `baseline/reporting.py` requires no additional policy.
+- The simplifyfu pass removed grouping fallbacks and repeated label type filters made obsolete by boundary validation. No new wrapper, schema abstraction, or code comments were needed. No evaluator/provider source, corpus asset, protocol fingerprint input, or historical result was modified.
+
+### Closure validation gates
+
+| Gate / command | Base | Result |
+| --- | --- | --- |
+| New closure regressions before implementation | `d69e87e` | **24 failed, 3 passed**; original crashes and malformed-record admission reproduced |
+| Isolated `d69e87e` page/export implementations with final tests | `d69e87e` | **24 failed, 3 passed** with the same causal signatures; [reversion log](evidence/valid-04-closure-reversion.log) |
+| `.venv/bin/pytest -q tests/test_export_structured.py tests/test_build_page.py` | `d69e87e` + closure changes | **86 passed in 1.13s** |
+| `.venv/bin/pytest -q tests/test_export_structured.py tests/test_build_page.py tests/test_harbor_agent.py` after simplification | `d69e87e` + closure changes | **97 passed in 1.41s** |
+| `git diff --check -- baseline/build_page.py baseline/export_structured.py baseline/reporting.py tests/test_build_page.py tests/test_export_structured.py tickets/valid-04-packaging-reporting.md` | `d69e87e` + closure changes | Clean |
+
+The isolated control lives at `/tmp/fontbench-valid04-closure-control-g_xzn40b`; only its two report implementations came from the base commit. Final tests and unchanged dependency modules were copied from the active checkout. No shared branch reversions, provider calls, or unexplained flaky failures occurred.
+
+### Handoff & Takeover Log
+
+- `2026-09-08 21:00 UTC`: User-authorized closure review and repair completed by `codex` / `verify_eval_closure` on `eob-dev2`, session `01a082cc-90d5-7b22-8096-9c43596303be`. Local fixes, Red/reversion evidence, and focused gates are complete; root coordinates the integrated validation and commit.
 
 ## Observed failure mechanisms
 - Harbor task names are font-bearing task IDs; task metadata tags contain category, weight, modifier, and width answers.
@@ -79,7 +133,7 @@ Historical data and reports remain reviewable but are not evidence that an input
 
 
 ## Completed changes
-- Harbor release CLI defaults to FontBench-2 and requires the dataset readiness gate before creating anything. The pure builder remains available for isolated structural fixture tests.
+- At the initial audit closure, the Harbor CLI defaulted to the accepted corpus and required the readiness gate. Release-03 now sends development generation to candidate directories and protects the frozen package. The pure builder remains available for isolated structural fixture tests.
 - PNG input validation checks signature, chunk CRCs, RGB/RGBA layout, decompression length, scanline filters, and the recorded image SHA-256 when present. Its intentionally narrow format is the Chromium screenshot format used by the renderer; the release validator also fully decodes pixels using Pillow.
 - Opaque task names derive from image bytes and internal task ID; public task tags and instructions contain no answer labels. Original IDs live only in verifier ground truth. All tasks use the shared frozen `baseline/prompt.txt` plus generic input/output paths.
 - Packaging validates every existing generated task tree, rejects retained/stale extras and symlinks, stages all files, and restores the previous dataset on a failed final rename. A recovery directory is retained if restoration itself fails. Unsupported filesystem crash atomicity is not claimed.
@@ -90,7 +144,7 @@ Historical data and reports remain reviewable but are not evidence that an input
 - `simplifyfu` and comment hygiene pass completed: common reporting checks are shared between two consumers, unused imports/constants and obsolete registries removed, and generated-file narration reduced. Repeated focused gates remained green.
 
 ## Remaining scope
-Remote Harbor installation/container execution and live provider calls were not performed. Root owns the final fresh dataset release gate, generated site, integrated test run, and main audit ticket. Sampling-factor correlations were independently reviewed and resolved as an explicitly accepted compact-design limitation in `valid-05-experimental-design.md`.
+Remote Harbor installation/container execution and live provider calls were not performed and remain outside this local validity repair. The final fresh dataset release gate, generated site, integrated audit tests, and main audit ticket were completed in `d69e87e`. Sampling-factor correlations were independently reviewed and resolved as an explicitly accepted compact-design limitation in `valid-05-experimental-design.md`. The closure review above resolves the remaining local reporting defects without requiring another model run.
 
 ## Generated-page browser verification
 

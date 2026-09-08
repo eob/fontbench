@@ -1,12 +1,12 @@
 {
   "name": "fontbench",
-  "version": "0.1.0",
-  "description": "FontBench-1: Visual font identification benchmark across system & Google fonts at wrapped widths.",
+  "version": "1.0.0",
+  "description": "FontBench: versioned visual typography recognition benchmark.",
   "type": "module",
   "scripts": {
     "render": "bun run src/render.ts",
     "build:harbor": "bun run src/generate_harbor_dataset.ts",
-    "build:all": "bun run render && bun run validate:dataset && bun run build:harbor",
+    "build:all": "bun run render && bun run validate:candidate && bun run build:harbor",
     "baseline": ".venv/bin/python -m baseline.cli",
     "baseline:mock": ".venv/bin/python -m baseline.cli --mock",
     "test": "bun run test:python && bun run test:ts && bun run typecheck",
@@ -15,7 +15,9 @@
     "typecheck": "tsc --noEmit",
     "benchmark": ".venv/bin/python -m baseline.runner",
     "build:page": ".venv/bin/python -m baseline.build_page",
-    "validate:dataset": ".venv/bin/python -m baseline.validate_dataset --manifest dataset/fontbench-2-rendered/manifest.json"
+    "validate:dataset": ".venv/bin/python -m baseline.validate_dataset --manifest dataset/fontbench-2-rendered/manifest.json",
+    "validate:release": ".venv/bin/python -m baseline.releases --release 1.0.0",
+    "validate:candidate": ".venv/bin/python -m baseline.validate_dataset --manifest dataset/candidate-rendered/manifest.json"
   },
   "devDependencies": {
     "@types/bun": "latest",

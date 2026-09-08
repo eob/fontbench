@@ -1,0 +1,40 @@
+Exact d69e87e renderer/packager with current regression tests in /tmp/fontbench-release-03-reversion-uhdarvas
+bun test v1.3.14 (0d9b296a)
+
+src/render.test.ts:
+50 | 
+51 | describe('rendered font integrity', () => {
+52 |   test('refuses registered release output before filesystem mutation or browser launch', async () => {
+53 |     const mkdir = spyOn(fs, 'mkdirSync').mockImplementation(() => { throw new Error('Filesystem mutation reached'); });
+54 |     try {
+55 |       await expect(renderAllSamples(path.join(import.meta.dir, '../dataset/fontbench-2-rendered'))).rejects.toThrow(/Frozen release output/);
+                                                                                                                 ^
+error: expect(received).toThrow(expected)
+
+Expected pattern: /Frozen release output/
+Received message: "Filesystem mutation reached"
+
+      at <anonymous> (/tmp/fontbench-release-03-reversion-uhdarvas/src/render.test.ts:55:109)
+(fail) rendered font integrity > refuses registered release output before filesystem mutation or browser launch [6.14ms]
+
+src/generate_harbor_dataset.test.ts:
+53 | }
+54 | 
+55 | test('refuses registered release output before filesystem mutation', () => {
+56 |   const mkdir = spyOn(fs, 'mkdirSync').mockImplementation(() => { throw new Error('Filesystem mutation reached'); });
+57 |   try {
+58 |     expect(() => buildHarborDataset(rendered, path.join(import.meta.dir, '../dataset/fontbench-2'))).toThrow(/Frozen release output/);
+                                                                                                          ^
+error: expect(received).toThrow(expected)
+
+Expected pattern: /Frozen release output/
+Received message: "Filesystem mutation reached"
+
+      at <anonymous> (/tmp/fontbench-release-03-reversion-uhdarvas/src/generate_harbor_dataset.test.ts:58:102)
+(fail) refuses registered release output before filesystem mutation [3.09ms]
+
+ 0 pass
+ 48 filtered out
+ 2 fail
+ 2 expect() calls
+Ran 2 tests across 2 files. [335.00ms]
