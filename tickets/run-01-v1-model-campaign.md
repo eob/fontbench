@@ -73,3 +73,14 @@ The user reported adding funds and raising provider limits, and explicitly reque
 All four exact Anthropic model IDs appear in the authenticated Models API. Current [Claude model and pricing documentation](https://platform.claude.com/docs/en/models/overview) confirms Fable 5.1 supports image input and retains the catalog's standard $10/$50 input/output token rates. The cumulative campaign cap remains $25; the user changed provider funding/limits but has not selected a higher numeric benchmark spending ceiling.
 
 The pre-resume checkpoint, final result hashes and original attempt IDs are captured for an independent preservation check. No final answer is eligible for remeasurement; prior billing failures remain in the attempt history and their conservative cost reservations remain in the cumulative guard.
+
+
+### Anthropic retry outcome
+
+The full eleven-model resume at `2026-09-08T21:49:05Z` still received HTTP 400 insufficient-credit responses for all four Claude models, including Fable. The runner paused Anthropic while OpenAI/Gemini progressed. A second graceful drain preserved 675 final observations. At `2026-09-08T21:51:56Z`, a bounded Claude-only retry (`--max-tasks 1 --concurrency 1`) again received the same credit error on Fable and stopped scheduling that provider. No Claude final observation was produced; no successful answer was retried.
+
+Independent validation confirms all 559 pre-expansion final responses are byte-identical and all 562 original attempt IDs remain. The latest closed checkpoint contains 675 final observations and all billing failures, with $11.0935009 in cumulative estimated spending. This includes conservative unmetered reservations rather than confirmed charges for failed requests. See [run-01-claude-resume.json](evidence/run-01-claude-resume.json).
+
+OpenAI/Gemini continue under the same run ID and $25 cumulative cap, selecting only their seven configurations until the Anthropic billing issue is resolved. All eleven registered models remain in the ledger and website records. Fable is now part of the authorized campaign and remains paused alongside the other three Claude models.
+
+The [Anthropic API billing guide](https://support.claude.com/en/articles/8977456-how-do-i-pay-for-my-claude-api-usage) documents prepaid Console credits. The account backing the configured `ANTHROPIC_API_KEY` still receives the billing refusal; model-list access succeeds. The provider's status page lists an older credit-purchase delay resolved September 2, which does not establish a current incident or explain this account's failure.

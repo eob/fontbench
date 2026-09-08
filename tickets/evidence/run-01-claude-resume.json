@@ -8,5 +8,14 @@
   "pre_resume_spent_cost_usd": 8.02708635,
   "sqlite_integrity": "ok",
   "newly_authorized_model": "claude-fable-5-1",
-  "campaign_budget_usd": 25
+  "campaign_budget_usd": 25,
+  "prior_final_results_unchanged": 559,
+  "prior_attempt_ids_preserved": 562,
+  "registered_models": 11,
+  "claude_final_results": 0,
+  "claude_error": "HTTP 400: Your credit balance is too low to access the Anthropic API.",
+  "bounded_retry_at": "2026-09-08T21:51:56.744831+00:00",
+  "post_retry_completed": 675,
+  "post_retry_attempts": 689,
+  "post_retry_spent_cost_usd": 11.093500899999988
 }

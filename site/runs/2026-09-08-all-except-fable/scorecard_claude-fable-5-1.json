@@ -16,7 +16,7 @@
   "accuracy_by_width": {},
   "per_font_accuracy": {},
   "avg_latency_sec": 0.0,
-  "model_name": "claude-sonnet-5",
+  "model_name": "claude-fable-5-1",
   "timestamp": "2026-09-08 21:51:56 UTC",
   "expected_task_count": 1824,
   "grading_version": "3",
@@ -37,18 +37,18 @@
   "runner_git_dirty": true,
   "created_at": "2026-09-08T21:36:04.066Z",
   "updated_at": "2026-09-08T21:51:56.744831+00:00",
-  "model_id": "claude-sonnet-5",
+  "model_id": "claude-fable-5-1",
   "model_config": {
     "api_key_env": "ANTHROPIC_API_KEY",
     "base_url": null,
-    "display_name": "Claude Sonnet 5",
+    "display_name": "Claude Fable 5.1",
     "enabled": true,
-    "id": "claude-sonnet-5",
-    "input_per_m": 2.0,
+    "id": "claude-fable-5-1",
+    "input_per_m": 10.0,
     "max_output_tokens": 4096,
-    "model": "claude-sonnet-5",
-    "notes": "Latest Sonnet. Default model effort is high.",
-    "output_per_m": 10.0,
+    "model": "claude-fable-5-1",
+    "notes": "Latest Fable. Adaptive thinking is always on; default effort is high.",
+    "output_per_m": 50.0,
     "pricing_notes": "Standard online API rates in USD per million tokens; excludes caching, batch discounts and tools.",
     "pricing_source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
     "provider": "anthropic",
@@ -56,8 +56,8 @@
   },
   "max_output_tokens": 4096,
   "pricing": {
-    "input_per_m": 2.0,
-    "output_per_m": 10.0
+    "input_per_m": 10.0,
+    "output_per_m": 50.0
   },
-  "model_config_fingerprint": "3eea74f353075099be73c9595a094bb3f7a468c7688d17c3b5cd217c93d9bb88"
+  "model_config_fingerprint": "5651e81821421e372074e9b58db5cced4e5fb6d05ec21248e07c30ed8d2aa366"
 }

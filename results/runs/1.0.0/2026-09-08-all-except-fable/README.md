@@ -1,23 +1,24 @@
 # V1.0.0 first multi-provider campaign
 
-Status: **interrupted**. Last checkpoint: `2026-09-08T21:47:15.541438+00:00`.
+Status: **paused**. Last checkpoint: `2026-09-08T21:51:56.744831+00:00`.
 
-**559 / 18,240 final observations**; cumulative estimated spend **$8.027086** against a **$25** guard.
+**675 / 20,064 final observations**; cumulative estimated spend **$11.093501** against a **$25** guard.
 
 The campaign includes all enabled Claude, OpenAI, and Gemini configurations, including Fable added on resume. The original run ID is retained to preserve checkpoints and history; its name describes the initial selection. Current provider issues appear below.
 
 | Model | Completed / 1,824 | State | Estimated USD |
 | --- | ---: | --- | ---: |
-| claude-haiku-4-5-20251001 | 0 | paused | 0.010120 |
-| claude-opus-5 | 0 | paused | 0.127400 |
-| claude-sonnet-5 | 0 | paused | 0.050960 |
-| gemini-3.1-pro-preview | 80 | paused | 1.417384 |
-| gemini-3.5-flash-lite | 79 | paused | 0.045950 |
-| gemini-3.8-flash | 80 | paused | 0.917894 |
-| gpt-5.6-luna | 80 | paused | 0.074150 |
-| gpt-5.6-sol | 80 | paused | 1.481300 |
-| gpt-5.6-terra | 80 | paused | 0.517978 |
-| gpt-6-astra | 80 | paused | 3.383950 |
+| claude-fable-5-1 | 0 | paused | 1.019200 |
+| claude-haiku-4-5-20251001 | 0 | paused | 0.030360 |
+| claude-opus-5 | 0 | paused | 0.509600 |
+| claude-sonnet-5 | 0 | paused | 0.152880 |
+| gemini-3.1-pro-preview | 96 | paused | 1.622018 |
+| gemini-3.5-flash-lite | 96 | paused | 0.055882 |
+| gemini-3.8-flash | 96 | paused | 1.128425 |
+| gpt-5.6-luna | 96 | paused | 0.091421 |
+| gpt-5.6-sol | 97 | paused | 1.785844 |
+| gpt-5.6-terra | 97 | paused | 0.639712 |
+| gpt-6-astra | 97 | paused | 4.058160 |
 
 ## Recorded provider issues
 
