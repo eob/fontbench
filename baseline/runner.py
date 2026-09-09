@@ -143,6 +143,8 @@ def run_benchmark(
     directory /= f'mock-{run_id}' if mock else run_id
     directory.mkdir(parents=True, exist_ok=True)
     with _run_lock(directory), ExitStack() as resources:
+        if (directory / 'finalization.json').exists() or (directory / 'final_results.json').exists():
+            raise ValueError('This run is finalized or awaiting its seal; use a new run ID for additional measurements')
         state_path = directory / 'state.sqlite3'
         if not state_path.exists() and (
             any((directory / name).exists() for name in ('summary.json', 'run.json', 'attempts.jsonl'))

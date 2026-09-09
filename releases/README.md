@@ -9,3 +9,5 @@ Existing descriptors and registered dataset/package directories are frozen. Deve
 The retained dataset lives at `dataset/fontbench-2-rendered`, and its Harbor package at `dataset/fontbench-2`. These implementation directory names predate release naming. Both belong to **V1.0.0**; the unversioned `dataset/fontbench-1` is an invalid historical prototype.
 
 Run records live under `results/runs/<version>/<run-id>/`. Model configurations, execution dates, and source code commits belong to individual runs. They do not change the dataset release. Preserve the original measurements; the website derives comparisons from compatible records.
+
+[Finalize a publication](FINALIZATION.md) to freeze its exact model roster and shared input cohort, independently re-score saved responses, and seal the source artifacts. Dataset coverage and publication finality are recorded separately.

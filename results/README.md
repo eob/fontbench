@@ -23,6 +23,8 @@ For an Anthropic key that spans workspaces, also set `ANTHROPIC_WORKSPACE_ID` to
 | `attempts.jsonl` | Readable attempt ledger, including failures and costs |
 | `summary.json` | Current completion, model/configuration identities, dates, and spending |
 | `scorecard_*.json` | Individual predictions and grading outcomes with release/data/protocol provenance |
+| `final_results.json` | Optional sealed publication: fixed cohort, independently verified scores, and explicit final status for every retained response |
+| `finalization.json` | Optional publication seal: source/finalizer Git provenance and hashes for every evidence artifact |
 
 Versioned SQLite checkpoints and JSON/JSONL records are included by Git's tracking rules. Keys, console logs, locks, SQLite WAL/SHM files, input caches, and mock runs remain excluded. Wait for the runner to finish or drain an interruption, then commit the complete run directory together:
 
@@ -32,6 +34,8 @@ git commit -m 'results: record GPT evaluation on FontBench V1.0.0'
 ```
 
 The runner writes the local repository; it does not commit unrelated work or push to a remote. Share the committed run directory through the normal repository workflow, then rebuild the website from the accumulated logs. Keep the closed SQLite file with its JSON exports so resuming can reuse completed measurements. If a checkpoint or `run.json` is lost or inconsistent, restore the complete run from Git before resuming. Commit code changes before measured runs so the recorded runner commit identifies the implementation; the dirty flag records any remaining local repository changes.
+
+After the campaign is finished and its source checkpoint committed, follow [the finalization guide](../releases/FINALIZATION.md) to seal an explicit common or full comparison. Sealed run IDs cannot resume; later measurements use a new run ID. Commit both finalization files before importing a publication into another site.
 
 ## Comparison rules
 

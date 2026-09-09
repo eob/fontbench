@@ -173,7 +173,7 @@ def build_release_page(version: str = "1.0.0", results_dir: str | Path = "result
     validity = validate_dataset(release_manifest_path(release, root=root))
     if not validity["valid"]:
         raise ValueError("Frozen release failed dataset validity checks")
-    history = aggregate_release_runs(release, items, results_dir)
+    history = aggregate_release_runs(release, items, results_dir, root=root)
     output = Path(output_dir)
     for run in history["runs"]:
         source = Path(results_dir) / run["path"]

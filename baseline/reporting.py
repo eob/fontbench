@@ -97,13 +97,13 @@ def _code_identity(record: dict) -> tuple[str | None, bool | None]:
     return commit, dirty
 
 
-def aggregate_release_runs(release: dict, items: list[dict], results_root: str | Path) -> dict:
+def aggregate_release_runs(release: dict, items: list[dict], results_root: str | Path, *, root: str | Path | None = None) -> dict:
     """Keep the first recorded final answer per release, inference setup, and task."""
     from baseline.model_config import _ModelConfig
     from baseline.releases import model_config_fingerprint
 
-    root = Path(results_root)
-    version_root = root / release["benchmark_version"]
+    results_directory = Path(results_root)
+    version_root = results_directory / release["benchmark_version"]
     by_id = {item["taskId"]: item for item in items}
     warnings, excluded, runs = [], [], []
     candidates = []
@@ -112,7 +112,7 @@ def aggregate_release_runs(release: dict, items: list[dict], results_root: str |
         "schema_version", "benchmark_version", "dataset_git_commit", "dataset_git_path",
         "dataset_fingerprint", "evaluation_protocol_fingerprint", "expected_task_count",
     )}
-    for directory in sorted(root.iterdir()) if root.exists() else []:
+    for directory in sorted(results_directory.iterdir()) if results_directory.exists() else []:
         if directory != version_root and directory.is_dir() and (
                 (directory / "summary.json").exists() or any(directory.glob("scorecard_*.json"))):
             excluded.append({"path": directory.name, "reason": "Unversioned or historical run"})
@@ -120,6 +120,15 @@ def aggregate_release_runs(release: dict, items: list[dict], results_root: str |
         if not directory.is_dir():
             continue
         run_path = f'{release["benchmark_version"]}/{directory.name}'
+        if any((directory / name).exists() for name in ('finalization.json', 'final_results.json')):
+            from baseline.finalize import verify_finalization
+            try:
+                verify_finalization(directory, root=root)
+            except (ValueError, RuntimeError, OSError) as error:
+                reason = f'Sealed run verification failed: {error}'
+                warnings.append(f'Excluded {run_path}: {reason}')
+                excluded.append({'path': run_path, 'reason': reason})
+                continue
         summary = read_report_json(directory / "summary.json", warnings)
         metadata = read_report_json(directory / "run.json", warnings)
         try:
