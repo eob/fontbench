@@ -4,10 +4,10 @@ This folder is the authoritative local workfu/ticketfu issue catalog. It include
 
 | Ticket | Priority | Scope | State |
 | --- | --- | --- | --- |
-| [publish-01](publish-01-v1-results.md) | High | Seal verified V1.0.0 scores and publish the corrected website | In Review |
+| [publish-01](publish-01-v1-results.md) | High | Seal verified V1.0.0 scores and publish the corrected website | Completed |
 | [ci-01](ci-01-browser-transport.md) | Medium | Isolate intermittent hosted Chromium transport disconnect in screenshot test | Open |
 | [run-02](run-02-resume-status.md) | Medium | Clear stale pause labels for selected models awaiting dispatch | Open |
-| [run-01](run-01-v1-model-campaign.md) | High | First V1.0.0 campaign across eleven provider models; $100 cap, all providers selected | In Progress |
+| [run-01](run-01-v1-model-campaign.md) | High | First V1.0.0 campaign across eleven provider models; $100 cap, all providers selected | Completed |
 | [fix-repo-audit](fix-repo-audit.md) | High | Initial repository, renderer, grader, package, and installation repairs | Completed; historical |
 | [feat-multi-provider-benchmark](feat-multi-provider-benchmark.md) | High | Provider adapters, checkpoints, budgeted pilot, and first website | Completed; historical |
 | [valid-01](valid-01-benchmark-audit.md) | Critical | Audit integration, artifact census, fresh corpus, final verification | Completed |
@@ -25,3 +25,5 @@ This folder is the authoritative local workfu/ticketfu issue catalog. It include
 Use [the run guide](../results/README.md) to add measurements later and rebuild [the benchmark website](../site/index.html). New paid campaigns are separate from these implementation tickets.
 
 The **11 audit/release tickets are completed**; the newly authorized model campaign is tracked separately in run-01. Final integration passed 413 Python tests, 78 Bun tests, TypeScript checking, frozen release validation, offline resume, wheel packaging, and desktop/mobile website checks. See [the integration record](valid-01-benchmark-audit.md#v100-release-and-ticket-closure) and [machine-readable gate evidence](evidence/release-final-gates.json).
+
+The first campaign and publication are completed through [PR #1](https://github.com/eob/fontbench/pull/1). All 8,102 responses are scored and sealed; eleven models share 728 inputs. The live page presents exact match and six attribute accuracies. `run-02` and `ci-01` remain independent operational/test follow-ups; neither changes the sealed measurements.

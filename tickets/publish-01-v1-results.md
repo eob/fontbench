@@ -1,6 +1,6 @@
 # publish-01-v1-results: Finalize and publish FontBench V1.0.0 measurements
 
-- **Status**: In Review
+- **Status**: Completed
 - **Branch**: `publish-01-v1-results`
 - **Assignee**: Edward Benson
 - **Machine**: eob-dev2
@@ -21,7 +21,7 @@ The $100 run has ended with 8,102 correctly scored final responses and no unreso
 - [x] Resolve publication scope, retry infrastructure failures if any, score and seal the chosen final artifact.
 - [x] Replace obsolete FontBench-1 app data and images with the verified V1 artifact; align all tables/charts on one cohort and remove fabricated metrics/scales.
 - [x] Run focused and required repository checks plus browser inspection; final source CI confirmation is recorded below.
-- [ ] Push FontBench records and land the app changes on Kaya main via its required PR workflow.
+- [x] Push FontBench records and land the app changes on Kaya main via its required PR workflow.
 - [x] Promote only reviewed FontBench changes to edwardbenson-prod, preserving unrelated production work; verify the live page.
 
 ## Decisions and durable findings
@@ -67,3 +67,7 @@ FontBench generated-report correction passed all 452 Python tests and browser ve
 The exact-match app correction landed through [Kaya main #1089](https://github.com/eob/kaya-web/pull/1089), commit `df9229a9d7bacbb2292f2079bfb4c1e1a7f407da`, and [production #1092](https://github.com/eob/kaya-web/pull/1092), commit `aa06441566ed329869a3cdb998037519eabd6d93`. Production deployment succeeded at 01:45:10 UTC. No composite score appears in the corrected comparison UI; original immutable score fields remain preserved.
 
 Final source control at `3c3b5887` passed all 80 browser/TypeScript tests (277 assertions), TypeScript checking, and wheel packaging locally; all 452 Python tests, frozen release checks, and seal verification passed. Hosted browser jobs remain intermittent, including one failed bounded retry at the same head. The renderer/test/protocol/data bytes match the earlier fully green hosted `9d390518` run; the separate browser transport investigation stays open. These results support publication integrity without claiming uniformly green hosted execution.
+
+## Closure
+
+Completed 2026-09-09. FontBench [PR #1](https://github.com/eob/fontbench/pull/1) merged remotely as `23a25545952a2415e8c3da7a31d337c0457bf43c` at 2026-09-09T01:47:25Z. The merge commit preserves the dataset, release tag, finalizer, checkpoint, and sealed publication commits in main history. All provider failures have final replacements; all 8,102 retained outputs are scored and sealed, with 728 shared inputs per model. Kaya main and production publication, including the exact-match presentation correction, are merged and deployed. The nonblocking queued-run status-label and intermittent hosted browser-transport investigations remain separate open tickets.

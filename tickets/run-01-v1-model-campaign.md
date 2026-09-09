@@ -1,6 +1,6 @@
 # run-01-v1-model-campaign: First V1.0.0 multi-provider campaign
 
-- **Status**: In Progress
+- **Status**: Completed
 - **Branch**: `run-01-v1-model-campaign`
 - **Base**: `df65c633c25b81b6abc55b732e8d526c0e7cbe20` (`v1.0.0`)
 - **Machine**: eob-dev2
@@ -172,4 +172,8 @@ The runner exited after its budget guard stopped further scheduling at `2026-09-
 
 Independent offline rescoring re-parsed all 8,102 raw responses and recomputed every dimension, exact match, and composite against the frozen V1.0.0 labels: zero discrepancies and zero current response errors. The 20 historical infrastructure failures remain in the attempt ledger and are excluded from output-accuracy scores. SQLite integrity and release identities pass.
 
-Publication preparation is tracked in `publish-01-v1-results`. The user is choosing between publishing the fixed shared sample or authorizing full-corpus completion with a larger budget. No spending above $100 or publication of an unstated scope is authorized yet.
+This checkpoint was subsequently sealed for the accepted compact shared sample. The final publication and delivery are recorded in `publish-01-v1-results`; no spending above $100 was needed or incurred.
+
+## Closure — 2026-09-09
+
+Completed through [FontBench PR #1](https://github.com/eob/fontbench/pull/1), merge `23a25545952a2415e8c3da7a31d337c0457bf43c`. All eleven configurations, including Fable, have 728 shared final measurements; all 8,102 retained responses and 8,122 historical attempts are preserved. No current provider or malformed-response error remains. The final cumulative estimate is $99.99190145. Results are live at [edwardbenson.com/benchmarks/fontbench](https://edwardbenson.com/benchmarks/fontbench), using exact match and separate attribute accuracies. Later campaigns require new run IDs and cannot mutate this seal.

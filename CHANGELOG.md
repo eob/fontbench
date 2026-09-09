@@ -35,7 +35,7 @@ All 20 historical infrastructure failures were recovered. Original responses, at
 - Finalizer Git commit: `3d16dacc021f26c46c09b762b5c985b5b7004151` (clean)
 - Shared cohort SHA-256: `19097ac3b1a2cab662304dcea8f051297779934f2fc35d8d22bc79a1e66ee19e`
 
-The verified results are live at [edwardbenson.com/benchmarks/fontbench](https://edwardbenson.com/benchmarks/fontbench), delivered through [Kaya main #1076](https://github.com/eob/kaya-web/pull/1076) and [production #1078](https://github.com/eob/kaya-web/pull/1078). The current page replaces the invalid historical scores and links the immutable source artifacts.
+The verified results are live at [edwardbenson.com/benchmarks/fontbench](https://edwardbenson.com/benchmarks/fontbench), delivered through [Kaya main #1076](https://github.com/eob/kaya-web/pull/1076) and [production #1078](https://github.com/eob/kaya-web/pull/1078). The current page replaces the invalid historical scores and links the immutable source artifacts. Its exact-match and individual-attribute presentation was finalized through [Kaya main #1089](https://github.com/eob/kaya-web/pull/1089) and [production #1092](https://github.com/eob/kaya-web/pull/1092); composite is omitted from the comparison UI while original artifact fields remain preserved.
 
 This publication does not change the V1.0.0 dataset, release tag, or protocol. New campaigns use new run IDs; existing sealed publications remain reproducible. See the [finalization guide](releases/FINALIZATION.md).
 
