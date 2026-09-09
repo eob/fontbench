@@ -1,28 +1,28 @@
 # V1.0.0 first multi-provider campaign
 
-Status: **interrupted**. Last checkpoint: `2026-09-08T22:54:03.256565+00:00`.
+Status: **budget_exhausted**. Last checkpoint: `2026-09-09T00:05:16.479947+00:00`.
 
-**3,644 / 20,064 final observations**; cumulative estimated spend **$47.236506** against a **$50** guard.
+**8,102 / 20,064 final observations**; cumulative estimated spend **$99.991901** against a **$100** guard.
 
 The campaign includes all enabled Claude, OpenAI, and Gemini configurations, including Fable added on resume. The original run ID is retained to preserve checkpoints and history; its name describes the initial selection. Current provider issues appear below.
 
 | Model | Completed / 1,824 | State | Estimated USD |
 | --- | ---: | --- | ---: |
-| claude-fable-5-1 | 302 | paused | 7.027860 |
-| claude-haiku-4-5-20251001 | 301 | paused | 0.447504 |
-| claude-opus-5 | 301 | paused | 3.383850 |
-| claude-sonnet-5 | 301 | paused | 1.191830 |
-| gemini-3.1-pro-preview | 348 | paused | 5.888766 |
-| gemini-3.5-flash-lite | 348 | paused | 0.202710 |
-| gemini-3.8-flash | 348 | paused | 4.168719 |
-| gpt-5.6-luna | 348 | paused | 0.335370 |
-| gpt-5.6-sol | 349 | paused | 6.484784 |
-| gpt-5.6-terra | 349 | paused | 2.259254 |
-| gpt-6-astra | 349 | paused | 15.845860 |
+| claude-fable-5-1 | 728 | budget_exhausted | 14.434580 |
+| claude-haiku-4-5-20251001 | 743 | budget_exhausted | 1.044965 |
+| claude-opus-5 | 731 | budget_exhausted | 7.222810 |
+| claude-sonnet-5 | 734 | budget_exhausted | 2.613030 |
+| gemini-3.1-pro-preview | 734 | budget_exhausted | 12.464466 |
+| gemini-3.5-flash-lite | 754 | budget_exhausted | 0.438957 |
+| gemini-3.8-flash | 736 | budget_exhausted | 8.908375 |
+| gpt-5.6-luna | 748 | budget_exhausted | 0.703283 |
+| gpt-5.6-sol | 732 | budget_exhausted | 13.619300 |
+| gpt-5.6-terra | 734 | budget_exhausted | 4.767556 |
+| gpt-6-astra | 728 | budget_exhausted | 33.774580 |
 
 ## Recorded provider issues
 
-- Interrupted; resume to continue
+- Increase --budget-usd to resume
 
 ## Provenance and recovery
 

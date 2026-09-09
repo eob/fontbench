@@ -158,3 +158,12 @@ The user authorized increasing the campaign ceiling to $100 if the $50 guard was
 The $50 invocation drained at `2026-09-08T22:54:03.256565+00:00`, preserving 3,644 completed observations and 3,664 attempts with $47.2365062 in cumulative estimated spending. SQLite integrity passes. The preservation snapshot precedes the new invocation, which selects all eleven enabled configurations with `--budget-usd 100 --concurrency 10`. The supplied Anthropic key and workspace remain in use; the fallback key has not been used.
 
 The local website monitor continues refreshing the versioned ledger. Claude is catching up with previously completed OpenAI/Gemini observations; all selected models remain eligible for their missing inputs.
+
+
+### $100 campaign checkpoint
+
+The runner exited after its budget guard stopped further scheduling at `2026-09-09T00:05:16.479947+00:00`. The final closed checkpoint contains 8,102 completed observations and 8,122 attempts, with $99.99190145 in cumulative estimated spending. All eleven configurations share 728 completed inputs; individual coverage differs slightly as inexpensive requests continued within the remaining cap.
+
+Independent offline rescoring re-parsed all 8,102 raw responses and recomputed every dimension, exact match, and composite against the frozen V1.0.0 labels: zero discrepancies and zero current response errors. The 20 historical infrastructure failures remain in the attempt ledger and are excluded from output-accuracy scores. SQLite integrity and release identities pass.
+
+Publication preparation is tracked in `publish-01-v1-results`. The user is choosing between publishing the fixed shared sample or authorizing full-corpus completion with a larger budget. No spending above $100 or publication of an unstated scope is authorized yet.
