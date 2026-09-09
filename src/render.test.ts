@@ -47,20 +47,36 @@ beforeEach(() => {
   traceFixture('setup complete');
 });
 
-afterEach(async () => {
+async function cleanupFixture() {
   traceFixture('cleanup begin');
+  const cleanupBrowsers = browsers;
+  const cleanupDirectory = directory;
+  browsers = [];
   launchSpy.mockRestore();
-  for (const browser of browsers) {
-    traceFixture('browser close begin');
-    await browser.close();
-    traceFixture('browser close complete');
-  }
+  // Restore shared state before a close can reject or outlive this test's hook.
   TOP_50_FONTS.splice(0, TOP_50_FONTS.length, ...originalFonts);
   VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, ...originalRecipes);
   WIDTH_VARIANTS.splice(0, WIDTH_VARIANTS.length, ...originalWidths.map(width => ({ ...width })));
-  fs.rmSync(directory, { recursive: true, force: true });
-  traceFixture('cleanup complete');
-});
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    await Promise.race([
+      Promise.all(cleanupBrowsers.filter(browser => browser.isConnected()).map(async browser => {
+        traceFixture('browser close begin');
+        await browser.close();
+        traceFixture('browser close complete');
+      })),
+      new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => reject(new Error('Renderer test browsers did not close within 4000ms')), 4000);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timeout);
+    fs.rmSync(cleanupDirectory, { recursive: true, force: true });
+    traceFixture('cleanup complete');
+  }
+}
+
+afterEach(cleanupFixture);
 
 // Native await avoids the browser-suite stalls seen with Bun's async rejection matcher.
 // See tickets/evidence/publish-01-bun-runtime-gates.md for the executable A/B control.
@@ -78,6 +94,38 @@ async function expectRejection(promise: Promise<unknown>, expected: RegExp | str
 }
 
 describe('rendered font integrity', () => {
+  test('restores shared fixtures before a failed browser close and cleans only its own directory', async () => {
+    const cleanupDirectory = directory;
+    let failClose!: (error: Error) => void;
+    browsers = [{
+      isConnected: () => true,
+      close: () => new Promise<void>((_, reject) => { failClose = reject; }),
+    } as unknown as Browser, {
+      isConnected: () => false,
+      close: () => { throw new Error('Disconnected browser closed again'); },
+    } as unknown as Browser];
+    WIDTH_VARIANTS[0]!.widthPx = -1;
+    const cleanup = cleanupFixture();
+    try {
+      expect(TOP_50_FONTS).toEqual(originalFonts);
+      expect(VARIANT_RECIPES).toEqual(originalRecipes);
+      expect(WIDTH_VARIANTS).toEqual(originalWidths);
+      directory = fs.mkdtempSync(path.join(os.tmpdir(), 'fontbench-render-next-test-'));
+    } finally {
+      failClose(new Error('injected browser close failure'));
+      await expectRejection(cleanup, 'injected browser close failure');
+      browsers = [];
+    }
+    expect(fs.existsSync(cleanupDirectory)).toBe(false);
+    expect(fs.existsSync(directory)).toBe(true);
+  });
+
+  test('removes its directory and fails clearly when browser cleanup never settles', async () => {
+    browsers = [{ isConnected: () => true, close: () => new Promise<void>(() => {}) } as unknown as Browser];
+    await expectRejection(cleanupFixture(), 'Renderer test browsers did not close within 4000ms');
+    expect(fs.existsSync(directory)).toBe(false);
+  });
+
   test('refuses registered release output before filesystem mutation or browser launch', async () => {
     const mkdir = spyOn(fs, 'mkdirSync').mockImplementation(() => { throw new Error('Filesystem mutation reached'); });
     try {

@@ -110,4 +110,48 @@ Apply the helper only to the renderer tests and retain the 1.3.14 pin. CI now ru
 
 Follow-up raw logs: `/tmp/fontbench-pr1-pin-completed.log`, `/tmp/fontbench-pr1-pin-completed-second.log`, `/tmp/fontbench-pr1-pin-aggregate-control.log`, `/tmp/fontbench-pr1-pin-ci-env-control.log`, `/tmp/fontbench-pr1-pin-ci-two-core-control.log`, `/tmp/fontbench-native-await-bun142.log`, `/tmp/fontbench-native-await-bun142-reversal.log`, `/tmp/fontbench-native-await-pinned-ci-gate.log`.
 
+## Browser-close failure must not contaminate later tests
+
+Commit `aef66af55211944db047b8f88c432d9f18d7fc84` completed every phase in [push run 34298344351](https://github.com/eob/fontbench/actions/runs/34298344351): 450 Python tests, 78 Bun tests (267 assertions, 10.34 s), TypeScript, dataset/release validation, and wheel build. The paired [PR run 34298349971](https://github.com/eob/fontbench/actions/runs/34298349971) failed during the final screenshot-failure test. Chromium's debugging pipe closed during the first real screenshot, before the second screenshot's injected error, and the browser process exited with code 0. The fixture then stopped at `browser close begin`; its hook timed out. Because restoring the shared font/recipe/width arrays occurred after that close, two later recipe tests inherited the injected recipes and failed. The first transport failure's cause remains unproven; this follow-up fixes the observed cleanup contamination without retrying or suppressing renderer errors.
+
+The parent reran only that failed hosted PR job on unchanged `aef66af5`; the retry completed every phase successfully, as did the original push job. Preserve the first failure alongside that successful retry: the transport disconnect is intermittent, and no renderer change is justified by this evidence. The cleanup contamination remains a deterministic defect worth repairing independently.
+
+Verbatim hosted failure excerpts:
+
+```text
+[render-test] cleanup begin
+[render-test] browser close begin
+(fail) rendered font integrity > closes the browser and preserves previous output when a later screenshot fails [10003.76ms]
+  ^ a beforeEach/afterEach hook timed out for this test.
+Expected length: 3
+Received length: 0
+(fail) every weight/modifier combination samples all spacing and width levels [0.28ms]
+```
+
+A controlled regression supplies a browser close that remains pending until explicitly rejected. Before releasing that close, it verifies the complete original font, recipe, and width state is restored. It then changes the current fixture directory, rejects the close with a known error, verifies that same error propagates, and checks that cleanup removed its captured directory while preserving the later directory. A disconnected fake browser rejects any redundant close call. The unchanged cleanup hook fails the shared-state assertion deterministically:
+
+```text
+92 |       expect(TOP_50_FONTS).toEqual(originalFonts);
+                                ^
+error: expect(received).toEqual(expected)
+(fail) rendered font integrity > restores shared fixtures before a failed browser close and cleans only its own directory [195.47ms]
+
+ 0 pass
+ 17 filtered out
+ 1 fail
+ 3 expect() calls
+```
+
+The repair captures the browser list and directory, clears the tracked list, and restores the launch spy and all shared arrays synchronously before any browser-close await. It closes only connected browsers, preserving close failures. One 4,000 ms deadline for the entire close operation fits inside the existing 5,000 ms hook budget; a never-settling close reports `Renderer test browsers did not close within 4000ms`. The timer is cleared and the captured directory is removed in `finally`. A second regression exercises the never-settling close and checks filesystem cleanup. No renderer, benchmark data, protocol, or original test expectation/deadline changes.
+
+| Cleanup validation gate | Result |
+| --- | --- |
+| Original cleanup with controlled failed-close regression | RED: original shared font state not restored |
+| Focused repaired cleanup tests | GREEN: 2 pass, 0 fail; 10 assertions |
+| Scratch reversal restoring only the original cleanup body | RED restored: same shared-state failure; 1 fail, 3 assertions |
+| `timeout --kill-after=15s 180s env CI=true GITHUB_ACTIONS=true DEBUG=pw:browser,pw:api bun run test:ts` | GREEN: 80 pass, 0 fail, 277 assertions; 9.88 s |
+| `bun run typecheck`; `git diff --check`; final scope review | GREEN: exit 0; cleanup edits limited to renderer tests and this evidence record |
+
+Logs: `/tmp/fontbench-native-await-hosted-pr-failed.log`, `/tmp/fontbench-native-await-hosted-push-success.log`, `/tmp/fontbench-cleanup-red.log`, `/tmp/fontbench-cleanup-green.log`, `/tmp/fontbench-cleanup-reversal.log`, `/tmp/fontbench-cleanup-ts-gate.log`, `/tmp/fontbench-cleanup-typecheck.log`. The scratch reversal lives at `/tmp/fontbench-cleanup-control-56ytuh2d`.
+
 Final CI review adds `--kill-after=15s` to the 180-second process watchdog so a stuck browser cleanup cannot ignore the termination signal indefinitely. This only bounds a stalled test process; normal assertions, browser behavior, and per-test deadlines remain unchanged.
