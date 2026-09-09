@@ -22,6 +22,20 @@ Runs record the release label, dataset Git commit and fingerprint, evaluation pr
 
 The benchmark intentionally samples the typography space. Unequal family counts and conditional factor correlations are documented sampling limits; exhaustive combinations and independent causal measurements are not claimed.
 
+## First V1.0.0 result publication — 2026-09-09
+
+The first sealed publication compares eleven OpenAI, Gemini, and Claude configurations (including Fable) on the same **728 inputs across 49 of the 50 release families**. All 8,102 retained responses have explicit final status; 8,008 belong to the fixed comparison and 94 remain supplementary. Full-release coverage remains partial. Cumulative recorded spending is $99.991901 under the $100 guard.
+
+All 20 historical infrastructure failures were recovered. Original responses, attempts, checkpoint bytes, model settings, and cost history remain intact. Every final response was independently scored with the frozen V1 protocol; no grading discrepancy remains. Metered comparison cost excludes unmetered retry reservations and separate failed attempts.
+
+- [Final results and exact cohort](results/runs/1.0.0/2026-09-08-all-except-fable/final_results.json)
+- [Artifact seal and verification hashes](results/runs/1.0.0/2026-09-08-all-except-fable/finalization.json)
+- Source checkpoint Git commit: `8e1f3026307e5a865c47f2b25bbac2c2b074f925`
+- Finalizer Git commit: `3d16dacc021f26c46c09b762b5c985b5b7004151` (clean)
+- Shared cohort SHA-256: `19097ac3b1a2cab662304dcea8f051297779934f2fc35d8d22bc79a1e66ee19e`
+
+This publication does not change the V1.0.0 dataset, release tag, or protocol. New campaigns use new run IDs; existing sealed publications remain reproducible. See the [finalization guide](releases/FINALIZATION.md).
+
 ## Unversioned prototypes — historical, invalid for V1.0.0 comparisons
 
 - The original 1,000-image generation includes duplicate/conflicting labels and unsupported or unintended font faces. Earlier graders and Harbor prompts also inflated scores or revealed answers.

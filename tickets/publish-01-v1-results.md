@@ -18,7 +18,7 @@ The $100 run has ended with 8,102 correctly scored final responses and no unreso
 - [x] Close and preserve the $100 checkpoint; independently re-parse/re-score all raw responses (zero discrepancies).
 - [x] Add an immutable publication seal with release/source hashes, fixed model roster/cohort, explicit per-result finality, and offline verification.
 - [x] Refuse mutation of sealed run IDs; preserve historical attempts and existing completion semantics.
-- [ ] Resolve publication scope, retry infrastructure failures if any, score and seal the chosen final artifact.
+- [x] Resolve publication scope, retry infrastructure failures if any, score and seal the chosen final artifact.
 - [ ] Replace obsolete FontBench-1 app data and images with the verified V1 artifact; align all tables/charts on one cohort and remove fabricated metrics/scales.
 - [ ] Run focused and required repository checks plus browser inspection.
 - [ ] Push FontBench records and land the app changes on Kaya main via its required PR workflow.
@@ -35,3 +35,5 @@ Kaya main and edwardbenson-prod have many unrelated divergent commits, but their
 Offline finalization tooling passed 450 Python tests; the final focused run passed all 29 seal/scoring cases. Frozen release validation passed without changing the dataset or protocol. Regression tests reproduce the missing seal guards and reject modified source bytes, forged provenance, invalid chronology, and inconsistent metrics. See [the finalizer gate record](evidence/publish-01-finalizer-gates.md).
 
 A scratch conversion in `/tmp` supported website inspection using actual saved measurements. It must be replaced by the strict committed-artifact importer before publication. The final scope is the common 728-input cohort, relying on the existing sampling instruction rather than treating an unanswered optional full-coverage offer as authorization to increase spending.
+
+The official common-cohort publication is now sealed and verified: 728 shared inputs, 49 families, eleven configurations, all 8,102 retained responses marked final. Source checkpoint `8e1f3026307e5a865c47f2b25bbac2c2b074f925`; clean finalizer `3d16dacc021f26c46c09b762b5c985b5b7004151`. No inference was issued during scoring or sealing.
