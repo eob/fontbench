@@ -1,0 +1,106 @@
+{
+  "validation_version": 1,
+  "valid": true,
+  "sample_count": 1824,
+  "font_count": 50,
+  "errors": [],
+  "distributions": {
+    "fontName": {
+      "Arial": 42,
+      "Arvo": 30,
+      "Bebas Neue": 12,
+      "Bitter": 60,
+      "Bodoni Moda": 45,
+      "Bungee": 12,
+      "Caveat": 24,
+      "Cinzel": 36,
+      "Comic Sans MS": 12,
+      "Cormorant Garamond": 30,
+      "Courier New": 12,
+      "Crimson Text": 30,
+      "DM Sans": 60,
+      "Dancing Script": 24,
+      "EB Garamond": 30,
+      "Fira Code": 24,
+      "Fira Sans": 45,
+      "Georgia": 30,
+      "Helvetica": 45,
+      "Impact": 12,
+      "Inter": 60,
+      "JetBrains Mono": 45,
+      "Lato": 45,
+      "Libre Baskerville": 27,
+      "Lobster": 12,
+      "Lora": 30,
+      "Merriweather": 45,
+      "Montserrat": 60,
+      "Noto Sans": 60,
+      "Nunito": 60,
+      "Open Sans": 30,
+      "Oswald": 36,
+      "PT Sans": 30,
+      "PT Serif": 30,
+      "Pacifico": 12,
+      "Playfair Display": 45,
+      "Plus Jakarta Sans": 45,
+      "Poppins": 45,
+      "Raleway": 60,
+      "Roboto": 60,
+      "Roboto Mono": 45,
+      "Rubik": 45,
+      "Shadows Into Light": 12,
+      "Source Code Pro": 60,
+      "Source Sans 3": 60,
+      "Space Mono": 30,
+      "Spectral": 45,
+      "Times New Roman": 12,
+      "Verdana": 3,
+      "Work Sans": 60
+    },
+    "category": {
+      "handwriting": 84,
+      "mono": 216,
+      "non-serif": 951,
+      "other": 48,
+      "serif": 525
+    },
+    "weight": {
+      "black": 309,
+      "bold": 582,
+      "regular": 696,
+      "thin": 237
+    },
+    "modifier": {
+      "italic": 312,
+      "regular": 378,
+      "small-caps": 378,
+      "strikethrough": 378,
+      "underline": 378
+    },
+    "kerning": {
+      "loose": 608,
+      "normal": 608,
+      "tight": 608
+    },
+    "lineHeight": {
+      "loose": 608,
+      "normal": 608,
+      "tight": 608
+    },
+    "widthId": {
+      "medium": 608,
+      "narrow": 608,
+      "wide": 608
+    }
+  },
+  "shortcut_accuracy": {
+    "widthId_to_lineHeight": 0.34868421052631576,
+    "kerning_to_lineHeight": 0.4144736842105263
+  },
+  "manifest_sha256": "d73c8368d36813a84d5afcdf327d4389bb9bdf5cf490b06c1fb645bd6948682d",
+  "candidate_count": 3000,
+  "skipped_count": 1176,
+  "unique_pixel_count": 1824,
+  "font_asset_count": 129,
+  "error_counts": {}
+}

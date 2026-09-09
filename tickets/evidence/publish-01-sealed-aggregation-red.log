@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________________ test_aggregator_excludes_tampered_sealed_run _________________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-98/test_aggregator_excludes_tampe0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff890613190>
+
+    def test_aggregator_excludes_tampered_sealed_run(campaign,monkeypatch):
+        from baseline.reporting import aggregate_release_runs
+        from baseline.releases import load_release,validate_release
+        f=finalizer();monkeypatch.setattr(f,'REPO_ROOT',campaign['root'])
+        f.finalize_run(campaign['directory'],scope='common',root=campaign['root'])
+        release=load_release(root=campaign['root']);items=validate_release(release,root=campaign['root'])
+        assert len(aggregate_release_runs(release,items,campaign['root']/'results/runs')['models'])==2
+        card=campaign['directory']/'scorecard_model-a.json';card.write_bytes(card.read_bytes()+b' ')
+        history=aggregate_release_runs(release,items,campaign['root']/'results/runs')
+>       assert history['models']==[]
+E       AssertionError: assert [{'id': 'a2fe...e': 'A', ...}] == []
+E         
+E         Left contains 2 more items, first extra item: {'id': 'a2fe842c81a806c765f3fa0bc1c7ec4a26d81fbcc18413ff2e5d0c937615f3ce', 'provider': 'google', 'model': 'model-b', 'display_name': 'B', ...}
+E         Use -v to get more diff
+
+tests/test_finalization.py:268: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+=========================== short test summary info ============================
+FAILED tests/test_finalization.py::test_aggregator_excludes_tampered_sealed_run
+1 failed in 0.34s

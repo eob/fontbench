@@ -1,0 +1,93 @@
+$ .venv/bin/python -m pytest
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: /mnt/disks/data/fontbench
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.15.1
+collected 413 items
+
+tests/test_build_page.py .................................               [  7%]
+tests/test_evaluator.py ..................................F............. [ 19%]
+..........                                                               [ 22%]
+tests/test_export_structured.py ........................................ [ 31%]
+................                                                         [ 35%]
+tests/test_fontbench.py .......                                          [ 37%]
+tests/test_harbor_agent.py ...........                                   [ 39%]
+tests/test_model_config.py ........................                      [ 45%]
+tests/test_providers.py ............................................     [ 56%]
+tests/test_release_artifacts.py .                                        [ 56%]
+tests/test_releases.py .................................                 [ 64%]
+tests/test_run_aggregation.py .......................................    [ 74%]
+tests/test_run_state.py ..................                               [ 78%]
+tests/test_runner.py ..........................                          [ 84%]
+tests/test_runner_lifecycle.py ..................                        [ 89%]
+tests/test_validate_dataset.py ......................................... [ 99%]
+....                                                                     [100%]
+
+=================================== FAILURES ===================================
+_____________ test_cli_mock_output_cannot_replace_a_live_scorecard _____________
+
+task = {'taskId': 'arial-1', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': ['Arial MT'], ...}
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-86/test_cli_mock_output_cannot_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fc859ddf450>
+
+    def test_cli_mock_output_cannot_replace_a_live_scorecard(task, tmp_path, monkeypatch):
+        manifest = tmp_path / "manifest.json"
+        manifest.write_text(json.dumps([task]))
+        live = tmp_path / "scorecard_example.json"
+        live.write_text('"existing live results"')
+        monkeypatch.setattr("sys.argv", ["fontbench", "--mock", "--model", "example", "--manifest", str(manifest), "--output-dir", str(tmp_path)])
+>       cli.main()
+
+tests/test_evaluator.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+baseline/runner.py:416: in main
+    summary = run_benchmark(args.manifest, args.config, args.output_dir, args.run_id, args.models,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = '/tmp/pytest-of-ted/pytest-86/test_cli_mock_output_cannot_re0/manifest.json'
+config_path = 'config/models.json'
+output_dir = '/tmp/pytest-of-ted/pytest-86/test_cli_mock_output_cannot_re0'
+run_id = '20260908T212411Z-e06a46fef1ba', selected_models = ['example']
+budget_usd = 25.0, max_tasks = None, concurrency = 3, mock = True
+release = None
+
+    def run_benchmark(
+        manifest_path: str | Path | None = None,
+        config_path: str | Path = 'config/models.json',
+        output_dir: str | Path = 'results/runs',
+        run_id: str | None = None,
+        selected_models: list[str] | None = None,
+        budget_usd: float | None = 25.0,
+        max_tasks: int | None = None,
+        concurrency: int = 3,
+        mock: bool = False,
+        *,
+        release: str | None = None,
+    ) -> dict[str, Any]:
+        if manifest_path is not None and release is not None:
+            raise ValueError('Choose either --release or an unversioned custom --manifest')
+        descriptor = load_release(DEFAULT_RELEASE if release is None else release) if manifest_path is None else None
+        if descriptor is not None:
+            manifest_path = release_manifest_path(descriptor)
+        if run_id is None:
+            run_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ-') + uuid.uuid4().hex[:12]
+        if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*', run_id):
+            raise ValueError('run_id must be a simple name, without directory separators')
+        if budget_usd is not None and (budget_usd < 0 or not math.isfinite(budget_usd)):
+            raise ValueError('budget_usd must be finite and non-negative')
+        if concurrency < 1 or (max_tasks is not None and max_tasks < 0):
+            raise ValueError('concurrency must be positive and max_tasks non-negative')
+        models = load_model_config(config_path)
+        if selected_models:
+            unknown = set(selected_models) - {model['id'] for model in models}
+            if unknown:
+>               raise ValueError(f'Unknown or disabled models: {", ".join(sorted(unknown))}')
+E               ValueError: Unknown or disabled models: example
+
+baseline/runner.py:103: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_evaluator.py::test_cli_mock_output_cannot_replace_a_live_scorecard
+======================== 1 failed, 412 passed in 15.97s ========================
+error: script "test:python" exited with code 1

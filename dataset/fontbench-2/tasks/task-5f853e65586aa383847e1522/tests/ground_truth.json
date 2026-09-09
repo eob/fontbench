@@ -1,0 +1,15 @@
+{
+  "taskId": "font-lobster-v28",
+  "harborTaskId": "task-5f853e65586aa383847e1522",
+  "canonical": "Lobster",
+  "aliases": [
+    "lobster"
+  ],
+  "category": "other",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "tight",
+  "lineHeight": "normal",
+  "widthId": "wide",
+  "widthPx": 440
+}

@@ -1,0 +1,67 @@
+$ .venv/bin/pytest -q tests/test_run_aggregation.py -k inside_an_invocation or unclassified_transport
+
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_task_must_fall_inside_an_invocation_of_its_recorded_configuration[started_at-2026-09-01T11:30:00Z] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-73/test_task_must_fall_inside_an_0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+field = 'started_at', value = '2026-09-01T11:30:00Z'
+
+    @pytest.mark.parametrize(("field", "value"), [("started_at", "2026-09-01T11:30:00Z"),
+                                                  ("updated_at", "2026-09-01T10:30:00Z")])
+    def test_task_must_fall_inside_an_invocation_of_its_recorded_configuration(release_history, field, value):
+        directory, _, _ = write_run(release_history, "invalid", [0])
+        metadata_path = directory / "run.json"
+        metadata = json.loads(metadata_path.read_text())
+        metadata["invocations"][0][field] = value
+        metadata_path.write_text(json.dumps(metadata))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:333: AssertionError
+_ test_task_must_fall_inside_an_invocation_of_its_recorded_configuration[updated_at-2026-09-01T10:30:00Z] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-73/test_task_must_fall_inside_an_1'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+field = 'updated_at', value = '2026-09-01T10:30:00Z'
+
+    @pytest.mark.parametrize(("field", "value"), [("started_at", "2026-09-01T11:30:00Z"),
+                                                  ("updated_at", "2026-09-01T10:30:00Z")])
+    def test_task_must_fall_inside_an_invocation_of_its_recorded_configuration(release_history, field, value):
+        directory, _, _ = write_run(release_history, "invalid", [0])
+        metadata_path = directory / "run.json"
+        metadata = json.loads(metadata_path.read_text())
+        metadata["invocations"][0][field] = value
+        metadata_path.write_text(json.dumps(metadata))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:333: AssertionError
+_____ test_unclassified_transport_errors_cannot_be_scored_as_final_answers _____
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-73/test_unclassified_transport_er0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+
+    def test_unclassified_transport_errors_cannot_be_scored_as_final_answers(release_history):
+        directory, _, card = write_run(release_history, "invalid", [0])
+        card["tasks"][0]["error"] = "TimeoutError: connection interrupted"
+        (directory / "scorecard_arbitrary-model.json").write_text(json.dumps(card))
+        report = aggregate(release_history)
+>       assert report["models"] == []
+E       AssertionError: assert [{'id': '469f... model', ...}] == []
+E         
+E         Left contains one more item: {'id': '469f0489e2f32dd984177ee07bd6464390dc072b4afe12ccd8b710e4c1bb8c92', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...}
+E         Use -v to get more diff
+
+tests/test_run_aggregation.py:342: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_run_aggregation.py::test_task_must_fall_inside_an_invocation_of_its_recorded_configuration[started_at-2026-09-01T11:30:00Z]
+FAILED tests/test_run_aggregation.py::test_task_must_fall_inside_an_invocation_of_its_recorded_configuration[updated_at-2026-09-01T10:30:00Z]
+FAILED tests/test_run_aggregation.py::test_unclassified_transport_errors_cannot_be_scored_as_final_answers
+3 failed, 36 deselected in 0.19s

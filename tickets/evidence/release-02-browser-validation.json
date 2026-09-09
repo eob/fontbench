@@ -1,0 +1,48 @@
+[
+  {
+    "label": "desktop",
+    "viewport": 1440,
+    "document_width": 1440,
+    "version": "1.0.0",
+    "dataset_git_commit": "d69e87e2c206ea75c52f5b8340d677bd14af03e3",
+    "inputs": 1824,
+    "fonts": 50,
+    "valid": true,
+    "models": 0,
+    "compatible_runs": 0,
+    "excluded_runs": [
+      {
+        "path": "fontbench-2026-09-07",
+        "reason": "Unversioned or historical run"
+      }
+    ],
+    "images": 7,
+    "dimension_sections": 6,
+    "metric_heading": "Line height",
+    "run_history_visible": true,
+    "errors": []
+  },
+  {
+    "label": "mobile",
+    "viewport": 390,
+    "document_width": 390,
+    "version": "1.0.0",
+    "dataset_git_commit": "d69e87e2c206ea75c52f5b8340d677bd14af03e3",
+    "inputs": 1824,
+    "fonts": 50,
+    "valid": true,
+    "models": 0,
+    "compatible_runs": 0,
+    "excluded_runs": [
+      {
+        "path": "fontbench-2026-09-07",
+        "reason": "Unversioned or historical run"
+      }
+    ],
+    "images": 7,
+    "dimension_sections": 6,
+    "metric_heading": "Line height",
+    "run_history_visible": true,
+    "errors": []
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-pt-sans-v42",
+  "harborTaskId": "task-bcc8e210223ea3c2e0ade510",
+  "canonical": "PT Sans",
+  "aliases": [
+    "pt sans"
+  ],
+  "category": "non-serif",
+  "weight": "bold",
+  "modifier": "strikethrough",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "wide",
+  "widthPx": 440
+}

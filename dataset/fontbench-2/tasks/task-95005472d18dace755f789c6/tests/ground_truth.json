@@ -1,0 +1,15 @@
+{
+  "taskId": "font-lora-v23",
+  "harborTaskId": "task-95005472d18dace755f789c6",
+  "canonical": "Lora",
+  "aliases": [
+    "lora"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "normal",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

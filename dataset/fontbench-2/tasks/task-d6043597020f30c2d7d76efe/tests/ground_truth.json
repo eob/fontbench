@@ -1,0 +1,15 @@
+{
+  "taskId": "font-verdana-v21",
+  "harborTaskId": "task-d6043597020f30c2d7d76efe",
+  "canonical": "Verdana",
+  "aliases": [
+    "verdana"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "italic",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

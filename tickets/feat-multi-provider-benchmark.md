@@ -1,9 +1,11 @@
 # Multi-provider benchmark, resumable execution, and visual results page
 
-- Status: Implemented and validated; live run stopped cleanly at its spending guard
+- Status: Completed (historical implementation and budgeted pilot; superseded by V1.0.0)
 - Branch: fix-repo-audit
 - Base: 080ac96
 - Harness: Codex
+
+> **Historical ticket.** The implementation and authorized pilot are complete. The September 8 audit found the pilot inputs invalid for final comparisons; its paid checkpoint is preserved. Use [the V1.0.0 run guide](../results/README.md) for new measurements.
 
 ## Requested outcome
 
@@ -28,7 +30,7 @@ Authenticated, read-only model lists exposed all 12 initial IDs; no inference ca
 
 ## Data
 
-Fresh corrected rendering: results/runs/fontbench-2026-09-07/input/manifest.json (639 images, 50 families). The original working dataset remains unchanged.
+Historical September 7 rendering (later found invalid): results/runs/fontbench-2026-09-07/input/manifest.json (639 images, 50 families). The original working dataset remains unchanged.
 
 ## Implemented behavior
 
@@ -50,16 +52,9 @@ The first tool-managed pilot process was externally terminated with SIGTERM befo
 
 HTTP timeouts measure inactivity per operation, not an overall wall-clock deadline. Interruptions drain submitted requests. Spending reservations assume the benchmark's small images and configured output caps; the guard is not a provider-enforced billing limit for arbitrary inputs.
 
-## Resume and rebuild
+## Historical execution instructions
 
-After adding Anthropic credits, use the same frozen dataset and run ID. Increase the cumulative budget to allow further work after budget exhaustion:
-
-```bash
-bun run benchmark --manifest results/runs/fontbench-2026-09-07/input/manifest.json --run-id fontbench-2026-09-07 --budget-usd 50
-bun run build:page --manifest results/runs/fontbench-2026-09-07/input/manifest.json --results-dir results/runs/fontbench-2026-09-07 --output-dir site
-```
-
-The example authorizes a total estimated $50 across all attempts in this run, not an additional $50. This run's frozen `input/` and completed `state.sqlite3` checkpoint are versioned; commit the updated checkpoint and reports together after extending it. Other runs' input caches and checkpoints remain ignored by default and need separate backups. Add an enabled catalog entry and select its ID with `--models` to contribute another model without repeating existing final datapoints.
+The original resume commands are retired. Their exact text remains in Git at `14e792f`; the current evaluator intentionally refuses this incompatible pilot. No additional spending or model run is required to close this implementation ticket. Versioned future campaigns and website aggregation are tracked by [release-01](release-01-versioned-runs.md) and [release-02](release-02-aggregate-run-history.md).
 
 ## Final implementation validation
 
@@ -75,7 +70,7 @@ The example authorizes a total estimated $50 across all attempts in this run, no
 
 The September 7 run stopped cleanly with 2,216 completed model–input pairs, 2,222 recorded evaluation attempts, and $24.988759 in cumulative estimated spending against the $25 guard. All models remain partial on the 639-input dataset. Anthropic paused for insufficient credits; Gemini 3.5 Flash-Lite and 3.8 Flash paused for repeated service/read timeouts. The remaining models stopped when their next conservative reservation could not fit the budget.
 
-The frozen page includes all 11 active configurations and all 2,216 completed pairs, with no provenance warnings. Final database integrity and preservation checks passed. Counts, states, and exact resume commands are in [the run notes](../results/runs/fontbench-2026-09-07/README.md).
+The historical page at `14e792f` included all 11 active configurations and all 2,216 completed pairs, with no provenance warnings. Final database integrity and preservation checks passed. Preserved counts and states are in [the run notes](../results/runs/fontbench-2026-09-07/README.md).
 
 ## Committed recovery snapshot
 

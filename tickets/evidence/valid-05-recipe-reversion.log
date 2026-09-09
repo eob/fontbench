@@ -1,0 +1,36 @@
+bun test v1.3.14 (0d9b296a)
+
+../../../../tmp/fontbench-recipe-control-qz4wk1dn/recipes.test.ts:
+3 | 
+4 | test('every weight/modifier combination samples all spacing and width levels', () => {
+5 |   for (const weight of ['thin', 'regular', 'bold', 'black']) {
+6 |     for (const modifier of ['regular', 'italic', 'underline', 'strikethrough', 'small-caps']) {
+7 |       const recipes = VARIANT_RECIPES.filter(recipe => recipe.weight === weight && recipe.modifier === modifier);
+8 |       expect(recipes).toHaveLength(3);
+                          ^
+error: expect(received).toHaveLength(expected)
+
+Expected length: 3
+Received length: 1
+
+      at <anonymous> (/tmp/fontbench-recipe-control-qz4wk1dn/recipes.test.ts:8:23)
+(fail) every weight/modifier combination samples all spacing and width levels [0.58ms]
+15 | 
+16 | test('card width and tracking cannot determine line-height labels', () => {
+17 |   for (const axis of ['widthId', 'kerning'] as const) {
+18 |     for (const value of new Set(VARIANT_RECIPES.map(recipe => recipe[axis]))) {
+19 |       const recipes = VARIANT_RECIPES.filter(recipe => recipe[axis] === value);
+20 |       expect(new Set(recipes.map(recipe => recipe.lineHeight)).size).toBe(3);
+                                                                          ^
+error: expect(received).toBe(expected)
+
+Expected: 3
+Received: 2
+
+      at <anonymous> (/tmp/fontbench-recipe-control-qz4wk1dn/recipes.test.ts:20:70)
+(fail) card width and tracking cannot determine line-height labels [0.50ms]
+
+ 0 pass
+ 2 fail
+ 2 expect() calls
+Ran 2 tests across 1 file. [20.00ms]

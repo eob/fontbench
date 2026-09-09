@@ -1,0 +1,49 @@
+bun test v1.3.14 (0d9b296a)
+
+src/release_protection.test.ts:
+(pass) refuses an overlapping registered output: frozen/rendered [2.85ms]
+(pass) refuses an overlapping registered output: frozen/rendered/new/subdirectory [0.38ms]
+(pass) refuses an overlapping registered output: frozen/harbor [0.26ms]
+(pass) refuses an overlapping registered output: frozen/harbor/tasks/new [0.25ms]
+(pass) refuses an overlapping registered output: frozen [0.22ms]
+(pass) refuses an overlapping registered output: . [0.21ms]
+16 | });
+17 | afterEach(() => fs.rmSync(repository, { recursive: true, force: true }));
+18 | 
+19 | test.each(['frozen/rendered', 'frozen/rendered/new/subdirectory', 'frozen/harbor', 'frozen/harbor/tasks/new', 'frozen', '.', '/'])(
+20 |   'refuses an overlapping registered output: %s', directory => {
+21 |     expect(() => assertMutableOutput(path.resolve(repository, directory), repository)).toThrow(/Frozen release output/);
+                                                                                            ^
+error: expect(received).toThrow(expected)
+
+Expected pattern: /Frozen release output/
+
+Received function did not throw
+Received value: undefined
+
+      at <anonymous> (/mnt/disks/data/fontbench/src/release_protection.test.ts:21:88)
+(fail) refuses an overlapping registered output: / [0.30ms]
+(pass) permits a separate output without creating it: candidate-rendered [0.38ms]
+(pass) permits a separate output without creating it: frozen/rendered-copy [0.26ms]
+(pass) permits a separate output without creating it: frozen/harbor-next [0.26ms]
+(pass) permits a separate output without creating it: new/parent/candidate [0.26ms]
+(pass) refuses aliases through existing symlink parents [0.46ms]
+(pass) rejects dangling symlinks instead of treating them as new output directories [0.36ms]
+(pass) refuses malformed registry declarations: {"entry":null} [0.37ms]
+(pass) refuses malformed registry declarations: {"entry":[]} [0.24ms]
+(pass) refuses malformed registry declarations: {"entry":{}} [0.21ms]
+(pass) refuses malformed registry declarations: {"entry":{"dataset_manifest":"frozen/rendered/manifest.json"}} [0.27ms]
+(pass) refuses malformed registry declarations: {"entry":{"dataset_manifest":"frozen/rendered/manifest.json","harbor_dataset":"../outside"}} [0.23ms]
+(pass) refuses malformed registry declarations: {"entry":{"dataset_manifest":"frozen/rendered/manifest.json","harbor_dataset":"/outside"}} [0.22ms]
+(pass) refuses malformed registry declarations: {"entry":{"dataset_manifest":"frozen/rendered/manifest.json","harbor_dataset":"frozen\\harbor"}} [0.22ms]
+(pass) refuses malformed registry declarations: {"entry":{"dataset_manifest":"frozen/rendered/manifest.json","harbor_dataset":""}} [0.22ms]
+(pass) does not ignore malformed JSON in another registered release [0.38ms]
+(pass) does not proceed when the release registry is missing [0.27ms]
+
+1 tests failed:
+(fail) refuses an overlapping registered output: / [0.30ms]
+
+ 22 pass
+ 1 fail
+ 28 expect() calls
+Ran 23 tests across 1 file. [27.00ms]

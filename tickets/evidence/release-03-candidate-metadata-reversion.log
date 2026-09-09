@@ -1,0 +1,45 @@
+bun test v1.3.14 (0d9b296a)
+
+src/generate_harbor_dataset.test.ts:
+Generating Harbor dataset at /tmp/fontbench-harbor-test-yEiB2Z/dataset for 1 tasks...
+
+✅ Successfully generated Harbor dataset with 1 tasks!
+163 | 
+164 | 
+165 | test('public task metadata contains no hidden labels or source IDs', () => {
+166 |   buildHarborDataset(rendered, output);
+167 |   const descriptor = Bun.TOML.parse(fs.readFileSync(path.join(output, 'dataset.toml'), 'utf8'));
+168 |   expect(descriptor).toMatchObject({ dataset: { name: 'fontbench-candidate', version: '0.0.0' } });
+                           ^
+error: expect(received).toMatchObject(expected)
+
+  {
+    "dataset": {
+-     "name": "fontbench-candidate",
+-     "version": "0.0.0",
++     "author": "Edward Benson",
++     "description": "FontBench-2: Visual typography benchmark across six attributes: font, category, weight, modifier, kerning, and line height.",
++     "license": "MIT",
++     "name": "fontbench-2",
++     "task_dir": "tasks",
++     "version": "2.0.0",
+    },
++   "metadata": {
++     "grading_version": "3",
++     "primary_pangram": "The quick brown fox jumps over the lazy dog.",
++     "total_tasks": 1,
++   },
++   "version": "1.0",
+  }
+
+- Expected  - 2
++ Received  + 12
+
+      at <anonymous> (/tmp/fontbench-release-03-reversion-uhdarvas/src/generate_harbor_dataset.test.ts:168:22)
+(fail) public task metadata contains no hidden labels or source IDs [6.85ms]
+
+ 0 pass
+ 32 filtered out
+ 1 fail
+ 1 expect() calls
+Ran 1 test across 1 file. [39.00ms]

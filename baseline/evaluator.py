@@ -10,6 +10,7 @@ Evaluates multimodal models on multi-attribute typographic identification tasks:
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import time
@@ -21,6 +22,31 @@ from typing import Callable, Dict, List, Optional
 from pydantic import ValidationError
 
 from baseline.providers import PredictionClient, PredictionResponse, TypographicPrediction
+
+
+GRADING_VERSION = "3"
+DEFAULT_PROMPT = Path(__file__).with_name("prompt.txt").read_text(encoding="utf-8").strip()
+
+
+def evaluation_protocol_fingerprint() -> str:
+    """Pin request construction, answer schema, grading, and the fallback prompt."""
+    digest = hashlib.sha256(json.dumps({
+        "grading_version": GRADING_VERSION, "default_prompt": DEFAULT_PROMPT,
+        "schema": TypographicPrediction.model_json_schema(),
+    }, sort_keys=True).encode())
+    # Source hashes fail closed when code changes without a manual version bump.
+    for name in ("evaluator.py", "providers.py"):
+        digest.update(Path(__file__).with_name(name).read_text(encoding="utf-8").encode("utf-8"))
+    return digest.hexdigest()
+
+
+def dataset_fingerprint(items: list[dict]) -> str:
+    digest = hashlib.sha256(b"fontbench-dataset-3\n")
+    for item in sorted(items, key=lambda item: item["taskId"]):
+        metadata = {key: value for key, value in item.items() if key not in {"imagePath", "imageFilename"}}
+        digest.update(json.dumps(metadata, sort_keys=True, ensure_ascii=False, allow_nan=False).encode())
+        digest.update(hashlib.sha256(Path(item["imagePath"]).read_bytes()).digest())
+    return digest.hexdigest()
 
 
 def normalize_font_name(text: str) -> str:
@@ -52,11 +78,13 @@ def load_manifest(manifest_path: str) -> list[dict]:
         if not isinstance(item, dict):
             raise ValueError(f"Manifest task {index} must be a JSON object")
         try:
-            TypographicPrediction.model_validate({
+            targets = {
                 "font": item.get("fontName"), "category": item.get("category"),
                 "weight": item.get("weight"), "modifier": item.get("modifier"),
                 "kerning": item.get("kerning"), "line_height": item.get("lineHeight"),
-            })
+            }
+            if TypographicPrediction.model_validate(targets).model_dump() != targets:
+                raise ValueError(f"Noncanonical typography labels in manifest task {index}")
         except ValidationError as e:
             raise ValueError(
                 f"Invalid typography in manifest task {index}; render a complete six-attribute manifest: {e}"
@@ -67,6 +95,11 @@ def load_manifest(manifest_path: str) -> list[dict]:
         if task_id in task_ids:
             raise ValueError(f"Duplicate manifest taskId: {task_id}")
         task_ids.add(task_id)
+        aliases = item.get("aliases", [])
+        if not isinstance(aliases, list) or any(
+            not isinstance(alias, str) or not normalize_font_name(alias) for alias in aliases
+        ):
+            raise ValueError(f"Manifest task {index} aliases must be a list of non-empty font names")
 
     for item in manifest_items:
         if item.get("imageFilename"):
@@ -138,8 +171,13 @@ class FontBenchScorecard:
     timestamp: str
     task_results: List[TaskEvaluationResult] = field(default_factory=list)
     expected_task_count: int = 0
-    grading_version: str = "2"
+    grading_version: str = GRADING_VERSION
     provider: str = "google"
+    dataset_fingerprint: str = ""
+    evaluation_protocol_fingerprint: str = ""
+    cohort_fingerprint: str = ""
+    status: str = "partial"
+    invalid_response_count: int = 0
 
     def to_markdown(self) -> str:
         lines = [
@@ -147,6 +185,8 @@ class FontBenchScorecard:
             "",
             f"- **Evaluated At**: {self.timestamp}",
             f"- **Total Tasks**: {self.total_tasks}",
+            f"- **Completion**: {self.status} ({self.total_tasks}/{self.expected_task_count})",
+            f"- **Invalid Model Answers**: {self.invalid_response_count} (scored zero)",
             f"- **Composite Typographic Score**: **{self.overall_composite_score * 100:.1f}%**",
             f"- **All-Correct Exact Match**: **{self.overall_exact_match * 100:.1f}%**",
             f"- **Average Latency**: {self.avg_latency_sec:.2f}s / task",
@@ -155,7 +195,7 @@ class FontBenchScorecard:
             "",
             "| Typographic Dimension | Accuracy | Description |",
             "|---|---|---|",
-            f"| **Font Family** | **{self.font_accuracy * 100:.1f}%** | Identification of exact font name across 50 top fonts |",
+            f"| **Font Family** | **{self.font_accuracy * 100:.1f}%** | Identification of exact font family |",
             f"| **Category** | **{self.category_accuracy * 100:.1f}%** | serif, non-serif, mono, handwriting, other |",
             f"| **Weight** | **{self.weight_accuracy * 100:.1f}%** | thin, regular, bold, black |",
             f"| **Modifiers** | **{self.modifier_accuracy * 100:.1f}%** | regular, italic, underline, strikethrough, small-caps |",
@@ -187,7 +227,7 @@ class FontBenchScorecard:
 
         lines.extend([
             "",
-            "## 4. Per-Font Accuracy (Top 50 Fonts)",
+            "## 4. Per-Font Accuracy",
             "",
             "| Font | Font Accuracy |",
             "|---|---|",
@@ -236,12 +276,13 @@ class BaselineEvaluator:
         response = self.predict_image(image_path, prompt)
         latency = time.perf_counter() - start_t
         raw_pred = response.raw_text
-        parsed_pred = response.parsed if not response.error else {}
-
-        prediction = {
-            key: value.strip() for key, value in parsed_pred.items()
-            if isinstance(value, str)
-        }
+        prediction = {}
+        if not response.error:
+            try:
+                prediction = TypographicPrediction.model_validate(response.parsed).model_dump()
+            except ValidationError as error:
+                response.error = str(error)
+                response.error_kind = "invalid_response"
         pred_font = prediction.get("font", "")
         pred_cat = prediction.get("category", "").lower()
         pred_weight = prediction.get("weight", "").lower()
@@ -316,7 +357,7 @@ class BaselineEvaluator:
 
     def evaluate_manifest(
         self,
-        manifest_path: str = "dataset/rendered/manifest.json",
+        manifest_path: str = "dataset/fontbench-2-rendered/manifest.json",
         limit: Optional[int] = None,
         concurrency: int = 5,
         progress_cb: Optional[Callable[[TaskEvaluationResult, int, int], None]] = None
@@ -326,22 +367,18 @@ class BaselineEvaluator:
             raise ValueError("limit must be non-negative")
         if concurrency < 1:
             raise ValueError("concurrency must be positive")
+        if not self.mock:
+            from baseline.validate_dataset import require_valid_dataset
+            require_valid_dataset(manifest_path)
         manifest_items = load_manifest(manifest_path)
+        fingerprint = dataset_fingerprint(manifest_items)
         expected_task_count = len(manifest_items)
         if limit is not None:
             manifest_items = manifest_items[:limit]
 
         total_tasks = len(manifest_items)
         results: List[TaskEvaluationResult] = []
-        prompt_default = (
-            "Examine the rendered text in the image. Identify its typographic properties:\n"
-            "1. font: The canonical font family name\n"
-            "2. category: Exactly one of [serif, non-serif, mono, handwriting, other]\n"
-            "3. weight: Exactly one of [thin, regular, bold, black]\n"
-            "4. modifier: Exactly one of [regular, italic, underline, strikethrough, small-caps]\n"
-            "5. kerning: Exactly one of [tight, normal, loose]\n"
-            "6. line_height: Exactly one of [tight, normal, loose]"
-        )
+        prompt_default = DEFAULT_PROMPT
 
         completed_count = 0
         if concurrency <= 1 or self.mock:
@@ -369,13 +406,20 @@ class BaselineEvaluator:
             indexed_results.sort(key=lambda pair: pair[0])
             results = [pair[1] for pair in indexed_results]
 
-        return self.score_results(results, expected_task_count)
+        scorecard = self.score_results(results, expected_task_count)
+        scorecard.dataset_fingerprint = fingerprint
+        return scorecard
 
     def score_results(
         self, results: List[TaskEvaluationResult], expected_task_count: int,
     ) -> FontBenchScorecard:
         """Aggregate saved or newly evaluated results without issuing requests."""
         total_tasks = len(results)
+        task_ids = [result.task_id for result in results]
+        if len(task_ids) != len(set(task_ids)):
+            raise ValueError("Duplicate task IDs cannot be scored as independent examples")
+        if expected_task_count < total_tasks:
+            raise ValueError("Results exceed the expected task count")
         font_correct_count = sum(1 for r in results if r.font_correct)
         cat_correct_count = sum(1 for r in results if r.category_correct)
         weight_correct_count = sum(1 for r in results if r.weight_correct)
@@ -444,6 +488,11 @@ class BaselineEvaluator:
         scorecard = FontBenchScorecard(
             total_tasks=total_tasks,
             expected_task_count=expected_task_count,
+            evaluation_protocol_fingerprint=evaluation_protocol_fingerprint(),
+            cohort_fingerprint=hashlib.sha256(json.dumps(sorted(task_ids)).encode()).hexdigest(),
+            status="complete" if total_tasks == expected_task_count and total_tasks > 0
+                   and all(not result.error or result.error_kind == "invalid_response" for result in results) else "partial",
+            invalid_response_count=sum(result.error_kind == "invalid_response" for result in results),
             overall_composite_score=total_composite / total_tasks if total_tasks else 0.0,
             overall_exact_match=all_correct_count / total_tasks if total_tasks else 0.0,
             font_accuracy=font_correct_count / total_tasks if total_tasks else 0.0,

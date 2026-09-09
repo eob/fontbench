@@ -1,0 +1,15 @@
+{
+  "taskId": "font-spectral-v15",
+  "harborTaskId": "task-1fa322fb2a387e9266d64146",
+  "canonical": "Spectral",
+  "aliases": [
+    "spectral"
+  ],
+  "category": "serif",
+  "weight": "thin",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

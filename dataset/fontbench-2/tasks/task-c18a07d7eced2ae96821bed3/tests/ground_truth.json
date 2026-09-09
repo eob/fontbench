@@ -1,0 +1,15 @@
+{
+  "taskId": "font-source-sans-3-v56",
+  "harborTaskId": "task-c18a07d7eced2ae96821bed3",
+  "canonical": "Source Sans 3",
+  "aliases": [
+    "source sans 3"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "strikethrough",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "wide",
+  "widthPx": 440
+}

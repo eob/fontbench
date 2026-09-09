@@ -1,0 +1,893 @@
+$ .venv/bin/pytest -q tests/test_export_structured.py tests/test_build_page.py -k malformed_export_task_metadata or malformed_export_model_id or export_preserves_explicit or malformed_summary_model_state
+
+FFFFFFFFFFFFFFFFFFF.FFFFF..                                              [100%]
+=================================== FAILURES ===================================
+__ test_malformed_export_task_metadata_preserves_valid_peer[category-value0] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met0')
+field = 'category', value = {}
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+>       report = build_structured_benchmark(str(tmp_path))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_export_structured.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+baseline/export_structured.py:36: in build_structured_benchmark
+    for category in sorted({task.get("category", "unknown") for task in tasks}):
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7fbabdd94e80>
+
+>   for category in sorted({task.get("category", "unknown") for task in tasks}):
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: unhashable type: 'dict'
+
+baseline/export_structured.py:36: TypeError
+__ test_malformed_export_task_metadata_preserves_valid_peer[category-value1] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met1')
+field = 'category', value = []
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+>       report = build_structured_benchmark(str(tmp_path))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_export_structured.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+baseline/export_structured.py:36: in build_structured_benchmark
+    for category in sorted({task.get("category", "unknown") for task in tasks}):
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7fbabdd6e950>
+
+>   for category in sorted({task.get("category", "unknown") for task in tasks}):
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: unhashable type: 'list'
+
+baseline/export_structured.py:36: TypeError
+___ test_malformed_export_task_metadata_preserves_valid_peer[category-None] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met2')
+field = 'category', value = None
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+___ test_malformed_export_task_metadata_preserves_valid_peer[category-False] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met3')
+field = 'category', value = False
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+_____ test_malformed_export_task_metadata_preserves_valid_peer[category-] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met4')
+field = 'category', value = ''
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+____ test_malformed_export_task_metadata_preserves_valid_peer[category-   ] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met5')
+field = 'category', value = '   '
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+___ test_malformed_export_task_metadata_preserves_valid_peer[weight-value6] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met6')
+field = 'weight', value = {}
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+__ test_malformed_export_task_metadata_preserves_valid_peer[modifier-value7] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met7')
+field = 'modifier', value = []
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+____ test_malformed_export_task_metadata_preserves_valid_peer[kerning-None] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met8')
+field = 'kerning', value = None
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+_ test_malformed_export_task_metadata_preserves_valid_peer[line_height-False] __
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met9')
+field = 'line_height', value = False
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+_____ test_malformed_export_task_metadata_preserves_valid_peer[width_id-0] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met10')
+field = 'width_id', value = 0
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+_ test_malformed_export_task_metadata_preserves_valid_peer[target_canonical-   ] _
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_task_met11')
+field = 'target_canonical', value = '   '
+
+    @pytest.mark.parametrize(("field", "value"), [
+        ("category", {}), ("category", []), ("category", None), ("category", False),
+        ("category", ""), ("category", "   "),
+        ("weight", {}), ("modifier", []), ("kerning", None),
+        ("line_height", False), ("width_id", 0), ("target_canonical", "   "),
+    ])
+    def test_malformed_export_task_metadata_preserves_valid_peer(tmp_path, field, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, tasks=[{"task_id": "one", field: value}])
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['valid', 'broken'] == ['valid']
+E         
+E         Left contains one more item: 'broken'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:208: AssertionError
+_________ test_malformed_export_model_id_preserves_valid_peer[value0] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_model_id0')
+value = {}
+
+    @pytest.mark.parametrize("value", [{}, [], None, False, 0, "", "   "])
+    def test_malformed_export_model_id_preserves_valid_peer(tmp_path, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, model_id=value)
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['broken', 'valid'] == ['valid']
+E         
+E         At index 0 diff: 'broken' != 'valid'
+E         Left contains one more item: 'valid'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:218: AssertionError
+_________ test_malformed_export_model_id_preserves_valid_peer[value1] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_model_id1')
+value = []
+
+    @pytest.mark.parametrize("value", [{}, [], None, False, 0, "", "   "])
+    def test_malformed_export_model_id_preserves_valid_peer(tmp_path, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, model_id=value)
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['broken', 'valid'] == ['valid']
+E         
+E         At index 0 diff: 'broken' != 'valid'
+E         Left contains one more item: 'valid'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:218: AssertionError
+__________ test_malformed_export_model_id_preserves_valid_peer[None] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_model_id2')
+value = None
+
+    @pytest.mark.parametrize("value", [{}, [], None, False, 0, "", "   "])
+    def test_malformed_export_model_id_preserves_valid_peer(tmp_path, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, model_id=value)
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['broken', 'valid'] == ['valid']
+E         
+E         At index 0 diff: 'broken' != 'valid'
+E         Left contains one more item: 'valid'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:218: AssertionError
+__________ test_malformed_export_model_id_preserves_valid_peer[False] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_model_id3')
+value = False
+
+    @pytest.mark.parametrize("value", [{}, [], None, False, 0, "", "   "])
+    def test_malformed_export_model_id_preserves_valid_peer(tmp_path, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, model_id=value)
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['broken', 'valid'] == ['valid']
+E         
+E         At index 0 diff: 'broken' != 'valid'
+E         Left contains one more item: 'valid'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:218: AssertionError
+____________ test_malformed_export_model_id_preserves_valid_peer[0] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_model_id4')
+value = 0
+
+    @pytest.mark.parametrize("value", [{}, [], None, False, 0, "", "   "])
+    def test_malformed_export_model_id_preserves_valid_peer(tmp_path, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, model_id=value)
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['broken', 'valid'] == ['valid']
+E         
+E         At index 0 diff: 'broken' != 'valid'
+E         Left contains one more item: 'valid'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:218: AssertionError
+____________ test_malformed_export_model_id_preserves_valid_peer[] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_model_id5')
+value = ''
+
+    @pytest.mark.parametrize("value", [{}, [], None, False, 0, "", "   "])
+    def test_malformed_export_model_id_preserves_valid_peer(tmp_path, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, model_id=value)
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['broken', 'valid'] == ['valid']
+E         
+E         At index 0 diff: 'broken' != 'valid'
+E         Left contains one more item: 'valid'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:218: AssertionError
+___________ test_malformed_export_model_id_preserves_valid_peer[   ] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_export_model_id6')
+value = '   '
+
+    @pytest.mark.parametrize("value", [{}, [], None, False, 0, "", "   "])
+    def test_malformed_export_model_id_preserves_valid_peer(tmp_path, value):
+        write_scorecard(tmp_path, "valid", total_tasks=1)
+        write_scorecard(tmp_path, "broken", total_tasks=1, model_id=value)
+        report = build_structured_benchmark(str(tmp_path))
+>       assert [model["model_id"] for model in report["models"]] == ["valid"]
+E       AssertionError: assert ['   ', 'valid'] == ['valid']
+E         
+E         At index 0 diff: '   ' != 'valid'
+E         Left contains one more item: 'valid'
+E         Use -v to get more diff
+
+tests/test_export_structured.py:218: AssertionError
+__ test_malformed_summary_model_state_preserves_measurements_and_peer[value0] __
+
+dataset = (PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s0/manifest.json'), [{'taskId': 'task-0', 'fontI...egory': 'non-serif', ...}, ...], PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s0/models.json'))
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s0')
+value = []
+
+    @pytest.mark.parametrize("value", [[], None, False, 0, "", ["broken"], "broken"])
+    def test_malformed_summary_model_state_preserves_measurements_and_peer(dataset, tmp_path, value):
+        manifest, samples, config = dataset
+        directory = tmp_path / "results"
+        write_scorecard(directory, samples)
+        model_config = json.loads(config.read_text())
+        model_config["models"].append({**model_config["models"][0], "id": "peer"})
+        config.write_text(json.dumps(model_config))
+        card = json.loads((directory / "scorecard_test-model.json").read_text())
+        (directory / "scorecard_peer.json").write_text(json.dumps({**card, "model_id": "peer"}))
+        summary_path = directory / "summary.json"
+        summary = json.loads(summary_path.read_text())
+        summary["models"]["peer"] = summary["models"]["test-model"]
+        summary["models"]["test-model"] = value
+        summary_path.write_text(json.dumps(summary))
+    
+>       report = build_page(manifest, directory, tmp_path / "site", config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_build_page.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s0/manifest.json')
+results_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s0/results')
+output_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s0/site')
+config_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s0/models.json')
+
+    def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: str | Path = "site",
+                   config_path: str | Path = "config/models.json") -> dict:
+        validity = validate_dataset(manifest_path)
+        items = load_manifest(str(manifest_path))
+        if not items:
+            raise ValueError("A benchmark page needs at least one rendered input")
+        by_id = {item["taskId"]: item for item in items}
+        fingerprint = dataset_fingerprint(items)
+        models = load_model_config(config_path)
+        directory, output = Path(results_dir), Path(output_dir)
+        summary_path = directory / "summary.json"
+        warnings = []
+        summary = read_report_json(summary_path, warnings)
+        if summary and (summary.get("dataset_fingerprint") != fingerprint
+                        or summary.get("evaluation_protocol_fingerprint") != evaluation_protocol_fingerprint()
+                        or not isinstance(summary.get("mock"), bool) or not isinstance(summary.get("models"), dict)):
+            warnings.append("Excluded run summary with incompatible dataset or missing mock provenance.")
+            summary = {}
+        if not validity["valid"]:
+            warnings.append("Dataset validity checks failed; these inputs are for inspection and cannot support benchmark claims.")
+        tasks_by_model = {}
+        for model in models:
+            card_path = directory / f'scorecard_{model["id"]}.json'
+            card = read_report_json(card_path, warnings)
+            tasks = []
+            rejected_card = card_path.exists() and not card
+            if card:
+                try:
+                    tasks = scorecard_tasks(card)
+                    if (card["dataset_fingerprint"] != fingerprint
+                            or card.get("model_id") != model["id"] or card.get("model_name") != model["model"]
+                            or card.get("provider") != model["provider"]
+                            or card.get("max_output_tokens") != model["max_output_tokens"]
+                            or card["expected_task_count"] != len(items)
+                            or not {task["task_id"] for task in tasks} <= set(by_id)
+                            or not validity["valid"]):
+                        raise ValueError("Incompatible model or validated dataset")
+                except ValueError as error:
+                    warnings.append(f'{model["display_name"]}: excluded scorecard: {error}.')
+                    tasks = []
+                    rejected_card = True
+            state = summary.get("models", {}).get(model["id"], {})
+            if state and (not isinstance(state, dict) or rejected_card or state.get("model") != model["model"]
+                          or state.get("provider") != model["provider"]
+                          or state.get("max_output_tokens") != model["max_output_tokens"]
+                          or (card and summary["mock"] != card.get("mock"))):
+                warnings.append(f'{model["display_name"]}: excluded run state with incompatible model or scorecard provenance.')
+                state = {}
+            model.update(completed=len(tasks), expected=len(items), metrics=_metrics(tasks),
+                         status="complete" if len(tasks) == len(items) else "partial" if tasks else "pending",
+>                        run_state=state.get("status") if isinstance(state.get("status"), str) else "pending",
+                                                                     ^^^^^^^^^
+                         reason=state.get("reason") if isinstance(state.get("reason"), str) else None,
+                         cost_usd=state.get("cost_usd") if finite_nonnegative(state.get("cost_usd")) else None,
+                         mock=bool(card.get("mock", False)) if card and not rejected_card else bool(summary.get("mock", False)) if state else False)
+E           AttributeError: 'list' object has no attribute 'get'
+
+baseline/build_page.py:155: AttributeError
+___ test_malformed_summary_model_state_preserves_measurements_and_peer[None] ___
+
+dataset = (PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s1/manifest.json'), [{'taskId': 'task-0', 'fontI...egory': 'non-serif', ...}, ...], PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s1/models.json'))
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s1')
+value = None
+
+    @pytest.mark.parametrize("value", [[], None, False, 0, "", ["broken"], "broken"])
+    def test_malformed_summary_model_state_preserves_measurements_and_peer(dataset, tmp_path, value):
+        manifest, samples, config = dataset
+        directory = tmp_path / "results"
+        write_scorecard(directory, samples)
+        model_config = json.loads(config.read_text())
+        model_config["models"].append({**model_config["models"][0], "id": "peer"})
+        config.write_text(json.dumps(model_config))
+        card = json.loads((directory / "scorecard_test-model.json").read_text())
+        (directory / "scorecard_peer.json").write_text(json.dumps({**card, "model_id": "peer"}))
+        summary_path = directory / "summary.json"
+        summary = json.loads(summary_path.read_text())
+        summary["models"]["peer"] = summary["models"]["test-model"]
+        summary["models"]["test-model"] = value
+        summary_path.write_text(json.dumps(summary))
+    
+>       report = build_page(manifest, directory, tmp_path / "site", config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_build_page.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s1/manifest.json')
+results_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s1/results')
+output_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s1/site')
+config_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s1/models.json')
+
+    def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: str | Path = "site",
+                   config_path: str | Path = "config/models.json") -> dict:
+        validity = validate_dataset(manifest_path)
+        items = load_manifest(str(manifest_path))
+        if not items:
+            raise ValueError("A benchmark page needs at least one rendered input")
+        by_id = {item["taskId"]: item for item in items}
+        fingerprint = dataset_fingerprint(items)
+        models = load_model_config(config_path)
+        directory, output = Path(results_dir), Path(output_dir)
+        summary_path = directory / "summary.json"
+        warnings = []
+        summary = read_report_json(summary_path, warnings)
+        if summary and (summary.get("dataset_fingerprint") != fingerprint
+                        or summary.get("evaluation_protocol_fingerprint") != evaluation_protocol_fingerprint()
+                        or not isinstance(summary.get("mock"), bool) or not isinstance(summary.get("models"), dict)):
+            warnings.append("Excluded run summary with incompatible dataset or missing mock provenance.")
+            summary = {}
+        if not validity["valid"]:
+            warnings.append("Dataset validity checks failed; these inputs are for inspection and cannot support benchmark claims.")
+        tasks_by_model = {}
+        for model in models:
+            card_path = directory / f'scorecard_{model["id"]}.json'
+            card = read_report_json(card_path, warnings)
+            tasks = []
+            rejected_card = card_path.exists() and not card
+            if card:
+                try:
+                    tasks = scorecard_tasks(card)
+                    if (card["dataset_fingerprint"] != fingerprint
+                            or card.get("model_id") != model["id"] or card.get("model_name") != model["model"]
+                            or card.get("provider") != model["provider"]
+                            or card.get("max_output_tokens") != model["max_output_tokens"]
+                            or card["expected_task_count"] != len(items)
+                            or not {task["task_id"] for task in tasks} <= set(by_id)
+                            or not validity["valid"]):
+                        raise ValueError("Incompatible model or validated dataset")
+                except ValueError as error:
+                    warnings.append(f'{model["display_name"]}: excluded scorecard: {error}.')
+                    tasks = []
+                    rejected_card = True
+            state = summary.get("models", {}).get(model["id"], {})
+            if state and (not isinstance(state, dict) or rejected_card or state.get("model") != model["model"]
+                          or state.get("provider") != model["provider"]
+                          or state.get("max_output_tokens") != model["max_output_tokens"]
+                          or (card and summary["mock"] != card.get("mock"))):
+                warnings.append(f'{model["display_name"]}: excluded run state with incompatible model or scorecard provenance.')
+                state = {}
+            model.update(completed=len(tasks), expected=len(items), metrics=_metrics(tasks),
+                         status="complete" if len(tasks) == len(items) else "partial" if tasks else "pending",
+>                        run_state=state.get("status") if isinstance(state.get("status"), str) else "pending",
+                                                                     ^^^^^^^^^
+                         reason=state.get("reason") if isinstance(state.get("reason"), str) else None,
+                         cost_usd=state.get("cost_usd") if finite_nonnegative(state.get("cost_usd")) else None,
+                         mock=bool(card.get("mock", False)) if card and not rejected_card else bool(summary.get("mock", False)) if state else False)
+E           AttributeError: 'NoneType' object has no attribute 'get'
+
+baseline/build_page.py:155: AttributeError
+__ test_malformed_summary_model_state_preserves_measurements_and_peer[False] ___
+
+dataset = (PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s2/manifest.json'), [{'taskId': 'task-0', 'fontI...egory': 'non-serif', ...}, ...], PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s2/models.json'))
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s2')
+value = False
+
+    @pytest.mark.parametrize("value", [[], None, False, 0, "", ["broken"], "broken"])
+    def test_malformed_summary_model_state_preserves_measurements_and_peer(dataset, tmp_path, value):
+        manifest, samples, config = dataset
+        directory = tmp_path / "results"
+        write_scorecard(directory, samples)
+        model_config = json.loads(config.read_text())
+        model_config["models"].append({**model_config["models"][0], "id": "peer"})
+        config.write_text(json.dumps(model_config))
+        card = json.loads((directory / "scorecard_test-model.json").read_text())
+        (directory / "scorecard_peer.json").write_text(json.dumps({**card, "model_id": "peer"}))
+        summary_path = directory / "summary.json"
+        summary = json.loads(summary_path.read_text())
+        summary["models"]["peer"] = summary["models"]["test-model"]
+        summary["models"]["test-model"] = value
+        summary_path.write_text(json.dumps(summary))
+    
+>       report = build_page(manifest, directory, tmp_path / "site", config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_build_page.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s2/manifest.json')
+results_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s2/results')
+output_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s2/site')
+config_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s2/models.json')
+
+    def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: str | Path = "site",
+                   config_path: str | Path = "config/models.json") -> dict:
+        validity = validate_dataset(manifest_path)
+        items = load_manifest(str(manifest_path))
+        if not items:
+            raise ValueError("A benchmark page needs at least one rendered input")
+        by_id = {item["taskId"]: item for item in items}
+        fingerprint = dataset_fingerprint(items)
+        models = load_model_config(config_path)
+        directory, output = Path(results_dir), Path(output_dir)
+        summary_path = directory / "summary.json"
+        warnings = []
+        summary = read_report_json(summary_path, warnings)
+        if summary and (summary.get("dataset_fingerprint") != fingerprint
+                        or summary.get("evaluation_protocol_fingerprint") != evaluation_protocol_fingerprint()
+                        or not isinstance(summary.get("mock"), bool) or not isinstance(summary.get("models"), dict)):
+            warnings.append("Excluded run summary with incompatible dataset or missing mock provenance.")
+            summary = {}
+        if not validity["valid"]:
+            warnings.append("Dataset validity checks failed; these inputs are for inspection and cannot support benchmark claims.")
+        tasks_by_model = {}
+        for model in models:
+            card_path = directory / f'scorecard_{model["id"]}.json'
+            card = read_report_json(card_path, warnings)
+            tasks = []
+            rejected_card = card_path.exists() and not card
+            if card:
+                try:
+                    tasks = scorecard_tasks(card)
+                    if (card["dataset_fingerprint"] != fingerprint
+                            or card.get("model_id") != model["id"] or card.get("model_name") != model["model"]
+                            or card.get("provider") != model["provider"]
+                            or card.get("max_output_tokens") != model["max_output_tokens"]
+                            or card["expected_task_count"] != len(items)
+                            or not {task["task_id"] for task in tasks} <= set(by_id)
+                            or not validity["valid"]):
+                        raise ValueError("Incompatible model or validated dataset")
+                except ValueError as error:
+                    warnings.append(f'{model["display_name"]}: excluded scorecard: {error}.')
+                    tasks = []
+                    rejected_card = True
+            state = summary.get("models", {}).get(model["id"], {})
+            if state and (not isinstance(state, dict) or rejected_card or state.get("model") != model["model"]
+                          or state.get("provider") != model["provider"]
+                          or state.get("max_output_tokens") != model["max_output_tokens"]
+                          or (card and summary["mock"] != card.get("mock"))):
+                warnings.append(f'{model["display_name"]}: excluded run state with incompatible model or scorecard provenance.')
+                state = {}
+            model.update(completed=len(tasks), expected=len(items), metrics=_metrics(tasks),
+                         status="complete" if len(tasks) == len(items) else "partial" if tasks else "pending",
+>                        run_state=state.get("status") if isinstance(state.get("status"), str) else "pending",
+                                                                     ^^^^^^^^^
+                         reason=state.get("reason") if isinstance(state.get("reason"), str) else None,
+                         cost_usd=state.get("cost_usd") if finite_nonnegative(state.get("cost_usd")) else None,
+                         mock=bool(card.get("mock", False)) if card and not rejected_card else bool(summary.get("mock", False)) if state else False)
+E           AttributeError: 'bool' object has no attribute 'get'
+
+baseline/build_page.py:155: AttributeError
+____ test_malformed_summary_model_state_preserves_measurements_and_peer[0] _____
+
+dataset = (PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s3/manifest.json'), [{'taskId': 'task-0', 'fontI...egory': 'non-serif', ...}, ...], PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s3/models.json'))
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s3')
+value = 0
+
+    @pytest.mark.parametrize("value", [[], None, False, 0, "", ["broken"], "broken"])
+    def test_malformed_summary_model_state_preserves_measurements_and_peer(dataset, tmp_path, value):
+        manifest, samples, config = dataset
+        directory = tmp_path / "results"
+        write_scorecard(directory, samples)
+        model_config = json.loads(config.read_text())
+        model_config["models"].append({**model_config["models"][0], "id": "peer"})
+        config.write_text(json.dumps(model_config))
+        card = json.loads((directory / "scorecard_test-model.json").read_text())
+        (directory / "scorecard_peer.json").write_text(json.dumps({**card, "model_id": "peer"}))
+        summary_path = directory / "summary.json"
+        summary = json.loads(summary_path.read_text())
+        summary["models"]["peer"] = summary["models"]["test-model"]
+        summary["models"]["test-model"] = value
+        summary_path.write_text(json.dumps(summary))
+    
+>       report = build_page(manifest, directory, tmp_path / "site", config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_build_page.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s3/manifest.json')
+results_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s3/results')
+output_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s3/site')
+config_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s3/models.json')
+
+    def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: str | Path = "site",
+                   config_path: str | Path = "config/models.json") -> dict:
+        validity = validate_dataset(manifest_path)
+        items = load_manifest(str(manifest_path))
+        if not items:
+            raise ValueError("A benchmark page needs at least one rendered input")
+        by_id = {item["taskId"]: item for item in items}
+        fingerprint = dataset_fingerprint(items)
+        models = load_model_config(config_path)
+        directory, output = Path(results_dir), Path(output_dir)
+        summary_path = directory / "summary.json"
+        warnings = []
+        summary = read_report_json(summary_path, warnings)
+        if summary and (summary.get("dataset_fingerprint") != fingerprint
+                        or summary.get("evaluation_protocol_fingerprint") != evaluation_protocol_fingerprint()
+                        or not isinstance(summary.get("mock"), bool) or not isinstance(summary.get("models"), dict)):
+            warnings.append("Excluded run summary with incompatible dataset or missing mock provenance.")
+            summary = {}
+        if not validity["valid"]:
+            warnings.append("Dataset validity checks failed; these inputs are for inspection and cannot support benchmark claims.")
+        tasks_by_model = {}
+        for model in models:
+            card_path = directory / f'scorecard_{model["id"]}.json'
+            card = read_report_json(card_path, warnings)
+            tasks = []
+            rejected_card = card_path.exists() and not card
+            if card:
+                try:
+                    tasks = scorecard_tasks(card)
+                    if (card["dataset_fingerprint"] != fingerprint
+                            or card.get("model_id") != model["id"] or card.get("model_name") != model["model"]
+                            or card.get("provider") != model["provider"]
+                            or card.get("max_output_tokens") != model["max_output_tokens"]
+                            or card["expected_task_count"] != len(items)
+                            or not {task["task_id"] for task in tasks} <= set(by_id)
+                            or not validity["valid"]):
+                        raise ValueError("Incompatible model or validated dataset")
+                except ValueError as error:
+                    warnings.append(f'{model["display_name"]}: excluded scorecard: {error}.')
+                    tasks = []
+                    rejected_card = True
+            state = summary.get("models", {}).get(model["id"], {})
+            if state and (not isinstance(state, dict) or rejected_card or state.get("model") != model["model"]
+                          or state.get("provider") != model["provider"]
+                          or state.get("max_output_tokens") != model["max_output_tokens"]
+                          or (card and summary["mock"] != card.get("mock"))):
+                warnings.append(f'{model["display_name"]}: excluded run state with incompatible model or scorecard provenance.')
+                state = {}
+            model.update(completed=len(tasks), expected=len(items), metrics=_metrics(tasks),
+                         status="complete" if len(tasks) == len(items) else "partial" if tasks else "pending",
+>                        run_state=state.get("status") if isinstance(state.get("status"), str) else "pending",
+                                                                     ^^^^^^^^^
+                         reason=state.get("reason") if isinstance(state.get("reason"), str) else None,
+                         cost_usd=state.get("cost_usd") if finite_nonnegative(state.get("cost_usd")) else None,
+                         mock=bool(card.get("mock", False)) if card and not rejected_card else bool(summary.get("mock", False)) if state else False)
+E           AttributeError: 'int' object has no attribute 'get'
+
+baseline/build_page.py:155: AttributeError
+_____ test_malformed_summary_model_state_preserves_measurements_and_peer[] _____
+
+dataset = (PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s4/manifest.json'), [{'taskId': 'task-0', 'fontI...egory': 'non-serif', ...}, ...], PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s4/models.json'))
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s4')
+value = ''
+
+    @pytest.mark.parametrize("value", [[], None, False, 0, "", ["broken"], "broken"])
+    def test_malformed_summary_model_state_preserves_measurements_and_peer(dataset, tmp_path, value):
+        manifest, samples, config = dataset
+        directory = tmp_path / "results"
+        write_scorecard(directory, samples)
+        model_config = json.loads(config.read_text())
+        model_config["models"].append({**model_config["models"][0], "id": "peer"})
+        config.write_text(json.dumps(model_config))
+        card = json.loads((directory / "scorecard_test-model.json").read_text())
+        (directory / "scorecard_peer.json").write_text(json.dumps({**card, "model_id": "peer"}))
+        summary_path = directory / "summary.json"
+        summary = json.loads(summary_path.read_text())
+        summary["models"]["peer"] = summary["models"]["test-model"]
+        summary["models"]["test-model"] = value
+        summary_path.write_text(json.dumps(summary))
+    
+>       report = build_page(manifest, directory, tmp_path / "site", config)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_build_page.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s4/manifest.json')
+results_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s4/results')
+output_dir = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s4/site')
+config_path = PosixPath('/tmp/pytest-of-ted/pytest-54/test_malformed_summary_model_s4/models.json')
+
+    def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: str | Path = "site",
+                   config_path: str | Path = "config/models.json") -> dict:
+        validity = validate_dataset(manifest_path)
+        items = load_manifest(str(manifest_path))
+        if not items:
+            raise ValueError("A benchmark page needs at least one rendered input")
+        by_id = {item["taskId"]: item for item in items}
+        fingerprint = dataset_fingerprint(items)
+        models = load_model_config(config_path)
+        directory, output = Path(results_dir), Path(output_dir)
+        summary_path = directory / "summary.json"
+        warnings = []
+        summary = read_report_json(summary_path, warnings)
+        if summary and (summary.get("dataset_fingerprint") != fingerprint
+                        or summary.get("evaluation_protocol_fingerprint") != evaluation_protocol_fingerprint()
+                        or not isinstance(summary.get("mock"), bool) or not isinstance(summary.get("models"), dict)):
+            warnings.append("Excluded run summary with incompatible dataset or missing mock provenance.")
+            summary = {}
+        if not validity["valid"]:
+            warnings.append("Dataset validity checks failed; these inputs are for inspection and cannot support benchmark claims.")
+        tasks_by_model = {}
+        for model in models:
+            card_path = directory / f'scorecard_{model["id"]}.json'
+            card = read_report_json(card_path, warnings)
+            tasks = []
+            rejected_card = card_path.exists() and not card
+            if card:
+                try:
+                    tasks = scorecard_tasks(card)
+                    if (card["dataset_fingerprint"] != fingerprint
+                            or card.get("model_id") != model["id"] or card.get("model_name") != model["model"]
+                            or card.get("provider") != model["provider"]
+                            or card.get("max_output_tokens") != model["max_output_tokens"]
+                            or card["expected_task_count"] != len(items)
+                            or not {task["task_id"] for task in tasks} <= set(by_id)
+                            or not validity["valid"]):
+                        raise ValueError("Incompatible model or validated dataset")
+                except ValueError as error:
+                    warnings.append(f'{model["display_name"]}: excluded scorecard: {error}.')
+                    tasks = []
+                    rejected_card = True
+            state = summary.get("models", {}).get(model["id"], {})
+            if state and (not isinstance(state, dict) or rejected_card or state.get("model") != model["model"]
+                          or state.get("provider") != model["provider"]
+                          or state.get("max_output_tokens") != model["max_output_tokens"]
+                          or (card and summary["mock"] != card.get("mock"))):
+                warnings.append(f'{model["display_name"]}: excluded run state with incompatible model or scorecard provenance.')
+                state = {}
+            model.update(completed=len(tasks), expected=len(items), metrics=_metrics(tasks),
+                         status="complete" if len(tasks) == len(items) else "partial" if tasks else "pending",
+>                        run_state=state.get("status") if isinstance(state.get("status"), str) else "pending",
+                                                                     ^^^^^^^^^
+                         reason=state.get("reason") if isinstance(state.get("reason"), str) else None,
+                         cost_usd=state.get("cost_usd") if finite_nonnegative(state.get("cost_usd")) else None,
+                         mock=bool(card.get("mock", False)) if card and not rejected_card else bool(summary.get("mock", False)) if state else False)
+E           AttributeError: 'str' object has no attribute 'get'
+
+baseline/build_page.py:155: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[category-value0]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[category-value1]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[category-None]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[category-False]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[category-]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[category-   ]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[weight-value6]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[modifier-value7]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[kerning-None]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[line_height-False]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[width_id-0]
+FAILED tests/test_export_structured.py::test_malformed_export_task_metadata_preserves_valid_peer[target_canonical-   ]
+FAILED tests/test_export_structured.py::test_malformed_export_model_id_preserves_valid_peer[value0]
+FAILED tests/test_export_structured.py::test_malformed_export_model_id_preserves_valid_peer[value1]
+FAILED tests/test_export_structured.py::test_malformed_export_model_id_preserves_valid_peer[None]
+FAILED tests/test_export_structured.py::test_malformed_export_model_id_preserves_valid_peer[False]
+FAILED tests/test_export_structured.py::test_malformed_export_model_id_preserves_valid_peer[0]
+FAILED tests/test_export_structured.py::test_malformed_export_model_id_preserves_valid_peer[]
+FAILED tests/test_export_structured.py::test_malformed_export_model_id_preserves_valid_peer[   ]
+FAILED tests/test_build_page.py::test_malformed_summary_model_state_preserves_measurements_and_peer[value0]
+FAILED tests/test_build_page.py::test_malformed_summary_model_state_preserves_measurements_and_peer[None]
+FAILED tests/test_build_page.py::test_malformed_summary_model_state_preserves_measurements_and_peer[False]
+FAILED tests/test_build_page.py::test_malformed_summary_model_state_preserves_measurements_and_peer[0]
+FAILED tests/test_build_page.py::test_malformed_summary_model_state_preserves_measurements_and_peer[]
+24 failed, 3 passed, 59 deselected in 0.46s

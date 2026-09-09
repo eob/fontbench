@@ -1,0 +1,15 @@
+{
+  "taskId": "font-raleway-v31",
+  "harborTaskId": "task-bc1c06e0025c1c7a2a06a383",
+  "canonical": "Raleway",
+  "aliases": [
+    "raleway"
+  ],
+  "category": "non-serif",
+  "weight": "bold",
+  "modifier": "regular",
+  "kerning": "tight",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

@@ -1,0 +1,52 @@
+{
+  "base": "d69e87e2",
+  "ticket_count": 8,
+  "inventory": [
+    {
+      "ticket": "feat-multi-provider-benchmark.md",
+      "initial_status": "Implemented and validated; live run stopped cleanly at its spending guard",
+      "in_catalog": false
+    },
+    {
+      "ticket": "fix-repo-audit.md",
+      "initial_status": "Implemented and validated locally (audit phase)",
+      "in_catalog": false
+    },
+    {
+      "ticket": "valid-01-benchmark-audit.md",
+      "initial_status": "Completed (local implementation, artifacts, and validation)",
+      "in_catalog": true
+    },
+    {
+      "ticket": "valid-02-rendering.md",
+      "initial_status": "Completed (local implementation and verification; central delivery handled by valid-01)",
+      "in_catalog": true
+    },
+    {
+      "ticket": "valid-03-evaluation.md",
+      "initial_status": "Completed (local implementation and validation)",
+      "in_catalog": true
+    },
+    {
+      "ticket": "valid-04-packaging-reporting.md",
+      "initial_status": "Completed (local implementation and validation)",
+      "in_catalog": true
+    },
+    {
+      "ticket": "valid-05-experimental-design.md",
+      "initial_status": "Completed \u2014 compact sampling explicitly accepted",
+      "in_catalog": true
+    },
+    {
+      "ticket": "valid-06-dataset-release-gate.md",
+      "initial_status": "Completed (local implementation and validation)",
+      "in_catalog": true
+    }
+  ],
+  "bookkeeping_findings": [
+    "Two historical tickets omitted from catalog and lack terminal status",
+    "valid-03 retains Red checks pending heading",
+    "valid-04/valid-06 retain pending parent integration text",
+    "Historical multi-provider ticket still instructs resume of retired input set"
+  ]
+}

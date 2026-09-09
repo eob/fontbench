@@ -1,0 +1,19 @@
+Examine the rendered text in the image. Identify its typographic properties:
+1. font: The canonical font family name (e.g., Arial, Times New Roman, Roboto, Georgia, Courier New, Comic Sans MS, etc.)
+2. category: Exactly one of [serif, non-serif, mono, handwriting, other]
+3. weight: Exactly one of [thin, regular, bold, black]
+4. modifier: Exactly one of [regular, italic, underline, strikethrough, small-caps]
+5. kerning: Exactly one of [tight, normal, loose]
+6. line_height: Exactly one of [tight, normal, loose]
+
+Benchmark definitions: weight labels correspond to CSS numeric weights thin=200, regular=400, bold=700, and black=900. The kerning label denotes uniform letter spacing (tracking): tight=-0.05em, normal=0em, and loose=0.12em. Line-height labels denote tight=1.15, normal=1.45, and loose=1.9 times the 22px font size. Font categories follow the benchmark family catalog; monospace is classified as mono, and handwriting and decorative display families use handwriting and other respectively.
+
+Respond ONLY with a valid JSON object matching this schema:
+{
+  "font": "<font name>",
+  "category": "<serif|non-serif|mono|handwriting|other>",
+  "weight": "<thin|regular|bold|black>",
+  "modifier": "<regular|italic|underline|strikethrough|small-caps>",
+  "kerning": "<tight|normal|loose>",
+  "line_height": "<tight|normal|loose>"
+}

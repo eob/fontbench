@@ -1,0 +1,47 @@
+{
+  "benchmark_version": "1.0.0",
+  "dataset_git_commit": "d69e87e2c206ea75c52f5b8340d677bd14af03e3",
+  "dataset_fingerprint": "d40a3cafa91610bbebaa6c49719f24efcbe754a328e448d3e51f0e1f217c79a6",
+  "evaluation_protocol_fingerprint": "3769c8cc383a4959533c4801eec6202035a5a8cd30b76644e8cdfbc11cc859ce",
+  "updated_at": "2026-09-08T22:46:17.815142+00:00",
+  "budget_usd": 50.0,
+  "spent_cost_usd": 37.879080200000026,
+  "runner_git_commit": "9d996ff09cb8a129927afb2252dbaf82775c8164",
+  "anthropic_workspace_id": "wrkspc_01QaUFx97Qe9NkmYhy6hgLng",
+  "prior_completed_preserved": 2439,
+  "prior_attempt_ids_preserved": 2459,
+  "post_retry_completed": 2443,
+  "post_retry_attempts": 2463,
+  "new_claude_responses": [
+    {
+      "model": "claude-fable-5-1",
+      "input_tokens": 1320,
+      "output_tokens": 59,
+      "cost_usd": 0.01615,
+      "error": null
+    },
+    {
+      "model": "claude-opus-5",
+      "input_tokens": 1318,
+      "output_tokens": 59,
+      "cost_usd": 0.008065,
+      "error": null
+    },
+    {
+      "model": "claude-sonnet-5",
+      "input_tokens": 1318,
+      "output_tokens": 54,
+      "cost_usd": 0.003176,
+      "error": null
+    },
+    {
+      "model": "claude-haiku-4-5-20251001",
+      "input_tokens": 1077,
+      "output_tokens": 46,
+      "cost_usd": 0.001307,
+      "error": null
+    }
+  ],
+  "fallback_credential_used": false,
+  "sqlite_integrity": "ok"
+}

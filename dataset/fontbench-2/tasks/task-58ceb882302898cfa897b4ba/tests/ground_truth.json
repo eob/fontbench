@@ -1,0 +1,15 @@
+{
+  "taskId": "font-bodoni-moda-v60",
+  "harborTaskId": "task-58ceb882302898cfa897b4ba",
+  "canonical": "Bodoni Moda",
+  "aliases": [
+    "bodoni moda"
+  ],
+  "category": "serif",
+  "weight": "black",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

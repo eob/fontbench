@@ -1,0 +1,18 @@
+{
+  "benchmark_version": "1.0.0",
+  "dataset_git_commit": "d69e87e2c206ea75c52f5b8340d677bd14af03e3",
+  "dataset_fingerprint": "d40a3cafa91610bbebaa6c49719f24efcbe754a328e448d3e51f0e1f217c79a6",
+  "evaluation_protocol_fingerprint": "3769c8cc383a4959533c4801eec6202035a5a8cd30b76644e8cdfbc11cc859ce",
+  "updated_at": "2026-09-08T22:20:23.380767+00:00",
+  "budget_usd": 50.0,
+  "spent_cost_usd": 24.896515799999975,
+  "prior_completed_preserved": 1597,
+  "prior_attempt_ids_preserved": 1612,
+  "post_retry_attempts": 1616,
+  "new_attempts": 4,
+  "claude_completed": 0,
+  "claude_error": "HTTP 400: This API key is not scoped to a workspace, so this request must include the anthropic-workspace-id header with the ID of the workspace to use. Add the header, or use an API key that is scoped to a workspace.",
+  "workspace_lookup_status": 403,
+  "workspace_lookup_error": "Missing permissions. Please check with Anthropic support if you think this is in error.",
+  "sqlite_integrity": "ok"
+}

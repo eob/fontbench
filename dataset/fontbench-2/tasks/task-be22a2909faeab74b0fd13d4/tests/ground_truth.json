@@ -1,0 +1,15 @@
+{
+  "taskId": "font-raleway-v58",
+  "harborTaskId": "task-be22a2909faeab74b0fd13d4",
+  "canonical": "Raleway",
+  "aliases": [
+    "raleway"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "small-caps",
+  "kerning": "tight",
+  "lineHeight": "normal",
+  "widthId": "medium",
+  "widthPx": 320
+}

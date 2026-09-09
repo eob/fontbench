@@ -42,6 +42,8 @@ def task(tmp_path):
     ("a", "Arial", [], False),
     ("Roboto", "Roboto Mono", [], False),
     ("Roboto Mono", "Roboto", [], False),
+    ("Helvetica Neue", "Helvetica", [], False),
+    ("Times", "Times New Roman", [], False),
     ("Arial or Helvetica", "Arial", [], False),
     ("Arial", "Helvetica", ["!!!"], False),
     ("", "Arial", [], False),
@@ -64,14 +66,6 @@ def test_missing_and_invalid_predictions_receive_no_default_credit(task, predict
     assert result.composite_score == 0.0
     assert not any((result.font_correct, result.category_correct, result.weight_correct,
                     result.modifier_correct, result.kerning_correct, result.line_height_correct))
-
-
-def test_partial_predictions_score_only_explicit_valid_dimensions(task):
-    evaluator = BaselineEvaluator(mock=True)
-    evaluator.predict_image = Mock(return_value=PredictionResponse(' {"font":"Arial"}', {"font": "Arial"}))
-    result = evaluator._eval_single_task(task, "prompt")
-    assert result.font_correct
-    assert result.composite_score == pytest.approx(1 / 6)
 
 
 def test_valid_response_scores_all_dimensions(task):
@@ -152,12 +146,20 @@ def test_zero_limit_produces_an_empty_scorecard(task, tmp_path):
 def test_cli_mock_output_cannot_replace_a_live_scorecard(task, tmp_path, monkeypatch):
     manifest = tmp_path / "manifest.json"
     manifest.write_text(json.dumps([task]))
-    live = tmp_path / "scorecard_example.json"
+    config = tmp_path / "models.json"
+    config.write_text(json.dumps({"version": 1, "verified_at": "2026-09-08", "models": [{
+        "id": "example", "model": "example", "provider": "google", "display_name": "Example",
+        "api_key_env": "TEST_KEY", "source_url": "https://example.com/models",
+    }]}))
+    live_directory = tmp_path / "safety"
+    live_directory.mkdir()
+    live = live_directory / "scorecard_example.json"
     live.write_text('"existing live results"')
-    monkeypatch.setattr("sys.argv", ["fontbench", "--mock", "--model", "example", "--manifest", str(manifest), "--output-dir", str(tmp_path)])
+    monkeypatch.setattr("sys.argv", ["fontbench", "--mock", "--models", "example", "--config", str(config),
+                                    "--run-id", "safety", "--manifest", str(manifest), "--output-dir", str(tmp_path)])
     cli.main()
     assert live.read_text() == '"existing live results"'
-    saved = json.loads((tmp_path / "scorecard_mock_example.json").read_text())
+    saved = json.loads((tmp_path / "mock-safety" / "scorecard_example.json").read_text())
     assert saved["mock"] is True
     assert saved["tasks"][0]["raw_prediction"]
     assert "error" in saved["tasks"][0]
@@ -165,6 +167,7 @@ def test_cli_mock_output_cannot_replace_a_live_scorecard(task, tmp_path, monkeyp
 
 
 def test_manifest_images_are_resolved_relative_to_the_manifest(task, tmp_path, monkeypatch):
+    monkeypatch.setattr("baseline.validate_dataset.require_valid_dataset", lambda path: {"valid": True})
     task.pop("imagePath")
     task["imageFilename"] = "sample.png"
     manifest = tmp_path / "manifest.json"
@@ -186,7 +189,7 @@ def test_limited_scorecards_record_the_full_manifest_size(task, tmp_path):
 def test_new_scorecards_identify_the_corrected_grading_rules(tmp_path):
     manifest = tmp_path / "manifest.json"
     manifest.write_text("[]")
-    assert BaselineEvaluator(mock=True).evaluate_manifest(str(manifest)).grading_version == "2"
+    assert BaselineEvaluator(mock=True).evaluate_manifest(str(manifest)).grading_version == "3"
 
 
 def test_invalid_response_error_preserves_the_complete_raw_body(task, monkeypatch):
@@ -232,3 +235,55 @@ def test_duplicate_manifest_task_ids_are_rejected_before_any_prediction(task, tm
     with pytest.raises(ValueError, match="[Dd]uplicate"):
         evaluator.evaluate_manifest(str(manifest))
     evaluator.predict_image.assert_not_called()
+
+
+def test_partial_parsed_responses_are_schema_failures_at_the_grading_boundary(task):
+    evaluator = BaselineEvaluator(mock=True)
+    evaluator.predict_image = Mock(return_value=PredictionResponse('{"font":"Arial"}', {'font': 'Arial'}))
+    result = evaluator._eval_single_task(task, 'prompt')
+    assert result.composite_score == 0
+    assert result.error_kind == 'invalid_response'
+
+
+def test_scorecard_marks_partial_cohort_and_invalid_model_answers(task):
+    evaluator = BaselineEvaluator(mock=True)
+    evaluator.predict_image = Mock(return_value=PredictionResponse('invalid', error='Invalid JSON', error_kind='invalid_response'))
+    result = evaluator._eval_single_task(task, 'prompt')
+    card = evaluator.score_results([result], expected_task_count=2)
+    assert card.status == 'partial'
+    assert card.invalid_response_count == 1
+    assert card.overall_composite_score == 0
+    assert card.cohort_fingerprint
+    full = evaluator.score_results([result], expected_task_count=1)
+    assert full.status == 'complete'
+    assert full.cohort_fingerprint == card.cohort_fingerprint
+    with pytest.raises(ValueError, match='[Dd]uplicate'):
+        evaluator.score_results([result, result], expected_task_count=2)
+
+
+@pytest.mark.parametrize('aliases', ['Arial', [None], ['  '], ['!!!'], 42])
+def test_malformed_aliases_are_refused_before_evaluation(task, tmp_path, aliases):
+    task['aliases'] = aliases
+    manifest = tmp_path / 'manifest.json'
+    manifest.write_text(json.dumps([task]))
+    evaluator = BaselineEvaluator(mock=True)
+    evaluator.predict_image = Mock()
+    with pytest.raises(ValueError, match='[Aa]lias'):
+        evaluator.evaluate_manifest(str(manifest))
+    evaluator.predict_image.assert_not_called()
+
+
+def test_live_evaluator_requires_valid_dataset_before_prediction(task, tmp_path, monkeypatch):
+    manifest = tmp_path / 'manifest.json'
+    manifest.write_text(json.dumps([task]))
+    def refuse(path):
+        raise ValueError('Dataset is not valid: audit evidence missing')
+    monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', refuse)
+    evaluator = BaselineEvaluator()
+    evaluator.predict_image = Mock()
+    try:
+        with pytest.raises(ValueError, match='Dataset is not valid'):
+            evaluator.evaluate_manifest(str(manifest))
+        evaluator.predict_image.assert_not_called()
+    finally:
+        evaluator.close()

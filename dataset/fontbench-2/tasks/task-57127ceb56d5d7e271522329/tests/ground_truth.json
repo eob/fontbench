@@ -1,0 +1,15 @@
+{
+  "taskId": "font-cormorant-garamond-v17",
+  "harborTaskId": "task-57127ceb56d5d7e271522329",
+  "canonical": "Cormorant Garamond",
+  "aliases": [
+    "cormorant garamond"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "regular",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "wide",
+  "widthPx": 440
+}

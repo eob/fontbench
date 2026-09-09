@@ -1,0 +1,15 @@
+{
+  "taskId": "font-plus-jakarta-sans-v22",
+  "harborTaskId": "task-791def3fcec4df00e21961e0",
+  "canonical": "Plus Jakarta Sans",
+  "aliases": [
+    "plus jakarta sans"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "tight",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

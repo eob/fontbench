@@ -1,3 +1,5 @@
+> **Invalid historical result.** This unversioned prototype scorecard is excluded from FontBench V1.0.0. See [historical classifications](historical.json).
+
 # FontBench-1 Scorecard: `mock-vlm`
 
 - **Evaluated At**: 2026-09-07 11:17:40 UTC

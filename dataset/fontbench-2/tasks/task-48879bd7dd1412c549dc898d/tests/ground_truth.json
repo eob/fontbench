@@ -1,0 +1,15 @@
+{
+  "taskId": "font-georgia-v41",
+  "harborTaskId": "task-48879bd7dd1412c549dc898d",
+  "canonical": "Georgia",
+  "aliases": [
+    "georgia"
+  ],
+  "category": "serif",
+  "weight": "bold",
+  "modifier": "strikethrough",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "medium",
+  "widthPx": 320
+}

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-lato-v25",
+  "harborTaskId": "task-4cc94b81bb884892dfa009aa",
+  "canonical": "Lato",
+  "aliases": [
+    "lato"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "strikethrough",
+  "kerning": "tight",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

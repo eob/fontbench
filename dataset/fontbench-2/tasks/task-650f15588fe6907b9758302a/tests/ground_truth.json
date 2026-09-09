@@ -1,0 +1,15 @@
+{
+  "taskId": "font-dm-sans-v50",
+  "harborTaskId": "task-650f15588fe6907b9758302a",
+  "canonical": "DM Sans",
+  "aliases": [
+    "dm sans"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "italic",
+  "kerning": "normal",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

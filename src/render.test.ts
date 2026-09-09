@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { chromium, type Browser } from 'playwright';
-import { TOP_50_FONTS, VARIANT_RECIPES, type FontSpec, type VariantRecipe } from './fonts';
+import { TOP_50_FONTS, VARIANT_RECIPES, WIDTH_VARIANTS, type FontSpec, type VariantRecipe } from './fonts';
 import { renderAllSamples } from './render';
 
 // An original, minimal WOFF containing rectangle glyphs for the ASCII pangram.
@@ -21,35 +21,152 @@ const recipe: VariantRecipe = {
 
 const originalFonts = [...TOP_50_FONTS];
 const originalRecipes = [...VARIANT_RECIPES];
+const originalWidths = WIDTH_VARIANTS.map(width => ({ ...width }));
 const realLaunch = chromium.launch.bind(chromium);
 let directory: string;
 let browsers: Browser[];
 let launchSpy: ReturnType<typeof spyOn>;
 
+function traceFixture(stage: string) {
+  if (process.env.CI) console.log(`[render-test] ${stage}`);
+}
+
 beforeEach(() => {
+  traceFixture('setup begin');
   directory = fs.mkdtempSync(path.join(os.tmpdir(), 'fontbench-render-test-'));
   browsers = [];
   TOP_50_FONTS.splice(0, TOP_50_FONTS.length, fixtureFont);
   VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, recipe);
   launchSpy = spyOn(chromium, 'launch').mockImplementation(async options => {
+    traceFixture('browser launch begin');
     const browser = await realLaunch(options);
+    traceFixture('browser launch complete');
     browsers.push(browser);
     return browser;
   });
+  traceFixture('setup complete');
 });
 
-afterEach(async () => {
+async function cleanupFixture() {
+  traceFixture('cleanup begin');
+  const cleanupBrowsers = browsers;
+  const cleanupDirectory = directory;
+  browsers = [];
   launchSpy.mockRestore();
-  for (const browser of browsers) await browser.close();
+  // Restore shared state before a close can reject or outlive this test's hook.
   TOP_50_FONTS.splice(0, TOP_50_FONTS.length, ...originalFonts);
   VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, ...originalRecipes);
-  fs.rmSync(directory, { recursive: true, force: true });
-});
+  WIDTH_VARIANTS.splice(0, WIDTH_VARIANTS.length, ...originalWidths.map(width => ({ ...width })));
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    await Promise.race([
+      Promise.all(cleanupBrowsers.filter(browser => browser.isConnected()).map(async browser => {
+        traceFixture('browser close begin');
+        await browser.close();
+        traceFixture('browser close complete');
+      })),
+      new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => reject(new Error('Renderer test browsers did not close within 4000ms')), 4000);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timeout);
+    fs.rmSync(cleanupDirectory, { recursive: true, force: true });
+    traceFixture('cleanup complete');
+  }
+}
+
+afterEach(cleanupFixture);
+
+// Native await avoids the browser-suite stalls seen with Bun's async rejection matcher.
+// See tickets/evidence/publish-01-bun-runtime-gates.md for the executable A/B control.
+async function expectRejection(promise: Promise<unknown>, expected: RegExp | string) {
+  let rejected = false;
+  let rejection: unknown;
+  try {
+    await promise;
+  } catch (error) {
+    rejected = true;
+    rejection = error;
+  }
+  expect(rejected).toBe(true);
+  expect(() => { throw rejection; }).toThrow(expected);
+}
 
 describe('rendered font integrity', () => {
+  test('restores shared fixtures before a failed browser close and cleans only its own directory', async () => {
+    const cleanupDirectory = directory;
+    let failClose!: (error: Error) => void;
+    browsers = [{
+      isConnected: () => true,
+      close: () => new Promise<void>((_, reject) => { failClose = reject; }),
+    } as unknown as Browser, {
+      isConnected: () => false,
+      close: () => { throw new Error('Disconnected browser closed again'); },
+    } as unknown as Browser];
+    WIDTH_VARIANTS[0]!.widthPx = -1;
+    const cleanup = cleanupFixture();
+    try {
+      expect(TOP_50_FONTS).toEqual(originalFonts);
+      expect(VARIANT_RECIPES).toEqual(originalRecipes);
+      expect(WIDTH_VARIANTS).toEqual(originalWidths);
+      directory = fs.mkdtempSync(path.join(os.tmpdir(), 'fontbench-render-next-test-'));
+    } finally {
+      failClose(new Error('injected browser close failure'));
+      await expectRejection(cleanup, 'injected browser close failure');
+      browsers = [];
+    }
+    expect(fs.existsSync(cleanupDirectory)).toBe(false);
+    expect(fs.existsSync(directory)).toBe(true);
+  });
+
+  test('removes its directory and fails clearly when browser cleanup never settles', async () => {
+    browsers = [{ isConnected: () => true, close: () => new Promise<void>(() => {}) } as unknown as Browser];
+    await expectRejection(cleanupFixture(), 'Renderer test browsers did not close within 4000ms');
+    expect(fs.existsSync(directory)).toBe(false);
+  });
+
+  test('refuses registered release output before filesystem mutation or browser launch', async () => {
+    const mkdir = spyOn(fs, 'mkdirSync').mockImplementation(() => { throw new Error('Filesystem mutation reached'); });
+    try {
+      await expectRejection(renderAllSamples(path.join(import.meta.dir, '../dataset/fontbench-2-rendered')), /Frozen release output/);
+      expect(launchSpy).not.toHaveBeenCalled();
+    } finally {
+      mkdir.mockRestore();
+    }
+  });
+
+  test('refuses a CSS family alias around an unrelated font binary', async () => {
+    TOP_50_FONTS[0] = { ...fixtureFont, name: 'Unrelated Sans', cssFamily: 'Unrelated Sans',
+      cssUrl: `data:text/css,${encodeURIComponent(css.replaceAll('Fixture Sans', 'Unrelated Sans'))}` };
+    await expectRejection(renderAllSamples(directory), /identity|family/i);
+  });
+
+  test('refuses CSS weight declarations that mislabel a static font binary', async () => {
+    TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-weight: 400', 'font-weight: 700'))}` };
+    VARIANT_RECIPES[0] = { ...recipe, weight: 'bold' };
+    await expectRejection(renderAllSamples(directory), /binary.*weight|weight.*binary/i);
+  });
+
+  test('records actual multiline geometry and content hashes with pinned assets', async () => {
+    const [sample] = await renderAllSamples(directory);
+    expect(sample!.layout!.lineCount).toBeGreaterThanOrEqual(2);
+    expect(sample!.imageSha256).toMatch(/^[a-f0-9]{64}$/);
+    const asset = sample!.fontRendering!.assets![0]!;
+    expect(fs.readFileSync(path.join(directory, asset.path))).toEqual(Buffer.from(FONT_DATA, 'base64'));
+  });
+
+  test('keeps line height observable even when the full pangram fits the width', async () => {
+    WIDTH_VARIANTS.find(width => width.id === 'wide')!.widthPx = 1200;
+    VARIANT_RECIPES[0] = { ...recipe, widthId: 'wide' };
+    const [sample] = await renderAllSamples(directory);
+    expect(sample!.layout!.lineCount).toBe(2);
+    expect(sample!.layout!.cardHeightPx).toBeGreaterThan(110);
+  });
+
   test('refuses a missing font instead of labeling a fallback', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: 'data:text/css,' };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/font|fallback/i);
+    await expectRejection(renderAllSamples(directory), /font|fallback/i);
     expect(fs.existsSync(path.join(directory, 'manifest.json'))).toBe(false);
   });
 
@@ -58,14 +175,14 @@ describe('rendered font integrity', () => {
       ...fixtureFont,
       cssUrl: `data:text/css,${encodeURIComponent(css.replace(FONT_DATA, 'aW52YWxpZA=='))}`,
     };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/font|network/i);
+    await expectRejection(renderAllSamples(directory), /font|network/i);
     expect(browsers.every(browser => !browser.isConnected())).toBe(true);
   });
 
   test('refuses partial glyph fallback even when a webfont loads', async () => {
     const partialCss = css.replace('font-weight: 400;', 'font-weight: 400; unicode-range: U+0041-005A;');
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(partialCss)}` };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/fallback/i);
+    await expectRejection(renderAllSamples(directory), /fallback/i);
   });
 
   test('omits unsupported weights and records the face actually used', async () => {
@@ -86,12 +203,34 @@ describe('rendered font integrity', () => {
     expect(browsers.every(browser => !browser.isConnected())).toBe(true);
   });
 
-  test('does not render upright labels using an italic-only font', async () => {
+  test('refuses a CSS italic declaration around a regular font binary', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-style: normal', 'font-style: italic'))}` };
-    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'italic' });
-    const manifest = await renderAllSamples(directory);
-    expect(manifest.map(sample => sample.modifier)).toEqual(['italic']);
+    VARIANT_RECIPES[0] = { ...recipe, modifier: 'italic' };
+    await expectRejection(renderAllSamples(directory), /binary style mismatch/);
   });
+
+  test('records the current native face after styles change between recipes', async () => {
+    const italicBytes = fs.readFileSync(new URL('./fixtures/fixture-italic.woff', import.meta.url));
+    const server = Bun.serve({ port: 0, fetch: () => new Response(italicBytes, { headers: { 'Content-Type': 'font/woff' } }) });
+    try {
+      const italicCss = css.replace('font-style: normal', 'font-style: italic').replace(`data:font/woff;base64,${FONT_DATA}`, `http://localhost:${server.port}/italic.woff`);
+      TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css + italicCss)}` };
+      VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, ...originalRecipes.filter(recipe => recipe.weight === 'regular'));
+      const manifest = await renderAllSamples(directory);
+      expect(manifest).toHaveLength(15);
+      for (const sample of manifest) {
+        expect(sample.fontRendering!.platformFonts[0]!.postScriptName).toBe(sample.modifier === 'italic' ? 'FixtureSans-Italic' : 'FixtureSans-Regular');
+      }
+      await server.stop(true);
+      const frozenManifest = fs.readFileSync(path.join(directory, 'manifest.json'));
+      const replayDirectory = path.join(directory, 'replay');
+      const replay = await renderAllSamples(replayDirectory, { fontCacheDir: directory });
+      expect(replay.map(sample => sample.imageSha256)).toEqual(manifest.map(sample => sample.imageSha256));
+      expect(fs.readFileSync(path.join(directory, 'manifest.json'))).toEqual(frozenManifest);
+    } finally {
+      await server.stop(true);
+    }
+  }, 15000);
 
   test('small caps visibly transforms lowercase letters and reports synthesis policy', async () => {
     VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'small-caps' });
@@ -102,15 +241,41 @@ describe('rendered font integrity', () => {
     expect(manifest[1]).toMatchObject({ fontRendering: { smallCapsSynthesisAllowed: true } });
   });
 
-  test('records synthetic italic and preserves unrelated files on successful replacement', async () => {
-    VARIANT_RECIPES[0] = { ...recipe, modifier: 'italic' };
+  test('omits a small-caps label when the requested style has no visible effect', async () => {
+    TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css + '#target { font-variant-caps: normal !important; }')}` };
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'small-caps' });
+    const manifest = await renderAllSamples(directory);
+    expect(manifest.map(sample => sample.modifier)).toEqual(['regular']);
+    expect(JSON.parse(fs.readFileSync(path.join(directory, 'skipped.json'), 'utf8'))[0].reason).toContain('no visible effect');
+  });
+
+  test('omits synthetic italic and preserves unrelated files on successful replacement', async () => {
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2, modifier: 'italic' });
     fs.writeFileSync(path.join(directory, 'notes.txt'), 'keep this');
+    fs.writeFileSync(path.join(directory, 'font-fixture-v99.png'), 'obsolete managed image');
     fs.writeFileSync(path.join(directory, 'manifest.json'), 'previous manifest');
     fs.writeFileSync(path.join(directory, 'font-fixture-v01.png'), 'previous image');
     const manifest = await renderAllSamples(directory);
-    expect(manifest[0]).toMatchObject({ fontRendering: { syntheticItalic: true } });
+    expect(manifest).toHaveLength(1);
+    expect(manifest[0]).toMatchObject({ fontRendering: { syntheticItalic: false } });
+    expect(JSON.parse(fs.readFileSync(path.join(directory, 'skipped.json'), 'utf8'))).toMatchObject([{ taskId: 'font-fixture-v02', reason: expect.stringContaining('Unsupported face') }]);
     expect(fs.readFileSync(path.join(directory, 'notes.txt'), 'utf8')).toBe('keep this');
+    expect(fs.existsSync(path.join(directory, 'font-fixture-v99.png'))).toBe(false);
     expect(JSON.parse(fs.readFileSync(path.join(directory, 'manifest.json'), 'utf8'))).toEqual(manifest);
+  });
+
+  test('reuses pinned font bytes and refuses tampered cache assets', async () => {
+    const [sample] = await renderAllSamples(directory);
+    const [repeated] = await renderAllSamples(directory);
+    expect(repeated!.imageSha256).toBe(sample!.imageSha256);
+    const asset = sample!.fontRendering!.assets![0]!;
+    fs.writeFileSync(path.join(directory, asset.path), 'corrupt');
+    await expectRejection(renderAllSamples(directory), /hash mismatch/);
+  }, 15000);
+
+  test('refuses identical images assigned to distinct tasks', async () => {
+    VARIANT_RECIPES.push({ ...recipe, variantIndex: 2 });
+    await expectRejection(renderAllSamples(directory), /Identical images/);
   });
 
   test('closes the browser and preserves previous output when a later screenshot fails', async () => {
@@ -139,7 +304,7 @@ describe('rendered font integrity', () => {
       });
       return browser;
     });
-    await expect(renderAllSamples(directory)).rejects.toThrow('injected screenshot failure');
+    await expectRejection(renderAllSamples(directory), 'injected screenshot failure');
     expect(browsers.every(browser => !browser.isConnected())).toBe(true);
     expect(fs.readFileSync(imagePath, 'utf8')).toBe('previous complete image');
     expect(fs.readFileSync(path.join(directory, 'manifest.json'), 'utf8')).toBe('previous complete manifest');

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-inter-v59",
+  "harborTaskId": "task-b49a5e975b8bf98a265a56fc",
+  "canonical": "Inter",
+  "aliases": [
+    "inter"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "small-caps",
+  "kerning": "normal",
+  "lineHeight": "loose",
+  "widthId": "wide",
+  "widthPx": 440
+}

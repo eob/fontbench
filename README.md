@@ -1,139 +1,110 @@
-# FontBench
+# FontBench V1.0.0
 
-FontBench evaluates visual identification of six typographic properties: font family, category, weight, modifier, letter spacing (`kerning`), and line height. Each task presents a high-DPI image of “The quick brown fox jumps over the lazy dog.” and requests a JSON prediction.
+FontBench measures recognition of six typographic properties from an image: font family, category, weight, modifier, letter spacing (`kerning`), and line height. **V1.0.0 freezes 1,824 images across 50 families**, with 2–5 visible lines per image, 129 verified font binaries, and zero validation errors.
 
-The catalog defines 50 font families and 20 recipes per family, using container widths of 220, 320, and 440 CSS pixels. Rendering produces up to 1,000 tasks; recipes whose weight or face is unavailable are skipped. The generated manifest records the actual task set. Supported variant counts differ by font; compare runs using the same frozen manifest and images.
+The [release descriptor](releases/1.0.0.json) binds this version to dataset Git commit [`d69e87e2c206ea75c52f5b8340d677bd14af03e3`](https://github.com/eob/fontbench/commit/d69e87e2c206ea75c52f5b8340d677bd14af03e3), the dataset fingerprint, and the evaluation protocol fingerprint. [CHANGELOG.md](CHANGELOG.md) records the release; Git tag `v1.0.0` identifies its compatible tooling. The accepted files remain in `dataset/fontbench-2-rendered` and `dataset/fontbench-2`: these directory names predate public versioning and do not mean V2.
 
-The packaged dataset currently contains 1,000 historical samples. These images and the existing scorecards predate the rendering and grading corrections described in [the audit notes](tickets/fix-repo-audit.md). Re-render and re-evaluate before using them for new model comparisons.
+The original 1,000-image dataset and September 7 639-image pilot are **invalid historical prototypes**. Their inputs, paid checkpoints, and reports are preserved and labeled in the [dataset guide](dataset/README.md) and [historical result catalog](results/historical.json). The [ticket catalog](tickets/README.md) records the defects, repairs, and regression evidence.
 
-The corrected September 7 comparison, frozen inputs, and resume commands are described in [the live run notes](results/runs/fontbench-2026-09-07/README.md). Open [the benchmark page](site/index.html) to explore its partial measurements and input montages.
+## Setup and validate the release
 
-## Setup
-
-Requires Bun and Python 3.10 or newer. Rendering also requires Chromium, its system dependencies, and network access to the configured font providers.
+Requires Bun 1.3.14, Python 3.10+, Git history containing the dataset commit, and Chromium for browser tests or candidate generation. CI uses this tested Bun version; review the [runtime regression evidence](tickets/evidence/publish-01-bun-runtime-gates.md) before upgrading it.
 
 ```bash
 bun install --frozen-lockfile
 bunx playwright install chromium
 python3 -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
+.venv/bin/python -m pip install -e '.[dev]'
+bun run validate:release
 ```
 
-On Linux, `bunx playwright install --with-deps chromium` also installs browser system dependencies and may require administrator privileges.
+On Linux, `bunx playwright install --with-deps chromium` can install browser system dependencies. The release validator runs offline: it verifies committed manifest bytes, dataset and protocol fingerprints, and the independent all-image/font gate. Live runs require this gate before contacting a model.
 
-## Render and package a dataset
+## Run any supported vision model, now or later
+
+Run an offline smoke check first:
 
 ```bash
-bun run render
-bun run build:harbor
-# Or run both:
-bun run build:all
+bun run benchmark --release 1.0.0 --mock --run-id smoke --max-tasks 3
 ```
 
-The renderer waits for each font variant to load and checks the fonts actually used by Chromium. It rejects fallback rendering and records loaded face information. Unsupported weights or faces are skipped; synthetic styling is recorded where used. Fonts are fetched from external providers, so the source files and available variants can change over time.
+Select models from [`config/models.json`](config/models.json), or provide your own catalog with `--config path/to/models.json`. Native adapters support OpenAI Responses, Anthropic Messages, and Google generateContent; an OpenAI-compatible endpoint can use `base_url`. Set the API key environment variable specified by each configuration. Catalog IDs and prices are dated records; verify availability and rates when scheduling a new campaign.
 
-By default, rendering writes to `dataset/rendered` and packaging writes to `dataset/fontbench-1`. To keep an existing dataset intact, use separate directories:
+Separate runs can contribute to the same release:
 
 ```bash
-bun -e 'import {renderAllSamples} from "./src/render"; await renderAllSamples("/tmp/fontbench-rendered")'
-bun -e 'import {buildHarborDataset} from "./src/generate_harbor_dataset"; buildHarborDataset("/tmp/fontbench-rendered", "/tmp/fontbench-dataset")'
-```
+# Example: GPT in one campaign.
+bun run benchmark --release 1.0.0 --run-id gpt-september \
+  --models gpt-6-astra --budget-usd 25
 
-The generator uses the manifest as the source of truth. It validates input images, removes stale generated tasks, and keeps answers in the verifier and oracle files. Instructions describe the output schema without revealing the answers.
+# Example: Gemini in a later campaign.
+bun run benchmark --release 1.0.0 --run-id gemini-later \
+  --models gemini-3.1-pro-preview --budget-usd 25
 
-## Run a resumable model comparison
-
-[`config/models.json`](config/models.json) enables 11 models: four Anthropic, four OpenAI, and three Google models, with exact API IDs, documented rates, output caps, and source links. Gemini 2.5 Flash-Lite remains recorded but disabled after live inference returned HTTP 404 for this account on September 7, 2026. Configure `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `GEMINI_API_KEY` in the environment. Keys are never stored in run files.
-
-Freeze a corrected rendering in its own directory, then start the matrix:
-
-```bash
-bun -e 'import {renderAllSamples} from "./src/render"; await renderAllSamples("dataset/validated-rendered")'
-bun run benchmark --manifest dataset/validated-rendered/manifest.json --run-id comparison --budget-usd 25
-```
-
-The runner shuffles samples reproducibly and cycles across models. It checkpoints each finished attempt in `results/runs/comparison/state.sqlite3` and writes scorecards plus `summary.json`. Infrastructure errors pause the affected provider or model. Valid answers and malformed model responses are final results; malformed answers score zero. Credit, network, or authentication failures remain retryable.
-
-Run the same command after adding credits. Completed datapoints are reused. The budget is cumulative for the run; increase `--budget-usd` to authorize more work. `--no-budget-limit` removes the runner's spending guard. The guard uses documented rates and conservative reservations for unmetered requests, so reported spending is an estimate rather than an invoice.
-
-A cumulative spending limit cannot be applied to a run with unresolved historical costs, including earlier unpriced attempts. The runner rejects that combination before making new requests.
-
-To add a model later, add a configuration entry and rerun. Existing model configurations and the image/label fingerprint must stay the same; use a new run ID for a changed dataset or changed inference settings. `--models ID [ID ...]` selects models; `--max-tasks N` performs a reproducible subset that can be extended later. `--concurrency N` controls simultaneous requests. Keep the SQLite file as well as the input images to resume. An abrupt process or machine failure between a provider response and its local commit can still require one remote retry.
-
-If scorecards remain but the checkpoint database is missing, the runner stops before making requests or overwriting reports. Restore the database from backup or choose a new run ID.
-
-For an offline smoke test:
-
-```bash
-bun run benchmark --mock --manifest dataset/validated-rendered/manifest.json --run-id smoke --max-tasks 3
-```
-
-Mock runs use separate directories and never enter live comparisons. The original single-model Gemini CLI remains available as `fontbench --mock --limit 6` or `python -m baseline.cli`.
-
-Each prediction has this shape:
-
-```json
-{
-  "font": "<font family>",
-  "category": "<serif|non-serif|mono|handwriting|other>",
-  "weight": "<thin|regular|bold|black>",
-  "modifier": "<regular|italic|underline|strikethrough|small-caps>",
-  "kerning": "<tight|normal|loose>",
-  "line_height": "<tight|normal|loose>"
-}
-```
-
-Each dimension contributes one sixth of the composite score. Font matching ignores case and punctuation but requires a complete canonical name or declared alias. Other dimensions require a listed value. Exact match requires all six dimensions to be correct. The `kerning` field describes CSS letter spacing (tracking), rather than changes to individual kerning pairs.
-
-## Build the benchmark page
-
-```bash
-bun run build:page --manifest dataset/validated-rendered/manifest.json --results-dir results/runs/comparison --output-dir site
+# Rebuild the website from all compatible recorded runs.
+bun run build:page --release 1.0.0 --results-dir results/runs --output-dir site
 python3 -m http.server 8000 --directory site
 ```
 
-Open `http://localhost:8000`. The page uses real dataset images in its overview and H3 breakdown contact sheets. Results show sample counts and completion status, and mismatched dataset fingerprints are excluded. Rebuild the page after resuming a run or adding a model.
+These live commands make paid requests. The budget is a cumulative estimate for that run based on configured rates and conservative reservations, not a provider invoice or provider-enforced limit.
 
-See [results/README.md](results/README.md) for the status of checked-in historical results.
+Each run writes to `results/runs/1.0.0/<run-id>/`. Its `run.json` records the release, full dataset Git hash, data/protocol fingerprints, model configurations, timestamps, and executing code commit/dirty state. `state.sqlite3` is the resumable checkpoint; `attempts.jsonl` retains every attempt; summaries and scorecards expose the scored observations. Commit a completed run directory to contribute it to this repository. The runner does not commit or push automatically. See the [run log guide](results/README.md) for the artifact layout and contribution workflow.
 
-## Run with Harbor
+Repeat the same command to resume. `--max-tasks N` selects a reproducible subset that can be extended later; `--concurrency N` controls simultaneous requests. Omitting `--run-id` creates a unique run. New model IDs can be added in separate runs at any time. Changed inference settings need a new run ID and remain separate configurations on the website. Explicit `--manifest` runs are unversioned experiments and do not enter the release leaderboard.
 
-Install Harbor separately in the same Python environment. The adapter uses Harbor’s asynchronous environment download/upload methods to read `/workspace/sample.png` and write `/workspace/output.json`.
+The website combines complementary observations for the same provider/model/endpoint/output limit, keeps the earliest final observation for each input, and retains all contributing run records and attempt costs. Repeating a task cannot replace a lower score with a higher one. Mocks, incompatible releases, and malformed reports are excluded. Rankings use shared task cohorts; partial coverage is displayed explicitly.
+
+Completed answers and malformed model outputs are final datapoints. Malformed outputs receive zero; infrastructure failures remain retryable and appear in error counts. The report leads with exact match: all six fields must be correct. It also shows the six individual attribute accuracies. Extra fields, duplicate JSON keys, missing fields, and invalid enum values invalidate the whole prediction.
+
+## What the benchmark measures
+
+Every input uses the same pangram with a mandatory break after “fox”; narrow cards can wrap further. The compact corpus samples the typographic space. It is not an exhaustive factorial design.
+
+The catalog has 50 candidate families and 60 recipes per family: four weights × five modifiers × three layout repeats. Supported combinations sample all three tracking, line-height, and width levels. Unsupported native faces are excluded, with the reason retained for each skipped candidate. The [frozen validation report](dataset/fontbench-2-rendered/validation.json) publishes the actual counts.
+
+The shared [prompt](baseline/prompt.txt) defines the labels for every provider and Harbor task:
+
+| Dimension | Labels and definition |
+| --- | --- |
+| Font | Complete canonical family or an explicitly declared spelling alias |
+| Category | `serif`, `non-serif`, `mono`, `handwriting`, `other`, following the published catalog |
+| Weight | `thin` = 200, `regular` = 400, `bold` = 700, `black` = 900 |
+| Modifier | `regular`, native `italic`, `underline`, `strikethrough`, `small-caps` |
+| Letter spacing | `tight` = −0.05em, `normal` = 0em, `loose` = 0.12em |
+| Line height | `tight` = 1.15, `normal` = 1.45, `loose` = 1.9 times the 22px font size |
+
+`thin` names the numeric 200 bucket. `kerning` means uniform tracking, not adjustment of individual letter pairs. Category is an annotation policy and is partly predictable from font identity. Family counts differ with face availability, so sample-weighted scores do not imply equal family weighting.
+
+Conditional correlations remain in the compact recipes. For example, knowing the recipe, modifier, and tracking can determine line height. This accepted sampling limit means the benchmark does not isolate independent causal effects. It also does not establish generalization to arbitrary text, sizes, browsers, languages, or unseen fonts. Inspect per-family results and input contact sheets alongside aggregate scores.
+
+## Candidate generation and Harbor
+
+The release inputs are already checked in. Generation commands create development candidates; they refuse to overwrite or overlap registered release directories.
 
 ```bash
-harbor run \
-  -p dataset/fontbench-1/tasks \
-  --agent baseline.harbor_agent:BaselineVLMAgent \
-  --model YOUR_MODEL_ID
+bun run build:all
+# render -> dataset/candidate-rendered
+# validate candidate -> package -> dataset/candidate-harbor
 ```
 
-The verifier writes a reward between 0 and 1 to `/logs/verifier/reward.txt`. It can also be run locally with `HARBOR_LOGS_DIR` selecting a writable log directory.
+The renderer verifies binary family, weight, style, and the fonts Chromium actually uses. It forbids synthetic italic/weight and accepts synthetic small caps only if they visibly change the image. It retains source font bytes, stylesheets, and hashes. Initial acquisition needs network access; pinned cache assets support subsequent offline replay to a separate destination.
 
-## Validation
+The independent gate decodes every image and parses all 129 font binaries used by the release (139 assets are retained in total). It checks hashes, visible text, line geometry, CSS settings, duplicate pixels, font identity, and complete accounting of 3,000 rendered or skipped candidates. Keep `manifest.json`, `catalog.json`, `skipped.json`, `fonts.lock.json`, PNGs, and `fonts/` together. Changes to released inputs or evaluation behavior require a new release descriptor and version.
+
+Install Harbor separately to use the frozen task package:
+
+```bash
+harbor run -p dataset/fontbench-2/tasks \
+  --agent baseline.harbor_agent:BaselineVLMAgent --model YOUR_MODEL_ID
+```
+
+Instructions, opaque task names, and public tags do not reveal the answers. The verifier writes `/logs/verifier/reward.txt`; it does not sandbox a malicious host-side adapter with access to verifier files. Harbor's own run output is separate from the versioned model ledger; use `bun run benchmark` for website contributions.
+
+## Development checks
 
 ```bash
 bun run test
-# Individual checks:
-bun run test:python
-bun run test:ts
-bun run typecheck
+bun run validate:release
 ```
 
-The tests cover dataset integrity, strict grading, malformed predictions, mock evaluation, report generation, font loading, and the Harbor adapter. Browser tests use local fixtures and require the Chromium installation above; they do not need font-provider access or API keys.
-
-## Repository layout
-
-- `src/fonts.ts`: font catalog and rendering recipes.
-- `src/render.ts`: Chromium renderer and manifest format.
-- `src/generate_harbor_dataset.ts`: Harbor task generator and verifier template.
-- `baseline/`: provider clients, evaluator, durable runner, page builder, exporter, and Harbor adapter.
-- `config/models.json`: verified model matrix and pricing sources.
-- `site/`: generated static benchmark page and SVG input montages.
-- `dataset/rendered/`: rendered images and manifest.
-- `dataset/fontbench-1/tasks/`: packaged tasks, environments, verifiers, and oracle solutions.
-- `tests/` and `src/*.test.ts`: Python and Bun tests.
-
-## License
-
-Repository code is MIT licensed; see [LICENSE](LICENSE). Font files come from the providers listed in the catalog and retain their respective licenses.
+The checks cover Python, local-fixture browser tests, TypeScript, and frozen release integrity. Browser tests need no provider access or API keys. Repository code is MIT licensed; source fonts retain their providers' licenses. See [LICENSE](LICENSE).

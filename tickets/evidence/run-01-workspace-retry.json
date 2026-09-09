@@ -1,0 +1,20 @@
+{
+  "benchmark_version": "1.0.0",
+  "dataset_git_commit": "d69e87e2c206ea75c52f5b8340d677bd14af03e3",
+  "dataset_fingerprint": "d40a3cafa91610bbebaa6c49719f24efcbe754a328e448d3e51f0e1f217c79a6",
+  "evaluation_protocol_fingerprint": "3769c8cc383a4959533c4801eec6202035a5a8cd30b76644e8cdfbc11cc859ce",
+  "updated_at": "2026-09-08T22:35:18.265137+00:00",
+  "budget_usd": 50.0,
+  "spent_cost_usd": 31.77837439999998,
+  "runner_git_commit": "577324bddbacbd5f82f971617e757bef59a3472f",
+  "anthropic_workspace_id": "wrkspc_01QaUFx97Qe9NkmYhy6hgLng",
+  "prior_completed_preserved": 2041,
+  "prior_attempt_ids_preserved": 2060,
+  "post_retry_attempts": 2061,
+  "new_attempts": 1,
+  "issued_model": "claude-fable-5-1",
+  "provider_paused_after_first_failure": true,
+  "claude_completed": 0,
+  "claude_error": "HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+  "sqlite_integrity": "ok"
+}

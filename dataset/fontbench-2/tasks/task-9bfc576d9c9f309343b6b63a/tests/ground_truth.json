@@ -1,0 +1,15 @@
+{
+  "taskId": "font-courier-new-v18",
+  "harborTaskId": "task-9bfc576d9c9f309343b6b63a",
+  "canonical": "Courier New",
+  "aliases": [
+    "courier new"
+  ],
+  "category": "mono",
+  "weight": "regular",
+  "modifier": "regular",
+  "kerning": "loose",
+  "lineHeight": "loose",
+  "widthId": "narrow",
+  "widthPx": 220
+}

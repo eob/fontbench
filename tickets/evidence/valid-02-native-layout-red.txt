@@ -1,0 +1,27 @@
+bun test v1.3.14 (0d9b296a)
+
+src/render.test.ts:
+Starting Chromium rendering for 1 fonts across 15 variants (15 total tasks)...
+[1/1] Rendered fonts through Fixture Sans (13 samples total)...
+Rendering completed in 1.5s!
+Manifest saved to /tmp/fontbench-render-test-UF4ljf/manifest.json
+128 |     try {
+129 |       const italicCss = css.replace('font-style: normal', 'font-style: italic').replace(`data:font/woff;base64,${FONT_DATA}`, `http://localhost:${server.port}/italic.woff`);
+130 |       TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css + italicCss)}` };
+131 |       VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, ...originalRecipes.filter(recipe => recipe.weight === 'regular'));
+132 |       const manifest = await renderAllSamples(directory);
+133 |       expect(manifest).toHaveLength(15);
+                             ^
+error: expect(received).toHaveLength(expected)
+
+Expected length: 15
+Received length: 13
+
+      at <anonymous> (/mnt/disks/data/fontbench/src/render.test.ts:133:24)
+(fail) rendered font integrity > records the current native face after styles change between recipes [2502.68ms]
+
+ 0 pass
+ 14 filtered out
+ 1 fail
+ 1 expect() calls
+Ran 1 test across 1 file. [2.53s]

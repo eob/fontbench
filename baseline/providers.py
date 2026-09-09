@@ -14,19 +14,41 @@ from urllib.parse import quote
 
 import httpx
 from PIL import Image
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 ErrorKind = Literal["credits", "rate_limit", "authentication", "unavailable", "invalid_response", "other"]
 
 
 class TypographicPrediction(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+
     font: str = Field(min_length=1, description="The non-empty canonical font family name")
     category: Literal["serif", "non-serif", "mono", "handwriting", "other"]
     weight: Literal["thin", "regular", "bold", "black"]
     modifier: Literal["regular", "italic", "underline", "strikethrough", "small-caps"]
     kerning: Literal["tight", "normal", "loose"]
     line_height: Literal["tight", "normal", "loose"]
+
+    @field_validator("font", "category", "weight", "modifier", "kerning", "line_height", mode="before")
+    @classmethod
+    def normalize_labels(cls, value, info):
+        if isinstance(value, str):
+            return value.strip() if info.field_name == "font" else value.strip().lower()
+        return value
+
+
+def parse_prediction(raw: str) -> dict:
+    def unique_keys(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"Duplicate prediction key: {key}")
+            result[key] = value
+        return result
+
+    parsed = json.loads(raw, object_pairs_hook=unique_keys)
+    return TypographicPrediction.model_validate(parsed).model_dump()
 
 
 @dataclass
@@ -217,12 +239,7 @@ class PredictionClient:
                 if response.is_success and not body.get("error"):
                     try:
                         result.raw_text = self._text(body).replace(api_key, "[REDACTED]")
-                        parsed = json.loads(result.raw_text)
-                        # Some structured-output providers preserve labels with different casing.
-                        if isinstance(parsed, dict):
-                            parsed = {key: value.strip().lower() if key != "font" and isinstance(value, str) else value
-                                      for key, value in parsed.items()}
-                        result.parsed = TypographicPrediction.model_validate(parsed).model_dump()
+                        result.parsed = parse_prediction(result.raw_text)
                         result.error = result.error_kind = None
                     except (ValueError, TypeError, KeyError, AttributeError) as error:
                         result.error = str(error).replace(api_key, "[REDACTED]")

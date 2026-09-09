@@ -1,0 +1,16 @@
+{
+  "taskId": "font-comic-sans-ms-v30",
+  "harborTaskId": "task-bd6631e85b666f7437de5403",
+  "canonical": "Comic Sans MS",
+  "aliases": [
+    "comic sans ms",
+    "comic sans"
+  ],
+  "category": "handwriting",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "medium",
+  "widthPx": 320
+}

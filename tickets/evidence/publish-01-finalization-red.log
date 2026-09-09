@@ -1,0 +1,419 @@
+FFFFFFFFFFFFFF                                                           [100%]
+=================================== FAILURES ===================================
+_____ test_common_finalization_scores_all_responses_and_preserves_evidence _____
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_common_finalization_score0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+
+    def test_common_finalization_scores_all_responses_and_preserves_evidence(campaign):
+>       f = finalizer()
+            ^^^^^^^^^^^
+
+tests/test_finalization.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+___________ test_finalization_is_idempotent_but_scope_cannot_change ____________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_finalization_is_idempoten0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+
+    def test_finalization_is_idempotent_but_scope_cannot_change(campaign):
+>       f = finalizer()
+            ^^^^^^^^^^^
+
+tests/test_finalization.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+____________________ test_full_scope_refuses_missing_inputs ____________________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_full_scope_refuses_missin0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+
+    def test_full_scope_refuses_missing_inputs(campaign):
+        with pytest.raises(ValueError, match='full|missing|complete'):
+>           finalizer().finalize_run(campaign['directory'], scope='full', root=campaign['root'])
+            ^^^^^^^^^^^
+
+tests/test_finalization.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+___________________ test_full_scope_accepts_complete_roster ____________________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_full_scope_accepts_comple0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+
+    def test_full_scope_accepts_complete_roster(campaign):
+        runner.run_benchmark(**campaign['args'], max_tasks=3)
+        git(campaign['root'], 'add', '.')
+        git(campaign['root'], 'commit', '-qm', 'Complete fixture')
+>       report = finalizer().finalize_run(campaign['directory'], scope='full', root=campaign['root'])
+                 ^^^^^^^^^^^
+
+tests/test_finalization.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+----------------------------- Captured stdout call -----------------------------
+model-b / task-1: saved | estimated spend $0.0159
+___________________ test_active_runner_refuses_finalization ____________________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_active_runner_refuses_fin0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+
+    def test_active_runner_refuses_finalization(campaign):
+>       f=finalizer()
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+_______ test_sealed_run_refuses_resume_before_clients_or_metadata_change _______
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_sealed_run_refuses_resume0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f88be6cdd50>
+
+    def test_sealed_run_refuses_resume_before_clients_or_metadata_change(campaign, monkeypatch):
+        directory=campaign['directory']
+        (directory/'finalization.json').write_text('{}')
+        monkeypatch.setattr(runner, 'BaselineEvaluator', lambda **kwargs: pytest.fail('Provider client constructed for sealed run'))
+        with pytest.raises(ValueError, match='sealed|finalized'):
+>           runner.run_benchmark(**campaign['args'])
+
+tests/test_finalization.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+baseline/runner.py:155: in run_benchmark
+    client = BaselineEvaluator(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kwargs = {'model_name': 'model-a', 'provider': 'google', 'mock': False, 'api_key_env': 'FIXTURE_API_KEY', ...}
+
+>   monkeypatch.setattr(runner, 'BaselineEvaluator', lambda **kwargs: pytest.fail('Provider client constructed for sealed run'))
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: Provider client constructed for sealed run
+
+tests/test_finalization.py:146: Failed
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+___________ test_tampered_sealed_artifact_is_refused[state.sqlite3] ____________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_tampered_sealed_artifact_0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+name = 'state.sqlite3'
+
+    @pytest.mark.parametrize('name', ['state.sqlite3','attempts.jsonl','run.json','summary.json','scorecard_model-a.json','final_results.json'])
+    def test_tampered_sealed_artifact_is_refused(campaign,name):
+>       f=finalizer();f.finalize_run(campaign['directory'],scope='common',root=campaign['root'])
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+___________ test_tampered_sealed_artifact_is_refused[attempts.jsonl] ___________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_tampered_sealed_artifact_1'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+name = 'attempts.jsonl'
+
+    @pytest.mark.parametrize('name', ['state.sqlite3','attempts.jsonl','run.json','summary.json','scorecard_model-a.json','final_results.json'])
+    def test_tampered_sealed_artifact_is_refused(campaign,name):
+>       f=finalizer();f.finalize_run(campaign['directory'],scope='common',root=campaign['root'])
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+______________ test_tampered_sealed_artifact_is_refused[run.json] ______________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_tampered_sealed_artifact_2'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+name = 'run.json'
+
+    @pytest.mark.parametrize('name', ['state.sqlite3','attempts.jsonl','run.json','summary.json','scorecard_model-a.json','final_results.json'])
+    def test_tampered_sealed_artifact_is_refused(campaign,name):
+>       f=finalizer();f.finalize_run(campaign['directory'],scope='common',root=campaign['root'])
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+____________ test_tampered_sealed_artifact_is_refused[summary.json] ____________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_tampered_sealed_artifact_3'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+name = 'summary.json'
+
+    @pytest.mark.parametrize('name', ['state.sqlite3','attempts.jsonl','run.json','summary.json','scorecard_model-a.json','final_results.json'])
+    def test_tampered_sealed_artifact_is_refused(campaign,name):
+>       f=finalizer();f.finalize_run(campaign['directory'],scope='common',root=campaign['root'])
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+_______ test_tampered_sealed_artifact_is_refused[scorecard_model-a.json] _______
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_tampered_sealed_artifact_4'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+name = 'scorecard_model-a.json'
+
+    @pytest.mark.parametrize('name', ['state.sqlite3','attempts.jsonl','run.json','summary.json','scorecard_model-a.json','final_results.json'])
+    def test_tampered_sealed_artifact_is_refused(campaign,name):
+>       f=finalizer();f.finalize_run(campaign['directory'],scope='common',root=campaign['root'])
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+_________ test_tampered_sealed_artifact_is_refused[final_results.json] _________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_tampered_sealed_artifact_5'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+name = 'final_results.json'
+
+    @pytest.mark.parametrize('name', ['state.sqlite3','attempts.jsonl','run.json','summary.json','scorecard_model-a.json','final_results.json'])
+    def test_tampered_sealed_artifact_is_refused(campaign,name):
+>       f=finalizer();f.finalize_run(campaign['directory'],scope='common',root=campaign['root'])
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+____________ test_raw_prediction_and_grade_disagreement_is_refused _____________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_raw_prediction_and_grade_0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+
+    def test_raw_prediction_and_grade_disagreement_is_refused(campaign):
+>       f=finalizer();directory=campaign['directory']
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+________ test_semantic_forgery_is_rejected_even_with_updated_file_hash _________
+
+campaign = {'root': PosixPath('/tmp/pytest-of-ted/pytest-95/test_semantic_forgery_is_rejec0'), 'directory': PosixPath('/tmp/pytes...ask-2","unmetered_attempts":0,"weight":"regular","weight_correct":true,"width_id":"narrow","width_px":220}', ...}, ...}
+
+    def test_semantic_forgery_is_rejected_even_with_updated_file_hash(campaign):
+>       f=finalizer();directory=campaign['directory'];f.finalize_run(directory,scope='common',root=campaign['root'])
+          ^^^^^^^^^^^
+
+tests/test_finalization.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def finalizer():
+>       assert importlib.util.find_spec('baseline.finalize') is not None, 'Offline finalization tooling is missing'
+E       AssertionError: Offline finalization tooling is missing
+E       assert None is not None
+E        +  where None = <function find_spec at 0x7f88c11d3100>('baseline.finalize')
+E        +    where <function find_spec at 0x7f88c11d3100> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/test_finalization.py:20: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+model-a / task-0: credits | estimated spend $0.0141
+model-a / task-0: saved | estimated spend $0.0145
+model-b / task-0: saved | estimated spend $0.0147
+model-a / task-2: saved | estimated spend $0.0151
+model-b / task-2: saved | estimated spend $0.0153
+model-a / task-1: saved | estimated spend $0.0157
+=========================== short test summary info ============================
+FAILED tests/test_finalization.py::test_common_finalization_scores_all_responses_and_preserves_evidence
+FAILED tests/test_finalization.py::test_finalization_is_idempotent_but_scope_cannot_change
+FAILED tests/test_finalization.py::test_full_scope_refuses_missing_inputs - A...
+FAILED tests/test_finalization.py::test_full_scope_accepts_complete_roster - ...
+FAILED tests/test_finalization.py::test_active_runner_refuses_finalization - ...
+FAILED tests/test_finalization.py::test_sealed_run_refuses_resume_before_clients_or_metadata_change
+FAILED tests/test_finalization.py::test_tampered_sealed_artifact_is_refused[state.sqlite3]
+FAILED tests/test_finalization.py::test_tampered_sealed_artifact_is_refused[attempts.jsonl]
+FAILED tests/test_finalization.py::test_tampered_sealed_artifact_is_refused[run.json]
+FAILED tests/test_finalization.py::test_tampered_sealed_artifact_is_refused[summary.json]
+FAILED tests/test_finalization.py::test_tampered_sealed_artifact_is_refused[scorecard_model-a.json]
+FAILED tests/test_finalization.py::test_tampered_sealed_artifact_is_refused[final_results.json]
+FAILED tests/test_finalization.py::test_raw_prediction_and_grade_disagreement_is_refused
+FAILED tests/test_finalization.py::test_semantic_forgery_is_rejected_even_with_updated_file_hash
+14 failed in 1.82s

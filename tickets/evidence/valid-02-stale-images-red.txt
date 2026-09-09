@@ -1,0 +1,27 @@
+bun test v1.3.14 (0d9b296a)
+
+src/render.test.ts:
+Starting Chromium rendering for 1 fonts across 2 variants (2 total tasks)...
+[1/1] Rendered fonts through Fixture Sans (1 samples total)...
+Rendering completed in 0.2s!
+Manifest saved to /tmp/fontbench-render-test-xHNVaR/manifest.json
+150 |     const manifest = await renderAllSamples(directory);
+151 |     expect(manifest).toHaveLength(1);
+152 |     expect(manifest[0]).toMatchObject({ fontRendering: { syntheticItalic: false } });
+153 |     expect(JSON.parse(fs.readFileSync(path.join(directory, 'skipped.json'), 'utf8'))).toMatchObject([{ taskId: 'font-fixture-v02', reason: expect.stringContaining('Unsupported face') }]);
+154 |     expect(fs.readFileSync(path.join(directory, 'notes.txt'), 'utf8')).toBe('keep this');
+155 |     expect(fs.existsSync(path.join(directory, 'font-fixture-v99.png'))).toBe(false);
+                                                                              ^
+error: expect(received).toBe(expected)
+
+Expected: false
+Received: true
+
+      at <anonymous> (/mnt/disks/data/fontbench/src/render.test.ts:155:73)
+(fail) rendered font integrity > omits synthetic italic and preserves unrelated files on successful replacement [527.90ms]
+
+ 0 pass
+ 14 filtered out
+ 1 fail
+ 5 expect() calls
+Ran 1 test across 1 file. [1211.00ms]

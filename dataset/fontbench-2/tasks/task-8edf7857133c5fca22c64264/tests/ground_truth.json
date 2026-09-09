@@ -1,0 +1,15 @@
+{
+  "taskId": "font-roboto-mono-v11",
+  "harborTaskId": "task-8edf7857133c5fca22c64264",
+  "canonical": "Roboto Mono",
+  "aliases": [
+    "roboto mono"
+  ],
+  "category": "mono",
+  "weight": "thin",
+  "modifier": "strikethrough",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "wide",
+  "widthPx": 440
+}

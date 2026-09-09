@@ -1,0 +1,16 @@
+{
+  "taskId": "font-comic-sans-ms-v23",
+  "harborTaskId": "task-8d05ad78bc26e82436c11e67",
+  "canonical": "Comic Sans MS",
+  "aliases": [
+    "comic sans ms",
+    "comic sans"
+  ],
+  "category": "handwriting",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "normal",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

@@ -1,0 +1,536 @@
+FF.FFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+______________ test_erased_second_line_cannot_claim_wrapped_text _______________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_erased_second_line_cannot0/manifest.json')
+
+    def test_erased_second_line_cannot_claim_wrapped_text(candidate):
+        file = candidate.parent / 'sample.png'
+        with Image.open(file) as original:
+            image = original.copy()
+        ImageDraw.Draw(image).rectangle((0, 100, 440, 228), fill='white')
+        image.save(file)
+        change(candidate, lambda rows: rows[0].update(imageSha256=hashlib.sha256(file.read_bytes()).hexdigest()))
+        report = validate_dataset(candidate)
+>       assert not report['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:149: AssertionError
+___________ test_invisible_png_pixels_are_rejected_in_every_mode[LA] ___________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_invisible_png_pixels_are_0/manifest.json')
+mode = 'LA'
+
+    @pytest.mark.parametrize('mode', ['LA', 'RGBA', 'P'])
+    def test_invisible_png_pixels_are_rejected_in_every_mode(candidate, mode):
+        file = candidate.parent / 'sample.png'
+        with Image.open(file) as original:
+            image = original.convert(mode)
+        if mode == 'P':
+            image.info['transparency'] = bytes([0] * 256)
+        else:
+            image.putalpha(0)
+        image.save(file)
+        change(candidate, lambda rows: rows[0].update(imageSha256=hashlib.sha256(file.read_bytes()).hexdigest()))
+>       assert not validate_dataset(candidate)['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:164: AssertionError
+___________ test_invisible_png_pixels_are_rejected_in_every_mode[P] ____________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_invisible_png_pixels_are_2/manifest.json')
+mode = 'P'
+
+    @pytest.mark.parametrize('mode', ['LA', 'RGBA', 'P'])
+    def test_invisible_png_pixels_are_rejected_in_every_mode(candidate, mode):
+        file = candidate.parent / 'sample.png'
+        with Image.open(file) as original:
+            image = original.convert(mode)
+        if mode == 'P':
+            image.info['transparency'] = bytes([0] * 256)
+        else:
+            image.putalpha(0)
+        image.save(file)
+        change(candidate, lambda rows: rows[0].update(imageSha256=hashlib.sha256(file.read_bytes()).hexdigest()))
+>       assert not validate_dataset(candidate)['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:164: AssertionError
+________________ test_malformed_catalog_returns_findings[None] _________________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_malformed_catalog_returns0/manifest.json')
+catalog = None
+
+    @pytest.mark.parametrize('catalog', [None, [], 1, 'invalid'])
+    def test_malformed_catalog_returns_findings(candidate, catalog):
+        (candidate.parent / 'catalog.json').write_text(json.dumps(catalog))
+>       report = validate_dataset(candidate)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_validate_dataset.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-40/test_malformed_catalog_returns0/manifest.json')
+
+    def validate_dataset(manifest_path: str | Path) -> dict:
+        """Return a complete audit report; legacy inputs fail without changing files."""
+        from baseline.evaluator import load_manifest
+    
+        manifest_path = Path(manifest_path).resolve()
+        root = manifest_path.parent
+        report = {'validation_version': 1, 'valid': False, 'sample_count': 0,
+                  'font_count': 0, 'errors': [], 'distributions': {}, 'shortcut_accuracy': {}}
+    
+        def fail(code: str, detail: str, task_id: str | None = None):
+            report['errors'].append({'code': code, 'taskId': task_id, 'detail': detail})
+    
+        try:
+            items = load_manifest(str(manifest_path))
+            if not items:
+                raise ValueError('Dataset is empty')
+        except (ValueError, OSError, TypeError) as error:
+            fail('manifest', str(error))
+            return report
+        report['sample_count'] = len(items)
+        report['font_count'] = len({item['fontName'] for item in items})
+        report['manifest_sha256'] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+        report['distributions'] = {axis: dict(sorted(Counter(str(item.get(axis, '<missing>')) for item in items).items())) for axis in AXES}
+        for axis in ('widthId', 'kerning'):
+            groups = defaultdict(Counter)
+            for item in items:
+                groups[str(item.get(axis))][item['lineHeight']] += 1
+            report['shortcut_accuracy'][f'{axis}_to_lineHeight'] = sum(max(group.values()) for group in groups.values()) / len(items)
+    
+        catalog = {}
+        try:
+            catalog = json.loads((root / 'catalog.json').read_text())
+            fonts = {font['id']: font for font in catalog['fonts']}
+            recipes = {recipe['variantIndex']: recipe for recipe in catalog['recipes']}
+            if not fonts or not recipes or len(fonts) != len(catalog['fonts']) or len(recipes) != len(catalog['recipes']):
+                raise ValueError('Catalog has empty or duplicate entries')
+            candidates = {f'font-{font_id}-v{index:02d}': (font, recipe)
+                          for font_id, font in fonts.items() for index, recipe in recipes.items()}
+            skipped = json.loads((root / 'skipped.json').read_text())
+            if not isinstance(skipped, list) or any(not isinstance(row, dict) or not row.get('reason') for row in skipped):
+                raise ValueError('Skipped candidates must record a reason')
+            skipped_ids = [row['taskId'] for row in skipped]
+            rendered_ids = {item['taskId'] for item in items}
+            if len(set(skipped_ids)) != len(skipped_ids) or rendered_ids & set(skipped_ids):
+                raise ValueError('Duplicate or both rendered and skipped candidates')
+            if rendered_ids | set(skipped_ids) != set(candidates):
+                raise ValueError('Rendered and skipped IDs do not account for the frozen catalog')
+            report['candidate_count'] = len(candidates)
+            report['skipped_count'] = len(skipped)
+            for item in items:
+                font, recipe = candidates[item['taskId']]
+                expected = {'fontId': font['id'], 'fontName': font['name'], 'category': font['category'],
+                            'aliases': font['aliases'], **{key: recipe[key] for key in ('weight', 'modifier', 'kerning', 'lineHeight', 'widthId')}}
+                if any(item.get(key) != value for key, value in expected.items()):
+                    fail('catalog', 'Labels differ from the frozen font catalog or recipe', item['taskId'])
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as error:
+            fail('census', f'Complete frozen catalog and skipped-candidate census required: {error}')
+    
+        pixel_hashes = {}
+        checked_assets = {}
+        prompts = {item.get('prompt') for item in items if isinstance(item.get('prompt'), str)}
+        for item in items:
+            task_id = item['taskId']
+            prompt = item.get('prompt')
+>           if not isinstance(prompt, str) or not prompt.strip() or len(prompts) != 1 or prompt != catalog.get('prompt'):
+                                                                                                   ^^^^^^^^^^^
+E           AttributeError: 'NoneType' object has no attribute 'get'
+
+baseline/validate_dataset.py:104: AttributeError
+______________ test_malformed_catalog_returns_findings[catalog1] _______________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_malformed_catalog_returns1/manifest.json')
+catalog = []
+
+    @pytest.mark.parametrize('catalog', [None, [], 1, 'invalid'])
+    def test_malformed_catalog_returns_findings(candidate, catalog):
+        (candidate.parent / 'catalog.json').write_text(json.dumps(catalog))
+>       report = validate_dataset(candidate)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_validate_dataset.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-40/test_malformed_catalog_returns1/manifest.json')
+
+    def validate_dataset(manifest_path: str | Path) -> dict:
+        """Return a complete audit report; legacy inputs fail without changing files."""
+        from baseline.evaluator import load_manifest
+    
+        manifest_path = Path(manifest_path).resolve()
+        root = manifest_path.parent
+        report = {'validation_version': 1, 'valid': False, 'sample_count': 0,
+                  'font_count': 0, 'errors': [], 'distributions': {}, 'shortcut_accuracy': {}}
+    
+        def fail(code: str, detail: str, task_id: str | None = None):
+            report['errors'].append({'code': code, 'taskId': task_id, 'detail': detail})
+    
+        try:
+            items = load_manifest(str(manifest_path))
+            if not items:
+                raise ValueError('Dataset is empty')
+        except (ValueError, OSError, TypeError) as error:
+            fail('manifest', str(error))
+            return report
+        report['sample_count'] = len(items)
+        report['font_count'] = len({item['fontName'] for item in items})
+        report['manifest_sha256'] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+        report['distributions'] = {axis: dict(sorted(Counter(str(item.get(axis, '<missing>')) for item in items).items())) for axis in AXES}
+        for axis in ('widthId', 'kerning'):
+            groups = defaultdict(Counter)
+            for item in items:
+                groups[str(item.get(axis))][item['lineHeight']] += 1
+            report['shortcut_accuracy'][f'{axis}_to_lineHeight'] = sum(max(group.values()) for group in groups.values()) / len(items)
+    
+        catalog = {}
+        try:
+            catalog = json.loads((root / 'catalog.json').read_text())
+            fonts = {font['id']: font for font in catalog['fonts']}
+            recipes = {recipe['variantIndex']: recipe for recipe in catalog['recipes']}
+            if not fonts or not recipes or len(fonts) != len(catalog['fonts']) or len(recipes) != len(catalog['recipes']):
+                raise ValueError('Catalog has empty or duplicate entries')
+            candidates = {f'font-{font_id}-v{index:02d}': (font, recipe)
+                          for font_id, font in fonts.items() for index, recipe in recipes.items()}
+            skipped = json.loads((root / 'skipped.json').read_text())
+            if not isinstance(skipped, list) or any(not isinstance(row, dict) or not row.get('reason') for row in skipped):
+                raise ValueError('Skipped candidates must record a reason')
+            skipped_ids = [row['taskId'] for row in skipped]
+            rendered_ids = {item['taskId'] for item in items}
+            if len(set(skipped_ids)) != len(skipped_ids) or rendered_ids & set(skipped_ids):
+                raise ValueError('Duplicate or both rendered and skipped candidates')
+            if rendered_ids | set(skipped_ids) != set(candidates):
+                raise ValueError('Rendered and skipped IDs do not account for the frozen catalog')
+            report['candidate_count'] = len(candidates)
+            report['skipped_count'] = len(skipped)
+            for item in items:
+                font, recipe = candidates[item['taskId']]
+                expected = {'fontId': font['id'], 'fontName': font['name'], 'category': font['category'],
+                            'aliases': font['aliases'], **{key: recipe[key] for key in ('weight', 'modifier', 'kerning', 'lineHeight', 'widthId')}}
+                if any(item.get(key) != value for key, value in expected.items()):
+                    fail('catalog', 'Labels differ from the frozen font catalog or recipe', item['taskId'])
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as error:
+            fail('census', f'Complete frozen catalog and skipped-candidate census required: {error}')
+    
+        pixel_hashes = {}
+        checked_assets = {}
+        prompts = {item.get('prompt') for item in items if isinstance(item.get('prompt'), str)}
+        for item in items:
+            task_id = item['taskId']
+            prompt = item.get('prompt')
+>           if not isinstance(prompt, str) or not prompt.strip() or len(prompts) != 1 or prompt != catalog.get('prompt'):
+                                                                                                   ^^^^^^^^^^^
+E           AttributeError: 'list' object has no attribute 'get'
+
+baseline/validate_dataset.py:104: AttributeError
+__________________ test_malformed_catalog_returns_findings[1] __________________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_malformed_catalog_returns2/manifest.json')
+catalog = 1
+
+    @pytest.mark.parametrize('catalog', [None, [], 1, 'invalid'])
+    def test_malformed_catalog_returns_findings(candidate, catalog):
+        (candidate.parent / 'catalog.json').write_text(json.dumps(catalog))
+>       report = validate_dataset(candidate)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_validate_dataset.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-40/test_malformed_catalog_returns2/manifest.json')
+
+    def validate_dataset(manifest_path: str | Path) -> dict:
+        """Return a complete audit report; legacy inputs fail without changing files."""
+        from baseline.evaluator import load_manifest
+    
+        manifest_path = Path(manifest_path).resolve()
+        root = manifest_path.parent
+        report = {'validation_version': 1, 'valid': False, 'sample_count': 0,
+                  'font_count': 0, 'errors': [], 'distributions': {}, 'shortcut_accuracy': {}}
+    
+        def fail(code: str, detail: str, task_id: str | None = None):
+            report['errors'].append({'code': code, 'taskId': task_id, 'detail': detail})
+    
+        try:
+            items = load_manifest(str(manifest_path))
+            if not items:
+                raise ValueError('Dataset is empty')
+        except (ValueError, OSError, TypeError) as error:
+            fail('manifest', str(error))
+            return report
+        report['sample_count'] = len(items)
+        report['font_count'] = len({item['fontName'] for item in items})
+        report['manifest_sha256'] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+        report['distributions'] = {axis: dict(sorted(Counter(str(item.get(axis, '<missing>')) for item in items).items())) for axis in AXES}
+        for axis in ('widthId', 'kerning'):
+            groups = defaultdict(Counter)
+            for item in items:
+                groups[str(item.get(axis))][item['lineHeight']] += 1
+            report['shortcut_accuracy'][f'{axis}_to_lineHeight'] = sum(max(group.values()) for group in groups.values()) / len(items)
+    
+        catalog = {}
+        try:
+            catalog = json.loads((root / 'catalog.json').read_text())
+            fonts = {font['id']: font for font in catalog['fonts']}
+            recipes = {recipe['variantIndex']: recipe for recipe in catalog['recipes']}
+            if not fonts or not recipes or len(fonts) != len(catalog['fonts']) or len(recipes) != len(catalog['recipes']):
+                raise ValueError('Catalog has empty or duplicate entries')
+            candidates = {f'font-{font_id}-v{index:02d}': (font, recipe)
+                          for font_id, font in fonts.items() for index, recipe in recipes.items()}
+            skipped = json.loads((root / 'skipped.json').read_text())
+            if not isinstance(skipped, list) or any(not isinstance(row, dict) or not row.get('reason') for row in skipped):
+                raise ValueError('Skipped candidates must record a reason')
+            skipped_ids = [row['taskId'] for row in skipped]
+            rendered_ids = {item['taskId'] for item in items}
+            if len(set(skipped_ids)) != len(skipped_ids) or rendered_ids & set(skipped_ids):
+                raise ValueError('Duplicate or both rendered and skipped candidates')
+            if rendered_ids | set(skipped_ids) != set(candidates):
+                raise ValueError('Rendered and skipped IDs do not account for the frozen catalog')
+            report['candidate_count'] = len(candidates)
+            report['skipped_count'] = len(skipped)
+            for item in items:
+                font, recipe = candidates[item['taskId']]
+                expected = {'fontId': font['id'], 'fontName': font['name'], 'category': font['category'],
+                            'aliases': font['aliases'], **{key: recipe[key] for key in ('weight', 'modifier', 'kerning', 'lineHeight', 'widthId')}}
+                if any(item.get(key) != value for key, value in expected.items()):
+                    fail('catalog', 'Labels differ from the frozen font catalog or recipe', item['taskId'])
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as error:
+            fail('census', f'Complete frozen catalog and skipped-candidate census required: {error}')
+    
+        pixel_hashes = {}
+        checked_assets = {}
+        prompts = {item.get('prompt') for item in items if isinstance(item.get('prompt'), str)}
+        for item in items:
+            task_id = item['taskId']
+            prompt = item.get('prompt')
+>           if not isinstance(prompt, str) or not prompt.strip() or len(prompts) != 1 or prompt != catalog.get('prompt'):
+                                                                                                   ^^^^^^^^^^^
+E           AttributeError: 'int' object has no attribute 'get'
+
+baseline/validate_dataset.py:104: AttributeError
+_______________ test_malformed_catalog_returns_findings[invalid] _______________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_malformed_catalog_returns3/manifest.json')
+catalog = 'invalid'
+
+    @pytest.mark.parametrize('catalog', [None, [], 1, 'invalid'])
+    def test_malformed_catalog_returns_findings(candidate, catalog):
+        (candidate.parent / 'catalog.json').write_text(json.dumps(catalog))
+>       report = validate_dataset(candidate)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_validate_dataset.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+manifest_path = PosixPath('/tmp/pytest-of-ted/pytest-40/test_malformed_catalog_returns3/manifest.json')
+
+    def validate_dataset(manifest_path: str | Path) -> dict:
+        """Return a complete audit report; legacy inputs fail without changing files."""
+        from baseline.evaluator import load_manifest
+    
+        manifest_path = Path(manifest_path).resolve()
+        root = manifest_path.parent
+        report = {'validation_version': 1, 'valid': False, 'sample_count': 0,
+                  'font_count': 0, 'errors': [], 'distributions': {}, 'shortcut_accuracy': {}}
+    
+        def fail(code: str, detail: str, task_id: str | None = None):
+            report['errors'].append({'code': code, 'taskId': task_id, 'detail': detail})
+    
+        try:
+            items = load_manifest(str(manifest_path))
+            if not items:
+                raise ValueError('Dataset is empty')
+        except (ValueError, OSError, TypeError) as error:
+            fail('manifest', str(error))
+            return report
+        report['sample_count'] = len(items)
+        report['font_count'] = len({item['fontName'] for item in items})
+        report['manifest_sha256'] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+        report['distributions'] = {axis: dict(sorted(Counter(str(item.get(axis, '<missing>')) for item in items).items())) for axis in AXES}
+        for axis in ('widthId', 'kerning'):
+            groups = defaultdict(Counter)
+            for item in items:
+                groups[str(item.get(axis))][item['lineHeight']] += 1
+            report['shortcut_accuracy'][f'{axis}_to_lineHeight'] = sum(max(group.values()) for group in groups.values()) / len(items)
+    
+        catalog = {}
+        try:
+            catalog = json.loads((root / 'catalog.json').read_text())
+            fonts = {font['id']: font for font in catalog['fonts']}
+            recipes = {recipe['variantIndex']: recipe for recipe in catalog['recipes']}
+            if not fonts or not recipes or len(fonts) != len(catalog['fonts']) or len(recipes) != len(catalog['recipes']):
+                raise ValueError('Catalog has empty or duplicate entries')
+            candidates = {f'font-{font_id}-v{index:02d}': (font, recipe)
+                          for font_id, font in fonts.items() for index, recipe in recipes.items()}
+            skipped = json.loads((root / 'skipped.json').read_text())
+            if not isinstance(skipped, list) or any(not isinstance(row, dict) or not row.get('reason') for row in skipped):
+                raise ValueError('Skipped candidates must record a reason')
+            skipped_ids = [row['taskId'] for row in skipped]
+            rendered_ids = {item['taskId'] for item in items}
+            if len(set(skipped_ids)) != len(skipped_ids) or rendered_ids & set(skipped_ids):
+                raise ValueError('Duplicate or both rendered and skipped candidates')
+            if rendered_ids | set(skipped_ids) != set(candidates):
+                raise ValueError('Rendered and skipped IDs do not account for the frozen catalog')
+            report['candidate_count'] = len(candidates)
+            report['skipped_count'] = len(skipped)
+            for item in items:
+                font, recipe = candidates[item['taskId']]
+                expected = {'fontId': font['id'], 'fontName': font['name'], 'category': font['category'],
+                            'aliases': font['aliases'], **{key: recipe[key] for key in ('weight', 'modifier', 'kerning', 'lineHeight', 'widthId')}}
+                if any(item.get(key) != value for key, value in expected.items()):
+                    fail('catalog', 'Labels differ from the frozen font catalog or recipe', item['taskId'])
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as error:
+            fail('census', f'Complete frozen catalog and skipped-candidate census required: {error}')
+    
+        pixel_hashes = {}
+        checked_assets = {}
+        prompts = {item.get('prompt') for item in items if isinstance(item.get('prompt'), str)}
+        for item in items:
+            task_id = item['taskId']
+            prompt = item.get('prompt')
+>           if not isinstance(prompt, str) or not prompt.strip() or len(prompts) != 1 or prompt != catalog.get('prompt'):
+                                                                                                   ^^^^^^^^^^^
+E           AttributeError: 'str' object has no attribute 'get'
+
+baseline/validate_dataset.py:104: AttributeError
+_______________ test_hash_consistent_non_font_bytes_are_rejected _______________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_hash_consistent_non_font_0/manifest.json')
+
+    def test_hash_consistent_non_font_bytes_are_rejected(candidate):
+        asset = candidate.parent / 'fonts/fixture.woff'
+        asset.write_bytes(b'not a font')
+        change(candidate, lambda rows: rows[0]['fontRendering']['assets'][0].update(sha256=hashlib.sha256(asset.read_bytes()).hexdigest()))
+        report = validate_dataset(candidate)
+>       assert not report['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:180: AssertionError
+_ test_claimed_font_properties_must_match_actual_binary[familyName-Impostor Sans] _
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_claimed_font_properties_m0/manifest.json')
+field = 'familyName', value = 'Impostor Sans'
+
+    @pytest.mark.parametrize('field,value', [('familyName', 'Impostor Sans'), ('weight', 900), ('italic', True)])
+    def test_claimed_font_properties_must_match_actual_binary(candidate, field, value):
+        change(candidate, lambda rows: rows[0]['fontRendering']['assets'][0].update({field: value}))
+        catalog = candidate.parent / 'catalog.json'
+        data = json.loads(catalog.read_text())
+        if field == 'familyName':
+            change(candidate, lambda rows: rows[0].update(fontName=value))
+            data['fonts'][0]['name'] = value
+        elif field == 'weight':
+            change(candidate, lambda rows: rows[0].update(weight='black', weightNumeric=900))
+            change(candidate, lambda rows: rows[0]['fontRendering']['loadedFaces'][0].update(weight='900'))
+            change(candidate, lambda rows: rows[0]['fontRendering']['assets'][0].update(weightRange=[900, 900]))
+            data['recipes'][0]['weight'] = 'black'
+        else:
+            change(candidate, lambda rows: rows[0].update(modifier='italic'))
+            change(candidate, lambda rows: rows[0]['fontRendering']['loadedFaces'][0].update(style='italic'))
+            data['recipes'][0]['modifier'] = 'italic'
+        catalog.write_text(json.dumps(data))
+        report = validate_dataset(candidate)
+>       assert not report['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:203: AssertionError
+______ test_claimed_font_properties_must_match_actual_binary[weight-900] _______
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_claimed_font_properties_m1/manifest.json')
+field = 'weight', value = 900
+
+    @pytest.mark.parametrize('field,value', [('familyName', 'Impostor Sans'), ('weight', 900), ('italic', True)])
+    def test_claimed_font_properties_must_match_actual_binary(candidate, field, value):
+        change(candidate, lambda rows: rows[0]['fontRendering']['assets'][0].update({field: value}))
+        catalog = candidate.parent / 'catalog.json'
+        data = json.loads(catalog.read_text())
+        if field == 'familyName':
+            change(candidate, lambda rows: rows[0].update(fontName=value))
+            data['fonts'][0]['name'] = value
+        elif field == 'weight':
+            change(candidate, lambda rows: rows[0].update(weight='black', weightNumeric=900))
+            change(candidate, lambda rows: rows[0]['fontRendering']['loadedFaces'][0].update(weight='900'))
+            change(candidate, lambda rows: rows[0]['fontRendering']['assets'][0].update(weightRange=[900, 900]))
+            data['recipes'][0]['weight'] = 'black'
+        else:
+            change(candidate, lambda rows: rows[0].update(modifier='italic'))
+            change(candidate, lambda rows: rows[0]['fontRendering']['loadedFaces'][0].update(style='italic'))
+            data['recipes'][0]['modifier'] = 'italic'
+        catalog.write_text(json.dumps(data))
+        report = validate_dataset(candidate)
+>       assert not report['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:203: AssertionError
+______ test_claimed_font_properties_must_match_actual_binary[italic-True] ______
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_claimed_font_properties_m2/manifest.json')
+field = 'italic', value = True
+
+    @pytest.mark.parametrize('field,value', [('familyName', 'Impostor Sans'), ('weight', 900), ('italic', True)])
+    def test_claimed_font_properties_must_match_actual_binary(candidate, field, value):
+        change(candidate, lambda rows: rows[0]['fontRendering']['assets'][0].update({field: value}))
+        catalog = candidate.parent / 'catalog.json'
+        data = json.loads(catalog.read_text())
+        if field == 'familyName':
+            change(candidate, lambda rows: rows[0].update(fontName=value))
+            data['fonts'][0]['name'] = value
+        elif field == 'weight':
+            change(candidate, lambda rows: rows[0].update(weight='black', weightNumeric=900))
+            change(candidate, lambda rows: rows[0]['fontRendering']['loadedFaces'][0].update(weight='900'))
+            change(candidate, lambda rows: rows[0]['fontRendering']['assets'][0].update(weightRange=[900, 900]))
+            data['recipes'][0]['weight'] = 'black'
+        else:
+            change(candidate, lambda rows: rows[0].update(modifier='italic'))
+            change(candidate, lambda rows: rows[0]['fontRendering']['loadedFaces'][0].update(style='italic'))
+            data['recipes'][0]['modifier'] = 'italic'
+        catalog.write_text(json.dumps(data))
+        report = validate_dataset(candidate)
+>       assert not report['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:203: AssertionError
+___________ test_supported_face_retains_catalog_layout_axis_coverage ___________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-40/test_supported_face_retains_ca0/manifest.json')
+
+    def test_supported_face_retains_catalog_layout_axis_coverage(candidate):
+        catalog = candidate.parent / 'catalog.json'
+        data = json.loads(catalog.read_text())
+        recipe = data['recipes'][0]
+        data['recipes'].extend([
+            {**recipe, 'variantIndex': 2, 'kerning': 'tight', 'lineHeight': 'tight', 'widthId': 'medium'},
+            {**recipe, 'variantIndex': 3, 'kerning': 'loose', 'lineHeight': 'loose', 'widthId': 'wide'},
+        ])
+        catalog.write_text(json.dumps(data))
+        (candidate.parent / 'skipped.json').write_text(json.dumps([
+            {'taskId': f'font-fixture-v{index:02}', 'reason': 'Unsupported face'} for index in (2, 3)
+        ]))
+        report = validate_dataset(candidate)
+>       assert not report['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:220: AssertionError
+=============================== warnings summary ===============================
+tests/test_validate_dataset.py::test_invisible_png_pixels_are_rejected_in_every_mode[P]
+  /mnt/disks/data/fontbench/.venv/lib/python3.11/site-packages/PIL/Image.py:1136: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_validate_dataset.py::test_erased_second_line_cannot_claim_wrapped_text
+FAILED tests/test_validate_dataset.py::test_invisible_png_pixels_are_rejected_in_every_mode[LA]
+FAILED tests/test_validate_dataset.py::test_invisible_png_pixels_are_rejected_in_every_mode[P]
+FAILED tests/test_validate_dataset.py::test_malformed_catalog_returns_findings[None]
+FAILED tests/test_validate_dataset.py::test_malformed_catalog_returns_findings[catalog1]
+FAILED tests/test_validate_dataset.py::test_malformed_catalog_returns_findings[1]
+FAILED tests/test_validate_dataset.py::test_malformed_catalog_returns_findings[invalid]
+FAILED tests/test_validate_dataset.py::test_hash_consistent_non_font_bytes_are_rejected
+FAILED tests/test_validate_dataset.py::test_claimed_font_properties_must_match_actual_binary[familyName-Impostor Sans]
+FAILED tests/test_validate_dataset.py::test_claimed_font_properties_must_match_actual_binary[weight-900]
+FAILED tests/test_validate_dataset.py::test_claimed_font_properties_must_match_actual_binary[italic-True]
+FAILED tests/test_validate_dataset.py::test_supported_face_retains_catalog_layout_axis_coverage
+12 failed, 1 passed, 31 deselected, 1 warning in 0.34s

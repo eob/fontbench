@@ -1,0 +1,16 @@
+{
+  "taskId": "font-open-sans-v37",
+  "harborTaskId": "task-b4a084e912abfdf514c1abf1",
+  "canonical": "Open Sans",
+  "aliases": [
+    "open sans",
+    "opensans"
+  ],
+  "category": "non-serif",
+  "weight": "bold",
+  "modifier": "underline",
+  "kerning": "tight",
+  "lineHeight": "loose",
+  "widthId": "wide",
+  "widthPx": 440
+}

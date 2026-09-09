@@ -1,0 +1,23 @@
+bun test v1.3.14 (0d9b296a)
+
+src/font_assets.test.ts:
+ 8 | test('font cache helper refuses registered output before filesystem mutation', () => {
+ 9 |   const frozen = path.join(import.meta.dir, '../dataset/fontbench-2-rendered');
+10 |   const request = { get: () => { throw new Error('Unexpected network request'); } } as unknown as APIRequestContext;
+11 |   const mkdir = spyOn(fs, 'mkdirSync').mockImplementation(() => { throw new Error('Filesystem mutation reached'); });
+12 |   try {
+13 |     expect(() => new FontAssets(frozen, frozen, request)).toThrow(/Frozen release output/);
+                                                               ^
+error: expect(received).toThrow(expected)
+
+Expected pattern: /Frozen release output/
+Received message: "Filesystem mutation reached"
+
+      at <anonymous> (/tmp/fontbench-release-03-reversion-uhdarvas/src/font_assets.test.ts:13:59)
+(fail) font cache helper refuses registered output before filesystem mutation [0.56ms]
+
+ 0 pass
+ 2 filtered out
+ 1 fail
+ 1 expect() calls
+Ran 1 test across 1 file. [75.00ms]

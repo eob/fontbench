@@ -1,0 +1,15 @@
+{
+  "taskId": "font-rubik-v32",
+  "harborTaskId": "task-3d6f57a4cfe2c0a62eaf320c",
+  "canonical": "Rubik",
+  "aliases": [
+    "rubik"
+  ],
+  "category": "non-serif",
+  "weight": "bold",
+  "modifier": "regular",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "narrow",
+  "widthPx": 220
+}

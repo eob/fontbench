@@ -1,0 +1,15 @@
+{
+  "taskId": "font-poppins-v60",
+  "harborTaskId": "task-380042757b4fe4eccd9c8200",
+  "canonical": "Poppins",
+  "aliases": [
+    "poppins"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

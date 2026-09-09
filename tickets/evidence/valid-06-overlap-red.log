@@ -1,0 +1,30 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_overlapping_line_boxes_cannot_reuse_the_previous_lines_ink ________
+
+candidate = PosixPath('/tmp/pytest-of-ted/pytest-44/test_overlapping_line_boxes_ca0/manifest.json')
+
+    def test_overlapping_line_boxes_cannot_reuse_the_previous_lines_ink(candidate):
+        file = candidate.parent / 'sample.png'
+        image = Image.new('RGB', (440, 228), 'white')
+        ImageDraw.Draw(image).rectangle((52, 55, 200, 105), fill='#111827')
+        image.save(file)
+        def overlap(rows):
+            rows[0].update(lineHeight='tight', imageSha256=hashlib.sha256(file.read_bytes()).hexdigest())
+            layout = rows[0]['layout']
+            layout.update(lineHeightPx=25.3)
+            layout['lineBoxes'][0].update(height=28)
+            layout['lineBoxes'][1].update(y=50.3, height=28)
+        change(candidate, overlap)
+        catalog = candidate.parent / 'catalog.json'
+        data = json.loads(catalog.read_text())
+        data['recipes'][0]['lineHeight'] = 'tight'
+        catalog.write_text(json.dumps(data))
+        report = validate_dataset(candidate)
+>       assert not report['valid']
+E       assert not True
+
+tests/test_validate_dataset.py:241: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_validate_dataset.py::test_overlapping_line_boxes_cannot_reuse_the_previous_lines_ink
+1 failed, 44 deselected in 0.18s

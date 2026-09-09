@@ -1,0 +1,14 @@
+version = "1.0"
+
+[metadata]
+name = "task-5f6b000ab009bd72228c3f3a"
+author_name = "Edward Benson"
+difficulty = "medium"
+category = "vision"
+tags = ["typography", "font-identification", "vlm"]
+
+[agent]
+timeout_sec = 180.0
+
+[verifier]
+timeout_sec = 60.0

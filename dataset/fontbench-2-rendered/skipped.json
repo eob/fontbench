@@ -1,0 +1,5882 @@
+[
+  {
+    "taskId": "font-arial-v01",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v02",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v03",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v04",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-arial-v05",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-arial-v06",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-arial-v07",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v08",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v09",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v10",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v11",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v12",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v13",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v14",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v15",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-arial-v49",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-arial-v50",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-arial-v51",
+    "fontId": "arial",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-helvetica-v01",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/regular, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v02",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/regular, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v03",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/regular, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v04",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/italic, available 300/italic"
+  },
+  {
+    "taskId": "font-helvetica-v05",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/italic, available 300/italic"
+  },
+  {
+    "taskId": "font-helvetica-v06",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/italic, available 300/italic"
+  },
+  {
+    "taskId": "font-helvetica-v07",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/underline, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v08",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/underline, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v09",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/underline, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v10",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v11",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v12",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v13",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/small-caps, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v14",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/small-caps, available 300/normal"
+  },
+  {
+    "taskId": "font-helvetica-v15",
+    "fontId": "helvetica",
+    "reason": "Unsupported face: requested 200/small-caps, available 300/normal"
+  },
+  {
+    "taskId": "font-open-sans-v01",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/regular, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v02",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/regular, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v03",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/regular, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v04",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/italic, available 300 800/italic, 300 800/italic"
+  },
+  {
+    "taskId": "font-open-sans-v05",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/italic, available 300 800/italic, 300 800/italic"
+  },
+  {
+    "taskId": "font-open-sans-v06",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/italic, available 300 800/italic, 300 800/italic"
+  },
+  {
+    "taskId": "font-open-sans-v07",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/underline, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v08",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/underline, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v09",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/underline, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v10",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v11",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v12",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v13",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v14",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v15",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v46",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/regular, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v47",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/regular, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v48",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/regular, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v49",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/italic, available 300 800/italic, 300 800/italic"
+  },
+  {
+    "taskId": "font-open-sans-v50",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/italic, available 300 800/italic, 300 800/italic"
+  },
+  {
+    "taskId": "font-open-sans-v51",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/italic, available 300 800/italic, 300 800/italic"
+  },
+  {
+    "taskId": "font-open-sans-v52",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/underline, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v53",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/underline, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v54",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/underline, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v55",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v56",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v57",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v58",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v59",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-open-sans-v60",
+    "fontId": "open-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 800/normal, 300 800/normal"
+  },
+  {
+    "taskId": "font-lato-v01",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/regular, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v02",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/regular, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v03",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/regular, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v04",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/italic, available 100/italic"
+  },
+  {
+    "taskId": "font-lato-v05",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/italic, available 100/italic"
+  },
+  {
+    "taskId": "font-lato-v06",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/italic, available 100/italic"
+  },
+  {
+    "taskId": "font-lato-v07",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/underline, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v08",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/underline, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v09",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/underline, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v10",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/strikethrough, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v11",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/strikethrough, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v12",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/strikethrough, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v13",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/small-caps, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v14",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/small-caps, available 100/normal"
+  },
+  {
+    "taskId": "font-lato-v15",
+    "fontId": "lato",
+    "reason": "Unsupported face: requested 200/small-caps, available 100/normal"
+  },
+  {
+    "taskId": "font-poppins-v01",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v02",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v03",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v04",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v05",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v06",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v07",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v08",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v09",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v10",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v11",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v12",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v13",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v14",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-poppins-v15",
+    "fontId": "poppins",
+    "reason": "Font binary weight mismatch for Poppins: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-oswald-v04",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 200/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v05",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 200/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v06",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 200/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v19",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 400/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v20",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 400/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v21",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 400/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v34",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 700/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v35",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 700/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v36",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 700/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v46",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/regular, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v47",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/regular, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v48",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/regular, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v49",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v50",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v51",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/italic, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v52",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/underline, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v53",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/underline, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v54",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/underline, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v55",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/strikethrough, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v56",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/strikethrough, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v57",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/strikethrough, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v58",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/small-caps, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v59",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/small-caps, available 200 700/normal"
+  },
+  {
+    "taskId": "font-oswald-v60",
+    "fontId": "oswald",
+    "reason": "Unsupported face: requested 900/small-caps, available 200 700/normal"
+  },
+  {
+    "taskId": "font-rubik-v01",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/regular, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v02",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/regular, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v03",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/regular, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v04",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/italic, available 300 900/italic"
+  },
+  {
+    "taskId": "font-rubik-v05",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/italic, available 300 900/italic"
+  },
+  {
+    "taskId": "font-rubik-v06",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/italic, available 300 900/italic"
+  },
+  {
+    "taskId": "font-rubik-v07",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/underline, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v08",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/underline, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v09",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/underline, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v10",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v11",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v12",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v13",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v14",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 900/normal"
+  },
+  {
+    "taskId": "font-rubik-v15",
+    "fontId": "rubik",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 900/normal"
+  },
+  {
+    "taskId": "font-fira-sans-v01",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v02",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v03",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v04",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v05",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v06",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v07",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v08",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v09",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v10",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v11",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v12",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v13",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v14",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-fira-sans-v15",
+    "fontId": "fira-sans",
+    "reason": "Font binary weight mismatch for Fira Sans: requested 200, binary supports 275..275"
+  },
+  {
+    "taskId": "font-pt-sans-v01",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v02",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v03",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v04",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-pt-sans-v05",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-pt-sans-v06",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-pt-sans-v07",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v08",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v09",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v10",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v11",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v12",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v13",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v14",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v15",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v46",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v47",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v48",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v49",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-pt-sans-v50",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-pt-sans-v51",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-pt-sans-v52",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v53",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v54",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v55",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v56",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v57",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v58",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v59",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-sans-v60",
+    "fontId": "pt-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v46",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/regular, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v47",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/regular, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v48",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/regular, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v49",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/italic, available 200 800/italic"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v50",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/italic, available 200 800/italic"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v51",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/italic, available 200 800/italic"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v52",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/underline, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v53",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/underline, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v54",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/underline, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v55",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v56",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v57",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/strikethrough, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v58",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v59",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 200 800/normal"
+  },
+  {
+    "taskId": "font-plus-jakarta-sans-v60",
+    "fontId": "plus-jakarta-sans",
+    "reason": "Unsupported face: requested 900/small-caps, available 200 800/normal"
+  },
+  {
+    "taskId": "font-verdana-v01",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v02",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v03",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v04",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v05",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v06",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v07",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v08",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v09",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v10",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v11",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v12",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v13",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v14",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v15",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v16",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v17",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v18",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v22",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v23",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v24",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v25",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v26",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v27",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v28",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v29",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v30",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 400/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v31",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v32",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v33",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v34",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v35",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v36",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v37",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v38",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v39",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v40",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v41",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v42",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v43",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v44",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v45",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v46",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v47",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v48",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/regular, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v49",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v50",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v51",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v52",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v53",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v54",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/underline, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v55",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v56",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v57",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v58",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v59",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-verdana-v60",
+    "fontId": "verdana",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/italic"
+  },
+  {
+    "taskId": "font-times-new-roman-v01",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v02",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v03",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v04",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v05",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v06",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v07",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v08",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v09",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v10",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v11",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v12",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v13",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v14",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v15",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v19",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v20",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v21",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v31",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v32",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v33",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v34",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v35",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v36",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v37",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v38",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v39",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v40",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v41",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v42",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v43",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v44",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v45",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v46",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v47",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v48",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v49",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v50",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v51",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v52",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v53",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v54",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v55",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v56",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v57",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v58",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v59",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-times-new-roman-v60",
+    "fontId": "times-new-roman",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v01",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v02",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v03",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v04",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-georgia-v05",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-georgia-v06",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-georgia-v07",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v08",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v09",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v10",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v11",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v12",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v13",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v14",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v15",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-georgia-v46",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v47",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v48",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v49",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-georgia-v50",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-georgia-v51",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-georgia-v52",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v53",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v54",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v55",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v56",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v57",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v58",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v59",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-georgia-v60",
+    "fontId": "georgia",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v01",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v02",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v03",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v04",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/italic"
+  },
+  {
+    "taskId": "font-playfair-display-v05",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/italic"
+  },
+  {
+    "taskId": "font-playfair-display-v06",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/italic"
+  },
+  {
+    "taskId": "font-playfair-display-v07",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v08",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v09",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v10",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v11",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v12",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v13",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v14",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal"
+  },
+  {
+    "taskId": "font-playfair-display-v15",
+    "fontId": "playfair-display",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v01",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/regular, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v02",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/regular, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v03",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/regular, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v04",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/italic, available 300 900/italic"
+  },
+  {
+    "taskId": "font-merriweather-v05",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/italic, available 300 900/italic"
+  },
+  {
+    "taskId": "font-merriweather-v06",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/italic, available 300 900/italic"
+  },
+  {
+    "taskId": "font-merriweather-v07",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/underline, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v08",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/underline, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v09",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/underline, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v10",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v11",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v12",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v13",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v14",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 900/normal"
+  },
+  {
+    "taskId": "font-merriweather-v15",
+    "fontId": "merriweather",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 900/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v01",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/regular, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v02",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/regular, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v03",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/regular, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v04",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/italic, available 400 800/italic"
+  },
+  {
+    "taskId": "font-eb-garamond-v05",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/italic, available 400 800/italic"
+  },
+  {
+    "taskId": "font-eb-garamond-v06",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/italic, available 400 800/italic"
+  },
+  {
+    "taskId": "font-eb-garamond-v07",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/underline, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v08",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/underline, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v09",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/underline, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v10",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v11",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v12",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v13",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v14",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v15",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v46",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/regular, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v47",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/regular, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v48",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/regular, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v49",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/italic, available 400 800/italic"
+  },
+  {
+    "taskId": "font-eb-garamond-v50",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/italic, available 400 800/italic"
+  },
+  {
+    "taskId": "font-eb-garamond-v51",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/italic, available 400 800/italic"
+  },
+  {
+    "taskId": "font-eb-garamond-v52",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/underline, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v53",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/underline, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v54",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/underline, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v55",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v56",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v57",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v58",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v59",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 800/normal"
+  },
+  {
+    "taskId": "font-eb-garamond-v60",
+    "fontId": "eb-garamond",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 800/normal"
+  },
+  {
+    "taskId": "font-lora-v01",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v02",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v03",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v04",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/italic, 400 700/italic"
+  },
+  {
+    "taskId": "font-lora-v05",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/italic, 400 700/italic"
+  },
+  {
+    "taskId": "font-lora-v06",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/italic, 400 700/italic"
+  },
+  {
+    "taskId": "font-lora-v07",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v08",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v09",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v10",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v11",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v12",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v13",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v14",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v15",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v46",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v47",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v48",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v49",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/italic, 400 700/italic"
+  },
+  {
+    "taskId": "font-lora-v50",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/italic, 400 700/italic"
+  },
+  {
+    "taskId": "font-lora-v51",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/italic, 400 700/italic"
+  },
+  {
+    "taskId": "font-lora-v52",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v53",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v54",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v55",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v56",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v57",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v58",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v59",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-lora-v60",
+    "fontId": "lora",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal, 400 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v01",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v02",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v03",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v04",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-pt-serif-v05",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-pt-serif-v06",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-pt-serif-v07",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v08",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v09",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v10",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v11",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v12",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v13",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v14",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v15",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v46",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v47",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v48",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v49",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-pt-serif-v50",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-pt-serif-v51",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-pt-serif-v52",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v53",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v54",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v55",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v56",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v57",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v58",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v59",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-pt-serif-v60",
+    "fontId": "pt-serif",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v01",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v02",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v03",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v04",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v05",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v06",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v07",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v08",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v09",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v10",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v11",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v12",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v13",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v14",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v15",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v34",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 700/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v35",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 700/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v36",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 700/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v46",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v47",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v48",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v49",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v50",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v51",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-libre-baskerville-v52",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v53",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v54",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v55",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v56",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v57",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v58",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v59",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-libre-baskerville-v60",
+    "fontId": "libre-baskerville",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v01",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v02",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v03",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v04",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/italic, available 300 700/italic"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v05",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/italic, available 300 700/italic"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v06",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/italic, available 300 700/italic"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v07",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v08",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v09",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v10",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v11",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v12",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v13",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v14",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v15",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v46",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v47",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v48",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v49",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/italic, available 300 700/italic"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v50",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/italic, available 300 700/italic"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v51",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/italic, available 300 700/italic"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v52",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v53",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v54",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v55",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v56",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v57",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v58",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v59",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cormorant-garamond-v60",
+    "fontId": "cormorant-garamond",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-cinzel-v01",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v02",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v03",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v04",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v05",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v06",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v07",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v08",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v09",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v10",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v11",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v12",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v13",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v14",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v15",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v19",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 400/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v20",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 400/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v21",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 400/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v34",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 700/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v35",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 700/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v36",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 700/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v49",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 900/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v50",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 900/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-cinzel-v51",
+    "fontId": "cinzel",
+    "reason": "Unsupported face: requested 900/italic, available 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v01",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v02",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v03",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/regular, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v04",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/italic, 400 900/italic"
+  },
+  {
+    "taskId": "font-bodoni-moda-v05",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/italic, 400 900/italic"
+  },
+  {
+    "taskId": "font-bodoni-moda-v06",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/italic, available 400 900/italic, 400 900/italic"
+  },
+  {
+    "taskId": "font-bodoni-moda-v07",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v08",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v09",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/underline, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v10",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v11",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v12",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v13",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v14",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-bodoni-moda-v15",
+    "fontId": "bodoni-moda",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 900/normal, 400 900/normal"
+  },
+  {
+    "taskId": "font-arvo-v01",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v02",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v03",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v04",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-arvo-v05",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-arvo-v06",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-arvo-v07",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v08",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v09",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v10",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v11",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v12",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v13",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v14",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v15",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-arvo-v46",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v47",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v48",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v49",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-arvo-v50",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-arvo-v51",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-arvo-v52",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v53",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v54",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v55",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v56",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v57",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v58",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v59",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-arvo-v60",
+    "fontId": "arvo",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v01",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v02",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v03",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v04",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-crimson-text-v05",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-crimson-text-v06",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-crimson-text-v07",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v08",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v09",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v10",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v11",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v12",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v13",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v14",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v15",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v46",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v47",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v48",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v49",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-crimson-text-v50",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-crimson-text-v51",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-crimson-text-v52",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v53",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v54",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v55",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v56",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v57",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v58",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v59",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-crimson-text-v60",
+    "fontId": "crimson-text",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-spectral-v46",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/regular, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v47",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/regular, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v48",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/regular, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v49",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/italic, available 800/italic"
+  },
+  {
+    "taskId": "font-spectral-v50",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/italic, available 800/italic"
+  },
+  {
+    "taskId": "font-spectral-v51",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/italic, available 800/italic"
+  },
+  {
+    "taskId": "font-spectral-v52",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/underline, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v53",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/underline, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v54",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/underline, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v55",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/strikethrough, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v56",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/strikethrough, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v57",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/strikethrough, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v58",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/small-caps, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v59",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/small-caps, available 800/normal"
+  },
+  {
+    "taskId": "font-spectral-v60",
+    "fontId": "spectral",
+    "reason": "Unsupported face: requested 900/small-caps, available 800/normal"
+  },
+  {
+    "taskId": "font-courier-new-v01",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v02",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v03",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v04",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v05",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v06",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v07",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v08",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v09",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v10",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v11",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v12",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v13",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v14",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v15",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v19",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v20",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v21",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v31",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v32",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v33",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v34",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v35",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v36",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v37",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v38",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v39",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v40",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v41",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v42",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v43",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v44",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v45",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v46",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v47",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v48",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v49",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v50",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v51",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v52",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v53",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v54",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v55",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v56",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v57",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v58",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v59",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-courier-new-v60",
+    "fontId": "courier-new",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v46",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/regular, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v47",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/regular, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v48",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/regular, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v49",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/italic, available 100 700/italic"
+  },
+  {
+    "taskId": "font-roboto-mono-v50",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/italic, available 100 700/italic"
+  },
+  {
+    "taskId": "font-roboto-mono-v51",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/italic, available 100 700/italic"
+  },
+  {
+    "taskId": "font-roboto-mono-v52",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/underline, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v53",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/underline, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v54",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/underline, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v55",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v56",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v57",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v58",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v59",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 100 700/normal"
+  },
+  {
+    "taskId": "font-roboto-mono-v60",
+    "fontId": "roboto-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 100 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v01",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v02",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v03",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v04",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v05",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v06",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v07",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v08",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v09",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v10",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v11",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v12",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v13",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v14",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v15",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 200/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v19",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 400/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v20",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 400/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v21",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 400/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v34",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 700/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v35",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 700/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v36",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 700/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v46",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v47",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v48",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/regular, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v49",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v50",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v51",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/italic, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v52",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v53",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v54",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/underline, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v55",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v56",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v57",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/strikethrough, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v58",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v59",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-fira-code-v60",
+    "fontId": "fira-code",
+    "reason": "Unsupported face: requested 900/small-caps, available 300 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v01",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v02",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v03",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v04",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-space-mono-v05",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-space-mono-v06",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/italic, available 400/italic"
+  },
+  {
+    "taskId": "font-space-mono-v07",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v08",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v09",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v10",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v11",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v12",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v13",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v14",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v15",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-space-mono-v46",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v47",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v48",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/regular, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v49",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-space-mono-v50",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-space-mono-v51",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/italic, available 700/italic"
+  },
+  {
+    "taskId": "font-space-mono-v52",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v53",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v54",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/underline, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v55",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v56",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v57",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v58",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v59",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-space-mono-v60",
+    "fontId": "space-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 700/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v46",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/regular, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v47",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/regular, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v48",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/regular, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v49",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/italic, available 100 800/italic"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v50",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/italic, available 100 800/italic"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v51",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/italic, available 100 800/italic"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v52",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/underline, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v53",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/underline, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v54",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/underline, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v55",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v56",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v57",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/strikethrough, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v58",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v59",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 100 800/normal"
+  },
+  {
+    "taskId": "font-jetbrains-mono-v60",
+    "fontId": "jetbrains-mono",
+    "reason": "Unsupported face: requested 900/small-caps, available 100 800/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v01",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v02",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v03",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v04",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v05",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v06",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v07",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v08",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v09",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v10",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v11",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v12",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v13",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v14",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v15",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v19",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v20",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v21",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v31",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v32",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v33",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v34",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v35",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v36",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v37",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v38",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v39",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v40",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v41",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v42",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v43",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v44",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v45",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v46",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v47",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v48",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v49",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v50",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v51",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v52",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v53",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v54",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v55",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v56",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v57",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v58",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v59",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-comic-sans-ms-v60",
+    "fontId": "comic-sans-ms",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v01",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v02",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v03",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v04",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v05",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v06",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v07",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v08",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v09",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v10",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v11",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v12",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v13",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v14",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v15",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v19",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v20",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v21",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v31",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v32",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v33",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v34",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v35",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v36",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v37",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v38",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v39",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v40",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v41",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v42",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v43",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v44",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v45",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v46",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v47",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v48",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v49",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v50",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v51",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v52",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v53",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v54",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v55",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v56",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v57",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v58",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v59",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-pacifico-v60",
+    "fontId": "pacifico",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v01",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v02",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v03",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v04",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v05",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v06",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v07",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v08",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v09",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v10",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v11",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v12",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v13",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v14",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v15",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v19",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 400/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v20",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 400/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v21",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 400/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v34",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 700/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v35",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 700/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v36",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 700/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v46",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v47",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v48",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v49",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v50",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v51",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v52",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v53",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v54",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v55",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v56",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v57",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v58",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v59",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-dancing-script-v60",
+    "fontId": "dancing-script",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v01",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v02",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v03",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v04",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v05",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v06",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v07",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v08",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v09",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v10",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v11",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v12",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v13",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v14",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v15",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 200/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v19",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 400/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v20",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 400/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v21",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 400/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v34",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 700/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v35",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 700/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v36",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 700/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v46",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v47",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v48",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/regular, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v49",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v50",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v51",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/italic, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v52",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v53",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v54",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/underline, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v55",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v56",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v57",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v58",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v59",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-caveat-v60",
+    "fontId": "caveat",
+    "reason": "Unsupported face: requested 900/small-caps, available 400 700/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v01",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v02",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v03",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v04",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v05",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v06",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v07",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v08",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v09",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v10",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v11",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v12",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v13",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v14",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v15",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v19",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v20",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v21",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v31",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v32",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v33",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v34",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v35",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v36",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v37",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v38",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v39",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v40",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v41",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v42",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v43",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v44",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v45",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v46",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v47",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v48",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v49",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v50",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v51",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v52",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v53",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v54",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v55",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v56",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v57",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v58",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v59",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-shadows-into-light-v60",
+    "fontId": "shadows-into-light",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-impact-v01",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v02",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v03",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v04",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v05",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v06",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v07",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v08",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v09",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v10",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v11",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v12",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v13",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v14",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v15",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v19",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v20",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v21",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v31",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v32",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v33",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v34",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v35",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v36",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v37",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v38",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v39",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v40",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v41",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v42",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v43",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v44",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v45",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v46",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v47",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v48",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v49",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v50",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v51",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v52",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v53",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v54",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v55",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v56",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v57",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v58",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v59",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-impact-v60",
+    "fontId": "impact",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal, 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v01",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v02",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v03",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v04",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v05",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v06",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v07",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v08",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v09",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v10",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v11",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v12",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v13",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v14",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v15",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v19",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v20",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v21",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v31",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v32",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v33",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v34",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v35",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v36",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v37",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v38",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v39",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v40",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v41",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v42",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v43",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v44",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v45",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v46",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v47",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v48",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v49",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v50",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v51",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v52",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v53",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v54",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v55",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v56",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v57",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v58",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v59",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bebas-neue-v60",
+    "fontId": "bebas-neue",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v01",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v02",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v03",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v04",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v05",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v06",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v07",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v08",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v09",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v10",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v11",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v12",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v13",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v14",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v15",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v19",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v20",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v21",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v31",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v32",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v33",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v34",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v35",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v36",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v37",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v38",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v39",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v40",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v41",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v42",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v43",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v44",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v45",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v46",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v47",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v48",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v49",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v50",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v51",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v52",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v53",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v54",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v55",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v56",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v57",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v58",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v59",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-lobster-v60",
+    "fontId": "lobster",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v01",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v02",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v03",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v04",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v05",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v06",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v07",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v08",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v09",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v10",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v11",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v12",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v13",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v14",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v15",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 200/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v19",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v20",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v21",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 400/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v31",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v32",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v33",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v34",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v35",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v36",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v37",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v38",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v39",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v40",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v41",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v42",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v43",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v44",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v45",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 700/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v46",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v47",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v48",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/regular, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v49",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v50",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v51",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/italic, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v52",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v53",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v54",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/underline, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v55",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v56",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v57",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/strikethrough, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v58",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v59",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  },
+  {
+    "taskId": "font-bungee-v60",
+    "fontId": "bungee",
+    "reason": "Unsupported face: requested 900/small-caps, available 400/normal"
+  }
+]

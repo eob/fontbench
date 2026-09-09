@@ -1,0 +1,15 @@
+{
+  "taskId": "font-merriweather-v53",
+  "harborTaskId": "task-49b940494b961139bd7c381b",
+  "canonical": "Merriweather",
+  "aliases": [
+    "merriweather"
+  ],
+  "category": "serif",
+  "weight": "black",
+  "modifier": "underline",
+  "kerning": "normal",
+  "lineHeight": "tight",
+  "widthId": "medium",
+  "widthPx": 320
+}

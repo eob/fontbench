@@ -1,0 +1,354 @@
+$ .venv/bin/pytest -q tests/test_run_aggregation.py
+
+FFFFFFFFFFFFFFFFFFFFFF                                                   [100%]
+=================================== FAILURES ===================================
+______ test_dated_partial_runs_accumulate_without_a_current_model_catalog ______
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_dated_partial_runs_accumu0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+
+    def test_dated_partial_runs_accumulate_without_a_current_model_catalog(release_history):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:86: AttributeError
+___ test_first_recorded_answer_wins_even_when_later_answer_is_better[False] ____
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_first_recorded_answer_win0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+invalid = False
+
+    @pytest.mark.parametrize("invalid", [False, True])
+    def test_first_recorded_answer_wins_even_when_later_answer_is_better(release_history, invalid):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:102: AttributeError
+____ test_first_recorded_answer_wins_even_when_later_answer_is_better[True] ____
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_first_recorded_answer_win1'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+invalid = True
+
+    @pytest.mark.parametrize("invalid", [False, True])
+    def test_first_recorded_answer_wins_even_when_later_answer_is_better(release_history, invalid):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:102: AttributeError
+_____________ test_tied_recording_times_use_run_id_and_never_score _____________
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_tied_recording_times_use_0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+
+    def test_tied_recording_times_use_run_id_and_never_score(release_history):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:118: AttributeError
+__ test_inference_changes_split_models_but_catalog_and_pricing_changes_do_not __
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_inference_changes_split_m0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+
+    def test_inference_changes_split_models_but_catalog_and_pricing_changes_do_not(release_history):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:128: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-benchmark_version-0.9.0] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'summary', field = 'benchmark_version', value = '0.9.0'
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-dataset_git_commit-cccccccccccccccccccccccccccccccccccccccc] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex1'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'summary', field = 'dataset_git_commit'
+value = 'cccccccccccccccccccccccccccccccccccccccc'
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-dataset_fingerprint-wrong] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex2'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'summary', field = 'dataset_fingerprint', value = 'wrong'
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-evaluation_protocol_fingerprint-wrong] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex3'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'summary', field = 'evaluation_protocol_fingerprint', value = 'wrong'
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-mock-True] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex4'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'summary', field = 'mock', value = True
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-mock-None] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex5'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'summary', field = 'mock', value = None
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-run_id-foreign] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex6'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'summary', field = 'run_id', value = 'foreign'
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-created_at-yesterday] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex7'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'summary', field = 'created_at', value = 'yesterday'
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[card-benchmark_version-None] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex8'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'card', field = 'benchmark_version', value = None
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[card-model_config_fingerprint-wrong] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex9'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'card', field = 'model_config_fingerprint', value = 'wrong'
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_incompatible_ledger_is_excluded_while_valid_peer_survives[card-mock-True] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_incompatible_ledger_is_ex10'), {'schema_version': 1, 'benchmark_version'..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+file = 'card', field = 'mock', value = True
+
+    @pytest.mark.parametrize(("file", "field", "value"), [
+        ("summary", "benchmark_version", "0.9.0"), ("summary", "dataset_git_commit", "c" * 40),
+        ("summary", "dataset_fingerprint", "wrong"), ("summary", "evaluation_protocol_fingerprint", "wrong"),
+        ("summary", "mock", True), ("summary", "mock", None), ("summary", "run_id", "foreign"),
+        ("summary", "created_at", "yesterday"), ("card", "benchmark_version", None),
+        ("card", "model_config_fingerprint", "wrong"), ("card", "mock", True),
+    ])
+    def test_incompatible_ledger_is_excluded_while_valid_peer_survives(release_history, file, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:147: AttributeError
+_ test_invalid_task_identity_or_chronology_cannot_enter_aggregate[recorded_at-None] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_invalid_task_identity_or_0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+field = 'recorded_at', value = None
+
+    @pytest.mark.parametrize(("field", "value"), [("recorded_at", None), ("recorded_at", "2026-09-01T11:00:00"),
+                                                  ("target_canonical", "Wrong font"), ("error_kind", "rate_limit")])
+    def test_invalid_task_identity_or_chronology_cannot_enter_aggregate(release_history, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:164: AttributeError
+_ test_invalid_task_identity_or_chronology_cannot_enter_aggregate[recorded_at-2026-09-01T11:00:00] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_invalid_task_identity_or_1'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+field = 'recorded_at', value = '2026-09-01T11:00:00'
+
+    @pytest.mark.parametrize(("field", "value"), [("recorded_at", None), ("recorded_at", "2026-09-01T11:00:00"),
+                                                  ("target_canonical", "Wrong font"), ("error_kind", "rate_limit")])
+    def test_invalid_task_identity_or_chronology_cannot_enter_aggregate(release_history, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:164: AttributeError
+_ test_invalid_task_identity_or_chronology_cannot_enter_aggregate[target_canonical-Wrong font] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_invalid_task_identity_or_2'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+field = 'target_canonical', value = 'Wrong font'
+
+    @pytest.mark.parametrize(("field", "value"), [("recorded_at", None), ("recorded_at", "2026-09-01T11:00:00"),
+                                                  ("target_canonical", "Wrong font"), ("error_kind", "rate_limit")])
+    def test_invalid_task_identity_or_chronology_cannot_enter_aggregate(release_history, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:164: AttributeError
+_ test_invalid_task_identity_or_chronology_cannot_enter_aggregate[error_kind-rate_limit] _
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_invalid_task_identity_or_3'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+field = 'error_kind', value = 'rate_limit'
+
+    @pytest.mark.parametrize(("field", "value"), [("recorded_at", None), ("recorded_at", "2026-09-01T11:00:00"),
+                                                  ("target_canonical", "Wrong font"), ("error_kind", "rate_limit")])
+    def test_invalid_task_identity_or_chronology_cannot_enter_aggregate(release_history, field, value):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:164: AttributeError
+_________ test_historical_unversioned_results_are_explicitly_excluded __________
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_historical_unversioned_re0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+
+    def test_historical_unversioned_results_are_explicitly_excluded(release_history):
+>       function = reporting.aggregate_release_runs
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.reporting' has no attribute 'aggregate_release_runs'
+
+tests/test_run_aggregation.py:174: AttributeError
+_______ test_release_page_shows_version_commit_origins_and_shared_cohort _______
+
+release_history = (PosixPath('/tmp/pytest-of-ted/pytest-59/test_release_page_shows_versio0'), {'schema_version': 1, 'benchmark_version':..., ...}], {'id': 'arbitrary-model', 'provider': 'google', 'model': 'custom-model', 'display_name': 'Custom model', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe3b72b45d0>
+
+    def test_release_page_shows_version_commit_origins_and_shared_cohort(release_history, monkeypatch):
+>       function = build_page.build_release_page
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'baseline.build_page' has no attribute 'build_release_page'
+
+tests/test_run_aggregation.py:183: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_run_aggregation.py::test_dated_partial_runs_accumulate_without_a_current_model_catalog
+FAILED tests/test_run_aggregation.py::test_first_recorded_answer_wins_even_when_later_answer_is_better[False]
+FAILED tests/test_run_aggregation.py::test_first_recorded_answer_wins_even_when_later_answer_is_better[True]
+FAILED tests/test_run_aggregation.py::test_tied_recording_times_use_run_id_and_never_score
+FAILED tests/test_run_aggregation.py::test_inference_changes_split_models_but_catalog_and_pricing_changes_do_not
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-benchmark_version-0.9.0]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-dataset_git_commit-cccccccccccccccccccccccccccccccccccccccc]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-dataset_fingerprint-wrong]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-evaluation_protocol_fingerprint-wrong]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-mock-True]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-mock-None]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-run_id-foreign]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[summary-created_at-yesterday]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[card-benchmark_version-None]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[card-model_config_fingerprint-wrong]
+FAILED tests/test_run_aggregation.py::test_incompatible_ledger_is_excluded_while_valid_peer_survives[card-mock-True]
+FAILED tests/test_run_aggregation.py::test_invalid_task_identity_or_chronology_cannot_enter_aggregate[recorded_at-None]
+FAILED tests/test_run_aggregation.py::test_invalid_task_identity_or_chronology_cannot_enter_aggregate[recorded_at-2026-09-01T11:00:00]
+FAILED tests/test_run_aggregation.py::test_invalid_task_identity_or_chronology_cannot_enter_aggregate[target_canonical-Wrong font]
+FAILED tests/test_run_aggregation.py::test_invalid_task_identity_or_chronology_cannot_enter_aggregate[error_kind-rate_limit]
+FAILED tests/test_run_aggregation.py::test_historical_unversioned_results_are_explicitly_excluded
+FAILED tests/test_run_aggregation.py::test_release_page_shows_version_commit_origins_and_shared_cohort
+22 failed in 0.27s

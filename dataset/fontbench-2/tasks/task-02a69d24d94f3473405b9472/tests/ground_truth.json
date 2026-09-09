@@ -1,0 +1,15 @@
+{
+  "taskId": "font-pt-serif-v29",
+  "harborTaskId": "task-02a69d24d94f3473405b9472",
+  "canonical": "PT Serif",
+  "aliases": [
+    "pt serif"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "normal",
+  "lineHeight": "loose",
+  "widthId": "narrow",
+  "widthPx": 220
+}

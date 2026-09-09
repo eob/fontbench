@@ -1,0 +1,15 @@
+{
+  "taskId": "font-bitter-v11",
+  "harborTaskId": "task-cf0459aa10e08346cea36bbb",
+  "canonical": "Bitter",
+  "aliases": [
+    "bitter"
+  ],
+  "category": "serif",
+  "weight": "thin",
+  "modifier": "strikethrough",
+  "kerning": "normal",
+  "lineHeight": "normal",
+  "widthId": "wide",
+  "widthPx": 440
+}

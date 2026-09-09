@@ -13,7 +13,11 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.14'
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
@@ -21,5 +25,14 @@ jobs:
       - run: bunx playwright install --with-deps chromium
       - run: python -m venv .venv
       - run: .venv/bin/python -m pip install -e '.[dev]'
-      - run: bun run test
+      - name: Python tests
+        run: bun run test:python
+      - name: TypeScript and Chromium tests
+        env:
+          DEBUG: pw:browser,pw:api
+        run: timeout --kill-after=15s 180s bun run test:ts
+      - name: TypeScript typecheck
+        run: bun run typecheck
+      - run: bun run validate:dataset
+      - run: bun run validate:release
       - run: .venv/bin/python -m pip wheel . --no-deps --wheel-dir /tmp/fontbench-wheels

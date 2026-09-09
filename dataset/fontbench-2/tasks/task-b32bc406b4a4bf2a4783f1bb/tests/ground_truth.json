@@ -1,0 +1,15 @@
+{
+  "taskId": "font-jetbrains-mono-v23",
+  "harborTaskId": "task-b32bc406b4a4bf2a4783f1bb",
+  "canonical": "JetBrains Mono",
+  "aliases": [
+    "jetbrains mono"
+  ],
+  "category": "mono",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "normal",
+  "lineHeight": "tight",
+  "widthId": "wide",
+  "widthPx": 440
+}

@@ -1,0 +1,15 @@
+{
+  "taskId": "font-noto-sans-v22",
+  "harborTaskId": "task-be46933c0faf48164b6f5338",
+  "canonical": "Noto Sans",
+  "aliases": [
+    "noto sans"
+  ],
+  "category": "non-serif",
+  "weight": "regular",
+  "modifier": "underline",
+  "kerning": "tight",
+  "lineHeight": "loose",
+  "widthId": "medium",
+  "widthPx": 320
+}

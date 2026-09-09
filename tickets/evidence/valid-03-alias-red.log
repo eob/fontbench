@@ -1,0 +1,94 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________ test_malformed_aliases_are_refused_before_evaluation[Arial] __________
+
+task = {'taskId': 'arial-1', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': 'Arial', ...}
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-12/test_malformed_aliases_are_ref0')
+aliases = 'Arial'
+
+    @pytest.mark.parametrize('aliases', ['Arial', [None], ['  '], ['!!!'], 42])
+    def test_malformed_aliases_are_refused_before_evaluation(task, tmp_path, aliases):
+        task['aliases'] = aliases
+        manifest = tmp_path / 'manifest.json'
+        manifest.write_text(json.dumps([task]))
+        evaluator = BaselineEvaluator(mock=True)
+        evaluator.predict_image = Mock()
+>       with pytest.raises(ValueError, match='[Aa]lias'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_evaluator.py:268: Failed
+________ test_malformed_aliases_are_refused_before_evaluation[aliases1] ________
+
+task = {'taskId': 'arial-1', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': [None], ...}
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-12/test_malformed_aliases_are_ref1')
+aliases = [None]
+
+    @pytest.mark.parametrize('aliases', ['Arial', [None], ['  '], ['!!!'], 42])
+    def test_malformed_aliases_are_refused_before_evaluation(task, tmp_path, aliases):
+        task['aliases'] = aliases
+        manifest = tmp_path / 'manifest.json'
+        manifest.write_text(json.dumps([task]))
+        evaluator = BaselineEvaluator(mock=True)
+        evaluator.predict_image = Mock()
+>       with pytest.raises(ValueError, match='[Aa]lias'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_evaluator.py:268: Failed
+________ test_malformed_aliases_are_refused_before_evaluation[aliases2] ________
+
+task = {'taskId': 'arial-1', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': ['  '], ...}
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-12/test_malformed_aliases_are_ref2')
+aliases = ['  ']
+
+    @pytest.mark.parametrize('aliases', ['Arial', [None], ['  '], ['!!!'], 42])
+    def test_malformed_aliases_are_refused_before_evaluation(task, tmp_path, aliases):
+        task['aliases'] = aliases
+        manifest = tmp_path / 'manifest.json'
+        manifest.write_text(json.dumps([task]))
+        evaluator = BaselineEvaluator(mock=True)
+        evaluator.predict_image = Mock()
+>       with pytest.raises(ValueError, match='[Aa]lias'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_evaluator.py:268: Failed
+________ test_malformed_aliases_are_refused_before_evaluation[aliases3] ________
+
+task = {'taskId': 'arial-1', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': ['!!!'], ...}
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-12/test_malformed_aliases_are_ref3')
+aliases = ['!!!']
+
+    @pytest.mark.parametrize('aliases', ['Arial', [None], ['  '], ['!!!'], 42])
+    def test_malformed_aliases_are_refused_before_evaluation(task, tmp_path, aliases):
+        task['aliases'] = aliases
+        manifest = tmp_path / 'manifest.json'
+        manifest.write_text(json.dumps([task]))
+        evaluator = BaselineEvaluator(mock=True)
+        evaluator.predict_image = Mock()
+>       with pytest.raises(ValueError, match='[Aa]lias'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_evaluator.py:268: Failed
+___________ test_malformed_aliases_are_refused_before_evaluation[42] ___________
+
+task = {'taskId': 'arial-1', 'fontId': 'arial', 'fontName': 'Arial', 'aliases': 42, ...}
+tmp_path = PosixPath('/tmp/pytest-of-ted/pytest-12/test_malformed_aliases_are_ref4')
+aliases = 42
+
+    @pytest.mark.parametrize('aliases', ['Arial', [None], ['  '], ['!!!'], 42])
+    def test_malformed_aliases_are_refused_before_evaluation(task, tmp_path, aliases):
+        task['aliases'] = aliases
+        manifest = tmp_path / 'manifest.json'
+        manifest.write_text(json.dumps([task]))
+        evaluator = BaselineEvaluator(mock=True)
+        evaluator.predict_image = Mock()
+>       with pytest.raises(ValueError, match='[Aa]lias'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_evaluator.py:268: Failed
+=========================== short test summary info ============================
+FAILED tests/test_evaluator.py::test_malformed_aliases_are_refused_before_evaluation[Arial]
+FAILED tests/test_evaluator.py::test_malformed_aliases_are_refused_before_evaluation[aliases1]
+FAILED tests/test_evaluator.py::test_malformed_aliases_are_refused_before_evaluation[aliases2]
+FAILED tests/test_evaluator.py::test_malformed_aliases_are_refused_before_evaluation[aliases3]
+FAILED tests/test_evaluator.py::test_malformed_aliases_are_refused_before_evaluation[42]
+5 failed, 51 deselected in 0.17s

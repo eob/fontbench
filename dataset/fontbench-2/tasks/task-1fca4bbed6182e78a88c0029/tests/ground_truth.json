@@ -1,0 +1,15 @@
+{
+  "taskId": "font-fira-sans-v46",
+  "harborTaskId": "task-1fca4bbed6182e78a88c0029",
+  "canonical": "Fira Sans",
+  "aliases": [
+    "fira sans"
+  ],
+  "category": "non-serif",
+  "weight": "black",
+  "modifier": "regular",
+  "kerning": "tight",
+  "lineHeight": "tight",
+  "widthId": "narrow",
+  "widthPx": 220
+}

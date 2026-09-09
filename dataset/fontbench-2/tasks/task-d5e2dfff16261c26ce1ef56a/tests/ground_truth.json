@@ -1,0 +1,15 @@
+{
+  "taskId": "font-times-new-roman-v30",
+  "harborTaskId": "task-d5e2dfff16261c26ce1ef56a",
+  "canonical": "Times New Roman",
+  "aliases": [
+    "times new roman"
+  ],
+  "category": "serif",
+  "weight": "regular",
+  "modifier": "small-caps",
+  "kerning": "loose",
+  "lineHeight": "tight",
+  "widthId": "medium",
+  "widthPx": 320
+}

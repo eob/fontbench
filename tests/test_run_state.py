@@ -194,3 +194,16 @@ def test_unknown_cost_and_error_free_results_are_preserved(tmp_path):
         store.save_result("run", "vendor/model", "task", result)
         assert store.completed_results("run", "vendor/model") == {"task": result}
         assert store.spent_cost("run") == 0
+
+
+def test_attempt_export_retains_superseded_failures_and_supports_incremental_reads(tmp_path):
+    with RunStore(tmp_path / 'runs.sqlite3') as store:
+        register(store)
+        store.save_result('run', 'vendor/model', 'task', {'error': 'timeout', 'cost_usd': 0.1}, attempt_id='failed')
+        first = store.attempts('run')
+        assert first[0].get('sequence') == 1, 'Attempt exports need a durable incremental sequence'
+        store.save_result('run', 'vendor/model', 'task', {'error': None, 'cost_usd': 0.2}, attempt_id='success')
+        later = store.attempts('run', after_sequence=first[0]['sequence'])
+        assert [row['attempt_id'] for row in later] == ['success']
+        assert [row['attempt_id'] for row in store.attempts('run')] == ['failed', 'success']
+        assert store.attempts('run', after_sequence=later[0]['sequence']) == []
