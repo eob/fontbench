@@ -165,3 +165,52 @@ This is an intermittent hosted browser-transport failure observed inside the tes
 Raw logs: `/tmp/fontbench-cleanup-hosted-pr-success.log` and `/tmp/fontbench-cleanup-hosted-push-failed.log`.
 
 Final CI review adds `--kill-after=15s` to the 180-second process watchdog so a stuck browser cleanup cannot ignore the termination signal indefinitely. This only bounds a stalled test process; normal assertions, browser behavior, and per-test deadlines remain unchanged.
+
+## Transport disconnect also observed without nested screenshot spies
+
+The exact-match presentation commit `3c3b58875883a23b4c07c9c09286f9778e850027` changed no renderer, renderer test, or font-cache implementation relative to the previously green `9d3905184d995c4daa6f5f50a5fefa25a6ac04f5`. Its two initial hosted jobs each reported 79 passing browser/TypeScript tests and one failure, with different failing cases:
+
+| Hosted job | Cache-reuse/tamper case | Screenshot-injection case | Browser phase |
+| --- | --- | --- | --- |
+| [PR 34299994333](https://github.com/eob/fontbench/actions/runs/34299994333) | Failed after 19,003.64 ms: 15-second test deadline plus four-second cleanup deadline | Passed in 291.89 ms | 79 pass, 1 fail, 274 assertions; 32.21 s |
+| [Push 34299989851](https://github.com/eob/fontbench/actions/runs/34299989851) | Passed in 695.97 ms | Failed after 9,005.18 ms: five-second test deadline plus four-second cleanup deadline | 79 pass, 1 fail, 272 assertions; 23.25 s |
+
+The PR's cache case stopped during its **first** `renderAllSamples` call. The first screenshot started at 01:39:52.301 UTC, reported loaded fonts and waited for element stability, then Chromium logged the debugging-pipe disconnection at 01:39:52.369. The browser exited with code 0 at 01:39:52.396. No screenshot success or second browser launch appeared before the test deadline. The second render, image-hash equality assertion, intentional cached-font corruption, and hash-mismatch rejection assertion were therefore not reached. This failure does not establish a defect in cache reuse or corruption detection.
+
+Verbatim PR log excerpt:
+
+```text
+2026-09-09T01:39:52.301Z pw:api => screenshot started
+2026-09-09T01:39:52.369Z pw:browser [pid=6779][err] [0909/013952.369130:ERROR:content/browser/devtools/devtools_pipe_handler.cc:188] Connection terminated while reading from pipe
+2026-09-09T01:39:52.396Z pw:browser [pid=6779] <process did exit: exitCode=0, signal=null>
+error: Renderer test browsers did not close within 4000ms
+(fail) rendered font integrity > reuses pinned font bytes and refuses tampered cache assets [19003.64ms]
+  ^ this test timed out after 15000ms.
+```
+
+Unlike the screenshot-injection case, the cache test does not install nested page/locator/screenshot spies; both cases use the fixture's shared browser-launch instrumentation. This broadens the observed boundary beyond nested screenshot spies without identifying the transport's internal cause. The push's separate screenshot failure has the same sequence: screenshot start at 01:39:56.832 UTC, pipe disconnection at .874, browser exit 0 at .901, then explicit test/cleanup deadlines. Subsequent recipe tests passed in both jobs, preserving the evidence that cleanup restores shared state.
+
+| Bounded local check on unchanged source | Result |
+| --- | --- |
+| `timeout --kill-after=10s 45s env CI=true GITHUB_ACTIONS=true DEBUG=pw:browser,pw:api bun test src/render.test.ts -t 'reuses pinned font bytes and refuses tampered cache assets'` | GREEN on Bun 1.3.14: 1 pass, 18 filtered out, 0 fail, 3 assertions; test 1,351.57 ms, process 2.08 s |
+| `.venv/bin/python -m baseline.releases --release 1.0.0` | GREEN: unchanged 1,824-input dataset and evaluation-protocol fingerprints |
+| `.venv/bin/python -m baseline.finalize --run-dir results/runs/1.0.0/2026-09-08-all-except-fable --verify` | GREEN: immutable 8,102-response seal and 728-input comparison verified |
+
+The passing focused control does not erase either hosted failure or prove the intermittent issue resolved. [ci-01](../ci-01-browser-transport.md) remains open; this follow-up changes only documentation, with no renderer/test edits or paid inference. Raw logs: `/tmp/fontbench-exact-hosted-pr-failed.log`, `/tmp/fontbench-exact-hosted-push-failed.log`, `/tmp/fontbench-exact-cache-focused.log`, `/tmp/fontbench-exact-cache-release.log`, and `/tmp/fontbench-exact-cache-seal.log`.
+
+## Final bounded retry and current-head control
+
+The one authorized [PR retry, attempt 2](https://github.com/eob/fontbench/actions/runs/34299994333/attempts/2), retained head `3c3b58875883a23b4c07c9c09286f9778e850027` and again failed the cache case during its first render. Its screenshot began at 01:43:10.674 UTC, the debugging pipe disconnected at .751, and Chromium exited with code 0 at .773. The unchanged 15-second test deadline and four-second cleanup deadline produced a 19,001.33 ms failure. The nested screenshot case passed in 308.41 ms; the complete browser phase reported 79 passes, one failure, and 274 assertions in 33.07 seconds. No further hosted retry was requested. Run metadata from `gh run view 34299994333 --json attempt,headSha,conclusion,url` confirms attempt 2 and conclusion `failure` at this exact head.
+
+The final local control used the existing full ordered CI browser command, including its environment, diagnostics, and external process watchdog. It did not alter source, tests, test deadlines, or expectations:
+
+| Exact current-head local gate | Result |
+| --- | --- |
+| `env CI=true GITHUB_ACTIONS=true DEBUG=pw:browser,pw:api timeout --kill-after=15s 180s bun run test:ts` | GREEN: 80 pass, 0 fail, 277 assertions; 10.34 s |
+| `bun run typecheck` | GREEN: exit 0 |
+| `.venv/bin/python -m pip wheel . --no-deps --wheel-dir /tmp/fontbench-exact-current-wheels` | GREEN: built `fontbench-1.0.0-py3-none-any.whl` |
+| Renderer/test/protocol/data comparison to `9d3905184d995c4daa6f5f50a5fefa25a6ac04f5` | Unchanged: `git diff --quiet` exits 0 for `src`, `baseline/evaluator.py`, `baseline/providers.py`, `baseline/prompt.txt`, `baseline/finalize.py`, `baseline/runner.py`, `releases`, `dataset`, `results`, `config`, `bun.lock`, `package.json`, and `.github/workflows/ci.yml` |
+
+The complete Git change list since that fully green hosted commit contains only report presentation (`README.md`, `baseline/build_page.py`, `site/index.html`), its two new Python regressions (`tests/test_build_page.py`), and ticket/evidence documentation. Current presentation validation already passed all 452 Python tests; the frozen release and immutable seal were reverified immediately before this control, as recorded above.
+
+The source has passing current-head local benchmark gates and an unresolved current-head hosted browser-transport failure. It must not be described as fully green in hosted CI. Retain the failure and the differing local outcome in [ci-01](../ci-01-browser-transport.md); no new inference, source repair, or test workaround is part of this documentation update. Logs: `/tmp/fontbench-exact-hosted-pr-retry-failed.log`, `/tmp/fontbench-exact-hosted-pr-retry-metadata.json`, `/tmp/fontbench-exact-current-ts-gate.log`, `/tmp/fontbench-exact-current-typecheck.log`, and `/tmp/fontbench-exact-current-wheel.log`.
