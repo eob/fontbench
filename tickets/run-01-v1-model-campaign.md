@@ -7,9 +7,15 @@
 - **Harness**: codex
 - **Session ID**: `/root` / FontBench release campaign
 - **Assignee**: Edward Benson
-- **Delivery**: Local run ledger and website; no remote publication requested.
+- **Delivery**: Final shared-cohort publication and remote run history; publication authorized in the follow-up task.
 
-## Authorized outcome
+## Current outcome
+
+The campaign ended at its $100 guard with 8,102 final responses across all eleven configurations and no unresolved provider errors. The fixed publication contains 728 identical inputs per model (49 families), consistent with the accepted compact-sampling scope. All final responses and historical attempts are preserved and sealed; full 1,824-input coverage remains partial. The source checkpoint is `8e1f3026307e5a865c47f2b25bbac2c2b074f925`, and final publication artifacts are committed at `805e2146e5ee1637d05cd82c0477371f2b9e3228`.
+
+This run ID cannot resume after sealing. Later measurements use a new run ID. [Publication ticket](publish-01-v1-results.md) tracks remote integration and the website replacement; the operational notes below retain the earlier execution history.
+
+## Original campaign target
 
 Run the complete frozen V1.0.0 corpus against all enabled OpenAI, Gemini, and Claude configurations. The user subsequently added Anthropic funds/limits and explicitly included `claude-fable-5-1`. All eleven enabled configurations now target 20,064 final model–input observations. The already-disabled historical Gemini 2.5 Flash-Lite remains excluded.
 
@@ -20,10 +26,10 @@ The user has authorized a **$100 cumulative estimated spending cap**, raised fro
 - [x] Confirm V1.0.0 manifest, dataset/protocol fingerprints and independent readiness gate.
 - [x] Verify credentials are present without exposing values; authenticated read-only model lists include all ten selected IDs.
 - [x] Check current provider pricing documentation against the dated catalog.
-- [ ] Run selected models using the checkpointed versioned runner; monitor completion, costs and provider errors.
-- [ ] Preserve all final observations; retry only infrastructure failures within the authorized spending limit.
-- [ ] Build the website from compatible versioned logs and verify recorded coverage/origins.
-- [ ] Check SQLite integrity, freeze complete run exports, record outcome and commit local results.
+- [x] Run selected models using the checkpointed versioned runner; monitor completion, costs and provider errors.
+- [x] Preserve all final observations; retry only infrastructure failures within the authorized spending limit.
+- [x] Build the website from compatible versioned logs and verify recorded coverage/origins.
+- [x] Check SQLite integrity, freeze final run exports, record outcome and commit local results.
 
 ## Run identity and command
 

@@ -1,6 +1,6 @@
 # publish-01-v1-results: Finalize and publish FontBench V1.0.0 measurements
 
-- **Status**: In Progress
+- **Status**: In Review
 - **Branch**: `publish-01-v1-results`
 - **Assignee**: Edward Benson
 - **Machine**: eob-dev2
@@ -19,7 +19,7 @@ The $100 run has ended with 8,102 correctly scored final responses and no unreso
 - [x] Add an immutable publication seal with release/source hashes, fixed model roster/cohort, explicit per-result finality, and offline verification.
 - [x] Refuse mutation of sealed run IDs; preserve historical attempts and existing completion semantics.
 - [x] Resolve publication scope, retry infrastructure failures if any, score and seal the chosen final artifact.
-- [ ] Replace obsolete FontBench-1 app data and images with the verified V1 artifact; align all tables/charts on one cohort and remove fabricated metrics/scales.
+- [x] Replace obsolete FontBench-1 app data and images with the verified V1 artifact; align all tables/charts on one cohort and remove fabricated metrics/scales.
 - [ ] Run focused and required repository checks plus browser inspection.
 - [ ] Push FontBench records and land the app changes on Kaya main via its required PR workflow.
 - [ ] Promote only reviewed FontBench changes to edwardbenson-prod, preserving unrelated production work; verify the live page.
@@ -37,3 +37,5 @@ Offline finalization tooling passed 450 Python tests; the final focused run pass
 A scratch conversion in `/tmp` supported website inspection using actual saved measurements. It must be replaced by the strict committed-artifact importer before publication. The final scope is the common 728-input cohort, relying on the existing sampling instruction rather than treating an unanswered optional full-coverage offer as authorization to increase spending.
 
 The official common-cohort publication is now sealed and verified: 728 shared inputs, 49 families, eleven configurations, all 8,102 retained responses marked final. Source checkpoint `8e1f3026307e5a865c47f2b25bbac2c2b074f925`; clean finalizer `3d16dacc021f26c46c09b762b5c985b5b7004151`. No inference was issued during scoring or sealing.
+
+FontBench source and the `v1.0.0` tag are pushed; [PR #1](https://github.com/eob/fontbench/pull/1) targets main. The sealed artifact commit is `805e2146e5ee1637d05cd82c0477371f2b9e3228`. The Kaya importer verified this exact committed artifact, the frozen dataset manifest, and specimen PNG hashes. FontBench also passed all 78 Bun tests, TypeScript checking, and a sealed release-page build. Kaya focused checks, production build, and 320/768/1440 browser interactions pass; the mandatory repository preflight and final production promotion remain in progress.
