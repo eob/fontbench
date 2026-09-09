@@ -27,32 +27,61 @@ let directory: string;
 let browsers: Browser[];
 let launchSpy: ReturnType<typeof spyOn>;
 
+function traceFixture(stage: string) {
+  if (process.env.CI) console.log(`[render-test] ${stage}`);
+}
+
 beforeEach(() => {
+  traceFixture('setup begin');
   directory = fs.mkdtempSync(path.join(os.tmpdir(), 'fontbench-render-test-'));
   browsers = [];
   TOP_50_FONTS.splice(0, TOP_50_FONTS.length, fixtureFont);
   VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, recipe);
   launchSpy = spyOn(chromium, 'launch').mockImplementation(async options => {
+    traceFixture('browser launch begin');
     const browser = await realLaunch(options);
+    traceFixture('browser launch complete');
     browsers.push(browser);
     return browser;
   });
+  traceFixture('setup complete');
 });
 
 afterEach(async () => {
+  traceFixture('cleanup begin');
   launchSpy.mockRestore();
-  for (const browser of browsers) await browser.close();
+  for (const browser of browsers) {
+    traceFixture('browser close begin');
+    await browser.close();
+    traceFixture('browser close complete');
+  }
   TOP_50_FONTS.splice(0, TOP_50_FONTS.length, ...originalFonts);
   VARIANT_RECIPES.splice(0, VARIANT_RECIPES.length, ...originalRecipes);
   WIDTH_VARIANTS.splice(0, WIDTH_VARIANTS.length, ...originalWidths.map(width => ({ ...width })));
   fs.rmSync(directory, { recursive: true, force: true });
+  traceFixture('cleanup complete');
 });
+
+// Native await avoids the browser-suite stalls seen with Bun's async rejection matcher.
+// See tickets/evidence/publish-01-bun-runtime-gates.md for the executable A/B control.
+async function expectRejection(promise: Promise<unknown>, expected: RegExp | string) {
+  let rejected = false;
+  let rejection: unknown;
+  try {
+    await promise;
+  } catch (error) {
+    rejected = true;
+    rejection = error;
+  }
+  expect(rejected).toBe(true);
+  expect(() => { throw rejection; }).toThrow(expected);
+}
 
 describe('rendered font integrity', () => {
   test('refuses registered release output before filesystem mutation or browser launch', async () => {
     const mkdir = spyOn(fs, 'mkdirSync').mockImplementation(() => { throw new Error('Filesystem mutation reached'); });
     try {
-      await expect(renderAllSamples(path.join(import.meta.dir, '../dataset/fontbench-2-rendered'))).rejects.toThrow(/Frozen release output/);
+      await expectRejection(renderAllSamples(path.join(import.meta.dir, '../dataset/fontbench-2-rendered')), /Frozen release output/);
       expect(launchSpy).not.toHaveBeenCalled();
     } finally {
       mkdir.mockRestore();
@@ -62,13 +91,13 @@ describe('rendered font integrity', () => {
   test('refuses a CSS family alias around an unrelated font binary', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, name: 'Unrelated Sans', cssFamily: 'Unrelated Sans',
       cssUrl: `data:text/css,${encodeURIComponent(css.replaceAll('Fixture Sans', 'Unrelated Sans'))}` };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/identity|family/i);
+    await expectRejection(renderAllSamples(directory), /identity|family/i);
   });
 
   test('refuses CSS weight declarations that mislabel a static font binary', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-weight: 400', 'font-weight: 700'))}` };
     VARIANT_RECIPES[0] = { ...recipe, weight: 'bold' };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/binary.*weight|weight.*binary/i);
+    await expectRejection(renderAllSamples(directory), /binary.*weight|weight.*binary/i);
   });
 
   test('records actual multiline geometry and content hashes with pinned assets', async () => {
@@ -89,7 +118,7 @@ describe('rendered font integrity', () => {
 
   test('refuses a missing font instead of labeling a fallback', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: 'data:text/css,' };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/font|fallback/i);
+    await expectRejection(renderAllSamples(directory), /font|fallback/i);
     expect(fs.existsSync(path.join(directory, 'manifest.json'))).toBe(false);
   });
 
@@ -98,14 +127,14 @@ describe('rendered font integrity', () => {
       ...fixtureFont,
       cssUrl: `data:text/css,${encodeURIComponent(css.replace(FONT_DATA, 'aW52YWxpZA=='))}`,
     };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/font|network/i);
+    await expectRejection(renderAllSamples(directory), /font|network/i);
     expect(browsers.every(browser => !browser.isConnected())).toBe(true);
   });
 
   test('refuses partial glyph fallback even when a webfont loads', async () => {
     const partialCss = css.replace('font-weight: 400;', 'font-weight: 400; unicode-range: U+0041-005A;');
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(partialCss)}` };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/fallback/i);
+    await expectRejection(renderAllSamples(directory), /fallback/i);
   });
 
   test('omits unsupported weights and records the face actually used', async () => {
@@ -129,7 +158,7 @@ describe('rendered font integrity', () => {
   test('refuses a CSS italic declaration around a regular font binary', async () => {
     TOP_50_FONTS[0] = { ...fixtureFont, cssUrl: `data:text/css,${encodeURIComponent(css.replace('font-style: normal', 'font-style: italic'))}` };
     VARIANT_RECIPES[0] = { ...recipe, modifier: 'italic' };
-    await expect(renderAllSamples(directory)).rejects.toThrow(/binary style mismatch/);
+    await expectRejection(renderAllSamples(directory), /binary style mismatch/);
   });
 
   test('records the current native face after styles change between recipes', async () => {
@@ -193,12 +222,12 @@ describe('rendered font integrity', () => {
     expect(repeated!.imageSha256).toBe(sample!.imageSha256);
     const asset = sample!.fontRendering!.assets![0]!;
     fs.writeFileSync(path.join(directory, asset.path), 'corrupt');
-    await expect(renderAllSamples(directory)).rejects.toThrow(/hash mismatch/);
+    await expectRejection(renderAllSamples(directory), /hash mismatch/);
   }, 15000);
 
   test('refuses identical images assigned to distinct tasks', async () => {
     VARIANT_RECIPES.push({ ...recipe, variantIndex: 2 });
-    await expect(renderAllSamples(directory)).rejects.toThrow(/Identical images/);
+    await expectRejection(renderAllSamples(directory), /Identical images/);
   });
 
   test('closes the browser and preserves previous output when a later screenshot fails', async () => {
@@ -227,7 +256,7 @@ describe('rendered font integrity', () => {
       });
       return browser;
     });
-    await expect(renderAllSamples(directory)).rejects.toThrow('injected screenshot failure');
+    await expectRejection(renderAllSamples(directory), 'injected screenshot failure');
     expect(browsers.every(browser => !browser.isConnected())).toBe(true);
     expect(fs.readFileSync(imagePath, 'utf8')).toBe('previous complete image');
     expect(fs.readFileSync(path.join(directory, 'manifest.json'), 'utf8')).toBe('previous complete manifest');

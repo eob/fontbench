@@ -25,7 +25,14 @@ jobs:
       - run: bunx playwright install --with-deps chromium
       - run: python -m venv .venv
       - run: .venv/bin/python -m pip install -e '.[dev]'
-      - run: bun run test
+      - name: Python tests
+        run: bun run test:python
+      - name: TypeScript and Chromium tests
+        env:
+          DEBUG: pw:browser,pw:api
+        run: timeout --kill-after=15s 180s bun run test:ts
+      - name: TypeScript typecheck
+        run: bun run typecheck
       - run: bun run validate:dataset
       - run: bun run validate:release
       - run: .venv/bin/python -m pip wheel . --no-deps --wheel-dir /tmp/fontbench-wheels
