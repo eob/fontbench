@@ -8,7 +8,7 @@ The original 1,000-image dataset and September 7 639-image pilot are **invalid h
 
 ## Setup and validate the release
 
-Requires Bun, Python 3.10+, Git history containing the dataset commit, and Chromium for browser tests or candidate generation.
+Requires Bun 1.3.14, Python 3.10+, Git history containing the dataset commit, and Chromium for browser tests or candidate generation. CI uses this tested Bun version; review the [runtime regression evidence](tickets/evidence/publish-01-bun-runtime-gates.md) before upgrading it.
 
 ```bash
 bun install --frozen-lockfile

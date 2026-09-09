@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "FontBench: versioned visual typography recognition benchmark.",
   "type": "module",
+  "packageManager": "bun@1.3.14",
   "scripts": {
     "render": "bun run src/render.ts",
     "build:harbor": "bun run src/generate_harbor_dataset.ts",
