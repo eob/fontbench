@@ -20,7 +20,7 @@ from baseline.reporting import finite_nonnegative, metrics as _metrics, read_rep
 from baseline.validate_dataset import validate_dataset
 
 
-METRICS = {"composite": "Composite score", "exact": "All six correct", "font": "Font family",
+METRICS = {"exact": "All six correct", "font": "Font family",
            "category": "Category", "weight": "Weight", "modifier": "Modifier",
            "kerning": "Letter spacing", "line_height": "Line height"}
 AXES = [
@@ -97,10 +97,10 @@ def _breakdown_table(section: dict, models: list[dict]) -> str:
         cells = []
         for model in models:
             value = group["models"][model["id"]]
-            score = value["metrics"]["composite"]
+            score = value["metrics"]["exact"]
             cells.append(f'<td>{_percent(score)}<small>n={value["count"]}</small></td>')
         rows.append(f'<tr><th scope="row">{escape(group["label"])}<small>{group["available"]} inputs</small></th>{"".join(cells)}</tr>')
-    return f'<div class="table-scroll"><table><thead><tr><th scope="col">Input group</th>{headings}</tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
+    return f'<div class="table-scroll"><table><thead><tr><th scope="col">Input group<small class="breakdown-metric">All six correct</small></th>{headings}</tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
 
 
 def build_page(manifest_path: str | Path, results_dir: str | Path, output_dir: str | Path = "site",
@@ -243,7 +243,7 @@ def _render_page(items: list[dict], models: list[dict], tasks_by_model: dict, va
     choices = "".join(f'<option value="{key}">{value}</option>' for key, value in METRICS.items())
     model_rows = []
     for model in models:
-        score = model["metrics"]["composite"]
+        score = model["metrics"]["exact"]
         cost = model["cost_usd"]
         cost_text = "—" if cost is None else f"${cost:.4f}"
         run_detail = ""
@@ -278,7 +278,7 @@ def _render_page(items: list[dict], models: list[dict], tasks_by_model: dict, va
     comparison_html = ''
     if len(measured_ids) > 1:
         comparison_html = f'<p class="method-note">Shared comparison: {len(common_ids)} input(s) completed by every measured model. ' + "; ".join(
-            f'{escape(model["display_name"])}: {_percent(comparison["models"][model["id"]]["composite"])} composite'
+            f'{escape(model["display_name"])}: {_percent(comparison["models"][model["id"]]["exact"])} all six correct'
             for model in models if model["id"] in measured_ids) + '</p>'
     mock_html = '<div class="notice">Mock preview: these are test outputs, not measured model performance.</div>' if report["mock"] else ""
     pending_html = '<p class="empty">Awaiting measured results. Model configurations are ready; no scores have been filled in.</p>' if not measured else ""
@@ -315,7 +315,7 @@ def _render_page(items: list[dict], models: list[dict], tasks_by_model: dict, va
 <main id="top"><section class="hero"><p class="eyebrow"><span class="live-dot"></span> A visual typography benchmark</p><h1>Can a model<br><em>read the type?</em></h1><div class="hero-bottom"><p>One sentence. Six typographic decisions.<br>Measuring how multimodal models see the details that make a typeface.</p><span class="run-label">{status_text}</span></div>
 <div class="stats"><div><strong>{report['font_count']}</strong><span>font families</span></div><div><strong>{len(items):,}</strong><span>rendered inputs</span></div><div><strong>6</strong><span>scored attributes</span></div><div><strong>{len(models)}</strong><span>model configurations</span></div></div></section>
 {release_html}{validity_html}{mock_html}<section id="inputs" class="inputs"><div class="section-heading"><div><p class="eyebrow">The evidence</p><h2>What the models actually see</h2></div><a class="sheet-link" href="assets/overview.svg" target="_blank">Explore full contact sheet ↗</a></div><figure><img src="assets/overview.svg" alt="A landscape contact sheet of {len(main_samples)} actual FontBench input images spanning families and typographic attributes"><figcaption>{len(main_samples)} representative inputs, selected to balance families, categories, weights, modifiers, and spacing. Every tile is an original benchmark PNG.</figcaption></figure></section>
-<section id="performance"><div class="section-heading"><div><p class="eyebrow">The measurements</p><h2>Model performance</h2><p>{coverage:,} completed model–input pairs. Each model's sample count is shown below.</p></div><label class="metric-label">Metric<select id="metric">{choices}</select></label></div>{pending_html}<div class="table-scroll overview"><table><thead><tr><th scope="col">Model</th><th scope="col">Coverage</th><th scope="col" id="metric-heading">Composite score</th><th scope="col">Run cost</th></tr></thead><tbody>{''.join(model_rows)}</tbody></table></div><p class="method-note">Composite score gives each of the six attributes equal weight. Percentages use completed samples; pending samples are not counted as wrong answers. Partial runs may cover different samples and should not be treated as final rankings.</p>{comparison_html}{warning_html}</section>
+<section id="performance"><div class="section-heading"><div><p class="eyebrow">The measurements</p><h2>Model performance</h2><p>{coverage:,} completed model–input pairs. Each model's sample count is shown below.</p></div><label class="metric-label">Metric<select id="metric">{choices}</select></label></div>{pending_html}<div class="table-scroll overview"><table><thead><tr><th scope="col">Model</th><th scope="col">Coverage</th><th scope="col" id="metric-heading">All six correct</th><th scope="col">Run cost</th></tr></thead><tbody>{''.join(model_rows)}</tbody></table></div><p class="method-note">All six correct counts an input only when every attribute is correct. The selector also shows each attribute’s accuracy. Percentages use completed samples; pending samples are not counted as wrong answers. Partial runs may cover different samples and should not be treated as final rankings.</p>{comparison_html}{warning_html}</section>
 <section id="dimensions" class="dimensions-intro"><p class="eyebrow">A closer look</p><h2>Six ways to read a sentence.</h2><p>Explore the visual variation, then compare measured scores within each group. Every cell includes its sample count; a dash means no completed measurements.</p></section>{''.join(section_html)}
 <section id="models"><div class="section-heading"><div><p class="eyebrow">The lineup</p><h2>Models &amp; configurations</h2><p>Explicit API models across Anthropic, OpenAI, and Google. Prices are recorded reference rates, not a performance estimate.</p></div></div><div class="model-grid">{''.join(config_cards)}</div></section>
 {history_html}<footer><a class="brand" href="#top"><span>Fb</span> FontBench</a><p>Reproducible inputs. Explicit grading. Measured results.<br><a href="benchmark.json">Download the page data</a> · No external assets required.</p><details><summary>Dataset identity</summary><code>{fingerprint}</code><p>Input images and task metadata are hashed together. Only matching scorecards using grading version {GRADING_VERSION} and the current evaluation protocol contribute measurements.</p></details></footer></main>
@@ -341,6 +341,7 @@ document.getElementById('metric').addEventListener('change',event=>{
     cell.querySelector('i').style.width=(model.metrics[key]===null?0:model.metrics[key]*100)+'%';
   });
   document.querySelectorAll('.breakdown').forEach(container=>{
+    container.querySelector('.breakdown-metric').textContent=event.target.selectedOptions[0].textContent;
     const section=report.sections.find(section=>section.id===container.dataset.section);
     container.querySelectorAll('tbody tr').forEach((row,index)=>{
       const group=section.groups[index];

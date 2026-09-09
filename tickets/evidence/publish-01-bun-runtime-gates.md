@@ -154,4 +154,14 @@ The repair captures the browser list and directory, clears the tracked list, and
 
 Logs: `/tmp/fontbench-native-await-hosted-pr-failed.log`, `/tmp/fontbench-native-await-hosted-push-success.log`, `/tmp/fontbench-cleanup-red.log`, `/tmp/fontbench-cleanup-green.log`, `/tmp/fontbench-cleanup-reversal.log`, `/tmp/fontbench-cleanup-ts-gate.log`, `/tmp/fontbench-cleanup-typecheck.log`. The scratch reversal lives at `/tmp/fontbench-cleanup-control-56ytuh2d`.
 
+## Hosted result with cleanup repair
+
+At exact commit `9d3905184d995c4daa6f5f50a5fefa25a6ac04f5`, [PR run 34299177701](https://github.com/eob/fontbench/actions/runs/34299177701) passed every phase: 450 Python tests in 34.38 seconds, all 80 TypeScript/browser tests with 277 assertions in 13.26 seconds, typechecking, dataset/release integrity, and wheel build. The paired [push run 34299173713](https://github.com/eob/fontbench/actions/runs/34299173713) passed Python but reported 79 passing TypeScript/browser tests and one failure with 272 assertions in 22.83 seconds. Both outcomes remain part of the validation record.
+
+The sole push failure is the final nested-spy screenshot-injection test. Browser launch, page/CDP setup, font checks, and layout all completed. The first real screenshot began at 01:27:57.068 UTC; Chromium reported its debugging pipe closed at 01:27:57.117 and exited with code 0. The second screenshot's injected error was not reached. The test reached its unchanged 5,000 ms deadline; cleanup then reported its own 4,000 ms deadline, removed the captured directory, and restored the shared arrays. All subsequent recipe tests passed, confirming that cleanup no longer contaminates other tests.
+
+This is an intermittent hosted browser-transport failure observed inside the test's nested instrumentation. The underlying cause is unknown; neither a renderer defect nor generic hosting failure is established. The all-green exact-head PR run verifies the cleanup change and frozen integrity gates. Preserve the failing push without another blind retry. Track further investigation in [ci-01-browser-transport.md](../ci-01-browser-transport.md); no renderer, test, dataset, or result changes accompany this evidence update.
+
+Raw logs: `/tmp/fontbench-cleanup-hosted-pr-success.log` and `/tmp/fontbench-cleanup-hosted-push-failed.log`.
+
 Final CI review adds `--kill-after=15s` to the 180-second process watchdog so a stuck browser cleanup cannot ignore the termination signal indefinitely. This only bounds a stalled test process; normal assertions, browser behavior, and per-test deadlines remain unchanged.

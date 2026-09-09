@@ -322,3 +322,47 @@ def test_malformed_summary_model_state_preserves_measurements_and_peer(dataset, 
     assert peer["run_state"] == "running"
     assert peer["cost_usd"] == 0.01
     assert len(report["warnings"]) == 1
+
+
+def test_report_defaults_to_exact_match_without_visible_composite(dataset, tmp_path):
+    manifest, samples, config = dataset
+    results = tmp_path / 'results'
+    write_scorecard(results, samples)
+    path = results / 'scorecard_test-model.json'
+    card = json.loads(path.read_text())
+    card['tasks'][0].update(font_correct=False, all_correct=False, composite_score=5 / 6)
+    path.write_text(json.dumps(card))
+    original = path.read_bytes()
+
+    report = build_page(manifest, results, tmp_path / 'site', config)
+    html = (tmp_path / 'site/index.html').read_text()
+    visible_html = html.split('<script id="benchmark-data"', 1)[0]
+    assert 'composite' not in visible_html.lower()
+    assert '<select id="metric"><option value="exact">All six correct</option>' in html
+    assert '<th scope="col" id="metric-heading">All six correct</th>' in html
+    assert 'data-model="test-model"><span>0.0%</span>' in html
+    assert '<td>0.0%<small>n=1</small></td>' in html
+    assert 'class="breakdown-metric">All six correct</small>' in html
+    assert report['models'][0]['metrics']['exact'] == 0
+    assert report['models'][0]['metrics']['composite'] == pytest.approx(5 / 6)
+    assert path.read_bytes() == original
+
+
+def test_shared_comparison_presents_exact_match_and_preserves_recorded_metrics(dataset, tmp_path):
+    manifest, samples, config = dataset
+    results = tmp_path / 'results'
+    write_scorecard(results, samples)
+    settings = json.loads(config.read_text())
+    settings['models'].append({**settings['models'][0], 'id': 'second', 'display_name': 'Second'})
+    config.write_text(json.dumps(settings))
+    card = json.loads((results / 'scorecard_test-model.json').read_text())
+    card['tasks'][0].update(font_correct=False, all_correct=False, composite_score=5 / 6)
+    (results / 'scorecard_test-model.json').write_text(json.dumps(card))
+    card['model_id'] = 'second'
+    (results / 'scorecard_second.json').write_text(json.dumps(card))
+
+    report = build_page(manifest, results, tmp_path / 'site', config)
+    html = (tmp_path / 'site/index.html').read_text()
+    assert 'Test Model: 0.0% all six correct; Second: 0.0% all six correct' in html
+    assert report['comparison']['models']['test-model']['composite'] == pytest.approx(5 / 6)
+    assert report['comparison']['models']['second']['composite'] == pytest.approx(5 / 6)

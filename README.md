@@ -54,7 +54,7 @@ Repeat the same command to resume. `--max-tasks N` selects a reproducible subset
 
 The website combines complementary observations for the same provider/model/endpoint/output limit, keeps the earliest final observation for each input, and retains all contributing run records and attempt costs. Repeating a task cannot replace a lower score with a higher one. Mocks, incompatible releases, and malformed reports are excluded. Rankings use shared task cohorts; partial coverage is displayed explicitly.
 
-Completed answers and malformed model outputs are final datapoints. Malformed outputs receive zero; infrastructure failures remain retryable and appear in error counts. Exact match requires all six fields correct; the composite is their equal-weight mean. Extra fields, duplicate JSON keys, missing fields, and invalid enum values invalidate the whole prediction.
+Completed answers and malformed model outputs are final datapoints. Malformed outputs receive zero; infrastructure failures remain retryable and appear in error counts. The report leads with exact match: all six fields must be correct. It also shows the six individual attribute accuracies. Extra fields, duplicate JSON keys, missing fields, and invalid enum values invalidate the whole prediction.
 
 ## What the benchmark measures
 
