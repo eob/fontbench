@@ -11,7 +11,7 @@
 
 Verify provider failures are resolved, independently score every retained output, explicitly seal the final measurements and publication cohort, commit and push the FontBench results, replace invalid historical results in the edwardbenson.com app through Kaya main, improve page accuracy and clarity, then publish the reviewed page through edwardbenson-prod. The user explicitly authorized remote pushes and website publication.
 
-The $100 run has ended with 8,102 correctly scored final responses and no unresolved provider errors. The shared comparison has 728 tasks across all eleven models. The user is choosing between this fixed matched sample and full 1,824-input coverage (requiring a higher authorized spending cap). Data collection or publication dependent on that choice waits for the answer; independent tooling and page preparation continue.
+The $100 run has ended with 8,102 correctly scored final responses and no unresolved provider errors. The shared comparison has 728 tasks across all eleven models. The user previously authorized a compact sample rather than exhaustive coverage. Apply that authorization to the fixed 728-input shared comparison, preserve all 8,102 responses, and retain the $100 spending cap. The published page must explicitly distinguish this sample from the full 1,824-input release. A larger campaign can use a new run ID later.
 
 ## Plan and gates
 
@@ -34,4 +34,4 @@ Kaya main and edwardbenson-prod have many unrelated divergent commits, but their
 
 Offline finalization tooling passed 450 Python tests; the final focused run passed all 29 seal/scoring cases. Frozen release validation passed without changing the dataset or protocol. Regression tests reproduce the missing seal guards and reject modified source bytes, forged provenance, invalid chronology, and inconsistent metrics. See [the finalizer gate record](evidence/publish-01-finalizer-gates.md).
 
-The official run remains unsealed while publication scope is pending. A scratch conversion in `/tmp` supports website inspection using actual saved measurements; it must be replaced by the strict committed-artifact importer before publication.
+A scratch conversion in `/tmp` supported website inspection using actual saved measurements. It must be replaced by the strict committed-artifact importer before publication. The final scope is the common 728-input cohort, relying on the existing sampling instruction rather than treating an unanswered optional full-coverage offer as authorization to increase spending.
