@@ -38,9 +38,9 @@ for this campaign.
 
 ## Plan and gates
 
-- [ ] Red: `muse-spark-1.3`/`muse-spark-1.2` unselectable; catalog file absent.
-- [ ] Add `config/models.meta.json`; validate it loads with `load_model_config`.
-- [ ] Offline Green: mock run with the new catalog; `bun run test`; `bun run validate:release`.
+- [x] Red: `muse-spark-1.3`/`muse-spark-1.2` unselectable; catalog file absent.
+- [x] Add `config/models.meta.json`; validate it loads with `load_model_config`.
+- [x] Offline Green: mock run with the new catalog; `bun run test`; `bun run validate:release`.
 - [ ] Live 1-task probe for both models; confirm structured output, usage accounting, cost math.
 - [ ] Full run: `--release 1.0.0 --config config/models.meta.json --run-id <id> --models
   muse-spark-1.3 muse-spark-1.2 --budget-usd 100`; retry only infrastructure failures.
@@ -59,13 +59,35 @@ ValueError: Unknown or disabled models: muse-spark-1.2, muse-spark-1.3
 Command: `.venv/bin/python -m baseline.runner --release 1.0.0 --mock --run-id red-check
 --max-tasks 1 --models muse-spark-1.3 muse-spark-1.2` (raises at `runner.py:104`).
 
+## Green evidence (2026-09-10, offline)
+
+`config/models.meta.json` loads two enabled models via `load_model_config`, and the mock
+smoke test completes 3/3 tasks for each:
+
+```text
+muse-spark-1.3 | openai | muse-spark-1.3 | https://api.meta.ai/v1 | MODEL_API_KEY | 1.25 / 4.25 | 4096
+muse-spark-1.2 | openai | muse-spark-1.2 | https://api.meta.ai/v1 | MODEL_API_KEY | 1.25 / 4.25 | 4096
+```
+
+Reversion check: the same mock command without `--config config/models.meta.json` fails with
+the identical Red signature (`ValueError: Unknown or disabled models`), proving the catalog
+is what turns selection Green. Mock run directories are git-ignored.
+
+| Gate / command | Base commit | Result |
+| :--- | :--- | :--- |
+| `bun run benchmark --release 1.0.0 --config config/models.meta.json --mock --run-id smoke-meta --max-tasks 3 --models muse-spark-1.3 muse-spark-1.2` | `df7445fe`+branch | 3/3 mock tasks per model, cost $0 |
+| `.venv/bin/python -m pytest -q` | `df7445fe`+branch | 452 passed, 0 failed (21s) |
+| `bun test src` | `df7445fe`+branch | 80 pass, 0 fail |
+| `tsc --noEmit` | `df7445fe`+branch | clean |
+| `bun run validate:release` | `df7445fe`+branch | fingerprints match; 1,824 expected tasks |
+
 ## Handoff and takeover log
 
 - `2026-09-10`: Started by `muse` on `eob-dev2` (Session `01a08930-2a59-7aa0-811b-63e91a3fd454`).
 
 ## Handoff memo
 
-- **Verified working**: Nothing yet; ticket and branch created.
-- **Pending / blocker**: `MODEL_API_KEY` must be provided before any live step. Offline wiring next.
-- **Repro command**: `.venv/bin/python -m baseline.runner --help`
-- **Next action**: Write `config/models.meta.json`, then run the mock smoke test with the new catalog.
+- **Verified working**: Meta catalog loads; mock run Green for both models; pytest 452, bun 80, tsc, release gate all pass.
+- **Pending / blocker**: `MODEL_API_KEY` must be provided before any live step.
+- **Repro command**: `bun run benchmark --release 1.0.0 --config config/models.meta.json --mock --run-id smoke-meta --max-tasks 3 --models muse-spark-1.3 muse-spark-1.2`
+- **Next action**: With `MODEL_API_KEY` set, run the 1-task live probe (`--run-id probe-meta-detail-01 --max-tasks 1 --budget-usd 5`), then start the full campaign on a fresh run ID.
