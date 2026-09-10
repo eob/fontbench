@@ -1,6 +1,6 @@
 # run-03-muse-spark-campaign: V1.0.0 campaign for Meta Muse Spark 1.3 and 1.2
 
-- **Status**: In Progress
+- **Status**: Completed
 - **Branch**: `run-03-muse-spark-campaign`
 - **Base**: `df7445fe` (`main`)
 - **Machine**: eob-dev2
@@ -9,6 +9,7 @@
 - **PR**: https://github.com/eob/fontbench/pull/2
 - **Assignee**: Edward Benson
 - **Delivery**: Sealed two-model common-cohort publication; website import tracked in kaya-web `feature-fontbench-muse-spark-results`.
+- **Completed**: 2026-09-10 through PR #2, merged to `main` as `234803f8`. Kaya-web page (PR #1249, production PR #1269) verified live with the Muse comparison.
 
 ## Goal
 
