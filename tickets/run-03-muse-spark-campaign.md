@@ -6,7 +6,7 @@
 - **Machine**: eob-dev2
 - **Harness**: muse
 - **Session ID**: `01a08930-2a59-7aa0-811b-63e91a3fd454` (pale-sinope)
-- **PR**: Pending
+- **PR**: https://github.com/eob/fontbench/pull/2
 - **Assignee**: Edward Benson
 - **Delivery**: Sealed two-model common-cohort publication; website import tracked in kaya-web `feature-fontbench-muse-spark-results`.
 
