@@ -73,6 +73,45 @@ def test_workspace_auth_only_reaches_anthropic(benchmark, monkeypatch, provider,
     assert evaluation_protocol_fingerprint() == load_release()['evaluation_protocol_fingerprint']
 
 
+@pytest.mark.parametrize('base_url,expected', [
+    ('https://api.meta.ai/v1', 300.0),
+    ('https://api.meta.ai/v1/', 300.0),
+    (None, 60.0),
+    ('https://api.openai.com/v1', 60.0),
+])
+def test_meta_endpoint_gets_extended_transport_timeout(benchmark, monkeypatch, base_url, expected):
+    from baseline.releases import load_release
+    from baseline.evaluator import evaluation_protocol_fingerprint
+
+    catalog = json.loads(benchmark['config_path'].read_text())
+    catalog['models'][0]['provider'] = 'openai'
+    if base_url is None:
+        catalog['models'][0].pop('base_url', None)
+    else:
+        catalog['models'][0]['base_url'] = base_url
+    benchmark['config_path'].write_text(json.dumps(catalog))
+    benchmark['mock'] = False
+    monkeypatch.setattr('baseline.validate_dataset.require_valid_dataset', lambda _: {'valid': True})
+    monkeypatch.setenv('TEST_KEY', 'fixture-secret')
+    prediction = json.dumps(dict(font='Arial', category='non-serif', weight='regular',
+                                modifier='regular', kerning='normal', line_height='normal'))
+    body = {'status': 'completed', 'output': [{'type': 'message', 'content': [
+        {'type': 'output_text', 'text': prediction}]}], 'usage': {'input_tokens': 10, 'output_tokens': 10}}
+    created = []
+    original = httpx.Client
+    def capture(**kwargs):
+        client = original(transport=httpx.MockTransport(lambda _: httpx.Response(200, json=body)), **kwargs)
+        created.append(client)
+        return client
+    monkeypatch.setattr('baseline.providers.httpx.Client', capture)
+
+    summary = run_benchmark(**benchmark, max_tasks=1)
+    assert summary['models']['model-a']['completed'] == 1
+    assert len(created) == 1
+    assert created[0].timeout.read == expected
+    assert evaluation_protocol_fingerprint() == load_release()['evaluation_protocol_fingerprint']
+
+
 def test_invalid_workspace_is_refused_before_client_creation(benchmark, monkeypatch):
     catalog = json.loads(benchmark['config_path'].read_text())
     catalog['models'][0]['provider'] = 'anthropic'

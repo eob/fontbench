@@ -9,6 +9,7 @@ from contextlib import ExitStack, contextmanager
 from dataclasses import asdict, fields
 from datetime import datetime, timezone
 import hashlib
+import httpx
 import json
 import math
 import os
@@ -30,6 +31,10 @@ from baseline.releases import (
     release_manifest_path, validate_release,
 )
 from baseline.run_state import RunStore
+
+
+META_API_BASE_URL = 'https://api.meta.ai/v1'
+META_REQUEST_TIMEOUT = 300.0
 
 
 def write_json(path: Path, data: dict) -> None:
@@ -163,6 +168,11 @@ def run_benchmark(
             if model['provider'] == 'anthropic' and anthropic_workspace_id:
                 # Configure account routing outside the frozen inference protocol.
                 client._client._http.headers['anthropic-workspace-id'] = anthropic_workspace_id
+            if client._client is not None and (model.get('base_url') or '').rstrip('/') == META_API_BASE_URL:
+                # Muse high-effort reasoning routinely exceeds the frozen 60s
+                # client timeout. Wait longer without changing the request body,
+                # grading, prompt, or evaluation protocol fingerprint.
+                client._client._http.timeout = httpx.Timeout(META_REQUEST_TIMEOUT)
             clients[model['id']] = client
         model_by_id = {model['id']: model for model in models}
         # Reserve two possible HTTP attempts before scheduling. Unmetered
