@@ -129,4 +129,5 @@ would otherwise pollute release aggregation as distinct configurations).
 - **Verified working**: Probes prove the wire path; 300s Meta timeout fix tested (456 pytest pass, fingerprint unchanged); full campaign launched.
 - **Pending / blocker**: None. Campaign `2026-09-10-muse-spark` running detached; log at `/tmp/fontbench-muse-run.log`.
 - **Repro command**: `bun run benchmark --release 1.0.0 --config config/models.meta.json --mock --run-id smoke-meta --max-tasks 3 --models muse-spark-1.3 muse-spark-1.2`
-- **Next action**: Monitor the campaign (`tail -f /tmp/fontbench-muse-run.log`), then commit the checkpoint, `finalize --scope common`, `--verify`, and push the seal.
+- **Next action**: Monitor the campaign (`tail -f /tmp/fontbench-muse-run.log`), validity-review it, then commit the checkpoint, `finalize --scope common`, `--verify`, and push the seal.
+- **Merge authorization**: User pre-authorized merging PR #2 to `main` after the seal verifies.
