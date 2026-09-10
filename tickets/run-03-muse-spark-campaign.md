@@ -42,9 +42,11 @@ for this campaign.
 - [x] Add `config/models.meta.json`; validate it loads with `load_model_config`.
 - [x] Offline Green: mock run with the new catalog; `bun run test`; `bun run validate:release`.
 - [x] Live probes for both models; confirm structured output, usage accounting, cost math.
-- [ ] Full run: `--release 1.0.0 --config config/models.meta.json --run-id 2026-09-10-muse-spark
+- [x] Full run: `--release 1.0.0 --config config/models.meta.json --run-id 2026-09-10-muse-spark
   --models muse-spark-1.3 muse-spark-1.2 --budget-usd 100 --concurrency 10`; retry only
   infrastructure failures.
+- [x] Validity review: full coverage, zero unresolved infra failures, plausible score profiles.
+- [x] Commit checkpoint and exports; `finalize --scope common`; `--verify`; commit the seal.
 - [ ] Commit checkpoint and exports; `finalize --scope common`; `--verify`; commit the seal.
 - [ ] Open PR for review; record merge provenance here.
 
@@ -120,14 +122,47 @@ seal (`--scope common`) is the fallback.
 Stale probe run directories were deleted (superseded 4096/8192-cap and 60s-timeout configs
 would otherwise pollute release aggregation as distinct configurations).
 
+## Validity review and seal (2026-09-10)
+
+Run `2026-09-10-muse-spark` finished `complete` in one invocation ($100 guard, concurrency
+10): **3,648/3,648 observations, $66.9465 spent, SQLite `integrity_check ok`**, no duplicate
+(model, task) pairs, release/dataset/protocol identity matching V1.0.0.
+
+- `muse-spark-1.2`: 1824/1824 clean, zero retries, zero unmetered attempts.
+- `muse-spark-1.3`: 1819 clean + 5 `invalid_response`, all `status: incomplete` at exactly
+  16384 output tokens in a single request (genuine non-answers, final zeroes per protocol,
+  0.27% of its tasks). 7 responses topped 15000 output tokens. One transport retry
+  (font-playfair-display-v42) recovered cleanly; its $0.0905 cost retains the unmetered
+  reservation per protocol. Zero unresolved infrastructure failures.
+- Latency vindicates the 300s fix: 1.3 median 73.3s with 1222/1824 responses over 60s (max
+  254.3s, inside the 300s budget); even 1.2 peaked at 63.0s twice.
+- Score profiles are plausible with no degeneracies (category ~94%, modifier ~91–96%,
+  kerning/line-height ~51–57%, weight ~77–80%).
+
+Sealed with `--scope common`: **1824 tasks x 2 models across all 50 families** (full-release
+coverage, unlike run-01's 728/49 sample). `--verify` re-parsed and re-scored all 3,648
+responses with zero discrepancies; artifact hashes match committed bytes.
+
+| Model | Exact | Font | Mean cost/input | Mean latency |
+| :--- | :--- | :--- | :--- | :--- |
+| muse-spark-1.3 | 4.17% | 19.68% | $0.022801 | 79.37s |
+| muse-spark-1.2 | 2.85% | 12.45% | $0.013861 | 19.64s |
+
+- Checkpoint commit: `d88a09dc` (source == finalizer, clean)
+- Seal commit: `e1e95f25`
+- Shared cohort SHA-256: `d46fb9667177ae3a652f06ded92c09da042a08c3beaee4926ad70778423d44ac`
+
+This cohort (full 1824) differs from run-01's 728-task cohort, so cross-publication model
+rankings are not valid. The website presents the Muse results as a second fixed comparison.
+
 ## Handoff and takeover log
 
 - `2026-09-10`: Started by `muse` on `eob-dev2` (Session `01a08930-2a59-7aa0-811b-63e91a3fd454`).
 
 ## Handoff memo
 
-- **Verified working**: Probes prove the wire path; 300s Meta timeout fix tested (456 pytest pass, fingerprint unchanged); full campaign launched.
-- **Pending / blocker**: None. Campaign `2026-09-10-muse-spark` running detached; log at `/tmp/fontbench-muse-run.log`.
-- **Repro command**: `bun run benchmark --release 1.0.0 --config config/models.meta.json --mock --run-id smoke-meta --max-tasks 3 --models muse-spark-1.3 muse-spark-1.2`
-- **Next action**: Monitor the campaign (`tail -f /tmp/fontbench-muse-run.log`), validity-review it, then commit the checkpoint, `finalize --scope common`, `--verify`, and push the seal.
+- **Verified working**: Campaign complete (3648/3648, $66.95); validity review passed; seal committed at `e1e95f25` and `--verify` clean.
+- **Pending / blocker**: None. Merge PR #2 to `main` (pre-authorized), then close the ticket.
+- **Repro command**: `.venv/bin/python -m baseline.finalize --run-dir results/runs/1.0.0/2026-09-10-muse-spark --verify`
+- **Next action**: Push the seal, merge PR #2, hand the seal commit to the kaya-web page import.
 - **Merge authorization**: User pre-authorized merging PR #2 to `main` after the seal verifies.
