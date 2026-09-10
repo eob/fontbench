@@ -13,9 +13,9 @@
       "base_url": "https://api.meta.ai/v1",
       "input_per_m": 1.25,
       "output_per_m": 4.25,
-      "max_output_tokens": 4096,
+      "max_output_tokens": 16384,
       "enabled": true,
-      "notes": "Meta Muse Spark 1.3 Standard tier via the OpenAI-compatible Meta Model API Responses endpoint. Reasoning model; uses model-default reasoning settings. Same $1.25/$4.25 standard pricing as 1.2; prompts never train Meta models.",
+      "notes": "Meta Muse Spark 1.3 Standard tier via the OpenAI-compatible Meta Model API Responses endpoint. Reasoning model at model-default high effort; uses model-default reasoning settings. 16384 output cap: the 4096-cap probe returned status incomplete with all 4096 tokens spent on reasoning, and live outputs reach ~6900 tokens, so 16384 keeps headroom above observed reasoning volume. Same $1.25/$4.25 standard pricing as 1.2; prompts never train Meta models.",
       "pricing_notes": "Standard tier rates in USD per million tokens; cached input $0.15/M not assumed. Output includes reasoning tokens."
     },
     {
@@ -29,9 +29,9 @@
       "base_url": "https://api.meta.ai/v1",
       "input_per_m": 1.25,
       "output_per_m": 4.25,
-      "max_output_tokens": 4096,
+      "max_output_tokens": 16384,
       "enabled": true,
-      "notes": "Meta Muse Spark 1.2 Standard tier via the OpenAI-compatible Meta Model API Responses endpoint. Reasoning model; uses model-default reasoning settings. Same $1.25/$4.25 standard pricing as 1.3; prompts never train Meta models.",
+      "notes": "Meta Muse Spark 1.2 Standard tier via the OpenAI-compatible Meta Model API Responses endpoint. Reasoning model; uses model-default reasoning settings. 16384 output cap matches 1.3 so both Muse configurations share identical inference settings. Same $1.25/$4.25 standard pricing as 1.3; prompts never train Meta models.",
       "pricing_notes": "Standard tier rates in USD per million tokens; cached input $0.15/M not assumed. Output includes reasoning tokens."
     }
   ]

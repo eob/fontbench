@@ -41,9 +41,10 @@ for this campaign.
 - [x] Red: `muse-spark-1.3`/`muse-spark-1.2` unselectable; catalog file absent.
 - [x] Add `config/models.meta.json`; validate it loads with `load_model_config`.
 - [x] Offline Green: mock run with the new catalog; `bun run test`; `bun run validate:release`.
-- [ ] Live 1-task probe for both models; confirm structured output, usage accounting, cost math.
-- [ ] Full run: `--release 1.0.0 --config config/models.meta.json --run-id <id> --models
-  muse-spark-1.3 muse-spark-1.2 --budget-usd 100`; retry only infrastructure failures.
+- [x] Live probes for both models; confirm structured output, usage accounting, cost math.
+- [ ] Full run: `--release 1.0.0 --config config/models.meta.json --run-id 2026-09-10-muse-spark
+  --models muse-spark-1.3 muse-spark-1.2 --budget-usd 100 --concurrency 10`; retry only
+  infrastructure failures.
 - [ ] Commit checkpoint and exports; `finalize --scope common`; `--verify`; commit the seal.
 - [ ] Open PR for review; record merge provenance here.
 
@@ -81,13 +82,51 @@ is what turns selection Green. Mock run directories are git-ignored.
 | `tsc --noEmit` | `df7445fe`+branch | clean |
 | `bun run validate:release` | `df7445fe`+branch | fingerprints match; 1,824 expected tasks |
 
+## Live probe saga (2026-09-10)
+
+All probes used throwaway run IDs (dirs removed after analysis); only the numbers below are kept.
+
+1. **4096 cap**: `muse-spark-1.2` completed cleanly (512 in / 2531 out, 18.3s, valid
+   parsed prediction). `muse-spark-1.3` returned `status: incomplete`
+   (`max_output_tokens`) with all 4096 output tokens spent on high-effort reasoning,
+   59.4s, scored 0 as `invalid_response`. A 4096 cap would have silently zeroed 1.3
+   across the campaign, so the cap moved to 8192 for both (identical inference settings).
+2. **8192 cap, 60s transport timeout**: 1.3 completed one task (4173 out, 59.8s) and
+   timed out twice on the next (121s, `unavailable`, keeps its reservation). 1.2 stayed
+   clean (2972–3254 out, ~20s). 1.3-high routinely needs 60–120s per request.
+3. **Fix**: the evaluation protocol fingerprint hashes `evaluator.py`/`providers.py`
+   source, so the 60s default there is untouchable for a V1.0.0 campaign. Following the
+   existing anthropic-workspace-header precedent, `runner.py` (not fingerprinted) now
+   extends the httpx timeout to 300s for the Meta endpoint only. Pinned by
+   `test_meta_endpoint_gets_extended_transport_timeout` (Meta with/without trailing
+   slash → 300s; default and OpenAI URLs → 60s).
+4. **300s proof**: all 4 attempts clean — 1.3 at 67.6s/3215 out and 105s/6892 out, 1.2
+   at 11–22s. Both 1.3 requests would have died at 60s.
+5. **Headroom**: max observed output is 6892 tokens, so the cap moved to 16384 for both
+   models. Unused headroom costs nothing (metered billing; reservations only gate the
+   last ~$0.15 of headroom per scheduling check).
+
+Projections for 1,824 x 2: ~$45–85 actual spend (1.3 ~$0.015–0.03/task, 1.2 ~$0.01–0.018),
+~5h wall time at concurrency 10. The $100 guard trips first if projections slip; a partial
+seal (`--scope common`) is the fallback.
+
+| Gate / command | Base commit | Result |
+| :--- | :--- | :--- |
+| `pytest tests/test_runner.py::test_meta_endpoint_gets_extended_transport_timeout` | branch | Red 2 failed/2 passed → Green 4 passed |
+| `.venv/bin/python -m pytest -q` | branch | 456 passed, 0 failed |
+| `bun run validate:release` | branch | fingerprint `3769c8cc…` unchanged |
+| Live 300s probe (throwaway ID, since removed) | branch | 4/4 clean, parsed predictions valid |
+
+Stale probe run directories were deleted (superseded 4096/8192-cap and 60s-timeout configs
+would otherwise pollute release aggregation as distinct configurations).
+
 ## Handoff and takeover log
 
 - `2026-09-10`: Started by `muse` on `eob-dev2` (Session `01a08930-2a59-7aa0-811b-63e91a3fd454`).
 
 ## Handoff memo
 
-- **Verified working**: Meta catalog loads; mock run Green for both models; pytest 452, bun 80, tsc, release gate all pass.
-- **Pending / blocker**: `MODEL_API_KEY` must be provided before any live step.
+- **Verified working**: Probes prove the wire path; 300s Meta timeout fix tested (456 pytest pass, fingerprint unchanged); full campaign launched.
+- **Pending / blocker**: None. Campaign `2026-09-10-muse-spark` running detached; log at `/tmp/fontbench-muse-run.log`.
 - **Repro command**: `bun run benchmark --release 1.0.0 --config config/models.meta.json --mock --run-id smoke-meta --max-tasks 3 --models muse-spark-1.3 muse-spark-1.2`
-- **Next action**: With `MODEL_API_KEY` set, run the 1-task live probe (`--run-id probe-meta-detail-01 --max-tasks 1 --budget-usd 5`), then start the full campaign on a fresh run ID.
+- **Next action**: Monitor the campaign (`tail -f /tmp/fontbench-muse-run.log`), then commit the checkpoint, `finalize --scope common`, `--verify`, and push the seal.
