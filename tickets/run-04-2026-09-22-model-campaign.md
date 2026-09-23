@@ -67,6 +67,8 @@ The OpenAI-only invocation reached 915 Sol and 914 Luna finals with zero OpenAI 
 
 At concurrency 24, Sol and Luna each reached 1,428/1,824 final responses with no OpenAI retries or provider errors. A fourth graceful checkpoint passed SQLite `integrity_check` at $22.666 cumulative estimated spend. The remaining 396 tasks per GPT model resume with the same catalog, run ID, and inference settings.
 
+Sol and Luna finished all 1,824 release tasks each with zero provider errors and zero retries. The source SQLite passed `integrity_check`; cumulative estimated spend was $28.0183 before the Opus retry. Opus remains at 391 final responses and one retryable credit failure. The seed-0 first 392 tasks contain exactly those 391 finals plus `font-space-mono-v18`, the failed task, so an Opus-only `--max-tasks 392 --concurrency 1` invocation sends exactly one new provider request to test billing access.
+
 ## Durable findings
 
 Pending.
