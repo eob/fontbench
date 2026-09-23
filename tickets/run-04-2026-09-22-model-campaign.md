@@ -63,6 +63,8 @@ The first full invocation was gracefully interrupted for a durable WIP checkpoin
 
 At 391 final responses, Anthropic returned HTTP 400: `Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.` The one affected task remains retryable; it is not scored as a model answer. Sol and Luna continued without errors. A second graceful checkpoint at 391/614/613 final responses for Opus/Sol/Luna (1,618 total) passed SQLite `integrity_check`. The next invocation selects only Sol and Luna to finish their corpus without prematurely retrying Opus; a single Opus retry follows the OpenAI completion.
 
+The OpenAI-only invocation reached 915 Sol and 914 Luna finals with zero OpenAI errors. A third graceful checkpoint passed SQLite `integrity_check` at $15.532 cumulative estimated spend. The next invocation raises concurrency from 16 to 24 for the same two models; concurrent benchmark runners have finished, and this scheduling change does not alter any model configuration or the frozen protocol.
+
 ## Durable findings
 
 Pending.

@@ -193,6 +193,51 @@
       "status": "interrupted",
       "updated_at": "2026-09-23T12:39:56.435670+00:00",
       "finished_at": "2026-09-23T12:39:56.435670+00:00"
+    },
+    {
+      "runner_git_commit": "e5c02357ce8845b636b1489193d3c4b438bdfb44",
+      "runner_git_dirty": false,
+      "started_at": "2026-09-23T12:41:12.383900+00:00",
+      "models": [
+        {
+          "id": "gpt-6-sol",
+          "provider": "openai",
+          "model": "gpt-6-sol",
+          "display_name": "GPT-6 Sol",
+          "api_key_env": "OPENAI_API_KEY",
+          "source_url": "https://developers.openai.com/api/docs/models/gpt-6-sol",
+          "pricing_source_url": "https://developers.openai.com/api/docs/pricing",
+          "pricing_notes": "Standard online API rates in USD per million tokens for short context; no caching, batch discount, or tools assumed.",
+          "notes": "Released 2026-09-22. Responses API, default medium reasoning. Output cap allows reasoning headroom without changing the frozen prompt or request shape.",
+          "base_url": null,
+          "input_per_m": 2.0,
+          "output_per_m": 10.0,
+          "max_output_tokens": 16384,
+          "enabled": true
+        },
+        {
+          "id": "gpt-6-luna",
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "display_name": "GPT-6 Luna",
+          "api_key_env": "OPENAI_API_KEY",
+          "source_url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+          "pricing_source_url": "https://developers.openai.com/api/docs/pricing",
+          "pricing_notes": "Standard online API rates in USD per million tokens for short context; no caching, batch discount, or tools assumed.",
+          "notes": "Released 2026-09-22. Responses API, default medium reasoning. Output cap matches the other models in this campaign.",
+          "base_url": null,
+          "input_per_m": 0.1,
+          "output_per_m": 0.5,
+          "max_output_tokens": 16384,
+          "enabled": true
+        }
+      ],
+      "max_tasks": null,
+      "concurrency": 16,
+      "budget_usd": 75.0,
+      "status": "interrupted",
+      "updated_at": "2026-09-23T12:51:49.056728+00:00",
+      "finished_at": "2026-09-23T12:51:49.056728+00:00"
     }
   ]
 }
