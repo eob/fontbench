@@ -9,6 +9,7 @@ This folder is the authoritative local workfu/ticketfu issue catalog. It include
 | [run-02](run-02-resume-status.md) | Medium | Clear stale pause labels for selected models awaiting dispatch | Open |
 | [run-01](run-01-v1-model-campaign.md) | High | First V1.0.0 campaign across eleven provider models; $100 cap, all providers selected | Completed |
 | [run-03](run-03-muse-spark-campaign.md) | High | V1.0.0 campaign for Meta Muse Spark 1.3 and 1.2; $100 cap, separate Meta catalog | Completed |
+| [run-04](run-04-2026-09-22-model-campaign.md) | High | V1.0.0 campaign for GPT-6 Sol, GPT-6 Luna, and Claude Opus 5.5 | In Progress |
 | [fix-repo-audit](fix-repo-audit.md) | High | Initial repository, renderer, grader, package, and installation repairs | Completed; historical |
 | [feat-multi-provider-benchmark](feat-multi-provider-benchmark.md) | High | Provider adapters, checkpoints, budgeted pilot, and first website | Completed; historical |
 | [valid-01](valid-01-benchmark-audit.md) | Critical | Audit integration, artifact census, fresh corpus, final verification | Completed |

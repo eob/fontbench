@@ -30,6 +30,8 @@ bun run benchmark --release 1.0.0 --mock --run-id smoke --max-tasks 3
 
 Select models from [`config/models.json`](config/models.json), or provide your own catalog with `--config path/to/models.json`. Native adapters support OpenAI Responses, Anthropic Messages, and Google generateContent; an OpenAI-compatible endpoint can use `base_url`. Set the API key environment variable specified by each configuration. Catalog IDs and prices are dated records; verify availability and rates when scheduling a new campaign.
 
+The September 22, 2026 OpenAI and Anthropic releases are in [`config/models.2026-09-22.json`](config/models.2026-09-22.json). Select that catalog with `--config` and choose `gpt-6-sol`, `gpt-6-luna`, or `claude-opus-5-5` with `--models`.
+
 Separate runs can contribute to the same release:
 
 ```bash
