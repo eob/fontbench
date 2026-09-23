@@ -69,6 +69,15 @@ At concurrency 24, Sol and Luna each reached 1,428/1,824 final responses with no
 
 Sol and Luna finished all 1,824 release tasks each with zero provider errors and zero retries. The source SQLite passed `integrity_check`; cumulative estimated spend was $28.0183 before the Opus retry. Opus remains at 391 final responses and one retryable credit failure. The seed-0 first 392 tasks contain exactly those 391 finals plus `font-space-mono-v18`, the failed task, so an Opus-only `--max-tasks 392 --concurrency 1` invocation sends exactly one new provider request to test billing access.
 
+The targeted Opus retry sent exactly one request for `font-space-mono-v18` and received the same HTTP 400 insufficient-credit response. The task remains unscored and retryable. The final saved state for this handoff is Sol 1,824/1,824, Luna 1,824/1,824, Opus 391/1,824, with 1,433 Opus tasks remaining; SQLite `integrity_check` returned `ok`. The cumulative $28.366 estimated spend includes $0.69536 in conservative unmetered reservations for the two rejected Opus requests; it is not a provider invoice. No further Anthropic requests should be sent until credit is restored. Do not seal or regenerate the tracked aggregate website while Opus is partial, because that would shrink the shared cohort below the existing 728 tasks.
+
+## Handoff memo
+
+- **Verified working**: OpenAI Sol and Luna have complete 1,824-task scorecards with zero errors; the source checkpoint is internally consistent and pushed to `main`.
+- **Pending**: Anthropic credit replenishment, then 1,433 remaining Opus 5.5 responses, source checkpoint commit, full-cohort seal, aggregate page rebuild, and publication verification.
+- **Repro/status command**: `.venv/bin/python -c 'import json; s=json.load(open("results/runs/1.0.0/2026-09-23-openai-anthropic/summary.json")); print(s["status"], {m: v["completed"] for m,v in s["models"].items()})'`
+- **Next action after credit is restored**: Resume `bun run benchmark --release 1.0.0 --config config/models.2026-09-22.json --run-id 2026-09-23-openai-anthropic --models claude-opus-5-5 --budget-usd 75 --concurrency 16`. Verify full coverage and zero unresolved infrastructure failures before finalization.
+
 ## Durable findings
 
 Pending.

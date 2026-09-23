@@ -9,14 +9,14 @@
   "grading_version": "3",
   "expected_task_count": 1824,
   "mock": false,
-  "runner_git_commit": "fcf220ab549c00f46530a0bb4f40c64dcc5afc24",
+  "runner_git_commit": "73e878eb95f07df5a799a702563aa19083a4f16d",
   "runner_git_dirty": false,
   "created_at": "2026-09-23T12:10:46.123Z",
-  "updated_at": "2026-09-23T13:15:23.649938+00:00",
+  "updated_at": "2026-09-23T13:16:32.668940+00:00",
   "budget_usd": 75.0,
-  "spent_cost_usd": 28.01832279999998,
+  "spent_cost_usd": 28.366002799999976,
   "cost_incomplete": false,
-  "status": "partial",
+  "status": "paused",
   "models": {
     "claude-opus-5-5": {
       "model_config": {
@@ -44,7 +44,7 @@
       "attempted_tasks": 392,
       "status": "paused",
       "reason": "HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
-      "cost_usd": 2.9608399999999993,
+      "cost_usd": 3.3085199999999992,
       "composite_score": 0.8427109974424549
     },
     "gpt-6-luna": {
@@ -74,7 +74,7 @@
       "status": "complete",
       "reason": null,
       "cost_usd": 0.9290367999999988,
-      "composite_score": 0.6795504385964918
+      "composite_score": 0.6795504385964926
     },
     "gpt-6-sol": {
       "model_config": {
@@ -103,7 +103,7 @@
       "status": "complete",
       "reason": null,
       "cost_usd": 24.12844599999993,
-      "composite_score": 0.7891995614035056
+      "composite_score": 0.7891995614035049
     }
   },
   "interruption_signal": null
