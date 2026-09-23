@@ -71,12 +71,14 @@ Sol and Luna finished all 1,824 release tasks each with zero provider errors and
 
 The targeted Opus retry sent exactly one request for `font-space-mono-v18` and received the same HTTP 400 insufficient-credit response. The task remains unscored and retryable. The final saved state for this handoff is Sol 1,824/1,824, Luna 1,824/1,824, Opus 391/1,824, with 1,433 Opus tasks remaining; SQLite `integrity_check` returned `ok`. The cumulative $28.366 estimated spend includes $0.69536 in conservative unmetered reservations for the two rejected Opus requests; it is not a provider invoice. No further Anthropic requests should be sent until credit is restored. Do not seal or regenerate the tracked aggregate website while Opus is partial, because that would shrink the shared cohort below the existing 728 tasks.
 
+After Anthropic credit was replenished, the same run ID resumed Opus only. The second credit-failed task completed on its next attempt and all remaining Opus tasks completed without new infrastructure errors. The run now has **1,824 unique final responses for each of the three new models**, zero invalid model responses, zero unresolved infrastructure failures, and SQLite `integrity_check: ok`. The final estimated campaign spend is **$37.895039**, including the two unmetered credit-error reservations. Per-model estimates are Opus $12.837556, Sol $24.128446, and Luna $0.929037. The complete source checkpoint is ready for commit and full-cohort finalization.
+
 ## Handoff memo
 
-- **Verified working**: OpenAI Sol and Luna have complete 1,824-task scorecards with zero errors; the source checkpoint is internally consistent and pushed to `main`.
-- **Pending**: Anthropic credit replenishment, then 1,433 remaining Opus 5.5 responses, source checkpoint commit, full-cohort seal, aggregate page rebuild, and publication verification.
+- **Verified working**: Sol, Luna, and Opus each have complete 1,824-task scorecards with zero final errors; the source checkpoint is internally consistent.
+- **Pending**: Commit the complete source checkpoint, seal and verify the full cohort, rebuild the aggregate page, and verify/push the publication.
 - **Repro/status command**: `.venv/bin/python -c 'import json; s=json.load(open("results/runs/1.0.0/2026-09-23-openai-anthropic/summary.json")); print(s["status"], {m: v["completed"] for m,v in s["models"].items()})'`
-- **Next action after credit is restored**: Resume `bun run benchmark --release 1.0.0 --config config/models.2026-09-22.json --run-id 2026-09-23-openai-anthropic --models claude-opus-5-5 --budget-usd 75 --concurrency 16`. Verify full coverage and zero unresolved infrastructure failures before finalization.
+- **Next action**: Finalize the committed checkpoint with `--scope full`, verify its seal, then build and audit the tracked aggregate export.
 
 ## Durable findings
 
