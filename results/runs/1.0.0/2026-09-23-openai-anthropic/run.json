@@ -132,6 +132,67 @@
       "status": "interrupted",
       "updated_at": "2026-09-23T12:21:33.100581+00:00",
       "finished_at": "2026-09-23T12:21:33.100581+00:00"
+    },
+    {
+      "runner_git_commit": "ffe542c33e46b0b3bd8a5d98b932e9ff89f66970",
+      "runner_git_dirty": false,
+      "started_at": "2026-09-23T12:22:30.237000+00:00",
+      "models": [
+        {
+          "id": "gpt-6-sol",
+          "provider": "openai",
+          "model": "gpt-6-sol",
+          "display_name": "GPT-6 Sol",
+          "api_key_env": "OPENAI_API_KEY",
+          "source_url": "https://developers.openai.com/api/docs/models/gpt-6-sol",
+          "pricing_source_url": "https://developers.openai.com/api/docs/pricing",
+          "pricing_notes": "Standard online API rates in USD per million tokens for short context; no caching, batch discount, or tools assumed.",
+          "notes": "Released 2026-09-22. Responses API, default medium reasoning. Output cap allows reasoning headroom without changing the frozen prompt or request shape.",
+          "base_url": null,
+          "input_per_m": 2.0,
+          "output_per_m": 10.0,
+          "max_output_tokens": 16384,
+          "enabled": true
+        },
+        {
+          "id": "gpt-6-luna",
+          "provider": "openai",
+          "model": "gpt-6-luna",
+          "display_name": "GPT-6 Luna",
+          "api_key_env": "OPENAI_API_KEY",
+          "source_url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+          "pricing_source_url": "https://developers.openai.com/api/docs/pricing",
+          "pricing_notes": "Standard online API rates in USD per million tokens for short context; no caching, batch discount, or tools assumed.",
+          "notes": "Released 2026-09-22. Responses API, default medium reasoning. Output cap matches the other models in this campaign.",
+          "base_url": null,
+          "input_per_m": 0.1,
+          "output_per_m": 0.5,
+          "max_output_tokens": 16384,
+          "enabled": true
+        },
+        {
+          "id": "claude-opus-5-5",
+          "provider": "anthropic",
+          "model": "claude-opus-5-5",
+          "display_name": "Claude Opus 5.5",
+          "api_key_env": "ANTHROPIC_API_KEY",
+          "source_url": "https://platform.claude.com/docs/en/models/opus-5-5/overview",
+          "pricing_source_url": "https://platform.claude.com/docs/en/models/opus-5-5/overview",
+          "pricing_notes": "Standard online API rates in USD per million tokens; no caching, batch discount, fast mode, or tools assumed.",
+          "notes": "Released 2026-09-22. Messages API, default medium adaptive thinking. Output cap matches the other models in this campaign.",
+          "base_url": null,
+          "input_per_m": 4.0,
+          "output_per_m": 20.0,
+          "max_output_tokens": 16384,
+          "enabled": true
+        }
+      ],
+      "max_tasks": null,
+      "concurrency": 16,
+      "budget_usd": 75.0,
+      "status": "interrupted",
+      "updated_at": "2026-09-23T12:39:56.435670+00:00",
+      "finished_at": "2026-09-23T12:39:56.435670+00:00"
     }
   ]
 }

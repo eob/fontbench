@@ -9,12 +9,12 @@
   "grading_version": "3",
   "expected_task_count": 1824,
   "mock": false,
-  "runner_git_commit": "c4ed9c88d147aa56e08701e37887158372800a3e",
-  "runner_git_dirty": true,
+  "runner_git_commit": "ffe542c33e46b0b3bd8a5d98b932e9ff89f66970",
+  "runner_git_dirty": false,
   "created_at": "2026-09-23T12:10:46.123Z",
-  "updated_at": "2026-09-23T12:21:33.100581+00:00",
+  "updated_at": "2026-09-23T12:39:56.435670+00:00",
   "budget_usd": 75.0,
-  "spent_cost_usd": 3.1107055000000012,
+  "spent_cost_usd": 11.486208300000017,
   "cost_incomplete": false,
   "status": "interrupted",
   "models": {
@@ -40,12 +40,12 @@
       "model": "claude-opus-5-5",
       "max_output_tokens": 16384,
       "display_name": "Claude Opus 5.5",
-      "completed": 154,
-      "attempted_tasks": 154,
+      "completed": 391,
+      "attempted_tasks": 392,
       "status": "paused",
-      "reason": "Interrupted; resume to continue",
-      "cost_usd": 1.021552,
-      "composite_score": 0.847402597402597
+      "reason": "HTTP 400: Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "cost_usd": 2.9608399999999993,
+      "composite_score": 0.8427109974424553
     },
     "gpt-6-luna": {
       "model_config": {
@@ -69,12 +69,12 @@
       "model": "gpt-6-luna",
       "max_output_tokens": 16384,
       "display_name": "GPT-6 Luna",
-      "completed": 155,
-      "attempted_tasks": 155,
+      "completed": 613,
+      "attempted_tasks": 613,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 0.07640350000000001,
-      "composite_score": 0.687096774193548
+      "cost_usd": 0.3223762999999998,
+      "composite_score": 0.6827079934747147
     },
     "gpt-6-sol": {
       "model_config": {
@@ -98,12 +98,12 @@
       "model": "gpt-6-sol",
       "max_output_tokens": 16384,
       "display_name": "GPT-6 Sol",
-      "completed": 155,
-      "attempted_tasks": 155,
+      "completed": 614,
+      "attempted_tasks": 614,
       "status": "paused",
       "reason": "Interrupted; resume to continue",
-      "cost_usd": 2.012749999999999,
-      "composite_score": 0.8107526881720423
+      "cost_usd": 8.202991999999997,
+      "composite_score": 0.7950597176981518
     }
   },
   "interruption_signal": 2

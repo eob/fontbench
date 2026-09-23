@@ -61,6 +61,8 @@ Live probe at `c4ed9c88` used the first seeded task in the resumable run. All th
 
 The first full invocation was gracefully interrupted for a durable WIP checkpoint before increasing concurrency. Its SQLite integrity check returned `ok`; the run retained 154/155/155 final responses for Opus/Sol/Luna, $3.111 estimated spend, and zero unresolved errors. The next invocation resumes exactly the remaining tasks.
 
+At 391 final responses, Anthropic returned HTTP 400: `Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.` The one affected task remains retryable; it is not scored as a model answer. Sol and Luna continued without errors. A second graceful checkpoint at 391/614/613 final responses for Opus/Sol/Luna (1,618 total) passed SQLite `integrity_check`. The next invocation selects only Sol and Luna to finish their corpus without prematurely retrying Opus; a single Opus retry follows the OpenAI completion.
+
 ## Durable findings
 
 Pending.
