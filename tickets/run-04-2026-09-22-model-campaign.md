@@ -1,6 +1,6 @@
 # run-04-2026-09-22-model-campaign: New OpenAI and Anthropic models
 
-- **Status**: In Progress
+- **Status**: Completed
 - **Branch**: `main` (direct repository data push)
 - **Machine**: `eob-dev2`
 - **Harness**: `codex`
@@ -35,9 +35,10 @@ AssertionError: Unselectable models: ['claude-opus-5-5', 'gpt-6-luna', 'gpt-6-so
 - [x] Verify the three-model catalog loads, reverses to the same Red result without `--config`, and passes a small offline mock run.
 - [x] Verify the frozen release and relevant model-config checks.
 - [x] Probe one live image per model; inspect structured responses, output usage, and API errors.
-- [ ] Run the complete 1,824-image release for only these three IDs; resume retryable infrastructure failures as needed.
-- [ ] Review coverage, errors, response profiles, and costs. Commit the closed source checkpoint and exports.
-- [ ] Seal with `baseline.finalize --scope common`, verify the seal, commit and push the publication.
+- [x] Run the complete 1,824-image release for only these three IDs; resume retryable infrastructure failures as needed.
+- [x] Review coverage, errors, response profiles, and costs. Commit the closed source checkpoint and exports.
+- [x] Seal with `baseline.finalize --scope full`, verify the seal, commit and push the publication.
+- [x] Rebuild the aggregate page with the original 728-task comparison unchanged.
 
 ## Validation evidence
 
@@ -71,15 +72,22 @@ Sol and Luna finished all 1,824 release tasks each with zero provider errors and
 
 The targeted Opus retry sent exactly one request for `font-space-mono-v18` and received the same HTTP 400 insufficient-credit response. The task remains unscored and retryable. The final saved state for this handoff is Sol 1,824/1,824, Luna 1,824/1,824, Opus 391/1,824, with 1,433 Opus tasks remaining; SQLite `integrity_check` returned `ok`. The cumulative $28.366 estimated spend includes $0.69536 in conservative unmetered reservations for the two rejected Opus requests; it is not a provider invoice. No further Anthropic requests should be sent until credit is restored. Do not seal or regenerate the tracked aggregate website while Opus is partial, because that would shrink the shared cohort below the existing 728 tasks.
 
-After Anthropic credit was replenished, the same run ID resumed Opus only. The second credit-failed task completed on its next attempt and all remaining Opus tasks completed without new infrastructure errors. The run now has **1,824 unique final responses for each of the three new models**, zero invalid model responses, zero unresolved infrastructure failures, and SQLite `integrity_check: ok`. The final estimated campaign spend is **$37.895039**, including the two unmetered credit-error reservations. Per-model estimates are Opus $12.837556, Sol $24.128446, and Luna $0.929037. The complete source checkpoint is ready for commit and full-cohort finalization.
+After Anthropic credit was replenished, the same run ID resumed Opus only. The second credit-failed task completed on its next attempt and all remaining Opus tasks completed without new infrastructure errors. The run now has **1,824 unique final responses for each of the three new models**, zero invalid model responses, zero unresolved infrastructure failures, and SQLite `integrity_check: ok`. The final estimated campaign spend is **$37.895039**, including the two unmetered credit-error reservations. Per-model estimates are Opus $12.837556, Sol $24.128446, and Luna $0.929037. The complete source checkpoint was committed and sealed below.
 
-## Handoff memo
+## Sealed publication and aggregate
 
-- **Verified working**: Sol, Luna, and Opus each have complete 1,824-task scorecards with zero final errors; the source checkpoint is internally consistent.
-- **Pending**: Commit the complete source checkpoint, seal and verify the full cohort, rebuild the aggregate page, and verify/push the publication.
-- **Repro/status command**: `.venv/bin/python -c 'import json; s=json.load(open("results/runs/1.0.0/2026-09-23-openai-anthropic/summary.json")); print(s["status"], {m: v["completed"] for m,v in s["models"].items()})'`
-- **Next action**: Finalize the committed checkpoint with `--scope full`, verify its seal, then build and audit the tracked aggregate export.
+- Source checkpoint commit: `d194245e` (complete and clean).
+- Seal commit: `77785942`. `.venv/bin/python -m baseline.finalize --run-dir results/runs/1.0.0/2026-09-23-openai-anthropic --verify` passed, re-parsing and re-scoring all 5,472 final responses. Full cohort: 1,824 tasks, SHA-256 `d46fb9667177ae3a652f06ded92c09da042a08c3beaee4926ad70778423d44ac`.
+- `bun run build:page --release 1.0.0 --results-dir results/runs --output-dir site` rebuilt the tracked aggregate. It contains 16 models across three live runs with no warnings. The shared comparison retains the *exact same* 728 task IDs as the previously tracked site, SHA-256 `19097ac3b1a2cab662304dcea8f051297779934f2fc35d8d22bc79a1e66ee19e`. Every model record and shared-cohort metric in the previously tracked site is unchanged.
+
+| Model | Full 1,824 exact | Shared 728 exact | Full composite | Mean metered API response cost |
+| --- | ---: | ---: | ---: | ---: |
+| Claude Opus 5.5 | 39.25% | 38.87% | 84.49% | $0.006657 |
+| GPT-6 Sol | 12.01% | 12.23% | 78.92% | $0.013038 |
+| GPT-6 Luna | 4.17% | 3.71% | 67.96% | $0.000505 |
 
 ## Durable findings
 
-Pending.
+- The run contains only the three September 22 model IDs. Earlier model scorecards were read for aggregation but no earlier model inference was scheduled.
+- The two Anthropic insufficient-credit attempts remain in `attempts.jsonl` and in the cumulative spending estimate; they are excluded from accuracy and mean metered response cost. No unresolved infrastructure failure remains.
+- A full 1,824-task seal and the 728-task cross-run website comparison have different cohorts. Keep their hashes and metrics labeled separately.
