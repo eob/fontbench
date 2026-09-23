@@ -65,6 +65,8 @@ At 391 final responses, Anthropic returned HTTP 400: `Your credit balance is too
 
 The OpenAI-only invocation reached 915 Sol and 914 Luna finals with zero OpenAI errors. A third graceful checkpoint passed SQLite `integrity_check` at $15.532 cumulative estimated spend. The next invocation raises concurrency from 16 to 24 for the same two models; concurrent benchmark runners have finished, and this scheduling change does not alter any model configuration or the frozen protocol.
 
+At concurrency 24, Sol and Luna each reached 1,428/1,824 final responses with no OpenAI retries or provider errors. A fourth graceful checkpoint passed SQLite `integrity_check` at $22.666 cumulative estimated spend. The remaining 396 tasks per GPT model resume with the same catalog, run ID, and inference settings.
+
 ## Durable findings
 
 Pending.
