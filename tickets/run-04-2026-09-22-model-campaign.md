@@ -34,7 +34,7 @@ AssertionError: Unselectable models: ['claude-opus-5-5', 'gpt-6-luna', 'gpt-6-so
 
 - [x] Verify the three-model catalog loads, reverses to the same Red result without `--config`, and passes a small offline mock run.
 - [x] Verify the frozen release and relevant model-config checks.
-- [ ] Probe one live image per model; inspect structured responses, output usage, and API errors.
+- [x] Probe one live image per model; inspect structured responses, output usage, and API errors.
 - [ ] Run the complete 1,824-image release for only these three IDs; resume retryable infrastructure failures as needed.
 - [ ] Review coverage, errors, response profiles, and costs. Commit the closed source checkpoint and exports.
 - [ ] Seal with `baseline.finalize --scope common`, verify the seal, commit and push the publication.
@@ -48,6 +48,18 @@ AssertionError: Unselectable models: ['claude-opus-5-5', 'gpt-6-luna', 'gpt-6-so
 | Reversion check using original `config/models.json` | `14b09c3a` | The same three IDs remain absent |
 | `bun run validate:release` | `14b09c3a` + new catalog | 1,824 tasks; dataset and protocol fingerprints match release descriptor |
 | `bun run test:python` | `14b09c3a` + new catalog | 456 passed, 0 failed |
+| `bun run test:ts` | `c4ed9c88` | 80 passed, 0 failed |
+| `bun run typecheck` | `c4ed9c88` | Clean |
+
+Live probe at `c4ed9c88` used the first seeded task in the resumable run. All three returned valid structured predictions, metered token usage, and no provider error:
+
+| Model | Input / output tokens | Cost | Latency |
+| --- | ---: | ---: | ---: |
+| `gpt-6-sol` | 692 / 1,489 | $0.016274 | 23.4s |
+| `gpt-6-luna` | 692 / 671 | $0.000405 | 13.2s |
+| `claude-opus-5-5` | 1,320 / 55 | $0.006380 | 2.7s |
+
+The first full invocation was gracefully interrupted for a durable WIP checkpoint before increasing concurrency. Its SQLite integrity check returned `ok`; the run retained 154/155/155 final responses for Opus/Sol/Luna, $3.111 estimated spend, and zero unresolved errors. The next invocation resumes exactly the remaining tasks.
 
 ## Durable findings
 
